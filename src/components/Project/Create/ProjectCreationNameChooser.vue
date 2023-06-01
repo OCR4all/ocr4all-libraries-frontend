@@ -1,0 +1,71 @@
+<script setup lang="ts">
+import InputText from "primevue/inputtext";
+import InlineMessage from "primevue/inlinemessage";
+
+import { useProjectCreationStore } from "@/stores/projectCreation.store";
+
+import { useCustomFetch } from "@/composables/useCustomFetch";
+
+const nameTaken = ref(false);
+const noName = ref(false);
+
+const emit = defineEmits(["back", "next"]);
+
+const projectName = ref();
+
+const store = useProjectCreationStore();
+
+async function createProject() {
+  if (!projectName.value) {
+    nameTaken.value = false;
+    noName.value = true;
+  } else {
+    noName.value = false;
+
+    const { isFetching, error, data } = await useCustomFetch(
+      `/project/list`
+    ).json();
+    let result = [...data.value.map((e) => e.id)];
+    if (result.includes(projectName.value)) {
+      nameTaken.value = true;
+    } else {
+      const { isFetching_a, error_a, data_a } = await useCustomFetch(
+        `/project/create?id=${projectName.value}`
+      ).json();
+      if (!error_a) {
+        store.projectId = projectName.value;
+        emit("next");
+      }
+    }
+  }
+}
+</script>
+
+<template>
+  <div
+    class="flex flex-col items-center justify-center space-y-10 dark:text-gray-100 sm:p-12"
+  >
+    <h2
+      class="mb-2 text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
+    >
+      Enter a project name
+    </h2>
+    <div class="flex flex-col space-y-2">
+      <InputText
+        v-model="projectName"
+        :class="{ 'p-invalid': nameTaken === true }"
+      />
+      <InlineMessage v-show="noName">A project name is necessary</InlineMessage>
+      <InlineMessage v-show="nameTaken"
+        >A project with this name already exists</InlineMessage
+      >
+    </div>
+    <button
+      type="button"
+      class="mb-2 mr-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      @click="createProject"
+    >
+      Create
+    </button>
+  </div>
+</template>

@@ -1,0 +1,49 @@
+import { createPinia } from "pinia";
+import { createI18n } from "vue-i18n";
+
+import { createApp } from "vue";
+import App from "./App.vue";
+
+import "./assets/index.postcss";
+
+import router from "./router";
+
+// PrimeVue imports
+import PrimeVue from "primevue/config";
+import "primevue/resources/primevue.min.css";
+import "primeicons/primeicons.css";
+import "primevue/resources/themes/tailwind-light/theme.css";
+import Tooltip from "primevue/tooltip";
+
+import ToastService from "primevue/toastservice";
+
+const app = createApp(App);
+
+const messages = Object.fromEntries(
+  Object.entries(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    import.meta.glob<{ default: any }>("./locales/*.json", {
+      eager: true,
+    })
+  ).map(([key, value]) => {
+    return [key.slice(10, -5), value.default];
+  })
+);
+
+const i18n = createI18n({
+  legacy: false,
+  locale: "en",
+  fallbackLocale: "en",
+  warnHtmlMessage: false,
+  globalInjection: true,
+  messages,
+});
+
+app.use(i18n);
+app.use(createPinia());
+app.use(PrimeVue);
+app.use(ToastService);
+app.use(router);
+app.directive("tooltip", Tooltip);
+
+app.mount("#app");

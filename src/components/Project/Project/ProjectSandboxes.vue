@@ -1,0 +1,284 @@
+<script setup lang="ts">
+import { ArrowPathIcon, EyeIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { UseTimeAgo } from "@vueuse/components";
+
+import DataTable from "primevue/datatable";
+import Column from "primevue/column";
+import InputText from "primevue/inputtext";
+import Toolbar from "primevue/toolbar";
+import Dialog from "primevue/dialog";
+import Toast from "primevue/toast";
+import Tag from "primevue/tag";
+import { FilterMatchMode } from "primevue/api";
+
+import { useCustomFetch } from "@/composables/useCustomFetch";
+
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
+
+import { useSandboxCreationStore } from "@/stores/sandboxCreation.store";
+import { useResultViewerStore } from "@/stores/resultViewerStore";
+
+const router = useRouter();
+const project = router.currentRoute.value.params.id;
+
+const sandboxes = ref([]);
+const isRefetching = ref(false);
+
+const selectedSandbox = ref();
+
+const isDeleteDialogVisible = ref(false);
+
+const store = useSandboxCreationStore();
+const resultStore = useResultViewerStore();
+
+async function refetch() {
+  isRefetching.value = true;
+  useCustomFetch(`/sandbox/list/${project}`)
+    .get()
+    .json()
+    .then((response) => {
+      setTimeout(function () {
+        isRefetching.value = response.isFetching.value;
+      }, 500);
+      sandboxes.value = response.data.value;
+    });
+}
+
+refetch();
+
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+});
+
+function createSandbox() {
+  store.projectId = project;
+  router.push("/project/sandbox");
+}
+
+function toggleDeleteDialog(id) {
+  selectedSandbox.value = id;
+  isDeleteDialogVisible.value = true;
+}
+
+const getColor = (entry) => {
+  switch (entry) {
+    case "secured":
+      return { background: "#1A56DB" };
+    default:
+      return null;
+  }
+};
+
+async function removeResults() {
+  useCustomFetch(`/sandbox/remove/${project}?id=${selectedSandbox.value}`)
+    .get()
+    .json()
+    .then(() => {
+      refetch();
+      isDeleteDialogVisible.value = false;
+      toast.add({
+        severity: "success",
+        summary: "Success",
+        detail: "Sandbox successfully removed",
+        life: 3000,
+      });
+    });
+}
+
+function openResultViewer(id) {
+  resultStore.projectId = project;
+  resultStore.sandboxId = id;
+  router.push(`/project/${project}/${id}`);
+}
+</script>
+<template>
+  <Toast />
+  <Toolbar
+    class="mb-4"
+    :pt="{
+      root: { class: '!rounded-xl !bg-white dark:!bg-zinc-700 !border-none' },
+    }"
+  >
+    <template #start>
+      <div class="my-2 space-x-2">
+        <button
+          type="button"
+          class="rounded-lg bg-blue-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          @click="createSandbox()"
+        >
+          New
+        </button>
+      </div>
+    </template>
+  </Toolbar>
+  <DataTable
+    :value="sandboxes"
+    sortField="tracking.updated"
+    :sortOrder="-1"
+    :filters="filters"
+    :globalFilterFields="['name', 'description', 'state']"
+    :pt="{
+      header: {
+        class: 'rounded-t-xl dark:!bg-zinc-700 dark:!text-white !border-none',
+      },
+      wrapper: { class: 'dark:!bg-zinc-600 dark:!text-white !border-none' },
+      row: { class: 'dark:!bg-zinc-600 dark:!text-white !border-none' },
+      emptyMessage: {
+        class: 'dark:!bg-zinc-600 dark:!text-white !border-none',
+      },
+    }"
+  >
+    <template #header>
+      <div class="flex justify-between">
+        <h2 class="my-4 text-xl">Result Overview</h2>
+        <div class="space-x-2">
+          <button @click="refetch">
+            <ArrowPathIcon
+              :disabled="isRefetching"
+              :class="{ 'animate-spin': isRefetching }"
+              class="mr-2 inline h-6 w-6 text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white"
+            />
+          </button>
+          <span class="p-input-icon-left ml-10">
+            <InputText
+              v-model="filters['global'].value"
+              placeholder="Search..."
+              :pt="{
+                root: { class: 'max-w-fit' },
+              }"
+            />
+          </span>
+        </div>
+      </div>
+    </template>
+    <template #empty> No results yet </template>
+    <Column
+      header="Open"
+      :exportable="false"
+      style="min-width: 8rem"
+      :pt="{
+        headerCell: { class: 'dark:!bg-zinc-700 !border-none' },
+        headerTitle: { class: 'dark:!text-white !border-none' },
+        bodyCell: { class: 'dark:!border-zinc-600' },
+      }"
+    >
+      <template #body="slotProps">
+        <button
+          type="button"
+          class="mr-2 inline-flex items-center rounded-lg bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          @click="openResultViewer(slotProps.data.id)"
+        >
+          <EyeIcon class="h-6 w-6 text-white" />
+        </button>
+      </template>
+    </Column>
+    <Column
+      field="name"
+      header="Name"
+      :pt="{
+        headerCell: { class: 'dark:!bg-zinc-700 !border-none' },
+        headerTitle: { class: 'dark:!text-white !border-none' },
+        bodyCell: { class: 'dark:!border-zinc-600' },
+      }"
+    ></Column>
+    <Column
+      field="description"
+      header="Description"
+      :pt="{
+        headerCell: { class: 'dark:!bg-zinc-700 !border-none' },
+        headerTitle: { class: 'dark:!text-white !border-none' },
+        bodyCell: { class: 'dark:!border-zinc-600' },
+      }"
+    ></Column>
+    <Column
+      field="state"
+      :sortable="true"
+      header="State"
+      :show-filter-menu="false"
+      :filter-menu-style="{ width: '14rem' }"
+      :pt="{
+        headerCell: { class: 'dark:!bg-zinc-700 !border-none' },
+        headerTitle: { class: 'dark:!text-white !border-none' },
+        bodyCell: { class: 'dark:!border-zinc-600' },
+      }"
+    >
+      <template #body="{ data }">
+        <Tag :value="data.state" :style="getColor(data.state)" />
+      </template>
+    </Column>
+    <Column
+      field="tracking.updated"
+      header="Updated"
+      :sortable="true"
+      :pt="{
+        headerCell: { class: 'dark:!bg-zinc-700 !border-none' },
+        headerTitle: { class: 'dark:!text-white !border-none' },
+        bodyCell: { class: 'dark:!border-zinc-600' },
+      }"
+    >
+      <template #body="slotProps">
+        <UseTimeAgo
+          v-slot="{ timeAgo }"
+          :time="Date.parse(slotProps.data.tracking.updated)"
+        >
+          {{ timeAgo }}
+        </UseTimeAgo>
+      </template>
+    </Column>
+    <Column
+      header="Actions"
+      :exportable="false"
+      style="min-width: 8rem"
+      :pt="{
+        headerCell: { class: 'dark:!bg-zinc-700 !border-none' },
+        headerTitle: { class: 'dark:!text-white !border-none' },
+        bodyCell: { class: 'dark:!border-zinc-600' },
+      }"
+    >
+      <template #body="slotProps">
+        <button
+          type="button"
+          class="mr-2 inline-flex items-center rounded-lg bg-red-600 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+          @click="toggleDeleteDialog(slotProps.data.id)"
+        >
+          <XMarkIcon class="h-6 w-6 text-white" />
+        </button>
+      </template>
+    </Column>
+  </DataTable>
+  <Dialog
+    v-model:visible="isDeleteDialogVisible"
+    modal
+    header="Remove Results"
+    :style="{ width: '50vw' }"
+    :pt="{
+      root: { class: 'dark:!bg-zinc-800' },
+      header: { class: 'dark:!bg-zinc-800' },
+      headerTitle: { class: 'dark:!text-white' },
+      headerIcons: { class: 'dark:!text-white' },
+      closeButton: { class: 'dark:!text-white' },
+      content: { class: 'dark:!bg-zinc-800' },
+    }"
+  >
+    <p class="pb-5 dark:text-gray-200">
+      Do you really want to delete these results?
+    </p>
+    <button
+      v-tooltip="'Import Images'"
+      type="button"
+      class="mb-2 mr-2 rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-500 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+      @click="isDeleteDialogVisible = false"
+    >
+      Cancel
+    </button>
+    <button
+      v-tooltip="'Remove Sandbox'"
+      type="button"
+      class="mb-2 mr-2 rounded-lg bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+      @click="removeResults"
+    >
+      Delete
+    </button>
+  </Dialog>
+</template>
