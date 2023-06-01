@@ -6,7 +6,7 @@ import Button from "primevue/button";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
 const router = useRouter();
-const project = router.currentRoute.value.params.id;
+const project = router.currentRoute.value.params.project;
 
 const activeIndex = ref(0);
 

@@ -8,13 +8,14 @@ const ProjectPage = () => import("@/pages/ProjectPage.vue");
 const Overview = () => import("@/components/Project/ProjectsOverview.vue");
 const New = () => import("@/components/Project/NewProject.vue");
 const Sandbox = () =>
-  import("@/components/Project/Project/Sandbox/SandboxView.vue");
-const Project = () => import("@/components/Project/ProjectView.vue");
+  import("@/components/Project/Project/Sandbox/NewSandbox.vue");
+const ProjectView = () => import("@/components/Project/ProjectView.vue");
+
+const ProjectContainer = () => import("@/components/Project/ProjectContainer.vue")
 const ResultViewer = () =>
   import("@/components/Project/Project/Sandbox/ResultViewer.vue");
 const NodeFlowPage = () => import("@/pages/NodeFlowPage.vue");
 const WorkflowsPage = () => import("@/pages/WorkflowsPage.vue");
-const SandboxPage = () => import("@/pages/SandboxPage.vue");
 
 import { useAuthStore } from "@/stores/auth.store";
 import { useConfigStore } from "@/stores/config.store";
@@ -47,26 +48,28 @@ const routes = [
         component: New,
       },
       {
-        path: "sandbox",
-        name: "New Sandbox",
-        component: Sandbox,
-      },
-      {
-        path: "results",
-        name: "Result",
-        component: ResultViewer,
-      },
-      {
-        path: ":id",
-        name: "Project Page",
-        component: Project,
+        path: ":project",
+        name: "Project",
+        component: ProjectContainer,
+        children: [
+          {
+            path: "view",
+            name: "View Project",
+            component: ProjectView
+          },
+          {
+            path: "new-result",
+            name: "New Sandbox",
+            component: Sandbox,
+          },
+          {
+            path: "result/:sandbox",
+            name: "Sandbox",
+            component: ResultViewer,
+          }
+        ]
       },
     ],
-  },
-  {
-    path: "/project/:projectid/:sandboxid",
-    name: "Sandbox",
-    component: SandboxPage,
   },
   {
     path: "/workflows",

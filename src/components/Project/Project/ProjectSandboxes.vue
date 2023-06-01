@@ -17,10 +17,9 @@ import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
 import { useSandboxCreationStore } from "@/stores/sandboxCreation.store";
-import { useResultViewerStore } from "@/stores/resultViewerStore";
 
 const router = useRouter();
-const project = router.currentRoute.value.params.id;
+const project = router.currentRoute.value.params.project;
 
 const sandboxes = ref([]);
 const isRefetching = ref(false);
@@ -30,7 +29,6 @@ const selectedSandbox = ref();
 const isDeleteDialogVisible = ref(false);
 
 const store = useSandboxCreationStore();
-const resultStore = useResultViewerStore();
 
 async function refetch() {
   isRefetching.value = true;
@@ -53,7 +51,7 @@ const filters = ref({
 
 function createSandbox() {
   store.projectId = project;
-  router.push("/project/sandbox");
+  router.push(`/project/${project}/new-result`);
 }
 
 function toggleDeleteDialog(id) {
@@ -84,12 +82,6 @@ async function removeResults() {
         life: 3000,
       });
     });
-}
-
-function openResultViewer(id) {
-  resultStore.projectId = project;
-  resultStore.sandboxId = id;
-  router.push(`/project/${project}/${id}`);
 }
 </script>
 <template>
@@ -167,7 +159,7 @@ function openResultViewer(id) {
         <button
           type="button"
           class="mr-2 inline-flex items-center rounded-lg bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          @click="openResultViewer(slotProps.data.id)"
+          @click="router.push(`/project/${project}/result/${slotProps.data.id}`);"
         >
           <EyeIcon class="h-6 w-6 text-white" />
         </button>

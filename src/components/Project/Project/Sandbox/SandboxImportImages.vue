@@ -6,12 +6,11 @@ import Image from "primevue/image";
 const emit = defineEmits(["next"]);
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
-import {useConfigStore} from "@/stores/config.store";
-import {useAuthStore} from "@/stores/auth.store";
 
 const store = useSandboxCreationStore();
-const config = useConfigStore()
-const auth = useAuthStore()
+
+const router = useRouter();
+const project = router.currentRoute.value.params.project;
 
 const folios = ref([]);
 async function importImages() {
@@ -19,16 +18,16 @@ async function importImages() {
   emit("next");
 }
 
-const folioData = await useCustomFetch(`/folio/list/${store.projectId}`)
+const folioData = await useCustomFetch(`/folio/list/${project}`)
   .post({ identifiers: [] })
   .json()
 const imageData = []
 for(const folio of folioData.data.value){
   const imageEntry = {id: folio.id}
-  await useCustomFetch(`/folio/derivative/thumbnail/${store.projectId}?id=${folio.id}`).get().blob().then((blob) => {
+  await useCustomFetch(`/folio/derivative/thumbnail/${project}?id=${folio.id}`).get().blob().then((blob) => {
     imageEntry["thumbnail"] = useObjectUrl(blob.data.value)
   })
-  await useCustomFetch(`/folio/derivative/best/${store.projectId}?id=${folio.id}`).get().blob().then((blob) => {
+  await useCustomFetch(`/folio/derivative/best/${project}?id=${folio.id}`).get().blob().then((blob) => {
     imageEntry["best"] = useObjectUrl(blob.data.value)
   })
   imageData.push(imageEntry)

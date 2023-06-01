@@ -13,7 +13,7 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 
 const router = useRouter();
 
-const project = router.currentRoute.value.params.id;
+const project = router.currentRoute.value.params.project;
 const data = await useCustomFetch(`/project/entity?id=${project}`).get().json();
 
 const id = ref(data.data.value.id);

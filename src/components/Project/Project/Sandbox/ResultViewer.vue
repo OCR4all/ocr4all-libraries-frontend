@@ -10,8 +10,8 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useToast } from "primevue/usetoast";
 
 const router = useRouter();
-const project = router.currentRoute.value.params.projectid;
-const sandbox = router.currentRoute.value.params.sandboxid;
+const project = router.currentRoute.value.params.project;
+const sandbox = router.currentRoute.value.params.sandbox;
 
 const toast = useToast();
 
@@ -197,11 +197,11 @@ async function checkJob(startedJob) {
 }
 
 const breadcrumbHome = { to: "/project/overview", label: "Projects" };
-const breadcrumbPaths = [{ to: `/project/${project}`, label: project }];
+const breadcrumbPaths = [{ to: `/project/${project}/view`, label: project }];
 const breadcrumbCurrent = { label: sandbox };
 </script>
 <template>
-  <Breadcrumbs
+  <BreadcrumbNavigation
     :home="breadcrumbHome"
     :path="breadcrumbPaths"
     :current="breadcrumbCurrent"

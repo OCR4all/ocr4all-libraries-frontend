@@ -8,7 +8,7 @@ import Information from "@/components/Project/Project/ProjectInformation.vue";
 import Results from "@/components/Project/Project/ProjectSandboxes.vue";
 
 const router = useRouter();
-const project = router.currentRoute.value.params.id;
+const project = router.currentRoute.value.params.project;
 
 const breadcrumbHome = { to: "/project/overview", label: "Projects" };
 const breadcrumbCurrent = { label: project };
@@ -16,7 +16,7 @@ const breadcrumbCurrent = { label: project };
 
 <template>
   <Toast />
-  <Breadcrumbs :home="breadcrumbHome" :current="breadcrumbCurrent" />
+  <BreadcrumbNavigation :home="breadcrumbHome" :current="breadcrumbCurrent" />
   <div
     class="rounded-lg bg-white p-5 shadow dark:border dark:border-gray-700 dark:bg-zinc-800"
   >

@@ -7,6 +7,7 @@ const store = useSandboxCreationStore();
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
 const router = useRouter();
+const project = router.currentRoute.value.params.project;
 
 const workflows = ref();
 
@@ -32,7 +33,7 @@ async function createSandbox() {
     .slice(0, -8)
     .replace(":", "-")}`;
   const { isFetching, error, data } = await useCustomFetch(
-    `/sandbox/create/${store.projectId}?id=${sandboxName}`
+    `/sandbox/create/${project}?id=${sandboxName}`
   )
     .get()
     .json();
@@ -66,7 +67,7 @@ async function importImages() {
     description: "Import images",
   };
   const _sandboxLaunchData = await useCustomFetch(
-    `/spi/launcher/schedule/${store.projectId}/${store.sandboxId}`
+    `/spi/launcher/schedule/${project}/${store.sandboxId}`
   )
     .post(payload)
     .json();
@@ -100,10 +101,10 @@ async function launchWorkflow() {
   await importImages();
 
   const { isFetching, error, data } = await useCustomFetch(
-    `/workflow/schedule/${store.projectId}/${store.sandboxId}/${selectedWorkflow.value.id}`
+    `/workflow/schedule/${project}/${store.sandboxId}/${selectedWorkflow.value.id}`
   )
     .post({
-      "job-short-description": `${store.projectId}_${store.sandboxId}`,
+      "job-short-description": `${project}_${store.sandboxId}`,
       "parent-snapshot": {
         track: [],
       },
@@ -206,7 +207,7 @@ async function launchWorkflow() {
     </h2>
     <button
       class="rounded-lg bg-blue-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-      @click="router.push(`/project/${store.projectId}/${store.sandboxId}`)"
+      @click="router.push(`/project/${project}/${store.sandboxId}`)"
     >
       Inspect Result
     </button>
