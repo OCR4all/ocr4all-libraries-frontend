@@ -11,7 +11,8 @@ const Sandbox = () =>
   import("@/components/Project/Project/Sandbox/NewSandbox.vue");
 const ProjectView = () => import("@/components/Project/ProjectView.vue");
 
-const ProjectContainer = () => import("@/components/Project/ProjectContainer.vue")
+const ProjectContainer = () =>
+  import("@/components/Project/ProjectContainer.vue");
 const ResultViewer = () =>
   import("@/components/Project/Project/Sandbox/ResultViewer.vue");
 const NodeFlowPage = () => import("@/pages/NodeFlowPage.vue");
@@ -55,7 +56,7 @@ const routes = [
           {
             path: "view",
             name: "View Project",
-            component: ProjectView
+            component: ProjectView,
           },
           {
             path: "new-result",
@@ -66,8 +67,8 @@ const routes = [
             path: "result/:sandbox",
             name: "Sandbox",
             component: ResultViewer,
-          }
-        ]
+          },
+        ],
       },
     ],
   },

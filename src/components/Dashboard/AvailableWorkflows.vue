@@ -12,7 +12,7 @@ import DefaultSpinner from "@/components/Layout/utils/DefaultSpinner.vue";
 const router = useRouter();
 
 const isRefetching = ref(false);
-const loading = ref(true)
+const loading = ref(true);
 
 const workflows = ref([]);
 async function refetch() {

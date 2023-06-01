@@ -15,11 +15,19 @@ const folioData = await useCustomFetch(`/folio/list/${project}`)
   .json();
 const folios = ref([]);
 for (const folio of folioData.data.value) {
-  const thumbnailBlob = await useCustomFetch(`/folio/derivative/thumbnail/${project}?id=${folio.id}`).get().blob()
-  const thumbnail = useObjectUrl(thumbnailBlob.data.value)
+  const thumbnailBlob = await useCustomFetch(
+    `/folio/derivative/thumbnail/${project}?id=${folio.id}`
+  )
+    .get()
+    .blob();
+  const thumbnail = useObjectUrl(thumbnailBlob.data.value);
 
-  const imageBlob = await useCustomFetch(`/folio/derivative/best/${project}?id=${folio.id}`).get().blob()
-  const image = useObjectUrl(imageBlob.data.value)
+  const imageBlob = await useCustomFetch(
+    `/folio/derivative/best/${project}?id=${folio.id}`
+  )
+    .get()
+    .blob();
+  const image = useObjectUrl(imageBlob.data.value);
 
   folios.value.push({
     name: folio.name,

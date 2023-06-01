@@ -29,7 +29,9 @@ const categories = computed<
     viewModel.value.editor.nodeTypes.entries()
   );
 
-  const categoryNames = new Set(nodeTypeEntries.map(([, ni]) => ni["category"]));
+  const categoryNames = new Set(
+    nodeTypeEntries.map(([, ni]) => ni["category"])
+  );
 
   const categories: Array<{ name: string; nodeTypes: NodeTypeInformations }> =
     [];
@@ -86,7 +88,7 @@ const draggedNodeStyles = computed<CSSProperties>(() => {
     return {};
   }
   if ("getBoundingClientRect" in editorEl.value) {
-    const {left, top} = editorEl.value.getBoundingClientRect();
+    const { left, top } = editorEl.value.getBoundingClientRect();
 
     return {
       top: `${mouseY.value - top}px`,

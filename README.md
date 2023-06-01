@@ -1,7 +1,9 @@
 # OCR4all Frontend
+
 This repository contains the frontend for the new release of OCR4all.
 
 ## Getting Started
+
 ### 1. Install packages
 
 ```bash
@@ -59,10 +61,12 @@ yarn deps:update
 ```
 
 ## Environment Variables
+
 - `VITE_API_URL`: Points to the URL under which the REST API of an OCR4all backend instance is running (e. g. `https://some-domain.com/api/v1.0`)
 - `VITE_MODE`: Whether the OCR4all backend is running in `Desktop` or `Server` mode
 
 ## Build with
+
 - 🛠[Vue 3](https://github.com/vuejs/)
 - ⚡️[Vite](https://github.com/vitejs/vite)
 - 🦾[Typescript](https://github.com/microsoft/TypeScript)

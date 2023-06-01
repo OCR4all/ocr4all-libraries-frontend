@@ -80,7 +80,7 @@ const onMouseMove = (event: MouseEvent) => {
             v-slot="{ open }"
           >
             <DisclosureButton
-              class="flex w-full justify-between rounded-lg shadow-lg bg-zinc-100 dark:bg-zinc-900 px-4 py-2 text-left text-sm font-medium text-white hover:bg-zinc-200 dark:hover:bg-zinc-950 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75"
+              class="flex w-full justify-between rounded-lg bg-zinc-100 px-4 py-2 text-left text-sm font-medium text-white shadow-lg hover:bg-zinc-200 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75 dark:bg-zinc-900 dark:hover:bg-zinc-950"
             >
               <span class="text-lg text-black dark:text-white">{{
                 parameter.title

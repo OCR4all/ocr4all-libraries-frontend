@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const router = useRouter()
+const router = useRouter();
 
 const steps = [{ label: "Images" }, { label: "Workflow" }];
 const step = ref(0);
@@ -14,12 +14,16 @@ function next() {
 const project = router.currentRoute.value.params.project;
 
 const breadcrumbHome = { to: "/project/overview", label: "Projects" };
-const breadcrumbPath = [{ to: `/project/${project}/view`, label: project }]
+const breadcrumbPath = [{ to: `/project/${project}/view`, label: project }];
 const breadcrumbCurrent = { label: "New Result" };
 </script>
 
 <template>
-  <BreadcrumbNavigation :home="breadcrumbHome" :path="breadcrumbPath" :current="breadcrumbCurrent" />
+  <BreadcrumbNavigation
+    :home="breadcrumbHome"
+    :path="breadcrumbPath"
+    :current="breadcrumbCurrent"
+  />
   <div
     class="rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-zinc-800"
   >

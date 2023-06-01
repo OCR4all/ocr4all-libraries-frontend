@@ -11,7 +11,7 @@ import DefaultSpinner from "@/components/Layout/utils/DefaultSpinner.vue";
 
 const router = useRouter();
 
-const loading = ref(true)
+const loading = ref(true);
 const isRefetching = ref(false);
 const jobs = ref([]);
 async function refetch() {

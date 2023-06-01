@@ -20,17 +20,23 @@ async function importImages() {
 
 const folioData = await useCustomFetch(`/folio/list/${project}`)
   .post({ identifiers: [] })
-  .json()
-const imageData = []
-for(const folio of folioData.data.value){
-  const imageEntry = {id: folio.id}
-  await useCustomFetch(`/folio/derivative/thumbnail/${project}?id=${folio.id}`).get().blob().then((blob) => {
-    imageEntry["thumbnail"] = useObjectUrl(blob.data.value)
-  })
-  await useCustomFetch(`/folio/derivative/best/${project}?id=${folio.id}`).get().blob().then((blob) => {
-    imageEntry["best"] = useObjectUrl(blob.data.value)
-  })
-  imageData.push(imageEntry)
+  .json();
+const imageData = [];
+for (const folio of folioData.data.value) {
+  const imageEntry = { id: folio.id };
+  await useCustomFetch(`/folio/derivative/thumbnail/${project}?id=${folio.id}`)
+    .get()
+    .blob()
+    .then((blob) => {
+      imageEntry["thumbnail"] = useObjectUrl(blob.data.value);
+    });
+  await useCustomFetch(`/folio/derivative/best/${project}?id=${folio.id}`)
+    .get()
+    .blob()
+    .then((blob) => {
+      imageEntry["best"] = useObjectUrl(blob.data.value);
+    });
+  imageData.push(imageEntry);
 }
 folios.value = [imageData, []];
 </script>
@@ -77,10 +83,7 @@ folios.value = [imageData, []];
               <i class="pi pi-eye"></i>
             </template>
             <template #image>
-              <img
-                :src="slotProps.item.thumbnail"
-                alt="image"
-              />
+              <img :src="slotProps.item.thumbnail" alt="image" />
             </template>
             <template #preview="slotPropsImage">
               <img
