@@ -171,14 +171,20 @@ async function launchWorkflow() {
     <h2
       v-if="isImportingImages"
       class="m-10 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
-    >Images are getting imported!
+    >
+      Images are getting imported!
     </h2>
     <div v-else-if="isWorkflowRunning">
-      <h2 class="m-10 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl">Workflow is running</h2>
-      <h3
-          class="text-center text-lg text-black dark:text-white sm:text-xl md:text-2xl"
+      <h2
+        class="m-10 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
       >
-        You can now leave this page and track the progress in the queue or just wait here for the workflow to finish
+        Workflow is running
+      </h2>
+      <h3
+        class="text-center text-lg text-black dark:text-white sm:text-xl md:text-2xl"
+      >
+        You can now leave this page and track the progress in the queue or just
+        wait here for the workflow to finish
       </h3>
     </div>
     <div class="text-center">

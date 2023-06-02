@@ -20,7 +20,7 @@ export default defineConfig({
   server: {
     host: true,
     strictPort: true,
-    port: 3333
+    port: 3333,
   },
   plugins: [
     vue(),
