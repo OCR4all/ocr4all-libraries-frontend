@@ -18,11 +18,11 @@
     "deps:update": "taze -I major"
   },
   "dependencies": {
-    "@headlessui/vue": "^1.7.13",
+    "@headlessui/vue": "^1.7.14",
     "@heroicons/vue": "^2.0.18",
     "@vee-validate/i18n": "^4.9.6",
     "@vueuse/components": "^10.1.2",
-    "baklavajs": "^2.0.2-beta.3",
+    "baklavajs": "^2.0.2-beta.4",
     "pinia": "2.1.3",
     "primeicons": "^6.0.1",
     "primevue": "^3.29.2",
@@ -65,11 +65,11 @@
     "rollup-plugin-visualizer": "^5.9.0",
     "tailwindcss": "3.3.2",
     "taze": "^0.10.1",
-    "typescript": "5.0.4",
+    "typescript": "5.1.3",
     "unplugin-auto-import": "0.16.4",
     "unplugin-vue-components": "0.25.0",
     "vite": "4.3.9",
-    "vitest": "0.31.3",
+    "vitest": "0.31.4",
     "vue-i18n": "9.2.2",
     "wait-on": "7.0.1"
   }
