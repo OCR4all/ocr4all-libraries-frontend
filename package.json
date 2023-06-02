@@ -1,6 +1,7 @@
 {
   "name": "ocr4all-frontend",
   "version": "0.0.1-alpha",
+  "license": "MIT",
   "scripts": {
     "dev": "vite --port 3333 --open",
     "build": "vite build",
