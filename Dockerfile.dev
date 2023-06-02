@@ -1,0 +1,11 @@
+FROM node:latest
+ENV HOST=0.0.0.0
+
+WORKDIR /app
+COPY package.json ./
+
+RUN yarn
+COPY . .
+
+EXPOSE 3333
+ENTRYPOINT [ "yarn", "dev" ]

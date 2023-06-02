@@ -17,6 +17,11 @@ export default defineConfig({
   define: {
     "process.env": {},
   },
+  server: {
+    host: true,
+    strictPort: true,
+    port: 3333
+  },
   plugins: [
     vue(),
     visualizer(),

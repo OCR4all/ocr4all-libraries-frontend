@@ -60,6 +60,19 @@ To update dependencies
 yarn deps:update
 ```
 
+## Docker
+To use Docker for your development environment
+
+```bash
+docker-compose -f docker-compose.dev.yaml up
+```
+
+To use Docker for your production deployment
+
+```bash
+docker-compose -f docker-compose.production.yaml up
+```
+
 ## Environment Variables
 
 - `VITE_API_URL`: Points to the URL under which the REST API of an OCR4all backend instance is running (e. g. `https://some-domain.com/api/v1.0`)
