@@ -27,24 +27,6 @@ function untangleItems(entries: object[], returnValue: string) {
   }
 }
 
-function replaceNames(name: string) {
-  switch (name) {
-    case "Tesserocr segment":
-      return "ocrd-tesserocr-segment";
-    case "CIS segment":
-      return "ocrd-cis-ocropy-segment";
-    case "CIS binarize":
-      return "ocrd-cis-ocropy-binarize";
-    case "Tesserocr binarize":
-      return "ocrd-tesserocr-binarize";
-    case "Calamari recognize":
-      return "ocrd-calamari-recognize";
-    case "Tesserocr recognize":
-      return "ocrd-tesserocr-recognize";
-    default:
-      return name;
-  }
-}
 function collectNodeParameters(nodeData: any) {
   const parameters = [];
   for (const entry of nodeData.entries) {
@@ -125,7 +107,7 @@ function createNodeType(nodeData: any) {
 
   return defineNode({
     type: nodeData.name,
-    title: replaceNames(nodeData.name),
+    title: nodeData.name,
     inputs: inputs,
     outputs: outputs,
   });
