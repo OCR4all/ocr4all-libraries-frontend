@@ -14,19 +14,19 @@ useCustomFetch(`/project/list`)
   .get()
   .json()
   .then((response) => {
-    projects.value = response.data.value.length;
+    projects.value = `${response.data.value.length}`;
   });
 useCustomFetch(`/workflow/list`)
   .get()
   .json()
   .then((response) => {
-    workflows.value = response.data.value.length;
+    workflows.value = `${response.data.value.length}`;
   });
 useCustomFetch(`/job/scheduler/snapshot/administration`)
   .get()
   .json()
   .then((response) => {
-    jobs.value = response.data.value;
+    jobs.value = `${response.data.value}`;
   });
 
 function startTour() {
@@ -49,7 +49,7 @@ function openSettings() {
 </script>
 <template>
   <div class="space-y-8 pb-8">
-    <div class="grid grid-cols-2 grid-rows-1 gap-8 xl:grid-cols-4">
+    <div class="grid grid-cols-2 grid-rows-1 gap-8 xl:grid-cols-3">
       <StatsCard>
         <template #title> Projects </template>
         <template #value>
@@ -73,10 +73,6 @@ function openSettings() {
             {{ jobs.running.length + jobs.scheduled.length }}
           </div>
         </template>
-      </StatsCard>
-      <StatsCard>
-        <template #title> Users </template>
-        <template #value> 1 </template>
       </StatsCard>
     </div>
     <div class="grid grid-cols-5 grid-rows-1 gap-8 lg:grid-rows-2">
