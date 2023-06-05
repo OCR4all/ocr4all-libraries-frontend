@@ -16,7 +16,7 @@ const isRefetching = ref(false);
 const jobs = ref([]);
 async function refetch() {
   isRefetching.value = true;
-  useCustomFetch(`/job/scheduler/snapshot/administration`)
+  useCustomFetch(`/job/overview/administration`)
     .get()
     .json()
     .then((response) => {

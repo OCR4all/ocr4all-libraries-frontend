@@ -22,11 +22,11 @@ useCustomFetch(`/workflow/list`)
   .then((response) => {
     workflows.value = `${response.data.value.length}`;
   });
-useCustomFetch(`/job/scheduler/snapshot/administration`)
+useCustomFetch(`/job/overview/administration`)
   .get()
   .json()
   .then((response) => {
-    jobs.value = `${response.data.value}`;
+    jobs.value = response.data.value;
   });
 
 function startTour() {
