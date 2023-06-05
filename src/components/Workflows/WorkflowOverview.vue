@@ -28,6 +28,7 @@ const editDialogVisible = ref(false);
 const deleteDialogVisible = ref(false);
 
 const labelTaken = ref(false);
+const originalWorkflowName = ref()
 const workflowMetadata = ref();
 const workflowView = ref();
 
@@ -64,6 +65,7 @@ async function editWorkflow(id) {
   )
     .get()
     .json();
+  originalWorkflowName.value = data.value.metadata.label;
   workflowMetadata.value = data.value.metadata;
   workflowView.value = data.value.view;
   toggleEditDialog();
@@ -82,7 +84,7 @@ async function updateWorkflow() {
   if (
     workflowListData.data.value.filter(
       (entry) => entry.label === workflowMetadata.value.label
-    ).length > 0
+    ).length > 0 && (originalWorkflowName.value != workflowMetadata.value.label)
   ) {
     labelTaken.value = true;
   } else {
