@@ -28,7 +28,7 @@ const editDialogVisible = ref(false);
 const deleteDialogVisible = ref(false);
 
 const labelTaken = ref(false);
-const originalWorkflowName = ref()
+const originalWorkflowName = ref();
 const workflowMetadata = ref();
 const workflowView = ref();
 
@@ -84,7 +84,8 @@ async function updateWorkflow() {
   if (
     workflowListData.data.value.filter(
       (entry) => entry.label === workflowMetadata.value.label
-    ).length > 0 && (originalWorkflowName.value != workflowMetadata.value.label)
+    ).length > 0 &&
+    originalWorkflowName.value != workflowMetadata.value.label
   ) {
     labelTaken.value = true;
   } else {
