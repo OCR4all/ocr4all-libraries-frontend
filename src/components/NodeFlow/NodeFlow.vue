@@ -79,6 +79,8 @@ function newGraph() {
       editor.graph.removeNode(node);
     }
   }
+  addNodeWithCoordinates(baklava, InputNode, 50, 350);
+
   workflowId.value = null;
   workflowName.value = null;
   originalWorkflowName.value = null;
