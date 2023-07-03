@@ -152,22 +152,24 @@ async function removeJob(job) {
         }"
       >
         <template #body="slotProps">
-          <button
-            :disabled="!['running', 'scheduled'].includes(slotProps.data.state)"
-            type="button"
-            class="mr-2 inline-flex items-center rounded-lg bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
-            @click="cancelJob(slotProps.data.id)"
-          >
-            <StopIcon class="h-6 w-6 text-white" />
-          </button>
-          <button
-              :disabled="['running', 'scheduled'].includes(slotProps.data.state)"
-              type="button"
-              class="mr-2 inline-flex items-center rounded-lg bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
-              @click="removeJob(slotProps.data.id)"
-          >
-            <XMarkIcon class="h-6 w-6 text-white" />
-          </button>
+          <span class="space-y-2">
+            <button
+                  :disabled="!['running', 'scheduled'].includes(slotProps.data.state)"
+                  type="button"
+                  class="mr-2 inline-flex items-center rounded-lg bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
+                  @click="cancelJob(slotProps.data.id)"
+              >
+              <StopIcon class="h-6 w-6 text-white" />
+            </button>
+            <button
+                :disabled="['running', 'scheduled'].includes(slotProps.data.state)"
+                type="button"
+                class="mr-2 inline-flex items-center rounded-lg bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
+                @click="removeJob(slotProps.data.id)"
+            >
+              <XMarkIcon class="h-6 w-6 text-white" />
+            </button>
+          </span>
         </template>
       </Column>
       <Column
