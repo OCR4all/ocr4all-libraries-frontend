@@ -102,7 +102,7 @@ const openContextMenu = () => {
 const onContextMenuClick = async (action: string) => {
   switch (action) {
     case "delete":
-      graph.value.removeNode(props.node);
+      if(props.node.title !== "Input") graph.value.removeNode(props.node);
       break;
     case "rename":
       tempName.value = props.node.title;
@@ -149,7 +149,7 @@ onUpdated(onRender);
         <div class="__title-label">
           {{ node.title }}
         </div>
-        <div class="__menu">
+        <div v-show="node.title !== 'Input'" class="__menu">
           <EllipsisVerticalIcon
             class="h-6 w-6 hover:cursor-pointer"
             @click="openContextMenu"

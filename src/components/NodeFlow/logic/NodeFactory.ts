@@ -142,7 +142,21 @@ function constructNodes(nodeData: object[]) {
       id: data.id,
     };
     nodesParameters.push(nodeParameters);
-    if (data.name !== "LAREX launcher")
+    const blacklist = [
+      "LAREX launcher",
+      "ocrd-pagetopdf",
+      "ocrd-tesserocr-fontshape",
+      "ocrd-tesserocr-segment-word",
+      "ocrd-tesserocr-segment-line",
+      "ocrd-tesserocr-segment-region",
+      "ocrd-cis-ocropy-denoise",
+      "ocrd-cis-ocropy-deskew",
+      "ocrd-tesserocr-deskew",
+      "ocrd-olena-binarize",
+      "ocrd-tesserocr-crop",
+      "ocrd-fileformat-transform"
+    ]
+    if (!blacklist.includes(data.name))
       nodes.push({
         node: node,
         category: replaceCategories(data.categories[0]),

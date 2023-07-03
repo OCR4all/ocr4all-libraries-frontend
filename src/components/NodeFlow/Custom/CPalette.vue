@@ -42,12 +42,7 @@ const categories = computed<
       );
 
       if (nodeTypesInCategory.length > 0) {
-        if (category === "default") {
-          categories.push({
-            name: "Input",
-            nodeTypes: Object.fromEntries(nodeTypesInCategory),
-          });
-        } else {
+        if (category !== "default") {
           categories.push({
             name: category,
             nodeTypes: Object.fromEntries(nodeTypesInCategory),
@@ -58,7 +53,6 @@ const categories = computed<
 
     // Hardcode sort order of categories, this should be handled differently in the future (get sort order from backend?)
     const sortOrder = [
-      "Input",
       "Preprocessing",
       "Layout Analysis",
       "Text Recognition",
