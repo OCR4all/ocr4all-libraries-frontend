@@ -8,6 +8,7 @@ import Dialog from "primevue/dialog";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useToast } from "primevue/usetoast";
+import {type} from "os";
 
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
@@ -131,11 +132,24 @@ async function generateSandbox(snapshotData) {
     )
       .post(payload)
       .json();
-    createdTrack.value = Array.from(data.value["snapshot-track"]);
-
-    isGeneratingSandbox.value = true;
-    const startedJob = data.value["job-id"];
-    await checkJob(startedJob);
+    if(error.value){
+      toast.add({
+        severity: "error",
+        summary: "Error",
+        detail: "Couldn't schedule result view",
+        life: 3000,
+      })
+    }else{
+      isGeneratingSandbox.value = true;
+      const startedJob = data.value["job-id"];
+      await checkJob(startedJob);
+      const jobResponse = await useCustomFetch(
+          `job/entity/${startedJob}`
+      )
+          .get()
+          .json()
+      createdTrack.value = jobResponse.data.value.journal.steps["0"]["snapshot-track"]
+    }
   }
   const sandboxData = await useCustomFetch(
     `/sandbox/entity/${project}?id=${sandbox}`
