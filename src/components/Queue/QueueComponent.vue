@@ -1,6 +1,6 @@
 <script setup>
 import { UseTimeAgo } from "@vueuse/components";
-import { ArrowPathIcon, StopIcon } from "@heroicons/vue/24/outline";
+import { ArrowPathIcon, ArchiveBoxXMarkIcon, StopIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
@@ -84,6 +84,14 @@ async function cancelJob(id) {
     });
   });
 }
+
+async function expungeJobs() {
+  await useCustomFetch(`job/scheduler/action/expunge`).then(() => {refetch()})
+}
+
+async function removeJob(job) {
+  await useCustomFetch(`job/remove/${job}`).then(() => {refetch()})
+}
 </script>
 
 <template>
@@ -95,11 +103,11 @@ async function cancelJob(id) {
       v-model:filters="filters"
       :value="jobs"
       paginator
-      filterDisplay="row"
-      :globalFilterFields="['id', 'description', 'state']"
+      filter-display="row"
+      :global-filter-fields="['id', 'description', 'state']"
       :loading="loading"
       :rows="5"
-      :rowsPerPageOptions="[5, 10, 20, 50]"
+      :rows-per-page-options="[5, 10, 20, 50]"
       :pt="{
         header: {
           class: 'rounded-t-xl dark:!bg-zinc-800 dark:!text-white !border-none',
@@ -110,7 +118,7 @@ async function cancelJob(id) {
           class: 'dark:!bg-zinc-700 dark:!text-white !border-none',
         },
       }"
-      tableStyle="min-width: 50rem"
+      table-style="min-width: 50rem"
     >
       <template #empty> Queue is empty... </template>
       <template #header>
@@ -122,6 +130,11 @@ async function cancelJob(id) {
                 :class="{ 'animate-spin': isRefetching }"
                 class="mr-2 inline h-6 w-6 text-gray-800 hover:text-black dark:text-gray-200 dark:hover:text-white"
               />
+            </button>
+            <button @click="expungeJobs">
+                <ArchiveBoxXMarkIcon
+                    class="mr-2 inline h-6 w-6 text-gray-800 hover:text-red-600 dark:text-gray-200 dark:hover:text-red-600"
+                />
             </button>
             <InputText
               v-model="filters['global'].value"
@@ -141,11 +154,19 @@ async function cancelJob(id) {
         <template #body="slotProps">
           <button
             :disabled="!['running', 'scheduled'].includes(slotProps.data.state)"
-            @click="cancelJob(slotProps.data.id)"
             type="button"
             class="mr-2 inline-flex items-center rounded-lg bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
+            @click="cancelJob(slotProps.data.id)"
           >
             <StopIcon class="h-6 w-6 text-white" />
+          </button>
+          <button
+              :disabled="['running', 'scheduled'].includes(slotProps.data.state)"
+              type="button"
+              class="mr-2 inline-flex items-center rounded-lg bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
+              @click="removeJob(slotProps.data.id)"
+          >
+            <XMarkIcon class="h-6 w-6 text-white" />
           </button>
         </template>
       </Column>
@@ -172,8 +193,8 @@ async function cancelJob(id) {
         field="state"
         :sortable="true"
         header="State"
-        :showFilterMenu="false"
-        :filterMenuStyle="{ width: '14rem' }"
+        :show-filter-menu="false"
+        :filter-menu-style="{ width: '14rem' }"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },
@@ -186,11 +207,10 @@ async function cancelJob(id) {
         <template #filter="{ filterModel, filterCallback }">
           <Dropdown
             v-model="filterModel.value"
-            @change="filterCallback()"
-            :options="states"
             placeholder="Select State"
+            :options="states"
             class="p-column-filter"
-            :showClear="true"
+            :show-clear="true"
             :pt="{
               root: {
                 class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
@@ -212,6 +232,7 @@ async function cancelJob(id) {
                   'dark:!bg-zinc-700 dark:hover:!bg-zinc-500 dark:!text-white dark:!border-none',
               },
             }"
+            @change="filterCallback()"
           >
             <template #option="slotProps">
               <Tag
@@ -226,7 +247,7 @@ async function cancelJob(id) {
         field="journal.progress"
         header="Progress"
         sortable
-        :showFilterMatchModes="false"
+        :show-filter-match-modes="false"
         style="min-width: 12rem"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
@@ -237,7 +258,7 @@ async function cancelJob(id) {
         <template #body="slotProps">
           <ProgressBar
             :value="slotProps.data.journal.progress * 100"
-            :showValue="false"
+            :show-value="false"
             style="height: 6px"
           ></ProgressBar>
         </template>
