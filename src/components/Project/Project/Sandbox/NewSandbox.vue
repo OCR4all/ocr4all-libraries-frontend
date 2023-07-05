@@ -25,7 +25,7 @@ const breadcrumbCurrent = { label: "New Result" };
     :current="breadcrumbCurrent"
   />
   <div
-    class="rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-zinc-800"
+    class="rounded-lg bg-white shadow-md dark:border dark:border-gray-700 dark:bg-zinc-800"
   >
     <section id="stepper" class="p-20">
       <div

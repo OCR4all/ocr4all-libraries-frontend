@@ -53,14 +53,6 @@ defineExpose({
       as="div"
       class="fixed inset-0 z-40 lg:hidden"
       @close="toggleSidebarMd(false)"
-      :pt="{
-        root: { class: 'dark:!bg-zinc-800' },
-        header: { class: 'dark:!bg-zinc-800' },
-        headerTitle: { class: 'dark:!text-white' },
-        headerIcons: { class: 'dark:!text-white' },
-        closeButton: { class: 'dark:!text-white' },
-        content: { class: 'dark:!bg-zinc-800' },
-      }"
     >
       <TransitionChild
         enter="transition ease-in-out duration-200 transform"
@@ -72,7 +64,7 @@ defineExpose({
         as="template"
       >
         <div
-          class="relative z-10 flex h-full w-72 flex-col border-r border-gray-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:hidden"
+          class="relative z-10 flex h-full w-72 flex-col border-r border-gray-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:hidden shadow-xl"
         >
           <button
             value="Close sidebar"
@@ -86,7 +78,7 @@ defineExpose({
             <img src="/img/logo.svg" class="h-9 w-48" alt="OCR4all logo" />
           </div>
           <div class="flex-1 overflow-y-auto">
-            <div class="mb-10">
+            <div class="mb-10 mx-2">
               <router-link
                 v-for="(item, index) in mainNavigation"
                 :key="index"
@@ -122,7 +114,7 @@ defineExpose({
   <TransitionRoot
     :show="sidebarLgOpened"
     as="div"
-    class="mx-3 my-8 overflow-y-auto rounded-2xl border-r border-gray-200 bg-white dark:border-zinc-700 dark:bg-zinc-800"
+    class="mx-3 my-8 overflow-y-auto rounded-2xl border-r border-gray-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 shadow-md"
     enter="transition ease-in-out duration-200 transform"
     enter-from="-translate-x-full"
     enter-to="translate-x-0"

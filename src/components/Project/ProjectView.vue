@@ -18,7 +18,7 @@ const breadcrumbCurrent = { label: project };
   <Toast />
   <BreadcrumbNavigation :home="breadcrumbHome" :current="breadcrumbCurrent" />
   <div
-    class="rounded-lg bg-white p-5 shadow dark:border dark:border-gray-700 dark:bg-zinc-800"
+    class="rounded-lg bg-white p-5 shadow-md dark:border dark:border-gray-700 dark:bg-zinc-800"
   >
     <TabView
       :pt="{

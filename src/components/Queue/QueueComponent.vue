@@ -97,7 +97,7 @@ async function removeJob(job) {
 <template>
   <Toast />
   <div
-    class="rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-zinc-800"
+    class="rounded-lg bg-white shadow-md dark:border dark:border-gray-700 dark:bg-zinc-800"
   >
     <DataTable
       v-model:filters="filters"

@@ -60,15 +60,24 @@ function toggleEditDialog() {
 }
 
 async function editWorkflow(id) {
-  const { isFetching, error, data } = await useCustomFetch(
+  const { error, data } = await useCustomFetch(
     `/workflow/pull/${id}`
   )
     .get()
     .json();
-  originalWorkflowName.value = data.value.metadata.label;
-  workflowMetadata.value = data.value.metadata;
-  workflowView.value = data.value.view;
-  toggleEditDialog();
+  if(error.value){
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: "Workflow couldn't be updated",
+      life: 3000,
+    });
+  }else{
+    originalWorkflowName.value = data.value.metadata.label;
+    workflowMetadata.value = data.value.metadata;
+    workflowView.value = data.value.view;
+    toggleEditDialog();
+  }
 }
 
 function toggleDeleteDialog() {
@@ -93,17 +102,26 @@ async function updateWorkflow() {
       label: workflowMetadata.value.label,
       description: workflowMetadata.value.description,
     };
-    const { isFetching, error, data } = await useCustomFetch(
+    const { error } = await useCustomFetch(
       `/workflow/update/${workflowMetadata.value.id}`
     )
       .post(payload)
       .json();
-    toast.add({
-      severity: "success",
-      summary: "Success",
-      detail: "Workflow successfully updated",
-      life: 3000,
-    });
+    if(error.value){
+      toast.add({
+        severity: "error",
+        summary: "Error",
+        detail: "Workflow couldn't be updated",
+        life: 3000,
+      });
+    }else{
+      toast.add({
+        severity: "success",
+        summary: "Success",
+        detail: "Workflow successfully updated",
+        life: 3000,
+      });
+    }
     editDialogVisible.value = false;
     refetch();
   }
@@ -115,7 +133,7 @@ function loadWorkflow(id) {
 }
 
 async function deleteWorkflow() {
-  const { isFetching, error, data } = await useCustomFetch(
+  const { data } = await useCustomFetch(
     `/workflow/remove/${workflowMetadata.value.id}`
   )
     .get()
@@ -136,7 +154,7 @@ async function deleteWorkflow() {
   <div class="card">
     <Toolbar
       :pt="{
-        root: { class: '!rounded-xl !bg-white dark:!bg-zinc-800 !border-none' },
+        root: { class: '!rounded-xl !bg-white dark:!bg-zinc-800 !border-none !shadow-md' },
       }"
       class="mb-4"
     >
@@ -173,7 +191,7 @@ async function deleteWorkflow() {
       :row-hover="true"
       :pt="{
         header: {
-          class: 'rounded-t-xl dark:!bg-zinc-800 dark:!text-white !border-none',
+          class: 'rounded-t-xl dark:!bg-zinc-800 dark:!text-white !border-none !shadow-md',
         },
         wrapper: { class: 'dark:!bg-zinc-700 dark:!text-white !border-none' },
         row: { class: 'dark:!bg-zinc-700 dark:!text-white !border-none' },

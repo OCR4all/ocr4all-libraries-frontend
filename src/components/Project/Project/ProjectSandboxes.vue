@@ -89,7 +89,7 @@ async function removeResults() {
   <Toolbar
     class="mb-4"
     :pt="{
-      root: { class: '!rounded-xl !bg-white dark:!bg-zinc-700 !border-none' },
+      root: { class: '!rounded-xl !bg-white dark:!bg-zinc-700 !border-none !shadow-md' },
     }"
   >
     <template #start>
@@ -112,7 +112,7 @@ async function removeResults() {
     :globalFilterFields="['name', 'description', 'state']"
     :pt="{
       header: {
-        class: 'rounded-t-xl dark:!bg-zinc-700 dark:!text-white !border-none',
+        class: 'rounded-t-xl dark:!bg-zinc-700 dark:!text-white !border-none !shadow-md',
       },
       wrapper: { class: 'dark:!bg-zinc-600 dark:!text-white !border-none' },
       row: { class: 'dark:!bg-zinc-600 dark:!text-white !border-none' },

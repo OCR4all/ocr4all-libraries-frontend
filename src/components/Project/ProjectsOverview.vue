@@ -59,7 +59,7 @@ const states = ref(["active", "closed", "blocked"]);
   <div class="card">
     <Toolbar
       :pt="{
-        root: { class: '!rounded-xl !bg-white dark:!bg-zinc-800 !border-none' },
+        root: { class: '!rounded-xl !bg-white dark:!bg-zinc-800 !border-none !shadow-md' },
       }"
       class="mb-4"
     >
@@ -105,7 +105,7 @@ const states = ref(["active", "closed", "blocked"]);
       :row-hover="true"
       :pt="{
         header: {
-          class: 'rounded-t-xl dark:!bg-zinc-800 dark:!text-white !border-none',
+          class: 'rounded-t-xl dark:!bg-zinc-800 dark:!text-white !border-none !shadow-md',
         },
         wrapper: { class: 'dark:!bg-zinc-700 dark:!text-white !border-none' },
         row: { class: 'dark:!bg-zinc-700 dark:!text-white !border-none' },

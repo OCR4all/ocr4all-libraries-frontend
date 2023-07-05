@@ -222,7 +222,7 @@ const breadcrumbCurrent = { label: sandbox };
   />
   <Toast />
   <div
-    class="rounded-lg bg-white p-5 shadow dark:border dark:border-gray-700 dark:bg-zinc-800"
+    class="rounded-lg bg-white p-5 shadow-md dark:border dark:border-gray-700 dark:bg-zinc-800"
   >
     <section v-if="!isGeneratingSandbox && !isReady">
       <h2

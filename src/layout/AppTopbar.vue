@@ -6,7 +6,7 @@ const authStore = useAuthStore();
 
 <template>
   <nav
-    class="flex h-16 justify-between space-x-6 border-b border-gray-200 bg-white px-3 py-3 dark:border-zinc-700 dark:bg-zinc-800 md:space-x-6 md:px-6"
+    class="flex h-16 justify-between space-x-6 border-b border-gray-200 bg-white px-3 py-3 dark:border-zinc-700 dark:bg-zinc-800 md:space-x-6 md:px-6 z-20 shadow-md"
   >
     <div class="ml-2 flex flex-1">
       <img src="/img/logo.svg" class="h-10 w-10" alt="OCR4all logo" />

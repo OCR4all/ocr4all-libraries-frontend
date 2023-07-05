@@ -187,7 +187,7 @@ function zoomOut() {
   <Toast />
   <EditorComponent
     id="editor"
-    class="rounded-xl shadow-xl"
+    class="rounded-xl shadow-md"
     :view-model="baklava"
   >
     <template #toolbar>
