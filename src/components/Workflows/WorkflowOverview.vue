@@ -272,7 +272,7 @@ async function deleteWorkflow() {
           headerTitle: { class: 'dark:!text-white !border-none' },
           bodyCell: { class: 'dark:!border-zinc-600' },
         }"
-        >>
+        >
         <template #body="slotProps">
           <UseTimeAgo
             v-slot="{ timeAgo }"
@@ -296,7 +296,7 @@ async function deleteWorkflow() {
           <div class="space-y-2">
             <button
               type="button"
-              class="mr-2 inline-flex items-center rounded-lg bg-green-600 p-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+              class="mr-2 inline-flex items-center rounded-lg bg-green-600 p-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-100 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
               @click="editWorkflow(slotProps.data.id)"
             >
               <PencilIcon class="h-6 w-6 text-white" />
