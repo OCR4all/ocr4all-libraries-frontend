@@ -86,11 +86,25 @@ async function cancelJob(id) {
 }
 
 async function expungeJobs() {
-  await useCustomFetch(`job/scheduler/action/expunge`).then(() => {refetch()})
+  useCustomFetch(`job/scheduler/action/expunge`).then(() => {refetch()}).then(() => {
+    toast.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Job queue cleared",
+      life: 3000,
+    });
+  })
 }
 
 async function removeJob(job) {
-  await useCustomFetch(`job/remove/${job}`).then(() => {refetch()})
+  useCustomFetch(`job/remove/${job}`).then(() => {refetch()}).then(() => {
+    toast.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Job removed",
+      life: 3000,
+    });
+  })
 }
 </script>
 
