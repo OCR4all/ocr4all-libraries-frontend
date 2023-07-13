@@ -157,9 +157,10 @@ async function generateSandbox(snapshotData) {
     .get()
     .json();
 
+  /* Very ugly hack that should be removed when the new LAREX version is available */
   sandboxHome.value = sandboxData.data.value["snapshot-synopsis"][
     "home"
-  ].replace("/home/ocr4all/ocr4all/workspace/projects/", "/home/books/");
+  ].replace(import.meta.env.VITE_LAREX_LOCATION, "/home/books/");
   const fileMap = {};
   const mimeMap = {};
 
