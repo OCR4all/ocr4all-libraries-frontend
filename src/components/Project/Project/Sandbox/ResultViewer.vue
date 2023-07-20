@@ -334,7 +334,7 @@ const breadcrumbCurrent = { label: sandbox };
       </h2>
       <form
         id="larexForm"
-        action="https://larex-legacy.zpd.wiki/Larex/directLibrary"
+        :action="import.meta.env.VITE_LAREX_LOCATION"
         method="POST"
         target="_blank"
       >
