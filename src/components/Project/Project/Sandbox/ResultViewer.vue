@@ -8,13 +8,14 @@ import Dialog from "primevue/dialog";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useToast } from "primevue/usetoast";
-import {type} from "os";
 
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
 const sandbox = router.currentRoute.value.params.sandbox;
 
 const toast = useToast();
+
+const larexLocation = import.meta.env.VITE_LAREX_LOCATION
 
 const isGeneratingSandbox = ref(false);
 const isReady = ref(false);
@@ -160,7 +161,7 @@ async function generateSandbox(snapshotData) {
   /* Very ugly hack that should be removed when the new LAREX version is available */
   sandboxHome.value = sandboxData.data.value["snapshot-synopsis"][
     "home"
-  ].replace(import.meta.env.VITE_LAREX_LOCATION, "/home/books/");
+  ].replace(larexLocation, "/home/books/");
   const fileMap = {};
   const mimeMap = {};
 
@@ -334,7 +335,7 @@ const breadcrumbCurrent = { label: sandbox };
       </h2>
       <form
         id="larexForm"
-        :action="import.meta.env.VITE_LAREX_LOCATION"
+        :action="larexLocation"
         method="POST"
         target="_blank"
       >
