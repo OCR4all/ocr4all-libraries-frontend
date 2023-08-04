@@ -16,6 +16,7 @@ const sandbox = router.currentRoute.value.params.sandbox;
 const toast = useToast();
 
 const larexLocation = import.meta.env.VITE_LAREX_LOCATION
+const larexURL = import.meta.env.VITE_LAREX_URL
 
 const isGeneratingSandbox = ref(false);
 const isReady = ref(false);
@@ -335,7 +336,7 @@ const breadcrumbCurrent = { label: sandbox };
       </h2>
       <form
         id="larexForm"
-        :action="larexLocation"
+        :action="larexURL"
         method="POST"
         target="_blank"
       >
