@@ -21,11 +21,11 @@ const sidebarMdOpened = ref(false);
 const sidebarLgOpened = ref(true);
 
 const mainNavigation = [
-  { to: "/", label: "Dashboard", icon: HomeIcon },
-  { to: "/project", label: "Projects", icon: Squares2X2Icon },
-  { to: "/workflows", label: "Workflows", icon: Square3Stack3DIcon },
-  { to: "/nodeflow", label: "NodeFlow", icon: CubeTransparentIcon },
-  { to: "/queue", label: "Queue", icon: QueueListIcon },
+  { to: "/", label: "nav.sidebar.links.dashboard", icon: HomeIcon },
+  { to: "/project", label: "nav.sidebar.links.projects", icon: Squares2X2Icon },
+  { to: "/workflows", label: "nav.sidebar.links.workflows", icon: Square3Stack3DIcon },
+  { to: "/nodeflow", label: "nav.sidebar.links.nodeflow", icon: CubeTransparentIcon },
+  { to: "/queue", label: "nav.sidebar.links.queue", icon: QueueListIcon },
 ];
 
 function toggleSidebarMd(val: boolean) {
@@ -89,7 +89,7 @@ defineExpose({
                   :is="item.icon"
                   class="mr-2 h-5 w-5 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-zinc-700"
                 />
-                {{ item.label }}
+                {{ $t(item.label) }}
               </router-link>
             </div>
           </div>
@@ -128,11 +128,10 @@ defineExpose({
           v-for="(item, index) in mainNavigation"
           :key="index"
           :to="item.to"
-          :disabled="item.disabled"
           class="group flex items-center rounded-lg p-2 px-6 py-2.5 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-zinc-700"
         >
           <component :is="item.icon" class="mr-2 h-5 w-5" />
-          {{ item.label }}
+          {{ $t(item.label) }}
         </router-link>
         <!-- CTA -->
         <div
@@ -144,7 +143,7 @@ defineExpose({
           <div class="mb-3 flex items-center">
             <span
               class="mr-2 rounded bg-orange-100 px-2.5 py-0.5 text-sm font-semibold text-orange-800 dark:bg-orange-200 dark:text-orange-900"
-              >Alpha</span
+              >{{ $t("nav.sidebar.cta.header") }}</span
             >
             <button
               type="button"
@@ -168,9 +167,7 @@ defineExpose({
             </button>
           </div>
           <p class="mb-3 text-sm text-blue-800 dark:text-blue-400">
-            This version of OCR4all is an early alpha release of the software.
-            Consequently, there may still be some bugs and many features are yet
-            to come.
+            {{ $t("nav.sidebar.cta.content") }}
           </p>
         </div>
       </div>

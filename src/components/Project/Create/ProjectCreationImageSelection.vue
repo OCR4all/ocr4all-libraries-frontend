@@ -32,7 +32,7 @@ async function importFromExchange() {
     <h2
       class="mb-2 text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
     >
-      Import Images
+      {{ $t("pages.projects.new.components.images.directive") }}
     </h2>
     <div class="flex">
       <button
@@ -41,7 +41,7 @@ async function importFromExchange() {
         class="mr-2 inline-flex items-center rounded-lg bg-blue-700 px-8 py-5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
         <FolderPlusIcon class="mr-2 h-5 w-5" />
-        Exchange
+        {{ $t("pages.projects.new.components.images.buttons.exchange") }}
       </button>
       <button
         disabled
@@ -49,7 +49,7 @@ async function importFromExchange() {
         class="mr-2 inline-flex items-center rounded-lg bg-blue-700 px-8 py-5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:bg-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:bg-blue-400"
       >
         <CloudArrowUpIcon class="mr-2 h-5 w-5" />
-        Upload
+        {{ $t("pages.projects.new.components.images.buttons.upload") }}
       </button>
     </div>
   </div>
@@ -62,7 +62,7 @@ async function importFromExchange() {
         class="inline-block rounded-lg bg-gray-400 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-gray-300 transition duration-100 hover:bg-gray-600 focus-visible:ring active:bg-gray-700 md:text-base"
         @click="router.push('/project/overview')"
       >
-        Complete
+        {{ $t("pages.projects.new.components.images.buttons.complete") }}
       </button>
     </div>
   </div>

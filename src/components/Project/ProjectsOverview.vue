@@ -70,7 +70,7 @@ const states = ref(["active", "closed", "blocked"]);
             class="rounded-lg bg-blue-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             @click="router.push('/project/new')"
           >
-            New
+            {{ $t("pages.projects.overview.toolbar.new") }}
           </button>
           <button
             disabled
@@ -78,7 +78,7 @@ const states = ref(["active", "closed", "blocked"]);
             class="rounded-lg bg-blue-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:bg-blue-400 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:bg-blue-400"
             @click="router.push('/project/import')"
           >
-            Import
+            {{ $t("pages.projects.overview.toolbar.import") }}
           </button>
         </div>
       </template>
@@ -119,22 +119,22 @@ const states = ref(["active", "closed", "blocked"]);
     >
       <template #header>
         <div class="flex justify-between">
-          <h2 class="my-4 text-xl">Project Overview</h2>
+          <h2 class="my-4 text-xl">{{ $t("pages.projects.overview.table.header") }}</h2>
           <span class="p-input-icon-left ml-10">
             <InputText
               v-model="filters['global'].value"
-              placeholder="Search..."
+              :placeholder="$t('pages.projects.overview.table.search.placeholder')"
             />
           </span>
         </div>
       </template>
-      <template #empty> No projects found. </template>
+      <template #empty> {{ $t("pages.projects.overview.table.empty") }} </template>
       <template #loading>
         <DefaultSpinner />
       </template>
       <Column
         :exportable="false"
-        header="Open"
+        :header="$t('pages.projects.overview.table.columns.open')"
         style="min-width: 8rem"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
@@ -154,7 +154,7 @@ const states = ref(["active", "closed", "blocked"]);
       </Column>
       <Column
         field="name"
-        header="Project"
+        :header="$t('pages.projects.overview.table.columns.project')"
         :sortable="true"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
@@ -164,7 +164,7 @@ const states = ref(["active", "closed", "blocked"]);
       ></Column>
       <Column
         field="description"
-        header="Description"
+        :header="$t('pages.projects.overview.table.columns.description')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },
@@ -177,7 +177,7 @@ const states = ref(["active", "closed", "blocked"]);
       </Column>
       <Column
         field="state"
-        header="State"
+        :header="$t('pages.projects.overview.table.columns.state')"
         :showFilterMenu="false"
         :filterMenuStyle="{ width: '14rem' }"
         :pt="{
@@ -230,7 +230,7 @@ const states = ref(["active", "closed", "blocked"]);
         </template>
       </Column>
       <Column
-        header="Keywords"
+          :header="$t('pages.projects.overview.table.columns.keywords')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },
@@ -248,7 +248,7 @@ const states = ref(["active", "closed", "blocked"]);
       </Column>
       <Column
         field="tracking.created"
-        header="Created"
+        :header="$t('pages.projects.overview.table.columns.created')"
         :sortable="true"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
@@ -267,7 +267,7 @@ const states = ref(["active", "closed", "blocked"]);
       </Column>
       <Column
         field="tracking.updated"
-        header="Last Updated"
+        :header="$t('pages.projects.overview.table.columns.last-updated')"
         :sortable="true"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },

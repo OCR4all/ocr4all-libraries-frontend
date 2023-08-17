@@ -1,8 +1,185 @@
 {
-  "dashboard": {
-    "heading": {
-      "welcome": "Welcome to",
-      "tool-name": "OCR4all"
+  "nav": {
+    "sidebar": {
+      "links": {
+        "dashboard": "Dashboard",
+        "projects": "Projects",
+        "workflows": "Workflows",
+        "nodeflow": "NodeFlow",
+        "queue": "Queue"
+      },
+      "cta": {
+        "header": "Alpha",
+        "content": "This version of OCR4all is an early alpha release of the software. Consequently, there may still be some bugs and many features are yet to come."
+      }
+    }
+  },
+  "pages": {
+    "dashboard": {
+      "stats": {
+        "projects": "Projects",
+        "workflows": "Workflows",
+        "jobs": "Queued Jobs"
+      },
+      "cards": {
+        "documentation": {
+          "title": "Documentation"
+        },
+        "settings": {
+          "title": "Settings"
+        },
+        "tour": {
+          "title": "Start the interactive Tour",
+          "subtitle": "Explore OCR4all"
+        },
+        "nodeflow": {
+          "title": "Build your own Workflows",
+          "subtitle": "NodeFlow editor"
+        }
+      },
+      "components": {
+        "recent-projects": {
+          "header": "Recent Projects",
+          "empty": "No projects found.",
+          "columns": {
+            "project": "Project",
+            "state": "State",
+            "last-updated": "Last Updated"
+          }
+        },
+        "queue": {
+          "header": "Job Queue",
+          "empty": "No jobs found.",
+          "columns": {
+            "id": "ID",
+            "state": "State",
+            "queued": "Queued"
+          }
+        },
+        "workflows": {
+          "header": "Available Workflows",
+          "empty": "No workflows found.",
+          "columns": {
+            "name": "Name",
+            "description": "Description",
+            "updated": "Updated"
+          }
+        }
+      }
+    },
+    "projects": {
+      "overview": {
+        "toolbar": {
+          "new": "New Project",
+          "import": "Import Project"
+        },
+        "table": {
+          "header": "Project Overview",
+          "empty": "No projects founds",
+          "search": {
+            "placeholder": "Search..."
+          },
+          "columns": {
+            "open": "Open",
+            "project": "Project",
+            "description": "Description",
+            "state": "State",
+            "keywords": "Keywords",
+            "created": "Created",
+            "last-updated": "Last Updated"
+          }
+        }
+      },
+      "new": {
+        "stepper": {
+          "name": "Name",
+          "metadata": "Metadata",
+          "images": "Images"
+        },
+        "components": {
+          "name": {
+            "directive": "Enter a project name",
+            "warning": {
+              "no-name": "A project name is necessary",
+              "name-taken": "A project with this name already exists"
+            },
+            "buttons": {
+              "create": "Create"
+            }
+          },
+          "metadata": {
+            "directive": "Enter additional information",
+            "form": {
+              "name": "Name",
+              "id": "ID",
+              "keywords": "Keywords",
+              "description": "Description"
+            },
+            "buttons": {
+              "skip": "Skip",
+              "save": "Save"
+            }
+          },
+          "images": {
+            "directive": "Import Images",
+            "buttons": {
+              "exchange": "Exchange",
+              "upload": "Upload",
+              "complete": "Complete"
+            }
+          }
+        }
+      },
+      "project": {
+        "results": {
+
+        },
+        "images": {
+          "no-images": "No images available"
+        },
+        "information": {
+          "form": {
+            "name": "Name",
+            "id": "ID",
+            "keywords": "Keywords",
+            "state": "State",
+            "description": "Description"
+          },
+          "buttons": {
+            "update": "Update",
+            "delete": "Delete Project"
+          },
+          "modals": {
+            "delete": {
+              "header": "Delete Project",
+              "content": "Do you really want to delete this project and all associated files?",
+              "buttons": {
+                "cancel": "Cancel",
+                "delete": "Delete"
+              }
+            }
+          }
+        }
+      }
+    },
+    "workflows": {
+      "toolbar": {
+        "new": "New Workflow"
+      },
+      "table": {
+        "heading": "Workflow Overview",
+        "empty": "No workflows found",
+        "search": {
+          "placeholder": "Search..."
+        },
+        "columns": {
+          "open": "Open",
+          "name": "Name",
+          "description": "Description",
+          "updated": "Updated",
+          "actions": "Actions"
+        }
+      }
     }
   }
 }

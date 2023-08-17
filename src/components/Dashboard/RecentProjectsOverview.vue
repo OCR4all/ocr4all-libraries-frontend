@@ -63,14 +63,14 @@ function getStateSeverity(state) {
         },
       }"
     >
-      <template #empty>No projects found.</template>
+      <template #empty> {{ $t("pages.dashboard.components.recent-projects.empty") }} </template>
       <template #loading>
         <DefaultSpinner />
       </template>
       <template #header>
         <div class="flex justify-between">
           <div>
-            <p>Recent Projects</p>
+            <p>  {{ $t("pages.dashboard.components.recent-projects.header") }} </p>
           </div>
           <div class="flex justify-end">
             <button :disabled="isRefetching === true" @click="refetch">
@@ -89,7 +89,7 @@ function getStateSeverity(state) {
       </template>
       <Column
         field="name"
-        header="Project"
+        :header="$t('pages.dashboard.components.recent-projects.columns.project')"
         :sortable="true"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
@@ -99,7 +99,7 @@ function getStateSeverity(state) {
         >></Column
       >
       <Column
-        header="State"
+          :header="$t('pages.dashboard.components.recent-projects.columns.state')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },
@@ -115,7 +115,7 @@ function getStateSeverity(state) {
       </Column>
       <Column
         field="tracking.updated"
-        header="Last Updated"
+        :header="$t('pages.dashboard.components.recent-projects.columns.last-updated')"
         :sortable="true"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },

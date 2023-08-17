@@ -108,7 +108,7 @@ const prev = () => {
       v-else
       class="flex flex-col items-center justify-center dark:text-gray-100"
     >
-      No images available
+      {{ $t("pages.projects.project.images.no-images") }}
     </div>
   </div>
 </template>

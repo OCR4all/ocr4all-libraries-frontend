@@ -75,14 +75,14 @@ const getSeverity = (entry) => {
         },
       }"
     >
-      <template #empty>No jobs found. </template>
+      <template #empty> {{ $t("pages.dashboard.components.queue.empty") }} </template>
       <template #loading>
         <DefaultSpinner />
       </template>
       <template #header>
         <div class="flex justify-between">
           <div>
-            <p>Job Queue</p>
+            <p> {{ $t("pages.dashboard.components.queue.header") }} </p>
           </div>
           <div class="flex justify-end">
             <button :disabled="isRefetching === true" @click="refetch">
@@ -101,7 +101,7 @@ const getSeverity = (entry) => {
       </template>
       <Column
         field="id"
-        header="ID"
+        :header="$t('pages.dashboard.components.queue.columns.id')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },
@@ -110,7 +110,7 @@ const getSeverity = (entry) => {
       ></Column>
       <Column
         field="state"
-        header="State"
+        :header="$t('pages.dashboard.components.queue.columns.state')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },
@@ -131,7 +131,7 @@ const getSeverity = (entry) => {
           headerTitle: { class: 'dark:!text-white !border-none' },
           bodyCell: { class: 'dark:!border-zinc-600' },
         }"
-        header="Queued"
+        :header="$t('pages.dashboard.components.queue.columns.queued')"
       >
         <template #body="slotProps">
           <UseTimeAgo
