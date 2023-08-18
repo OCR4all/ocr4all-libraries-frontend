@@ -196,7 +196,7 @@ onUpdated(onRender);
               :class="open ? 'rotate-90 transform' : ''"
               class="h-5 w-5 text-center text-gray-800 dark:text-gray-200"
             />
-            <span>Settings</span>
+            <span>{{ $t("pages.nodeflow.node.settings") }}</span>
           </div>
         </DisclosureButton>
         <DisclosurePanel class="px-4 pb-2 pt-4 text-sm">

@@ -180,6 +180,35 @@
           "actions": "Actions"
         }
       }
+    },
+    "nodeflow": {
+      "sidebar": {
+        "description": "Description",
+        "parameters": "Parameters"
+      },
+      "palette": {
+        "processors": "Processors"
+      },
+      "node": {
+        "settings": "Settings"
+      }
+    },
+    "queue": {
+      "table": {
+        "header": "Job Queue",
+        "empty": "Queue is empty...",
+        "search": {
+          "placeholder": "Search..."
+        },
+        "columns": {
+          "actions": "Actions",
+          "id": "ID",
+          "description": "Description",
+          "state": "State",
+          "progress": "Progress",
+          "created": "Created"
+        }
+      }
     }
   }
 }

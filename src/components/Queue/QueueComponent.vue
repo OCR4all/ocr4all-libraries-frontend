@@ -134,10 +134,10 @@ async function removeJob(job) {
       }"
       table-style="min-width: 50rem"
     >
-      <template #empty> Queue is empty... </template>
+      <template #empty> {{ $t("pages.queue.table.empty") }} </template>
       <template #header>
         <div class="flex justify-between">
-          <h2 class="my-4 text-xl">Job Queue</h2>
+          <h2 class="my-4 text-xl"> {{ $t("pages.queue.table.header") }} </h2>
           <span class="p-input-icon-left ml-10 space-x-4">
             <button :disabled="isRefetching === true" @click="refetch">
               <ArrowPathIcon
@@ -152,13 +152,13 @@ async function removeJob(job) {
             </button>
             <InputText
               v-model="filters['global'].value"
-              placeholder="Search..."
+              :placeholder="$t('pages.queue.table.search.placeholder')"
             />
           </span>
         </div>
       </template>
       <Column
-        header="Actions"
+        :header="$t('pages.queue.table.columns.actions')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },
@@ -189,7 +189,7 @@ async function removeJob(job) {
       <Column
         field="id"
         :sortable="true"
-        header="ID"
+        :header="$t('pages.queue.table.columns.id')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },
@@ -198,7 +198,7 @@ async function removeJob(job) {
       ></Column>
       <Column
         field="description"
-        header="Description"
+        :header="$t('pages.queue.table.columns.description')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },
@@ -261,7 +261,7 @@ async function removeJob(job) {
       </Column>
       <Column
         field="journal.progress"
-        header="Progress"
+        :header="$t('pages.queue.table.columns.progress')"
         sortable
         :show-filter-match-modes="false"
         style="min-width: 12rem"
@@ -282,7 +282,7 @@ async function removeJob(job) {
       <Column
         :sortable="true"
         field="created"
-        header="Created"
+        :header="$t('pages.queue.table.columns.created')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },

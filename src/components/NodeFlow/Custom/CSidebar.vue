@@ -62,7 +62,7 @@ const onMouseMove = (event: MouseEvent) => {
       <h2
         class="my-5 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
       >
-        Description
+        {{ $t("pages.nodeflow.sidebar.description") }}
       </h2>
       <p class="text-center text-lg text-black dark:text-gray-200">
         {{ store.sidebarDescriptions["processor"] }}
@@ -71,7 +71,7 @@ const onMouseMove = (event: MouseEvent) => {
         <h3
           class="my-5 text-center text-lg font-bold text-black dark:text-white sm:text-xl md:text-2xl"
         >
-          Parameters
+          {{ $t("pages.nodeflow.sidebar.parameters") }}
         </h3>
         <div class="flex flex-col space-y-2">
           <Disclosure
