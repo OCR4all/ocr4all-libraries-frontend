@@ -153,7 +153,7 @@ function openSettings() {
             />
           </template>
           <template #subtitle> {{ $t("pages.dashboard.cards.nodeflow.subtitle") }} </template>
-          <template #title> {{ $t("pages.dashboard.cards.nodeflow.subtitle") }} </template>
+          <template #title> {{ $t("pages.dashboard.cards.nodeflow.title") }} </template>
         </NodeFlowCard>
       </div>
     </div>
