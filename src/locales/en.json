@@ -14,6 +14,14 @@
       }
     }
   },
+  "settings": {
+    "username": "Username",
+    "language": "Language",
+    "buttons": {
+      "save": "Save",
+      "close": "Close"
+    }
+  },
   "pages": {
     "dashboard": {
       "stats": {
@@ -64,6 +72,16 @@
             "description": "Description",
             "updated": "Updated"
           }
+        }
+      },
+      "toasts": {
+        "settings": {
+          "summary": "Info",
+          "detail": "Settings not available yet"
+        },
+        "tour": {
+          "summary": "Info",
+          "detail": "Interactive tour not availble yet"
         }
       }
     },
@@ -149,6 +167,14 @@
             "update": "Update",
             "delete": "Delete Project"
           },
+          "toasts": {
+            "update": {
+              "success": {
+                "summary": "Success",
+                "detail": "Data updated"
+              }
+            }
+          },
           "modals": {
             "delete": {
               "header": "Delete Project",
@@ -158,6 +184,94 @@
                 "delete": "Delete"
               }
             }
+          }
+        }
+      },
+      "sandbox": {
+        "results": {
+          "toolbar": {
+            "new": "New Result"
+          },
+          "table": {
+            "header": "Result Overview",
+            "empty": "No results yet",
+            "search": {
+              "placeholder": "Search..."
+            },
+            "columns": {
+              "open": "Open",
+              "name": "Name",
+              "description": "Description",
+              "state": "State",
+              "updated": "Updated",
+              "actions": "Actions"
+            }
+          },
+          "modals": {
+            "remove-results": {
+              "header": "Remove Results",
+              "content": "Do you really want to delete these results?",
+              "buttons": {
+                "cancel": {
+                  "tooltip": "Cancel removal",
+                  "text": "Cancel"
+                },
+                "delete": {
+                  "tooltip": "Delete Sandbox",
+                  "text": "Delete"
+                }
+              }
+            }
+          },
+          "toasts": {
+            "remove-results": {
+              "success": {
+                "summary": "Success",
+                "detail": "Sandbox successfully removed"
+              }
+            }
+          }
+        },
+        "images": {
+          "heading": "Select Images",
+          "directive": "Choose which images of the project should get used"
+        },
+        "workflow": {
+          "heading": "Select a workflow",
+          "directive": "Select which workflow should be used to generate results",
+          "importing-images": "Images are getting imported!",
+          "running-workflows": {
+            "heading": "Workflow is running",
+            "content": "You can now leave this page and track the progress in the queue or just wait here for the workflow to finish"
+          },
+          "workflow-finished": "Workflow finished!",
+          "buttons": {
+            "inspect-results": "Inspect Result"
+          }
+        }
+      },
+      "result-viewer": {
+        "overview": {
+          "heading": "Result Viewer",
+          "toasts": {
+            "remove-snapshot": {
+              "success": {
+                "summary": "Success",
+                "detail": "Snapshot removed"
+              }
+            },
+            "schedule-result-view": {
+              "error": {
+                "summary": "Error",
+                "detail": "Couldn't schedule result view"
+              }
+            }
+          },
+          "generation": {
+            "heading": "Preparing Result Viewing"
+          },
+          "results-ready": {
+            "heading": "Results are ready to be viewed in LAREX"
           }
         }
       }
@@ -179,6 +293,28 @@
           "updated": "Updated",
           "actions": "Actions"
         }
+      },
+      "toasts": {
+        "update": {
+          "error": {
+            "summary": "Error",
+            "detail": "Workflow couldn't be updated"
+          },
+          "success": {
+            "summary": "Success",
+            "detail": "Workflow successfully updated"
+          }
+        },
+        "remove": {
+          "error": {
+            "summary": "Error",
+            "detail": "Workflow couldn't be removed"
+          },
+          "success": {
+            "summary": "Success",
+            "detail": "Workflow successfully removed"
+          }
+        }
       }
     },
     "nodeflow": {
@@ -191,6 +327,24 @@
       },
       "node": {
         "settings": "Settings"
+      },
+      "toasts": {
+        "save": {
+          "success": {
+            "summary": "Success",
+            "detail": "Workflow was saved"
+          }
+        },
+        "load": {
+          "success": {
+            "summary": "Success",
+            "detail": "Workflows successfully loaded"
+          },
+          "error": {
+            "summary": "Error",
+            "detail": "Couldn't load workflow"
+          }
+        }
       }
     },
     "queue": {
@@ -207,6 +361,36 @@
           "state": "State",
           "progress": "Progress",
           "created": "Created"
+        },
+        "toasts": {
+          "cancel": {
+            "success": {
+              "summary": "Success",
+              "detail": "Job canceled"
+            }
+          },
+          "expunge": {
+            "success": {
+              "summary": "Success",
+              "detail": "Job queue cleared"
+            }
+          },
+          "remove": {
+            "success": {
+              "summary": "Success",
+              "detail": "Job removed"
+            }
+          }
+        }
+      }
+    },
+    "login": {
+      "toasts": {
+        "login": {
+          "error": {
+            "summary": "Error",
+            "detail": "Wrong credentials"
+          }
         }
       }
     }

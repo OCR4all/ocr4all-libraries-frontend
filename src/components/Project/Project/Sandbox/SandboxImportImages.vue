@@ -46,12 +46,12 @@ folios.value = [imageData, []];
     <h2
       class="mb-2 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
     >
-      Select Images
+      {{ $t("pages.projects.sandbox.images.heading") }}
     </h2>
     <h2
       class="mb-8 text-center text-lg font-bold text-gray-700 dark:text-gray-200 sm:text-lg md:text-lg"
     >
-      Choose which images of the project should get used
+      {{ $t("pages.projects.sandbox.images.directive") }}
     </h2>
     <PickList
       v-model="folios"

@@ -9,6 +9,9 @@ import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
+import {useI18n} from "vue-i18n";
+const { t } = useI18n();
+
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
 const router = useRouter();
@@ -41,8 +44,8 @@ async function update() {
     .json();
   toast.add({
     severity: "success",
-    summary: "Success",
-    detail: "Data updated",
+    summary: t("pages.projects.project.toasts.update.success.summary"),
+    detail: t("pages.projects.project.toasts.update.success.detail"),
     life: 3000,
   });
 }

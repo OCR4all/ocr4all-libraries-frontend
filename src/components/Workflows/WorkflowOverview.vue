@@ -14,6 +14,9 @@ import InlineMessage from "primevue/inlinemessage";
 import Textarea from "primevue/textarea";
 import { FilterMatchMode } from "primevue/api";
 
+import {useI18n} from "vue-i18n";
+const { t } = useI18n();
+
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
@@ -68,8 +71,8 @@ async function editWorkflow(id) {
   if(error.value){
     toast.add({
       severity: "error",
-      summary: "Error",
-      detail: "Workflow couldn't be updated",
+      summary: t("pages.workflows.toasts.update.error.summary"),
+      detail: t("pages.workflows.toasts.update.error.detail"),
       life: 3000,
     });
   }else{
@@ -110,15 +113,15 @@ async function updateWorkflow() {
     if(error.value){
       toast.add({
         severity: "error",
-        summary: "Error",
-        detail: "Workflow couldn't be updated",
+        summary: t("pages.workflows.toasts.update.error.summary"),
+        detail: t("pages.workflows.toasts.update.error.detail"),
         life: 3000,
       });
     }else{
       toast.add({
         severity: "success",
-        summary: "Success",
-        detail: "Workflow successfully updated",
+        summary: t("pages.workflows.toasts.update.success.summary"),
+        detail: t("pages.workflows.toasts.update.success.detail"),
         life: 3000,
       });
     }
@@ -142,8 +145,8 @@ async function deleteWorkflow() {
   toggleEditDialog();
   toast.add({
     severity: "success",
-    summary: "Success",
-    detail: "Workflow successfully removed",
+    summary: t("pages.workflows.toasts.remove.success.summary"),
+    detail: t("pages.workflows.toasts.remove.success.detail"),
     life: 3000,
   });
   refetch();

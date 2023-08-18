@@ -5,6 +5,8 @@ import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
+import {useI18n} from "vue-i18n";
+const { t } = useI18n();
 function onSubmit(
   values: { username: string; password: string },
   { setErrors }: any
@@ -15,8 +17,8 @@ function onSubmit(
   return authStore.login(username, password).catch((error: any) =>
     toast.add({
       severity: "error",
-      summary: "Error",
-      detail: "Wrong credentials",
+      summary: t("pages.login.toasts.login.error.summary"),
+      detail: t("pages.login.toasts.login.error.detail"),
       life: 3000,
     })
   );

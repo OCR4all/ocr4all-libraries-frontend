@@ -124,12 +124,12 @@ async function launchWorkflow() {
     <h2
       class="mb-2 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
     >
-      Select a workflow
+      {{ $t("pages.projects.sandbox.workflow.heading") }}
     </h2>
     <h2
       class="mb-8 text-center text-lg font-bold text-gray-700 dark:text-gray-200 sm:text-lg md:text-lg"
     >
-      Select which workflow should be used to generate results
+      {{ $t("pages.projects.sandbox.workflow.directive") }}
     </h2>
     <Dropdown
       v-model="selectedWorkflow"
@@ -172,19 +172,18 @@ async function launchWorkflow() {
       v-if="isImportingImages"
       class="m-10 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
     >
-      Images are getting imported!
+      {{ $t("pages.projects.sandbox.workflow.importing-images") }}
     </h2>
     <div v-else-if="isWorkflowRunning">
       <h2
         class="m-10 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
       >
-        Workflow is running
+        {{ $t("pages.projects.sandbox.workflow.running-workflows.heading") }}
       </h2>
       <h3
         class="text-center text-lg text-black dark:text-white sm:text-xl md:text-2xl"
       >
-        You can now leave this page and track the progress in the queue or just
-        wait here for the workflow to finish
+        {{ $t("pages.projects.sandbox.workflow.running-workflows.content") }}
       </h3>
     </div>
     <div class="text-center">
@@ -198,13 +197,13 @@ async function launchWorkflow() {
     <h2
       class="m-10 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
     >
-      Workflow finished!
+      {{ $t("pages.projects.sandbox.workflow.workflow-finished") }}
     </h2>
     <button
       class="rounded-lg bg-blue-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       @click="router.push(`/project/${project}/result/${store.sandboxId}`)"
     >
-      Inspect Result
+      {{ $t("pages.projects.sandbox.workflow.buttons.inspect-results") }}
     </button>
   </section>
 </template>

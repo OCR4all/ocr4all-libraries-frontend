@@ -23,6 +23,9 @@ import InputNode from "@/nodes/InputNode";
 import { useNodeFlowStore } from "@/stores/nodeflow.store";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
+import {useI18n} from "vue-i18n";
+const { t } = useI18n();
+
 const toast = useToast();
 
 const baklava = useBaklava();
@@ -134,8 +137,8 @@ async function saveWorkflow() {
       }
       toast.add({
         severity: "success",
-        summary: "Success",
-        detail: "Workflows was saved",
+        summary: t("pages.nodeflow.toasts.save.success.summary"),
+        detail: t("pages.nodeflow.toasts.save.success.detail"),
         life: 3000,
       });
       isLoadingSaveWorkflow.value = false;
@@ -158,15 +161,15 @@ async function loadWorkflow() {
     originalWorkflowName.value = data.value.metadata.label;
     toast.add({
       severity: "success",
-      summary: "Success",
-      detail: "Workflow successfully loaded",
+      summary: t("pages.nodeflow.toasts.load.success.summary"),
+      detail: t("pages.nodeflow.toasts.load.success.summary"),
       life: 3000,
     });
   } catch (error) {
     toast.add({
       severity: "error",
-      summary: "Error",
-      detail: "Couldn't load workflow",
+      summary: t("pages.nodeflow.toasts.load.error.summary"),
+      detail: t("pages.nodeflow.toasts.load.error.summary"),
       life: 3000,
     });
     selectedWorkflow.value = undefined;

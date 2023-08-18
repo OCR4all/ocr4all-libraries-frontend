@@ -5,13 +5,16 @@ import Dialog from "primevue/dialog";
 import Dropdown from "primevue/dropdown";
 import Button from "primevue/button";
 
+import { useI18n } from "vue-i18n";
+const t = useI18n();
+
 const router = useRouter();
 
 import { useAuthStore } from "@/stores/auth.store";
 
 const countries = ref([
-  { name: "🇩🇪 Deutsch", code: "de" },
-  { name: "🇬🇧 English", code: "en" },
+  { name: "🇩🇪", code: "de" },
+  { name: "🇬🇧", code: "en" },
 ]);
 const selectedCountry = ref(countries.value[1]);
 
@@ -33,6 +36,11 @@ function openAdminDashboard() {
 }
 function logout() {
   authStore.logout();
+}
+
+function save(){
+  t.locale.value = selectedCountry.value.code
+  visible.value = false
 }
 </script>
 
@@ -150,13 +158,17 @@ function logout() {
       </Dropdown>
     </div>
     <template #footer>
-      <Button label="Close" icon="pi pi-times" @click="visible = false" text />
       <Button
-        label="Save"
+          :label="$t('settings.buttons.close')"
+          icon="pi pi-times"
+          @click="visible = false"
+          text />
+      <Button
+        :label="$t('settings.buttons.save')"
         severity="info"
         icon="pi pi-check"
         autofocus
-        @click="visible = false"
+        @click="save"
       />
     </template>
   </Dialog>

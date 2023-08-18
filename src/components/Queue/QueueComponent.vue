@@ -11,6 +11,9 @@ import Toast from "primevue/toast";
 import ProgressBar from "primevue/progressbar";
 import { FilterMatchMode } from "primevue/api";
 
+import {useI18n} from "vue-i18n";
+const { t } = useI18n();
+
 import { useToast } from "primevue/usetoast";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 const toast = useToast();
@@ -78,8 +81,8 @@ async function cancelJob(id) {
   await refetch().then(() => {
     toast.add({
       severity: "success",
-      summary: "Success",
-      detail: "Job canceled",
+      summary: t("pages.queue.toasts.cancel.summary"),
+      detail: t("pages.queue.toasts.cancel.detail"),
       life: 3000,
     });
   });
@@ -89,8 +92,8 @@ async function expungeJobs() {
   useCustomFetch(`job/scheduler/action/expunge`).then(() => {refetch()}).then(() => {
     toast.add({
       severity: "success",
-      summary: "Success",
-      detail: "Job queue cleared",
+      summary: t("pages.queue.toasts.expunge.summary"),
+      detail: t("pages.queue.toasts.expunge.detail"),
       life: 3000,
     });
   })
@@ -100,8 +103,8 @@ async function removeJob(job) {
   useCustomFetch(`job/remove/${job}`).then(() => {refetch()}).then(() => {
     toast.add({
       severity: "success",
-      summary: "Success",
-      detail: "Job removed",
+      summary: t("pages.queue.toasts.remove.summary"),
+      detail: t("pages.queue.toasts.remove.detail"),
       life: 3000,
     });
   })

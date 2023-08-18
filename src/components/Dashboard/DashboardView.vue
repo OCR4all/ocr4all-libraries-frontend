@@ -6,6 +6,9 @@ import { useToast } from "primevue/usetoast";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 const toast = useToast();
 
+import {useI18n} from "vue-i18n";
+const { t } = useI18n();
+
 const projects = ref();
 const workflows = ref();
 const jobs = ref();
@@ -32,8 +35,8 @@ useCustomFetch(`/job/overview/administration`)
 function startTour() {
   toast.add({
     severity: "info",
-    summary: "Info",
-    detail: "Interactive tour not available yet",
+    summary: t("pages.dashboard.toasts.tour.summary"),
+    detail: t("pages.dashboard.toasts.tour.detail"),
     life: 3000,
   });
 }
@@ -41,8 +44,8 @@ function startTour() {
 function openSettings() {
   toast.add({
     severity: "info",
-    summary: "Info",
-    detail: "Settings not available yet",
+    summary: t("pages.dashboard.toasts.settings.summary"),
+    detail: t("pages.dashboard.toasts.settings.detail"),
     life: 3000,
   });
 }
