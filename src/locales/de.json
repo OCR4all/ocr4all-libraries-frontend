@@ -10,7 +10,7 @@
       },
       "cta": {
         "header": "Alpha",
-        "content": "This version of OCR4all is an early alpha release of the software. Consequently, there may still be some bugs and many features are yet to come."
+        "content": "Diese Version von OCR4all ist eine frühe Alpha-Version der Software. Deshalb kann diese immer noch einige Bugs enthalten und verschiedene Features werden noch eingebaut."
       }
     }
   },
@@ -25,125 +25,125 @@
   "pages": {
     "dashboard": {
       "stats": {
-        "projects": "Projects",
+        "projects": "Projekte",
         "workflows": "Workflows",
-        "jobs": "Queued Jobs"
+        "jobs": "Aufträge in der Warteschlange"
       },
       "cards": {
         "documentation": {
-          "title": "Documentation"
+          "title": "Dokumentation"
         },
         "settings": {
-          "title": "Settings"
+          "title": "Einstellungen"
         },
         "tour": {
-          "title": "Start the interactive Tour",
-          "subtitle": "Explore OCR4all"
+          "title": "Starte die interaktive Tour",
+          "subtitle": "Entdecke OCR4all"
         },
         "nodeflow": {
-          "title": "Build your own Workflows",
+          "title": "Erstelle eigene Workflows",
           "subtitle": "NodeFlow editor"
         }
       },
       "components": {
         "recent-projects": {
-          "header": "Recent Projects",
-          "empty": "No projects found.",
+          "header": "Zuletzt bearbeitete Projekte",
+          "empty": "Keine Projekte vorhanden.",
           "columns": {
-            "project": "Project",
-            "state": "State",
-            "last-updated": "Last Updated"
+            "project": "Projekt",
+            "state": "Status",
+            "last-updated": "Letzte Änderung"
           }
         },
         "queue": {
-          "header": "Job Queue",
-          "empty": "No jobs found.",
+          "header": "Warteschlange",
+          "empty": "Keine Aufträge in der Warteschlange.",
           "columns": {
             "id": "ID",
-            "state": "State",
-            "queued": "Queued"
+            "state": "Status",
+            "queued": "Beauftragt"
           }
         },
         "workflows": {
-          "header": "Available Workflows",
-          "empty": "No workflows found.",
+          "header": "Verfügbare Workflows",
+          "empty": "Keine Workflows vorhanden.",
           "columns": {
             "name": "Name",
-            "description": "Description",
-            "updated": "Updated"
+            "description": "Beschreibung",
+            "updated": "Geändert"
           }
         }
       },
       "toasts": {
         "settings": {
           "summary": "Info",
-          "detail": "Settings not available yet"
+          "detail": "Einstellungen noch nicht verfügbar"
         },
         "tour": {
           "summary": "Info",
-          "detail": "Interactive tour not availble yet"
+          "detail": "Interaktive Tour noch nicht verfügbar"
         }
       }
     },
     "projects": {
       "overview": {
         "toolbar": {
-          "new": "New Project",
-          "import": "Import Project"
+          "new": "Neues Projekt",
+          "import": "Importiere Projekt"
         },
         "table": {
-          "header": "Project Overview",
-          "empty": "No projects founds",
+          "header": "Projektübersicht",
+          "empty": "Keine Projekte vorhanden",
           "search": {
-            "placeholder": "Search..."
+            "placeholder": "Suchen..."
           },
           "columns": {
-            "open": "Open",
-            "project": "Project",
-            "description": "Description",
-            "state": "State",
-            "keywords": "Keywords",
-            "created": "Created",
-            "last-updated": "Last Updated"
+            "open": "Öffnen",
+            "project": "Projekt",
+            "description": "Beschreibung",
+            "state": "Status",
+            "keywords": "Stichworte",
+            "created": "Erstellt",
+            "last-updated": "Zuletzt bearbeitet"
           }
         }
       },
       "new": {
         "stepper": {
           "name": "Name",
-          "metadata": "Metadata",
-          "images": "Images"
+          "metadata": "Metadaten",
+          "images": "Bilder"
         },
         "components": {
           "name": {
-            "directive": "Enter a project name",
+            "directive": "Gib den Projektnamen ein",
             "warning": {
-              "no-name": "A project name is necessary",
-              "name-taken": "A project with this name already exists"
+              "no-name": "Ein Projektname ist verpflichtend",
+              "name-taken": "Ein anderes Projekt mit diesem Namen existiert bereits"
             },
             "buttons": {
-              "create": "Create"
+              "create": "Erstellen"
             }
           },
           "metadata": {
-            "directive": "Enter additional information",
+            "directive": "Weitere Informationen eingeben",
             "form": {
               "name": "Name",
               "id": "ID",
-              "keywords": "Keywords",
-              "description": "Description"
+              "keywords": "Stichworte",
+              "description": "Beschreibung"
             },
             "buttons": {
-              "skip": "Skip",
-              "save": "Save"
+              "skip": "Überspringen",
+              "save": "Speichern"
             }
           },
           "images": {
-            "directive": "Import Images",
+            "directive": "Bilder importieren",
             "buttons": {
               "exchange": "Exchange",
-              "upload": "Upload",
-              "complete": "Complete"
+              "upload": "Hochladen",
+              "complete": "Abschließen"
             }
           }
         }
@@ -153,35 +153,35 @@
 
         },
         "images": {
-          "no-images": "No images available"
+          "no-images": "Keine Bilder verfügbar"
         },
         "information": {
           "form": {
             "name": "Name",
             "id": "ID",
-            "keywords": "Keywords",
-            "state": "State",
-            "description": "Description"
+            "keywords": "Stichworte",
+            "state": "Status",
+            "description": "Beschreibung"
           },
           "buttons": {
-            "update": "Update",
-            "delete": "Delete Project"
+            "update": "Aktualisieren",
+            "delete": "Projekt löschen"
           },
           "toasts": {
             "update": {
               "success": {
-                "summary": "Success",
-                "detail": "Data updated"
+                "summary": "Erfolg",
+                "detail": "Daten aktualisiert"
               }
             }
           },
           "modals": {
             "delete": {
-              "header": "Delete Project",
-              "content": "Do you really want to delete this project and all associated files?",
+              "header": "Projekt löscen",
+              "content": "Möchtest du wirklich das Projekt und alle damit verbundene Daten löschen?",
               "buttons": {
-                "cancel": "Cancel",
-                "delete": "Delete"
+                "cancel": "Abbrechen",
+                "delete": "Löschen"
               }
             }
           }
@@ -190,35 +190,35 @@
       "sandbox": {
         "results": {
           "toolbar": {
-            "new": "New Result"
+            "new": "Neues Resultat"
           },
           "table": {
-            "header": "Result Overview",
-            "empty": "No results yet",
+            "header": "Resultatsübersicht",
+            "empty": "Keine Resultate vorhanden",
             "search": {
-              "placeholder": "Search..."
+              "placeholder": "Suchen..."
             },
             "columns": {
-              "open": "Open",
+              "open": "Öffnen",
               "name": "Name",
-              "description": "Description",
-              "state": "State",
-              "updated": "Updated",
-              "actions": "Actions"
+              "description": "Beschreibung",
+              "state": "Status",
+              "updated": "Zuletzt bearbeitet",
+              "actions": "Aktionen"
             }
           },
           "modals": {
             "remove-results": {
-              "header": "Remove Results",
-              "content": "Do you really want to delete these results?",
+              "header": "Resultate löschen",
+              "content": "Möchtest du wirklich diese Resultate löschen?",
               "buttons": {
                 "cancel": {
-                  "tooltip": "Cancel removal",
-                  "text": "Cancel"
+                  "tooltip": "Löschen abbrechen",
+                  "text": "Abbrechen"
                 },
                 "delete": {
-                  "tooltip": "Delete Sandbox",
-                  "text": "Delete"
+                  "tooltip": "Resultate löschen",
+                  "text": "Löschen"
                 }
               }
             }
@@ -226,159 +226,159 @@
           "toasts": {
             "remove-results": {
               "success": {
-                "summary": "Success",
-                "detail": "Sandbox successfully removed"
+                "summary": "Erfolg",
+                "detail": "Resultate erfolgreich gelöscht"
               }
             }
           }
         },
         "images": {
-          "heading": "Select Images",
-          "directive": "Choose which images of the project should get used"
+          "heading": "Bilder auswählen",
+          "directive": "Entscheide welche Bilder für das Projekt genutzt werden sollen"
         },
         "workflow": {
-          "heading": "Select a workflow",
-          "directive": "Select which workflow should be used to generate results",
-          "importing-images": "Images are getting imported!",
+          "heading": "Wähle einen Workflow",
+          "directive": "Entscheide mit welchem Workflow Resultate generiert werden sollen",
+          "importing-images": "Bilder werden importiert!",
           "running-workflows": {
-            "heading": "Workflow is running",
-            "content": "You can now leave this page and track the progress in the queue or just wait here for the workflow to finish"
+            "heading": "Workflow wird ausgeführt",
+            "content": "Du kannst diese Seite jetzt verlassen und den Fortschritt über die Warteschlange verfolgen oder hier warten bis der Workflow ausgeführt wurde"
           },
-          "workflow-finished": "Workflow finished!",
+          "workflow-finished": "Workflow erfolgreich ausgeführt!",
           "buttons": {
-            "inspect-results": "Inspect Result"
+            "inspect-results": "Resultate inspizieren"
           }
         }
       },
       "result-viewer": {
         "overview": {
-          "heading": "Result Viewer",
+          "heading": "Resultatinspektor",
           "toasts": {
             "remove-snapshot": {
               "success": {
-                "summary": "Success",
-                "detail": "Snapshot removed"
+                "summary": "Erfolg",
+                "detail": "Snapshot entfernt"
               }
             },
             "schedule-result-view": {
               "error": {
-                "summary": "Error",
-                "detail": "Couldn't schedule result view"
+                "summary": "Fehler",
+                "detail": "Resultatsansicht konnte nicht erstellt werden"
               }
             }
           },
           "generation": {
-            "heading": "Preparing Result Viewing"
+            "heading": "Resultatsinspektor wird vorbereitet"
           },
           "results-ready": {
-            "heading": "Results are ready to be viewed in LAREX"
+            "heading": "Die Resultate können nun in LAREX betrachtet werden"
           }
         }
       }
     },
     "workflows": {
       "toolbar": {
-        "new": "New Workflow"
+        "new": "Neuer Workflow"
       },
       "table": {
-        "heading": "Workflow Overview",
-        "empty": "No workflows found",
+        "heading": "Workflowübersicht",
+        "empty": "Keine Workflows vorhanden",
         "search": {
-          "placeholder": "Search..."
+          "placeholder": "Suchen..."
         },
         "columns": {
-          "open": "Open",
+          "open": "Öffnen",
           "name": "Name",
-          "description": "Description",
-          "updated": "Updated",
-          "actions": "Actions"
+          "description": "Beschreibung",
+          "updated": "Zuletzt bearbeitet",
+          "actions": "Aktionen"
         }
       },
       "toasts": {
         "update": {
           "error": {
-            "summary": "Error",
-            "detail": "Workflow couldn't be updated"
+            "summary": "Fehler",
+            "detail": "Workflow konnte nicht aktualisiert werden"
           },
           "success": {
-            "summary": "Success",
-            "detail": "Workflow successfully updated"
+            "summary": "Erfolg",
+            "detail": "Workflow erfolgreich aktualisiert"
           }
         },
         "remove": {
           "error": {
-            "summary": "Error",
-            "detail": "Workflow couldn't be removed"
+            "summary": "Fehler",
+            "detail": "Workflow konnte nicht entfernt werden"
           },
           "success": {
-            "summary": "Success",
-            "detail": "Workflow successfully removed"
+            "summary": "Erfolg",
+            "detail": "Workflow erfolgreich entfernt"
           }
         }
       }
     },
     "nodeflow": {
       "sidebar": {
-        "description": "Description",
-        "parameters": "Parameters"
+        "description": "Beschreibung",
+        "parameters": "Parameter"
       },
       "palette": {
-        "processors": "Processors"
+        "processors": "Prozessoren"
       },
       "node": {
-        "settings": "Settings"
+        "settings": "Einstellungen"
       },
       "toasts": {
         "save": {
           "success": {
-            "summary": "Success",
-            "detail": "Workflow was saved"
+            "summary": "Erfolg",
+            "detail": "Workflow wurde gespeichert"
           }
         },
         "load": {
           "success": {
-            "summary": "Success",
-            "detail": "Workflows successfully loaded"
+            "summary": "Erfolg",
+            "detail": "Workflows erfolgreich geladen"
           },
           "error": {
-            "summary": "Error",
-            "detail": "Couldn't load workflow"
+            "summary": "Fehler",
+            "detail": "Workflow konnte nicht geladen werden"
           }
         }
       }
     },
     "queue": {
       "table": {
-        "header": "Job Queue",
-        "empty": "Queue is empty...",
+        "header": "Warteschlange",
+        "empty": "Warteschlange ist leer...",
         "search": {
-          "placeholder": "Search..."
+          "placeholder": "Suchen..."
         },
         "columns": {
-          "actions": "Actions",
+          "actions": "Aktionen",
           "id": "ID",
-          "description": "Description",
-          "state": "State",
-          "progress": "Progress",
-          "created": "Created"
+          "description": "Beschreibung",
+          "state": "Status",
+          "progress": "Fortschritt",
+          "created": "Erstellt"
         },
         "toasts": {
           "cancel": {
             "success": {
-              "summary": "Success",
-              "detail": "Job canceled"
+              "summary": "Erfolg",
+              "detail": "Auftrag abgebrochen"
             }
           },
           "expunge": {
             "success": {
-              "summary": "Success",
-              "detail": "Job queue cleared"
+              "summary": "Erfolg",
+              "detail": "Warteschlange geleert"
             }
           },
           "remove": {
             "success": {
-              "summary": "Success",
-              "detail": "Job removed"
+              "summary": "Erfolg",
+              "detail": "Auftrag entfernt"
             }
           }
         }
@@ -388,8 +388,8 @@
       "toasts": {
         "login": {
           "error": {
-            "summary": "Error",
-            "detail": "Wrong credentials"
+            "summary": "Fehler",
+            "detail": "Fehlerhafte Anmeldedaten"
           }
         }
       }
