@@ -32,7 +32,7 @@ const messages = Object.fromEntries(
 
 const i18n = createI18n({
   legacy: false,
-  locale: "en",
+  locale: useStorage("ocr4all/frontend/language", "en").value,
   fallbackLocale: "en",
   warnHtmlMessage: false,
   globalInjection: true,

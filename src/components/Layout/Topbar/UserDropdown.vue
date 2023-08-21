@@ -11,6 +11,7 @@ const t = useI18n();
 const router = useRouter();
 
 import { useAuthStore } from "@/stores/auth.store";
+import { useUiStore } from "@/stores/ui.store";
 
 const countries = ref([
   { name: "🇩🇪", code: "de" },
@@ -18,6 +19,7 @@ const countries = ref([
 ]);
 const selectedCountry = ref(countries.value[1]);
 
+const uiStore = useUiStore();
 const authStore = useAuthStore();
 const items = [
   { action: openSettings, name: "Settings", adminOnly: false },
@@ -40,6 +42,7 @@ function logout() {
 
 function save(){
   t.locale.value = selectedCountry.value.code
+  useStorage("ocr4all/frontend/language", "en").value = selectedCountry.value.code
   visible.value = false
 }
 </script>
@@ -161,8 +164,8 @@ function save(){
       <Button
           :label="$t('settings.buttons.close')"
           icon="pi pi-times"
-          @click="visible = false"
-          text />
+          text
+          @click="visible = false" />
       <Button
         :label="$t('settings.buttons.save')"
         severity="info"
