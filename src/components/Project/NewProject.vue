@@ -1,5 +1,11 @@
 <script setup lang="ts">
-const steps = [{ label: "Name" }, { label: "Metadata" }, { label: "Images" }];
+import {useI18n} from "vue-i18n";
+const { t } = useI18n();
+
+const steps = [
+  { label: t("pages.projects.new.stepper.name") },
+  { label: t("pages.projects.new.stepper.metadata") },
+  { label: t("pages.projects.new.stepper.images") }];
 const step = ref(0);
 function back() {
   step.value -= 1;

@@ -43,14 +43,14 @@ function skip() {
     <h2
       class="mb-2 text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
     >
-      Enter additional information
+      {{ $t("pages.projects.new.components.metadata.directive") }}
     </h2>
     <div class="mx-auto grid grid-cols-6 gap-4">
       <div class="col-span-3 flex flex-col">
         <label
           for="text"
           class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
-          >Name</label
+          >{{$t("pages.projects.new.components.metadata.form.name")}}</label
         >
         <InputText v-model="name" type="text" />
       </div>
@@ -59,7 +59,7 @@ function skip() {
         <label
           for="last-name"
           class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
-          >ID</label
+          >{{$t("pages.projects.new.components.metadata.form.id")}}</label
         >
         <InputText v-model="id" disabled type="text" />
       </div>
@@ -68,7 +68,7 @@ function skip() {
         <label
           for="email"
           class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
-          >Keywords</label
+          >{{$t("pages.projects.new.components.metadata.form.keywords")}}</label
         >
         <Chips
           v-model="keywords"
@@ -86,7 +86,7 @@ function skip() {
         <label
           for="message"
           class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
-          >Description</label
+          >{{ $t("pages.projects.new.components.metadata.form.description") }}</label
         >
         <Textarea v-model="description" rows="5" cols="30" />
       </div>
@@ -96,13 +96,13 @@ function skip() {
           class="inline-block rounded-lg bg-gray-400 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-gray-300 transition duration-100 hover:bg-gray-600 focus-visible:ring active:bg-gray-700 md:text-base"
           @click="skip"
         >
-          Skip
+          {{ $t("pages.projects.new.components.metadata.buttons.skip") }}
         </button>
         <button
           class="inline-block rounded-lg bg-indigo-500 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-indigo-300 transition duration-100 hover:bg-indigo-600 focus-visible:ring active:bg-indigo-700 md:text-base"
           @click="save"
         >
-          Save
+          {{ $t("pages.projects.new.components.metadata.buttons.save") }}
         </button>
       </div>
     </div>

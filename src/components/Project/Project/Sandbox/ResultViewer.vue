@@ -18,6 +18,9 @@ const toast = useToast();
 const larexLocation = import.meta.env.VITE_LAREX_LOCATION
 const larexURL = import.meta.env.VITE_LAREX_URL
 
+import {useI18n} from "vue-i18n";
+const { t } = useI18n();
+
 const isGeneratingSandbox = ref(false);
 const isReady = ref(false);
 
@@ -86,7 +89,6 @@ async function deleteSnapshot(snapshotData) {
   const payload = {
     track: Array.from(snapshotData.key),
   };
-  console.log(payload);
   const { isFetching, error, data } = await useCustomFetch(
     `/snapshot/remove/${project}/${sandbox}`
   )
@@ -94,8 +96,8 @@ async function deleteSnapshot(snapshotData) {
     .json();
   toast.add({
     severity: "success",
-    summary: "Success",
-    detail: "Snapshot removed",
+    summary: t("pages.projects.result-viewer.overview.toasts.remove-snapshot.success.summary"),
+    detail: t("pages.projects.result-viewer.overview.toasts.remove-snapshot.success.detail"),
     life: 3000,
   });
   await refetch();
@@ -137,8 +139,8 @@ async function generateSandbox(snapshotData) {
     if(error.value){
       toast.add({
         severity: "error",
-        summary: "Error",
-        detail: "Couldn't schedule result view",
+        summary: t("pages.projects.result-viewer.overview.toasts.schedule-result-view.error.summary"),
+        detail: t("pages.projects.result-viewer.overview.toasts.schedule-result-view.error.summary"),
         life: 3000,
       })
     }else{
@@ -231,7 +233,7 @@ const breadcrumbCurrent = { label: sandbox };
       <h2
         class="m-10 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
       >
-        Result Viewer
+        {{ $t("pages.projects.result-viewer.overview.heading") }}
       </h2>
       <div class="mb-4 flex flex-wrap gap-2">
         <Button
@@ -301,7 +303,7 @@ const breadcrumbCurrent = { label: sandbox };
       <h2
         class="m-10 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
       >
-        Preparing Result Viewing
+        {{ $t("pages.projects.result-viewer.generation.heading") }}
       </h2>
       <div class="text-center">
         <div role="status">
@@ -332,7 +334,7 @@ const breadcrumbCurrent = { label: sandbox };
       <h2
         class="m-10 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
       >
-        Results are ready to be viewed in LAREX
+        {{ $t("pages.projects.result-viewer.overview.results-ready.heading") }}
       </h2>
       <form
         id="larexForm"

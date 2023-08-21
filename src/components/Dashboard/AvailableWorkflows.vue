@@ -58,7 +58,7 @@ refetch();
       <template #header>
         <div class="flex justify-between">
           <div>
-            <p>Available Workflows</p>
+            <p> {{ $t("pages.dashboard.components.workflows.header") }} </p>
           </div>
           <div class="flex justify-end">
             <button :disabled="isRefetching === true" @click="refetch">
@@ -75,13 +75,13 @@ refetch();
           </div>
         </div>
       </template>
-      <template #empty>No workflows found.</template>
+      <template #empty>{{$t("pages.dashboard.components.workflows.empty")}}</template>
       <template #loading>
         <DefaultSpinner />
       </template>
       <Column
         field="label"
-        header="Name"
+        :header="$t('pages.dashboard.components.workflows.columns.name')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },
@@ -90,7 +90,7 @@ refetch();
       ></Column>
       <Column
         field="description"
-        header="Description"
+        :header="$t('pages.dashboard.components.workflows.columns.description')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },
@@ -98,7 +98,7 @@ refetch();
         }"
       ></Column>
       <Column
-        header="Updated"
+          :header="$t('pages.dashboard.components.workflows.columns.updated')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },

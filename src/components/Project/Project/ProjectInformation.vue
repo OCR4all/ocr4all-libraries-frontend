@@ -9,6 +9,9 @@ import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
+import {useI18n} from "vue-i18n";
+const { t } = useI18n();
+
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
 const router = useRouter();
@@ -41,8 +44,8 @@ async function update() {
     .json();
   toast.add({
     severity: "success",
-    summary: "Success",
-    detail: "Data updated",
+    summary: t("pages.projects.project.toasts.update.success.summary"),
+    detail: t("pages.projects.project.toasts.update.success.detail"),
     life: 3000,
   });
 }
@@ -64,7 +67,7 @@ async function deleteProject() {
       <label
         for="text"
         class="mb-2 inline-block text-sm text-gray-800 dark:text-white sm:text-base"
-        >Name</label
+        >{{ $t("pages.projects.project.information.form.name") }}</label
       >
       <InputText v-model="name" type="text" />
     </div>
@@ -73,7 +76,7 @@ async function deleteProject() {
       <label
         for="id"
         class="mb-2 inline-block text-sm text-gray-800 dark:text-white sm:text-base"
-        >ID</label
+        >{{ $t("pages.projects.project.information.form.id") }}</label
       >
       <InputText v-model="id" disabled type="id" />
     </div>
@@ -82,7 +85,7 @@ async function deleteProject() {
       <label
         for="keywords"
         class="mb-2 inline-block text-sm text-gray-800 dark:text-white sm:text-base"
-        >Keywords</label
+        >{{ $t("pages.projects.project.information.form.keywords") }}</label
       >
       <Chips
         v-model="keywords"
@@ -100,7 +103,7 @@ async function deleteProject() {
       <label
         for="state"
         class="mb-2 inline-block text-sm text-gray-800 dark:text-white sm:text-base"
-        >State</label
+        >{{ $t("pages.projects.project.information.form.state") }}</label
       >
       <Dropdown
         v-model="state"
@@ -136,7 +139,7 @@ async function deleteProject() {
       <label
         for="description"
         class="mb-2 inline-block text-sm text-gray-800 dark:text-white sm:text-base"
-        >Description</label
+        >{{ $t("pages.projects.project.information.form.description") }}</label
       >
       <Textarea v-model="description" rows="5" cols="30" />
     </div>
@@ -144,19 +147,19 @@ async function deleteProject() {
       class="col-span-4 inline-block rounded-lg bg-blue-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-blue-300 transition duration-100 hover:bg-blue-600 focus-visible:ring active:bg-blue-700 md:col-span-1 md:text-base"
       @click="update"
     >
-      Update
+      {{ $t("pages.projects.project.information.buttons.update") }}
     </button>
     <button
       type="button"
       class="col-span-4 inline-block rounded-lg bg-red-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 md:col-span-1 md:text-base"
       @click="deleteDialogVisible = true"
     >
-      Delete Project
+      {{ $t("pages.projects.project.information.buttons.delete") }}
     </button>
     <Dialog
       v-model:visible="deleteDialogVisible"
       modal
-      header="Delete Project"
+      :header="$t('pages.projects.project.information.modals.delete.header')"
       :style="{ width: '50vw' }"
       :pt="{
         root: { class: 'dark:!bg-zinc-800' },
@@ -168,21 +171,21 @@ async function deleteProject() {
       }"
     >
       <p class="pb-5 dark:text-gray-200">
-        Do you really want to delete this project and all associated files?
+        {{ $t('pages.projects.project.information.modals.delete.content') }}
       </p>
       <button
         type="button"
         class="mb-2 mr-2 rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-500 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
         @click="deleteDialogVisible = false"
       >
-        Cancel
+        {{ $t('pages.projects.project.information.modals.delete.buttons.cancel') }}
       </button>
       <button
         type="button"
         class="mb-2 mr-2 rounded-lg bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
         @click="deleteProject"
       >
-        Delete
+        {{ $t('pages.projects.project.information.modals.delete.buttons.delete') }}
       </button>
     </Dialog>
   </div>

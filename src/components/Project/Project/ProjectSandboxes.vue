@@ -16,6 +16,9 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
+import {useI18n} from "vue-i18n";
+const { t } = useI18n();
+
 import { useSandboxCreationStore } from "@/stores/sandboxCreation.store";
 
 const router = useRouter();
@@ -77,8 +80,8 @@ async function removeResults() {
       isDeleteDialogVisible.value = false;
       toast.add({
         severity: "success",
-        summary: "Success",
-        detail: "Sandbox successfully removed",
+        summary: t("pages.projects.sandbox.results.toasts.remove-results.success.summary"),
+        detail: t("pages.projects.sandbox.results.toasts.remove-results.success.detail"),
         life: 3000,
       });
     });
@@ -99,7 +102,7 @@ async function removeResults() {
           class="rounded-lg bg-blue-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           @click="createSandbox()"
         >
-          New
+          {{ $t("pages.projects.sandbox.results.toolbar.new") }}
         </button>
       </div>
     </template>
@@ -123,7 +126,7 @@ async function removeResults() {
   >
     <template #header>
       <div class="flex justify-between">
-        <h2 class="my-4 text-xl">Result Overview</h2>
+        <h2 class="my-4 text-xl">{{ $t("pages.projects.sandbox.results.table.header") }}</h2>
         <div class="space-x-2">
           <button @click="refetch">
             <ArrowPathIcon
@@ -135,7 +138,7 @@ async function removeResults() {
           <span class="p-input-icon-left ml-10">
             <InputText
               v-model="filters['global'].value"
-              placeholder="Search..."
+              :placeholder="$t('pages.projects.sandbox.results.table.search.placeholder')"
               :pt="{
                 root: { class: 'max-w-fit' },
               }"
@@ -144,9 +147,9 @@ async function removeResults() {
         </div>
       </div>
     </template>
-    <template #empty> No results yet </template>
+    <template #empty> {{ $t("pages.projects.sandbox.results.table.empty") }} </template>
     <Column
-      header="Open"
+      :header="$t('pages.projects.sandbox.results.table.columns.open')"
       :exportable="false"
       style="min-width: 8rem"
       :pt="{
@@ -169,7 +172,7 @@ async function removeResults() {
     </Column>
     <Column
       field="name"
-      header="Name"
+      :header="$t('pages.projects.sandbox.results.table.columns.name')"
       :pt="{
         headerCell: { class: 'dark:!bg-zinc-700 !border-none' },
         headerTitle: { class: 'dark:!text-white !border-none' },
@@ -178,7 +181,7 @@ async function removeResults() {
     ></Column>
     <Column
       field="description"
-      header="Description"
+      :header="$t('pages.projects.sandbox.results.table.columns.description')"
       :pt="{
         headerCell: { class: 'dark:!bg-zinc-700 !border-none' },
         headerTitle: { class: 'dark:!text-white !border-none' },
@@ -188,7 +191,7 @@ async function removeResults() {
     <Column
       field="state"
       :sortable="true"
-      header="State"
+      :header="$t('pages.projects.sandbox.results.table.columns.state')"
       :show-filter-menu="false"
       :filter-menu-style="{ width: '14rem' }"
       :pt="{
@@ -203,7 +206,7 @@ async function removeResults() {
     </Column>
     <Column
       field="tracking.updated"
-      header="Updated"
+      :header="$t('pages.projects.sandbox.results.table.columns.updated')"
       :sortable="true"
       :pt="{
         headerCell: { class: 'dark:!bg-zinc-700 !border-none' },
@@ -221,7 +224,7 @@ async function removeResults() {
       </template>
     </Column>
     <Column
-      header="Actions"
+      :header="$t('pages.projects.sandbox.results.table.columns.actions')"
       :exportable="false"
       style="min-width: 8rem"
       :pt="{
@@ -244,7 +247,7 @@ async function removeResults() {
   <Dialog
     v-model:visible="isDeleteDialogVisible"
     modal
-    header="Remove Results"
+    :header="$t('pages.projects.sandbox.results.modals.remove-results.header')"
     :style="{ width: '50vw' }"
     :pt="{
       root: { class: 'dark:!bg-zinc-800' },
@@ -256,15 +259,15 @@ async function removeResults() {
     }"
   >
     <p class="pb-5 dark:text-gray-200">
-      Do you really want to delete these results?
+      {{ $t('pages.projects.sandbox.results.modals.remove-results.content') }}
     </p>
     <button
-      v-tooltip="'Import Images'"
+      v-tooltip="'Cancel'"
       type="button"
       class="mb-2 mr-2 rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-500 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
       @click="isDeleteDialogVisible = false"
     >
-      Cancel
+      {{ $t('pages.projects.sandbox.results.modals.remove-results.buttons.cancel.text') }}
     </button>
     <button
       v-tooltip="'Remove Sandbox'"
@@ -272,7 +275,7 @@ async function removeResults() {
       class="mb-2 mr-2 rounded-lg bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
       @click="removeResults"
     >
-      Delete
+      {{ $t('pages.projects.sandbox.results.modals.remove-results.buttons.delete.text') }}
     </button>
   </Dialog>
 </template>

@@ -48,16 +48,16 @@ async function createProject() {
     <h2
       class="mb-2 text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
     >
-      Enter a project name
+      {{ $t("pages.projects.new.components.name.directive") }}
     </h2>
     <div class="flex flex-col space-y-2">
       <InputText
         v-model="projectName"
         :class="{ 'p-invalid': nameTaken === true }"
       />
-      <InlineMessage v-show="noName">A project name is necessary</InlineMessage>
+      <InlineMessage v-show="noName">{{ $t("pages.projects.new.components.name.warning.no-name") }}</InlineMessage>
       <InlineMessage v-show="nameTaken"
-        >A project with this name already exists</InlineMessage
+        >{{ $t("pages.projects.new.components.name.warning.name-taken") }}</InlineMessage
       >
     </div>
     <button
@@ -65,7 +65,7 @@ async function createProject() {
       class="mb-2 mr-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       @click="createProject"
     >
-      Create
+      {{ $t("pages.projects.new.components.name.buttons.create") }}
     </button>
   </div>
 </template>

@@ -14,6 +14,9 @@ import InlineMessage from "primevue/inlinemessage";
 import Textarea from "primevue/textarea";
 import { FilterMatchMode } from "primevue/api";
 
+import {useI18n} from "vue-i18n";
+const { t } = useI18n();
+
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
@@ -68,8 +71,8 @@ async function editWorkflow(id) {
   if(error.value){
     toast.add({
       severity: "error",
-      summary: "Error",
-      detail: "Workflow couldn't be updated",
+      summary: t("pages.workflows.toasts.update.error.summary"),
+      detail: t("pages.workflows.toasts.update.error.detail"),
       life: 3000,
     });
   }else{
@@ -110,15 +113,15 @@ async function updateWorkflow() {
     if(error.value){
       toast.add({
         severity: "error",
-        summary: "Error",
-        detail: "Workflow couldn't be updated",
+        summary: t("pages.workflows.toasts.update.error.summary"),
+        detail: t("pages.workflows.toasts.update.error.detail"),
         life: 3000,
       });
     }else{
       toast.add({
         severity: "success",
-        summary: "Success",
-        detail: "Workflow successfully updated",
+        summary: t("pages.workflows.toasts.update.success.summary"),
+        detail: t("pages.workflows.toasts.update.success.detail"),
         life: 3000,
       });
     }
@@ -142,8 +145,8 @@ async function deleteWorkflow() {
   toggleEditDialog();
   toast.add({
     severity: "success",
-    summary: "Success",
-    detail: "Workflow successfully removed",
+    summary: t("pages.workflows.toasts.remove.success.summary"),
+    detail: t("pages.workflows.toasts.remove.success.detail"),
     life: 3000,
   });
   refetch();
@@ -165,7 +168,7 @@ async function deleteWorkflow() {
             class="rounded-lg bg-blue-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             @click="router.push('/nodeflow')"
           >
-            New
+            {{ $t("pages.workflows.toolbar.new") }}
           </button>
         </div>
       </template>
@@ -205,21 +208,21 @@ async function deleteWorkflow() {
     >
       <template #header>
         <div class="flex justify-between">
-          <h2 class="my-4 text-xl">Workflow Overview</h2>
+          <h2 class="my-4 text-xl">{{ $t("pages.workflows.table.heading") }}</h2>
           <span class="p-input-icon-left ml-10">
             <InputText
               v-model="filters['global'].value"
-              placeholder="Search..."
+              :placeholder="$t('pages.workflows.table.search.placeholder')"
             />
           </span>
         </div>
       </template>
-      <template #empty> No projects found. </template>
+      <template #empty> {{ $t("pages.workflows.table.empty") }} </template>
       <template #loading>
         <DefaultSpinner />
       </template>
       <Column
-        header="Open"
+        :header="$t('pages.workflows.table.columns.open')"
         :exportable="false"
         style="min-width: 8rem"
         :pt="{
@@ -242,7 +245,7 @@ async function deleteWorkflow() {
       </Column>
       <Column
         field="label"
-        header="Name"
+        :header="$t('pages.workflows.table.columns.name')"
         :sortable="true"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
@@ -252,7 +255,7 @@ async function deleteWorkflow() {
       ></Column>
       <Column
         field="description"
-        header="Description"
+        :header="$t('pages.workflows.table.columns.description')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },
@@ -265,7 +268,7 @@ async function deleteWorkflow() {
       </Column>
       <Column
         field="date"
-        header="Updated"
+        :header="$t('pages.workflows.table.columns.updated')"
         :sortable="true"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
@@ -283,7 +286,7 @@ async function deleteWorkflow() {
         </template>
       </Column>
       <Column
-        header="Actions"
+        :header="$t('pages.workflows.table.columns.actions')"
         :exportable="false"
         style="min-width: 8rem"
         :pt="{

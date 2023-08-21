@@ -1,8 +1,398 @@
 {
-  "dashboard": {
-    "heading": {
-      "welcome": "Welcome to",
-      "tool-name": "OCR4all"
+  "nav": {
+    "sidebar": {
+      "links": {
+        "dashboard": "Dashboard",
+        "projects": "Projects",
+        "workflows": "Workflows",
+        "nodeflow": "NodeFlow",
+        "queue": "Queue"
+      },
+      "cta": {
+        "header": "Alpha",
+        "content": "This version of OCR4all is an early alpha release of the software. Consequently, there may still be some bugs and many features are yet to come."
+      }
+    }
+  },
+  "settings": {
+    "username": "Username",
+    "language": "Language",
+    "buttons": {
+      "save": "Save",
+      "close": "Close"
+    }
+  },
+  "pages": {
+    "dashboard": {
+      "stats": {
+        "projects": "Projects",
+        "workflows": "Workflows",
+        "jobs": "Queued Jobs"
+      },
+      "cards": {
+        "documentation": {
+          "title": "Documentation"
+        },
+        "settings": {
+          "title": "Settings"
+        },
+        "tour": {
+          "title": "Start the interactive Tour",
+          "subtitle": "Explore OCR4all"
+        },
+        "nodeflow": {
+          "title": "Build your own Workflows",
+          "subtitle": "NodeFlow editor"
+        }
+      },
+      "components": {
+        "recent-projects": {
+          "header": "Recent Projects",
+          "empty": "No projects found.",
+          "columns": {
+            "project": "Project",
+            "state": "State",
+            "last-updated": "Last Updated"
+          }
+        },
+        "queue": {
+          "header": "Job Queue",
+          "empty": "No jobs found.",
+          "columns": {
+            "id": "ID",
+            "state": "State",
+            "queued": "Queued"
+          }
+        },
+        "workflows": {
+          "header": "Available Workflows",
+          "empty": "No workflows found.",
+          "columns": {
+            "name": "Name",
+            "description": "Description",
+            "updated": "Updated"
+          }
+        }
+      },
+      "toasts": {
+        "settings": {
+          "summary": "Info",
+          "detail": "Settings not available yet"
+        },
+        "tour": {
+          "summary": "Info",
+          "detail": "Interactive tour not availble yet"
+        }
+      }
+    },
+    "projects": {
+      "overview": {
+        "toolbar": {
+          "new": "New Project",
+          "import": "Import Project"
+        },
+        "table": {
+          "header": "Project Overview",
+          "empty": "No projects founds",
+          "search": {
+            "placeholder": "Search..."
+          },
+          "columns": {
+            "open": "Open",
+            "project": "Project",
+            "description": "Description",
+            "state": "State",
+            "keywords": "Keywords",
+            "created": "Created",
+            "last-updated": "Last Updated"
+          }
+        }
+      },
+      "new": {
+        "stepper": {
+          "name": "Name",
+          "metadata": "Metadata",
+          "images": "Images"
+        },
+        "components": {
+          "name": {
+            "directive": "Enter a project name",
+            "warning": {
+              "no-name": "A project name is necessary",
+              "name-taken": "A project with this name already exists"
+            },
+            "buttons": {
+              "create": "Create"
+            }
+          },
+          "metadata": {
+            "directive": "Enter additional information",
+            "form": {
+              "name": "Name",
+              "id": "ID",
+              "keywords": "Keywords",
+              "description": "Description"
+            },
+            "buttons": {
+              "skip": "Skip",
+              "save": "Save"
+            }
+          },
+          "images": {
+            "directive": "Import Images",
+            "buttons": {
+              "exchange": "Exchange",
+              "upload": "Upload",
+              "complete": "Complete"
+            }
+          }
+        }
+      },
+      "project": {
+        "results": {
+
+        },
+        "images": {
+          "no-images": "No images available"
+        },
+        "information": {
+          "form": {
+            "name": "Name",
+            "id": "ID",
+            "keywords": "Keywords",
+            "state": "State",
+            "description": "Description"
+          },
+          "buttons": {
+            "update": "Update",
+            "delete": "Delete Project"
+          },
+          "toasts": {
+            "update": {
+              "success": {
+                "summary": "Success",
+                "detail": "Data updated"
+              }
+            }
+          },
+          "modals": {
+            "delete": {
+              "header": "Delete Project",
+              "content": "Do you really want to delete this project and all associated files?",
+              "buttons": {
+                "cancel": "Cancel",
+                "delete": "Delete"
+              }
+            }
+          }
+        }
+      },
+      "sandbox": {
+        "results": {
+          "toolbar": {
+            "new": "New Result"
+          },
+          "table": {
+            "header": "Result Overview",
+            "empty": "No results yet",
+            "search": {
+              "placeholder": "Search..."
+            },
+            "columns": {
+              "open": "Open",
+              "name": "Name",
+              "description": "Description",
+              "state": "State",
+              "updated": "Updated",
+              "actions": "Actions"
+            }
+          },
+          "modals": {
+            "remove-results": {
+              "header": "Remove Results",
+              "content": "Do you really want to delete these results?",
+              "buttons": {
+                "cancel": {
+                  "tooltip": "Cancel removal",
+                  "text": "Cancel"
+                },
+                "delete": {
+                  "tooltip": "Delete Sandbox",
+                  "text": "Delete"
+                }
+              }
+            }
+          },
+          "toasts": {
+            "remove-results": {
+              "success": {
+                "summary": "Success",
+                "detail": "Sandbox successfully removed"
+              }
+            }
+          }
+        },
+        "images": {
+          "heading": "Select Images",
+          "directive": "Choose which images of the project should get used"
+        },
+        "workflow": {
+          "heading": "Select a workflow",
+          "directive": "Select which workflow should be used to generate results",
+          "importing-images": "Images are getting imported!",
+          "running-workflows": {
+            "heading": "Workflow is running",
+            "content": "You can now leave this page and track the progress in the queue or just wait here for the workflow to finish"
+          },
+          "workflow-finished": "Workflow finished!",
+          "buttons": {
+            "inspect-results": "Inspect Result"
+          }
+        }
+      },
+      "result-viewer": {
+        "overview": {
+          "heading": "Result Viewer",
+          "toasts": {
+            "remove-snapshot": {
+              "success": {
+                "summary": "Success",
+                "detail": "Snapshot removed"
+              }
+            },
+            "schedule-result-view": {
+              "error": {
+                "summary": "Error",
+                "detail": "Couldn't schedule result view"
+              }
+            }
+          },
+          "generation": {
+            "heading": "Preparing Result Viewing"
+          },
+          "results-ready": {
+            "heading": "Results are ready to be viewed in LAREX"
+          }
+        }
+      }
+    },
+    "workflows": {
+      "toolbar": {
+        "new": "New Workflow"
+      },
+      "table": {
+        "heading": "Workflow Overview",
+        "empty": "No workflows found",
+        "search": {
+          "placeholder": "Search..."
+        },
+        "columns": {
+          "open": "Open",
+          "name": "Name",
+          "description": "Description",
+          "updated": "Updated",
+          "actions": "Actions"
+        }
+      },
+      "toasts": {
+        "update": {
+          "error": {
+            "summary": "Error",
+            "detail": "Workflow couldn't be updated"
+          },
+          "success": {
+            "summary": "Success",
+            "detail": "Workflow successfully updated"
+          }
+        },
+        "remove": {
+          "error": {
+            "summary": "Error",
+            "detail": "Workflow couldn't be removed"
+          },
+          "success": {
+            "summary": "Success",
+            "detail": "Workflow successfully removed"
+          }
+        }
+      }
+    },
+    "nodeflow": {
+      "sidebar": {
+        "description": "Description",
+        "parameters": "Parameters"
+      },
+      "palette": {
+        "processors": "Processors"
+      },
+      "node": {
+        "settings": "Settings"
+      },
+      "toasts": {
+        "save": {
+          "success": {
+            "summary": "Success",
+            "detail": "Workflow was saved"
+          }
+        },
+        "load": {
+          "success": {
+            "summary": "Success",
+            "detail": "Workflows successfully loaded"
+          },
+          "error": {
+            "summary": "Error",
+            "detail": "Couldn't load workflow"
+          }
+        }
+      }
+    },
+    "queue": {
+      "table": {
+        "header": "Job Queue",
+        "empty": "Queue is empty...",
+        "search": {
+          "placeholder": "Search..."
+        },
+        "columns": {
+          "actions": "Actions",
+          "id": "ID",
+          "description": "Description",
+          "state": "State",
+          "progress": "Progress",
+          "created": "Created"
+        },
+        "toasts": {
+          "cancel": {
+            "success": {
+              "summary": "Success",
+              "detail": "Job canceled"
+            }
+          },
+          "expunge": {
+            "success": {
+              "summary": "Success",
+              "detail": "Job queue cleared"
+            }
+          },
+          "remove": {
+            "success": {
+              "summary": "Success",
+              "detail": "Job removed"
+            }
+          }
+        }
+      }
+    },
+    "login": {
+      "toasts": {
+        "login": {
+          "error": {
+            "summary": "Error",
+            "detail": "Wrong credentials"
+          }
+        }
+      }
     }
   }
 }

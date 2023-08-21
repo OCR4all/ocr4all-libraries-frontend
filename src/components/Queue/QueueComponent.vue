@@ -11,6 +11,9 @@ import Toast from "primevue/toast";
 import ProgressBar from "primevue/progressbar";
 import { FilterMatchMode } from "primevue/api";
 
+import {useI18n} from "vue-i18n";
+const { t } = useI18n();
+
 import { useToast } from "primevue/usetoast";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 const toast = useToast();
@@ -78,8 +81,8 @@ async function cancelJob(id) {
   await refetch().then(() => {
     toast.add({
       severity: "success",
-      summary: "Success",
-      detail: "Job canceled",
+      summary: t("pages.queue.toasts.cancel.summary"),
+      detail: t("pages.queue.toasts.cancel.detail"),
       life: 3000,
     });
   });
@@ -89,8 +92,8 @@ async function expungeJobs() {
   useCustomFetch(`job/scheduler/action/expunge`).then(() => {refetch()}).then(() => {
     toast.add({
       severity: "success",
-      summary: "Success",
-      detail: "Job queue cleared",
+      summary: t("pages.queue.toasts.expunge.summary"),
+      detail: t("pages.queue.toasts.expunge.detail"),
       life: 3000,
     });
   })
@@ -100,8 +103,8 @@ async function removeJob(job) {
   useCustomFetch(`job/remove/${job}`).then(() => {refetch()}).then(() => {
     toast.add({
       severity: "success",
-      summary: "Success",
-      detail: "Job removed",
+      summary: t("pages.queue.toasts.remove.summary"),
+      detail: t("pages.queue.toasts.remove.detail"),
       life: 3000,
     });
   })
@@ -134,10 +137,10 @@ async function removeJob(job) {
       }"
       table-style="min-width: 50rem"
     >
-      <template #empty> Queue is empty... </template>
+      <template #empty> {{ $t("pages.queue.table.empty") }} </template>
       <template #header>
         <div class="flex justify-between">
-          <h2 class="my-4 text-xl">Job Queue</h2>
+          <h2 class="my-4 text-xl"> {{ $t("pages.queue.table.header") }} </h2>
           <span class="p-input-icon-left ml-10 space-x-4">
             <button :disabled="isRefetching === true" @click="refetch">
               <ArrowPathIcon
@@ -152,13 +155,13 @@ async function removeJob(job) {
             </button>
             <InputText
               v-model="filters['global'].value"
-              placeholder="Search..."
+              :placeholder="$t('pages.queue.table.search.placeholder')"
             />
           </span>
         </div>
       </template>
       <Column
-        header="Actions"
+        :header="$t('pages.queue.table.columns.actions')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },
@@ -189,7 +192,7 @@ async function removeJob(job) {
       <Column
         field="id"
         :sortable="true"
-        header="ID"
+        :header="$t('pages.queue.table.columns.id')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },
@@ -198,7 +201,7 @@ async function removeJob(job) {
       ></Column>
       <Column
         field="description"
-        header="Description"
+        :header="$t('pages.queue.table.columns.description')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },
@@ -261,7 +264,7 @@ async function removeJob(job) {
       </Column>
       <Column
         field="journal.progress"
-        header="Progress"
+        :header="$t('pages.queue.table.columns.progress')"
         sortable
         :show-filter-match-modes="false"
         style="min-width: 12rem"
@@ -282,7 +285,7 @@ async function removeJob(job) {
       <Column
         :sortable="true"
         field="created"
-        header="Created"
+        :header="$t('pages.queue.table.columns.created')"
         :pt="{
           headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
           headerTitle: { class: 'dark:!text-white !border-none' },

@@ -6,6 +6,9 @@ import { useToast } from "primevue/usetoast";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 const toast = useToast();
 
+import {useI18n} from "vue-i18n";
+const { t } = useI18n();
+
 const projects = ref();
 const workflows = ref();
 const jobs = ref();
@@ -32,8 +35,8 @@ useCustomFetch(`/job/overview/administration`)
 function startTour() {
   toast.add({
     severity: "info",
-    summary: "Info",
-    detail: "Interactive tour not available yet",
+    summary: t("pages.dashboard.toasts.tour.summary"),
+    detail: t("pages.dashboard.toasts.tour.detail"),
     life: 3000,
   });
 }
@@ -41,8 +44,8 @@ function startTour() {
 function openSettings() {
   toast.add({
     severity: "info",
-    summary: "Info",
-    detail: "Settings not available yet",
+    summary: t("pages.dashboard.toasts.settings.summary"),
+    detail: t("pages.dashboard.toasts.settings.detail"),
     life: 3000,
   });
 }
@@ -51,7 +54,7 @@ function openSettings() {
   <div class="space-y-8 pb-8">
     <div class="grid grid-cols-2 grid-rows-1 gap-8 xl:grid-cols-3">
       <StatsCard>
-        <template #title> Projects </template>
+        <template #title> {{ $t("pages.dashboard.stats.projects") }} </template>
         <template #value>
           <div v-show="projects">
             {{ projects }}
@@ -59,7 +62,7 @@ function openSettings() {
         </template>
       </StatsCard>
       <StatsCard>
-        <template #title> Workflows </template>
+        <template #title> {{ $t("pages.dashboard.stats.workflows") }} </template>
         <template #value>
           <div v-show="workflows">
             {{ workflows }}
@@ -67,7 +70,7 @@ function openSettings() {
         </template>
       </StatsCard>
       <StatsCard>
-        <template #title> Queued Jobs </template>
+        <template #title> {{ $t("pages.dashboard.stats.jobs") }} </template>
         <template #value>
           <div v-if="jobs">
             {{ jobs.running.length + jobs.scheduled.length }}
@@ -93,7 +96,7 @@ function openSettings() {
                 alt="Notebook icon"
               />
             </template>
-            <template #text> Documentation </template>
+            <template #text> {{ $t("pages.dashboard.cards.documentation.title") }} </template>
           </IconCard>
         </a>
       </div>
@@ -106,7 +109,7 @@ function openSettings() {
               alt="Notebook icon"
             />
           </template>
-          <template #text>Settings</template>
+          <template #text> {{ $t("pages.dashboard.cards.settings.title") }} </template>
         </IconCard>
       </div>
     </div>
@@ -136,8 +139,8 @@ function openSettings() {
               alt="Notebook icon"
             />
           </template>
-          <template #subtitle> Explore OCR4all </template>
-          <template #title> Start the interactive Tour </template>
+          <template #subtitle> {{ $t("pages.dashboard.cards.tour.subtitle") }} </template>
+          <template #title> {{ $t("pages.dashboard.cards.tour.title") }} </template>
         </WideCard>
       </div>
       <div class="col-span-2 row-span-1">
@@ -149,8 +152,8 @@ function openSettings() {
               alt="Notebook icon"
             />
           </template>
-          <template #subtitle> NodeFlow editor </template>
-          <template #title> Build your own Workflows </template>
+          <template #subtitle> {{ $t("pages.dashboard.cards.nodeflow.subtitle") }} </template>
+          <template #title> {{ $t("pages.dashboard.cards.nodeflow.title") }} </template>
         </NodeFlowCard>
       </div>
     </div>
