@@ -10,6 +10,7 @@ import router from "./router";
 
 // PrimeVue imports
 import PrimeVue from "primevue/config";
+import Tailwind from "primevue/passthrough/tailwind";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import "primevue/resources/themes/tailwind-light/theme.css";
@@ -41,7 +42,7 @@ const i18n = createI18n({
 
 app.use(i18n);
 app.use(createPinia());
-app.use(PrimeVue);
+app.use(PrimeVue, { unstyled: true, pt: Tailwind });
 app.use(ToastService);
 app.use(router);
 app.directive("tooltip", Tooltip);
