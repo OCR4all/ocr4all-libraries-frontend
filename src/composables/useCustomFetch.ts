@@ -9,7 +9,10 @@ export const useCustomFetch = createFetch({
   options: {
     async beforeFetch({ options }) {
       if (config.mode !== "Desktop"){
-        options.headers.Authorization = `Bearer ${auth.token}`;
+        options.headers = {
+          ...options.headers,
+          Authorization: `Bearer ${auth.token}`,
+        }
       }
       return { options };
     },
