@@ -113,6 +113,34 @@ function openSettings() {
         </IconCard>
       </div>
     </div>
+    <div class="grid grid-flow-col gap-8">
+      <div class="col-span-2 row-span-1">
+        <WideCard @start-tour="startTour">
+          <template #icon>
+            <img
+                class="m-auto h-20 w-20"
+                src="/assets/dashboard/play-dynamic-gradient.png"
+                alt="Notebook icon"
+            />
+          </template>
+          <template #subtitle> {{ $t("pages.dashboard.cards.tour.subtitle") }} </template>
+          <template #title> {{ $t("pages.dashboard.cards.tour.title") }} </template>
+        </WideCard>
+      </div>
+      <div class="col-span-2 row-span-1">
+        <NodeFlowCard>
+          <template #icon>
+            <img
+                class="m-auto h-20 w-20"
+                src="/assets/dashboard/file-plus-dynamic-gradient.png"
+                alt="Notebook icon"
+            />
+          </template>
+          <template #subtitle> {{ $t("pages.dashboard.cards.nodeflow.subtitle") }} </template>
+          <template #title> {{ $t("pages.dashboard.cards.nodeflow.title") }} </template>
+        </NodeFlowCard>
+      </div>
+    </div>
     <div class="grid grid-cols-4 grid-rows-1 gap-8">
       <div class="col-span-4 row-span-1 2xl:col-span-2">
         <div
@@ -127,34 +155,6 @@ function openSettings() {
         >
           <SmallJobQueue />
         </div>
-      </div>
-    </div>
-    <div class="grid grid-flow-col gap-8">
-      <div class="col-span-2 row-span-1">
-        <WideCard @start-tour="startTour">
-          <template #icon>
-            <img
-              class="m-auto h-20 w-20"
-              src="/assets/dashboard/play-dynamic-gradient.png"
-              alt="Notebook icon"
-            />
-          </template>
-          <template #subtitle> {{ $t("pages.dashboard.cards.tour.subtitle") }} </template>
-          <template #title> {{ $t("pages.dashboard.cards.tour.title") }} </template>
-        </WideCard>
-      </div>
-      <div class="col-span-2 row-span-1">
-        <NodeFlowCard>
-          <template #icon>
-            <img
-              class="m-auto h-20 w-20"
-              src="/assets/dashboard/file-plus-dynamic-gradient.png"
-              alt="Notebook icon"
-            />
-          </template>
-          <template #subtitle> {{ $t("pages.dashboard.cards.nodeflow.subtitle") }} </template>
-          <template #title> {{ $t("pages.dashboard.cards.nodeflow.title") }} </template>
-        </NodeFlowCard>
       </div>
     </div>
   </div>
