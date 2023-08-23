@@ -385,6 +385,12 @@
       }
     },
     "login": {
+      "directive": "Log in to your account",
+      "input": {
+        "username": "Username",
+        "password": "Password"
+      },
+      "sign-in": "Sign in",
       "toasts": {
         "login": {
           "error": {

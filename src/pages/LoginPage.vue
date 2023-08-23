@@ -38,7 +38,7 @@ function onSubmit(
         <h1
           class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl"
         >
-          Log in to your account
+          {{ $t("pages.login.directive") }}
         </h1>
         <Form
           v-slot="{ errors, isSubmitting }"
@@ -49,7 +49,7 @@ function onSubmit(
             <label
               for="username"
               class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-              >Username</label
+              >{{ $t("pages.login.input.username") }}</label
             >
             <Field
               type="text"
@@ -65,7 +65,7 @@ function onSubmit(
             <label
               for="password"
               class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-              >Password</label
+              >{{ $t("pages.login.input.password") }}</label
             >
             <Field
               type="password"
@@ -86,7 +86,7 @@ function onSubmit(
               v-show="isSubmitting"
               class="spinner-border spinner-border-sm mr-1"
             ></span>
-            Sign
+            {{ $t("pages.login.sign-in") }}
           </button>
         </Form>
       </div>

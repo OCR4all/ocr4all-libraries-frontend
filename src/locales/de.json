@@ -385,11 +385,17 @@
       }
     },
     "login": {
+      "directive": "Login",
+      "input": {
+        "username": "Benutzername",
+        "password": "Passwort"
+      },
+      "sign-in": "Jetzt einloggen",
       "toasts": {
         "login": {
           "error": {
             "summary": "Fehler",
-            "detail": "Fehlerhafte Anmeldedaten"
+            "detail": "Anmeldedaten nicht erkannt"
           }
         }
       }
