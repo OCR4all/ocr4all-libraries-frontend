@@ -81,8 +81,8 @@ async function cancelJob(id) {
   await refetch().then(() => {
     toast.add({
       severity: "success",
-      summary: t("pages.queue.toasts.cancel.summary"),
-      detail: t("pages.queue.toasts.cancel.detail"),
+      summary: t("pages.queue.toasts.cancel.success.summary"),
+      detail: t("pages.queue.toasts.cancel.success.detail"),
       life: 3000,
     });
   });
@@ -92,8 +92,8 @@ async function expungeJobs() {
   useCustomFetch(`job/scheduler/action/expunge`).then(() => {refetch()}).then(() => {
     toast.add({
       severity: "success",
-      summary: t("pages.queue.toasts.expunge.summary"),
-      detail: t("pages.queue.toasts.expunge.detail"),
+      summary: t("pages.queue.toasts.expunge.success.summary"),
+      detail: t("pages.queue.toasts.expunge.success.detail"),
       life: 3000,
     });
   })
@@ -103,8 +103,8 @@ async function removeJob(job) {
   useCustomFetch(`job/remove/${job}`).then(() => {refetch()}).then(() => {
     toast.add({
       severity: "success",
-      summary: t("pages.queue.toasts.remove.summary"),
-      detail: t("pages.queue.toasts.remove.detail"),
+      summary: t("pages.queue.toasts.remove.success.summary"),
+      detail: t("pages.queue.toasts.remove.success.detail"),
       life: 3000,
     });
   })
