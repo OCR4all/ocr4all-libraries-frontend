@@ -69,6 +69,7 @@
     "unplugin-auto-import": "0.16.6",
     "unplugin-vue-components": "0.25.2",
     "vite": "4.4.9",
+    "vite-plugin-vue-devtools": "^1.0.0-rc.3",
     "vitest": "0.34.3",
     "vue-i18n": "9.2.2",
     "wait-on": "7.0.1"
