@@ -8,7 +8,7 @@
   },
   "include": [
     "package.json",
-    "vite.config.ts",
+    "vite.config.mts",
     "vitest.config.ts",
     "playwright-ct.config.ts",
     "playwright.config.ts"
