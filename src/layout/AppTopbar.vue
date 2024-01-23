@@ -27,6 +27,7 @@ const authStore = useAuthStore();
       </button>
       <img src="/img/logo.svg" class="ml-8 h-10 w-10" alt="OCR4all logo" />
     </div>
+    <NotificationDropdown />
     <DarkModeToggle />
     <div v-show="authStore.user">
       <UserDropdown />

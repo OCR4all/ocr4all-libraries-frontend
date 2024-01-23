@@ -24,6 +24,7 @@ declare module 'vue' {
     NewSandbox: typeof import('./src/components/Project/Project/Sandbox/NewSandbox.vue')['default']
     NodeFlow: typeof import('./src/components/NodeFlow/NodeFlow.vue')['default']
     NodeFlowCard: typeof import('./src/components/Dashboard/NodeFlowCard.vue')['default']
+    NotificationDropdown: typeof import('./src/components/Notifications/NotificationDropdown.vue')['default']
     ProjectContainer: typeof import('./src/components/Project/ProjectContainer.vue')['default']
     ProjectCreationImageSelection: typeof import('./src/components/Project/Create/ProjectCreationImageSelection.vue')['default']
     ProjectCreationMetadata: typeof import('./src/components/Project/Create/ProjectCreationMetadata.vue')['default']
