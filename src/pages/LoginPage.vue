@@ -32,7 +32,7 @@ function onSubmit(
   >
     <img class="h-20 pb-10" src="/img/logo.png" alt="OCR4all logo" />
     <div
-      class="w-full rounded-lg bg-white shadow-md dark:border dark:border-gray-700 dark:bg-zinc-800 sm:max-w-md md:mt-0 xl:p-0"
+      class="w-full bg-white shadow-md dark:border dark:border-gray-700 dark:bg-zinc-800 sm:max-w-md md:mt-0 xl:p-0"
     >
       <div class="space-y-4 p-6 sm:p-8 md:space-y-6">
         <h1
@@ -55,7 +55,7 @@ function onSubmit(
               type="text"
               name="username"
               id="username"
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+              class="block w-full border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
               :class="{ 'is-invalid': errors.username }"
               required=""
             />
@@ -71,7 +71,7 @@ function onSubmit(
               type="password"
               id="password"
               name="password"
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+              class="block w-full border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
               :class="{ 'is-invalid': errors.password }"
               required=""
             />
@@ -80,7 +80,7 @@ function onSubmit(
           <button
             :disabled="isSubmitting"
             type="submit"
-            class="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            class="w-full bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             <span
               v-show="isSubmitting"

@@ -4,7 +4,7 @@ import { BellIcon } from "@heroicons/vue/24/solid";
 const isOpen = ref(false)
 </script>
 <template>
-  <div class="dark-toggle-container mx-3 flex text-sm">
+  <div class="dark-toggle-container mx-2 flex text-sm">
     <button class="text-center" @click="isOpen = true">
       <BellIcon
         aria-hidden="true"

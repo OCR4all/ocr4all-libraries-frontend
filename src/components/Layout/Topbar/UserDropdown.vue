@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
+import { MoonIcon, UserIcon } from "@heroicons/vue/24/solid";
 
 import Dialog from "primevue/dialog";
 import Dropdown from "primevue/dropdown";
@@ -50,12 +51,11 @@ function save(){
 <template>
   <Menu as="div" class="mt-2">
     <MenuButton
-      class="rounded-full focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+      class="rounded-full focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 mx-2"
     >
-      <img
-        class="h-6 w-6 rounded-full"
-        src="https://t3.ftcdn.net/jpg/03/39/45/96/360_F_339459697_XAFacNQmwnvJRqe1Fe9VOptPWMUxlZP8.jpg"
-        alt=""
+      <UserIcon
+        aria-hidden="true"
+        class="h-6 w-6 flex-shrink-0 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white"
       />
     </MenuButton>
     <transition

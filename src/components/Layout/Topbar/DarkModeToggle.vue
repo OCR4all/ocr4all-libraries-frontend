@@ -6,7 +6,7 @@ const toggleDark = useToggle(isDark);
 </script>
 
 <template>
-  <div class="dark-toggle-container mx-3 flex text-sm">
+  <div class="dark-toggle-container mx-2 flex text-sm">
     <button class="text-center" @click="toggleDark()">
       <MoonIcon
         v-if="isDark"

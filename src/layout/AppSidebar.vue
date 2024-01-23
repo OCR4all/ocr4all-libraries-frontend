@@ -83,7 +83,7 @@ defineExpose({
                 v-for="(item, index) in mainNavigation"
                 :key="index"
                 :to="item.to"
-                class="flex items-center rounded-lg px-6 py-2.5 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-zinc-700"
+                class="flex items-center px-6 py-2.5 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-zinc-700"
               >
                 <component
                   :is="item.icon"
@@ -114,7 +114,7 @@ defineExpose({
   <TransitionRoot
     :show="sidebarLgOpened"
     as="div"
-    class="mx-3 my-8 overflow-y-auto rounded-2xl border-r border-gray-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 shadow-md"
+    class="overflow-y-auto border-r border-solid border-gray-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 shadow-md"
     enter="transition ease-in-out duration-200 transform"
     enter-from="-translate-x-full"
     enter-to="translate-x-0"
@@ -128,7 +128,7 @@ defineExpose({
           v-for="(item, index) in mainNavigation"
           :key="index"
           :to="item.to"
-          class="group flex items-center rounded-lg p-2 px-6 py-2.5 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-zinc-700"
+          class="group flex items-center p-2 px-6 py-2.5 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-zinc-700"
         >
           <component :is="item.icon" class="mr-2 h-5 w-5" />
           {{ $t(item.label) }}
@@ -142,12 +142,12 @@ defineExpose({
         >
           <div class="mb-3 flex items-center">
             <span
-              class="mr-2 rounded bg-orange-100 px-2.5 py-0.5 text-sm font-semibold text-orange-800 dark:bg-orange-200 dark:text-orange-900"
+              class="mr-2 bg-orange-100 px-2.5 py-0.5 text-sm font-semibold text-orange-800 dark:bg-orange-200 dark:text-orange-900"
               >{{ $t("nav.sidebar.cta.header") }}</span
             >
             <button
               type="button"
-              class="-mx-1.5 -my-1.5 ml-auto inline-flex h-6 w-6 rounded-lg bg-blue-50 p-1 text-blue-900 hover:bg-blue-200 focus:ring-2 focus:ring-blue-400 dark:bg-blue-900 dark:text-blue-400 dark:hover:bg-blue-800"
+              class="-mx-1.5 -my-1.5 ml-auto inline-flex h-6 w-6 bg-blue-50 p-1 text-blue-900 hover:bg-blue-200 focus:ring-2 focus:ring-blue-400 dark:bg-blue-900 dark:text-blue-400 dark:hover:bg-blue-800"
               @click="uiStore.sidebarCtaVisible = false"
             >
               <span class="sr-only">Close</span>

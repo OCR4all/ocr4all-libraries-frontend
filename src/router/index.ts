@@ -18,6 +18,8 @@ const ResultViewer = () =>
 const NodeFlowPage = () => import("@/pages/NodeFlowPage.vue");
 const WorkflowsPage = () => import("@/pages/WorkflowsPage.vue");
 
+const UploadPage = () => import("@/pages/repository/UploadPage.vue")
+
 import { useAuthStore } from "@/stores/auth.store";
 import { useConfigStore } from "@/stores/config.store";
 
@@ -31,6 +33,17 @@ const routes = [
     path: "/queue",
     name: "Queue",
     component: QueuePage,
+  },
+  {
+    path: "/repository",
+    name: "Repository",
+    children: [
+      {
+        path: "upload",
+        name: "Upload",
+        component: UploadPage,
+      }
+    ]
   },
   {
     path: "/project",
