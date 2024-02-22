@@ -5,7 +5,7 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { defineConfig } from "vite";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
-import VueDevTools from 'vite-plugin-vue-devtools'
+import VueDevTools from "vite-plugin-vue-devtools";
 import { visualizer } from "rollup-plugin-visualizer";
 import { version as pkgVersion } from "./package.json";
 
@@ -32,7 +32,7 @@ export default defineConfig({
       // locale messages resource pre-compile option
       include: resolve(
         dirname(fileURLToPath(import.meta.url)),
-        "./src/locales/**"
+        "./src/locales/**",
       ),
     }),
     AutoImport({

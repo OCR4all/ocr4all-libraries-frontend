@@ -9,7 +9,7 @@ import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
@@ -87,16 +87,7 @@ async function deleteProject() {
         class="mb-2 inline-block text-sm text-gray-800 dark:text-white sm:text-base"
         >{{ $t("pages.projects.project.information.form.keywords") }}</label
       >
-      <Chips
-        v-model="keywords"
-        :pt="{
-          root: {
-            class: '!rounded-lg dark:!rounded-lg dark:!bg-zinc-700 !w-fit',
-          },
-          token: { class: 'dark:!bg-zinc-800 dark:!text-white' },
-          input: { class: 'dark:!text-gray-100' },
-        }"
-      />
+      <Chips v-model="keywords" />
     </div>
 
     <div class="col-span-4 flex flex-col">
@@ -111,27 +102,6 @@ async function deleteProject() {
         option-label="name"
         placeholder="Select a City"
         class="md:w-14rem w-full"
-        :pt="{
-          root: {
-            class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-          },
-          input: {
-            class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-          },
-          list: {
-            class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-          },
-          header: {
-            class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-          },
-          filterContainer: {
-            class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-          },
-          item: {
-            class:
-              'dark:!bg-zinc-700 dark:hover:!bg-zinc-500 dark:!text-white dark:!border-none',
-          },
-        }"
       />
     </div>
 
@@ -144,7 +114,7 @@ async function deleteProject() {
       <Textarea v-model="description" rows="5" cols="30" />
     </div>
     <button
-      class="col-span-4 inline-block rounded-lg bg-blue-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-blue-300 transition duration-100 hover:bg-blue-600 focus-visible:ring active:bg-blue-700 md:col-span-1 md:text-base"
+      class="col-span-4 inline-block rounded-lg bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
       @click="update"
     >
       {{ $t("pages.projects.project.information.buttons.update") }}
@@ -161,31 +131,27 @@ async function deleteProject() {
       modal
       :header="$t('pages.projects.project.information.modals.delete.header')"
       :style="{ width: '50vw' }"
-      :pt="{
-        root: { class: 'dark:!bg-zinc-800' },
-        header: { class: 'dark:!bg-zinc-800' },
-        headerTitle: { class: 'dark:!text-white' },
-        headerIcons: { class: 'dark:!text-white' },
-        closeButton: { class: 'dark:!text-white' },
-        content: { class: 'dark:!bg-zinc-800' },
-      }"
     >
       <p class="pb-5 dark:text-gray-200">
-        {{ $t('pages.projects.project.information.modals.delete.content') }}
+        {{ $t("pages.projects.project.information.modals.delete.content") }}
       </p>
       <button
         type="button"
         class="mb-2 mr-2 rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-500 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
         @click="deleteDialogVisible = false"
       >
-        {{ $t('pages.projects.project.information.modals.delete.buttons.cancel') }}
+        {{
+          $t("pages.projects.project.information.modals.delete.buttons.cancel")
+        }}
       </button>
       <button
         type="button"
         class="mb-2 mr-2 rounded-lg bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
         @click="deleteProject"
       >
-        {{ $t('pages.projects.project.information.modals.delete.buttons.delete') }}
+        {{
+          $t("pages.projects.project.information.modals.delete.buttons.delete")
+        }}
       </button>
     </Dialog>
   </div>

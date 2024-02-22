@@ -15,8 +15,8 @@ import { useAuthStore } from "@/stores/auth.store";
 import { useUiStore } from "@/stores/ui.store";
 
 const countries = ref([
-  { name: "🇩🇪", code: "de" },
-  { name: "🇬🇧", code: "en" },
+  { name: "German 🇩🇪", code: "de" },
+  { name: "English 🇬🇧", code: "en" },
 ]);
 const selectedCountry = ref(countries.value[1]);
 
@@ -41,17 +41,18 @@ function logout() {
   authStore.logout();
 }
 
-function save(){
-  t.locale.value = selectedCountry.value.code
-  useStorage("ocr4all/frontend/language", "en").value = selectedCountry.value.code
-  visible.value = false
+function save() {
+  t.locale.value = selectedCountry.value.code;
+  useStorage("ocr4all/frontend/language", "en").value =
+    selectedCountry.value.code;
+  visible.value = false;
 }
 </script>
 
 <template>
   <Menu as="div" class="mt-2">
     <MenuButton
-      class="rounded-full focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 mx-2"
+      class="mx-2 rounded-full focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
     >
       <UserIcon
         aria-hidden="true"
@@ -91,15 +92,6 @@ function save(){
     modal
     header="Settings"
     :style="{ width: '50vw' }"
-    :pt="{
-      root: { class: 'dark:!bg-zinc-800' },
-      header: { class: 'dark:!bg-zinc-800' },
-      headerTitle: { class: 'dark:!text-white' },
-      headerIcons: { class: 'dark:!text-white' },
-      footer: { class: 'dark:!bg-zinc-800' },
-      closeButton: { class: 'dark:!text-white' },
-      content: { class: 'dark:!bg-zinc-800' },
-    }"
   >
     <div class="grid grid-cols-2 grid-rows-2 gap-2">
       <div class="dark:!text-gray-200">Username</div>
@@ -111,27 +103,6 @@ function save(){
         optionLabel="name"
         placeholder="Language"
         class="md:w-14rem w-full"
-        :pt="{
-          root: {
-            class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-          },
-          input: {
-            class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-          },
-          list: {
-            class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-          },
-          header: {
-            class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-          },
-          filterContainer: {
-            class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-          },
-          item: {
-            class:
-              'dark:!bg-zinc-700 dark:hover:!bg-zinc-500 dark:!text-white dark:!border-none',
-          },
-        }"
       >
         <template #value="slotProps">
           <div v-if="slotProps.value" class="align-items-center flex">
@@ -162,10 +133,11 @@ function save(){
     </div>
     <template #footer>
       <Button
-          :label="$t('settings.buttons.close')"
-          icon="pi pi-times"
-          text
-          @click="visible = false" />
+        :label="$t('settings.buttons.close')"
+        icon="pi pi-times"
+        text
+        @click="visible = false"
+      />
       <Button
         :label="$t('settings.buttons.save')"
         severity="info"

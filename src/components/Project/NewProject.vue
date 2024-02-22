@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
 const steps = [
   { label: t("pages.projects.new.stepper.name") },
   { label: t("pages.projects.new.stepper.metadata") },
-  { label: t("pages.projects.new.stepper.images") }];
+  { label: t("pages.projects.new.stepper.images") },
+];
 const step = ref(0);
 function back() {
   step.value -= 1;
@@ -36,7 +37,7 @@ const breadcrumbCurrent = { label: "New" };
             <span
               class="h-6 w-6 rounded-full text-center text-[10px]/6 font-bold text-gray-500"
               :class="{
-                'bg-blue-600': index === step,
+                'bg-primary-600': index === step,
                 'text-white': index === step,
                 'bg-gray-100': index !== step,
               }"

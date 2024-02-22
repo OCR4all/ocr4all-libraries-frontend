@@ -20,49 +20,14 @@ const breadcrumbCurrent = { label: project };
   <div
     class="rounded-lg bg-white p-5 shadow-md dark:border dark:border-gray-700 dark:bg-zinc-800"
   >
-    <TabView
-      :pt="{
-        root: { class: 'dark:!bg-zinc-800' },
-        navContainer: { class: 'dark:!bg-zinc-800' },
-        navContent: { class: 'dark:!bg-zinc-800' },
-        nav: { class: 'dark:!bg-zinc-800' },
-        panelContainer: { class: 'dark:!bg-zinc-800' },
-      }"
-    >
-      <TabPanel
-        header="Results"
-        :pt="{
-          root: { class: 'dark:!bg-zinc-800' },
-          header: { class: 'dark:!bg-zinc-800' },
-          headerAction: { class: 'dark:!bg-zinc-800 dark:!text-blue-500' },
-          headerTitle: { class: 'dark:!bg-zinc-800 dark:!text-white' },
-          content: { class: 'dark:!bg-zinc-800' },
-        }"
-      >
+    <TabView>
+      <TabPanel header="Results">
         <Results />
       </TabPanel>
-      <TabPanel
-        header="Images"
-        :pt="{
-          root: { class: 'dark:!bg-zinc-800' },
-          header: { class: 'dark:!bg-zinc-800' },
-          headerAction: { class: 'dark:!bg-zinc-800 dark:!text-blue-500' },
-          headerTitle: { class: 'dark:!bg-zinc-800 dark:!text-white' },
-          content: { class: 'dark:!bg-zinc-800' },
-        }"
-      >
+      <TabPanel header="Images">
         <Images />
       </TabPanel>
-      <TabPanel
-        header="Information"
-        :pt="{
-          root: { class: 'dark:!bg-zinc-800' },
-          header: { class: 'dark:!bg-zinc-800' },
-          headerAction: { class: 'dark:!bg-zinc-800 dark:!text-blue-500' },
-          headerTitle: { class: 'dark:!bg-zinc-800 dark:!text-white' },
-          content: { class: 'dark:!bg-zinc-800' },
-        }"
-      >
+      <TabPanel header="Information">
         <Information />
       </TabPanel>
     </TabView>

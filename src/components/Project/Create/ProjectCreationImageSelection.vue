@@ -38,7 +38,7 @@ async function importFromExchange() {
       <button
         @click="importFromExchange"
         type="button"
-        class="mr-2 inline-flex items-center rounded-lg bg-blue-700 px-8 py-5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        class="mr-2 inline-flex items-center rounded-lg bg-primary-700 px-8 py-5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
       >
         <FolderPlusIcon class="mr-2 h-5 w-5" />
         {{ $t("pages.projects.new.components.images.buttons.exchange") }}
@@ -46,7 +46,7 @@ async function importFromExchange() {
       <button
         disabled
         type="button"
-        class="mr-2 inline-flex items-center rounded-lg bg-blue-700 px-8 py-5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:bg-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:bg-blue-400"
+        class="mr-2 inline-flex items-center rounded-lg bg-primary-700 px-8 py-5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 disabled:bg-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 dark:disabled:bg-primary-400"
       >
         <CloudArrowUpIcon class="mr-2 h-5 w-5" />
         {{ $t("pages.projects.new.components.images.buttons.upload") }}

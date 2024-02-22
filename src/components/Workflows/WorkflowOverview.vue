@@ -14,7 +14,7 @@ import InlineMessage from "primevue/inlinemessage";
 import Textarea from "primevue/textarea";
 import { FilterMatchMode } from "primevue/api";
 
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
 import { useToast } from "primevue/usetoast";
@@ -63,19 +63,17 @@ function toggleEditDialog() {
 }
 
 async function editWorkflow(id) {
-  const { error, data } = await useCustomFetch(
-    `/workflow/pull/${id}`
-  )
+  const { error, data } = await useCustomFetch(`/workflow/pull/${id}`)
     .get()
     .json();
-  if(error.value){
+  if (error.value) {
     toast.add({
       severity: "error",
       summary: t("pages.workflows.toasts.update.error.summary"),
       detail: t("pages.workflows.toasts.update.error.detail"),
       life: 3000,
     });
-  }else{
+  } else {
     originalWorkflowName.value = data.value.metadata.label;
     workflowMetadata.value = data.value.metadata;
     workflowView.value = data.value.view;
@@ -89,13 +87,13 @@ function toggleDeleteDialog() {
 
 async function updateWorkflow() {
   const workflowListData = await useCustomFetch(
-    `${import.meta.env.VITE_API_URL}/workflow/list`
+    `${import.meta.env.VITE_API_URL}/workflow/list`,
   )
     .get()
     .json();
   if (
     workflowListData.data.value.filter(
-      (entry) => entry.label === workflowMetadata.value.label
+      (entry) => entry.label === workflowMetadata.value.label,
     ).length > 0 &&
     originalWorkflowName.value != workflowMetadata.value.label
   ) {
@@ -106,18 +104,18 @@ async function updateWorkflow() {
       description: workflowMetadata.value.description,
     };
     const { error } = await useCustomFetch(
-      `/workflow/update/${workflowMetadata.value.id}`
+      `/workflow/update/${workflowMetadata.value.id}`,
     )
       .post(payload)
       .json();
-    if(error.value){
+    if (error.value) {
       toast.add({
         severity: "error",
         summary: t("pages.workflows.toasts.update.error.summary"),
         detail: t("pages.workflows.toasts.update.error.detail"),
         life: 3000,
       });
-    }else{
+    } else {
       toast.add({
         severity: "success",
         summary: t("pages.workflows.toasts.update.success.summary"),
@@ -137,7 +135,7 @@ function loadWorkflow(id) {
 
 async function deleteWorkflow() {
   const { data } = await useCustomFetch(
-    `/workflow/remove/${workflowMetadata.value.id}`
+    `/workflow/remove/${workflowMetadata.value.id}`,
   )
     .get()
     .json();
@@ -155,12 +153,7 @@ async function deleteWorkflow() {
 <template>
   <Toast />
   <div class="card">
-    <Toolbar
-      :pt="{
-        root: { class: '!rounded-xl !bg-white dark:!bg-zinc-800 !border-none !shadow-md' },
-      }"
-      class="mb-4"
-    >
+    <Toolbar class="mb-4">
       <template #start>
         <div class="my-2 space-x-2">
           <button
@@ -192,23 +185,15 @@ async function deleteWorkflow() {
       sortField="date"
       :sortOrder="-1"
       :row-hover="true"
-      :pt="{
-        header: {
-          class: 'rounded-t-xl dark:!bg-zinc-800 dark:!text-white !border-none !shadow-md',
-        },
-        wrapper: { class: 'dark:!bg-zinc-700 dark:!text-white !border-none' },
-        row: { class: 'dark:!bg-zinc-700 dark:!text-white !border-none' },
-        emptyMessage: {
-          class: 'dark:!bg-zinc-700 dark:!text-white !border-none',
-        },
-      }"
       paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :rows-per-page-options="[10, 25, 50]"
       responsive-layout="scroll"
     >
       <template #header>
         <div class="flex justify-between">
-          <h2 class="my-4 text-xl">{{ $t("pages.workflows.table.heading") }}</h2>
+          <h2 class="my-4 text-xl">
+            {{ $t("pages.workflows.table.heading") }}
+          </h2>
           <span class="p-input-icon-left ml-10">
             <InputText
               v-model="filters['global'].value"
@@ -217,7 +202,11 @@ async function deleteWorkflow() {
           </span>
         </div>
       </template>
-      <template #empty> {{ $t("pages.workflows.table.empty") }} </template>
+      <template #empty>
+        <span class="text-primary-950 dark:text-primary-50">{{
+          $t("pages.workflows.table.empty")
+        }}</span>
+      </template>
       <template #loading>
         <DefaultSpinner />
       </template>
@@ -225,11 +214,6 @@ async function deleteWorkflow() {
         :header="$t('pages.workflows.table.columns.open')"
         :exportable="false"
         style="min-width: 8rem"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       >
         <template #body="slotProps">
           <div class="space-y-2">
@@ -247,21 +231,11 @@ async function deleteWorkflow() {
         field="label"
         :header="$t('pages.workflows.table.columns.name')"
         :sortable="true"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       ></Column>
       <Column
         field="description"
         :header="$t('pages.workflows.table.columns.description')"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
-        >>
+      >
         <template #body="slotProps">
           <p class="max-w-xs truncate">{{ slotProps.data.description }}</p>
         </template>
@@ -270,12 +244,7 @@ async function deleteWorkflow() {
         field="date"
         :header="$t('pages.workflows.table.columns.updated')"
         :sortable="true"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
-        >
+      >
         <template #body="slotProps">
           <UseTimeAgo
             v-slot="{ timeAgo }"
@@ -289,12 +258,7 @@ async function deleteWorkflow() {
         :header="$t('pages.workflows.table.columns.actions')"
         :exportable="false"
         style="min-width: 8rem"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
-        >>
+      >
         <template #body="slotProps">
           <div class="space-y-2">
             <button
@@ -313,15 +277,6 @@ async function deleteWorkflow() {
       modal
       header="Edit"
       :style="{ width: '50vw' }"
-      :pt="{
-        root: { class: 'dark:!bg-zinc-800' },
-        header: { class: 'dark:!bg-zinc-800' },
-        headerTitle: { class: 'dark:!text-white' },
-        headerIcons: { class: 'dark:!text-white' },
-        closeButton: { class: 'dark:!text-white' },
-        content: { class: 'dark:!bg-zinc-800' },
-        footer: { class: 'dark:!bg-zinc-800' },
-      }"
     >
       <div class="mx-auto grid grid-cols-6 gap-4">
         <div class="col-span-3 flex flex-col">
@@ -377,10 +332,6 @@ async function deleteWorkflow() {
           label="Cancel"
           icon="pi pi-times"
           @click="toggleEditDialog"
-          :pt="{
-            label: { class: 'dark:text-blue-200' },
-            icon: { class: 'dark:text-blue-200' },
-          }"
           text
         />
         <Button
@@ -396,14 +347,6 @@ async function deleteWorkflow() {
       modal
       header="Delete Workflow"
       :style="{ width: '50vw' }"
-      :pt="{
-        root: { class: 'dark:!bg-zinc-800' },
-        header: { class: 'dark:!bg-zinc-800' },
-        headerTitle: { class: 'dark:!text-white' },
-        headerIcons: { class: 'dark:!text-white' },
-        closeButton: { class: 'dark:!text-white' },
-        content: { class: 'dark:!bg-zinc-800' },
-      }"
     >
       <p class="pb-5 dark:text-gray-200">
         Do you really want to delete this workflow?

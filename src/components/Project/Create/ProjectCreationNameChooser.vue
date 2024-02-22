@@ -22,15 +22,14 @@ async function createProject() {
   } else {
     noName.value = false;
 
-    const { isFetching, error, data } = await useCustomFetch(
-      `/project/list`
-    ).json();
+    const { isFetching, error, data } =
+      await useCustomFetch(`/project/list`).json();
     let result = [...data.value.map((e) => e.id)];
     if (result.includes(projectName.value)) {
       nameTaken.value = true;
     } else {
       const { isFetching_a, error_a, data_a } = await useCustomFetch(
-        `/project/create?id=${projectName.value}`
+        `/project/create?id=${projectName.value}`,
       ).json();
       if (!error_a) {
         store.projectId = projectName.value;
@@ -55,14 +54,16 @@ async function createProject() {
         v-model="projectName"
         :class="{ 'p-invalid': nameTaken === true }"
       />
-      <InlineMessage v-show="noName">{{ $t("pages.projects.new.components.name.warning.no-name") }}</InlineMessage>
-      <InlineMessage v-show="nameTaken"
-        >{{ $t("pages.projects.new.components.name.warning.name-taken") }}</InlineMessage
-      >
+      <InlineMessage v-show="noName">{{
+        $t("pages.projects.new.components.name.warning.no-name")
+      }}</InlineMessage>
+      <InlineMessage v-show="nameTaken">{{
+        $t("pages.projects.new.components.name.warning.name-taken")
+      }}</InlineMessage>
     </div>
     <button
       type="button"
-      class="mb-2 mr-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      class="mb-2 mr-2 rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
       @click="createProject"
     >
       {{ $t("pages.projects.new.components.name.buttons.create") }}

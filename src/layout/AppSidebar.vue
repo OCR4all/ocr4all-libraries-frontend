@@ -12,6 +12,7 @@ import {
   HomeIcon,
   XMarkIcon,
   Square3Stack3DIcon,
+  ServerIcon,
 } from "@heroicons/vue/24/outline";
 import { useUiStore } from "@/stores/ui.store";
 
@@ -22,9 +23,22 @@ const sidebarLgOpened = ref(true);
 
 const mainNavigation = [
   { to: "/", label: "nav.sidebar.links.dashboard", icon: HomeIcon },
+  {
+    to: "/repository",
+    label: "nav.sidebar.links.repository",
+    icon: ServerIcon,
+  },
   { to: "/project", label: "nav.sidebar.links.projects", icon: Squares2X2Icon },
-  { to: "/workflows", label: "nav.sidebar.links.workflows", icon: Square3Stack3DIcon },
-  { to: "/nodeflow", label: "nav.sidebar.links.nodeflow", icon: CubeTransparentIcon },
+  {
+    to: "/workflows",
+    label: "nav.sidebar.links.workflows",
+    icon: Square3Stack3DIcon,
+  },
+  {
+    to: "/nodeflow",
+    label: "nav.sidebar.links.nodeflow",
+    icon: CubeTransparentIcon,
+  },
   { to: "/queue", label: "nav.sidebar.links.queue", icon: QueueListIcon },
 ];
 
@@ -64,7 +78,7 @@ defineExpose({
         as="template"
       >
         <div
-          class="relative z-10 flex h-full w-72 flex-col border-r border-gray-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 lg:hidden shadow-xl"
+          class="relative z-10 flex h-full w-72 flex-col border-r border-gray-200 bg-white shadow-xl dark:border-zinc-700 dark:bg-zinc-800 lg:hidden"
         >
           <button
             value="Close sidebar"
@@ -78,7 +92,7 @@ defineExpose({
             <img src="/img/logo.svg" class="h-9 w-48" alt="OCR4all logo" />
           </div>
           <div class="flex-1 overflow-y-auto">
-            <div class="mb-10 mx-2">
+            <div class="mx-2 mb-10">
               <router-link
                 v-for="(item, index) in mainNavigation"
                 :key="index"
@@ -114,7 +128,7 @@ defineExpose({
   <TransitionRoot
     :show="sidebarLgOpened"
     as="div"
-    class="overflow-y-auto border-r border-solid border-gray-200 bg-white dark:border-zinc-700 dark:bg-zinc-800 shadow-md"
+    class="overflow-y-auto border-r border-solid border-gray-200 bg-white shadow-md dark:border-zinc-700 dark:bg-zinc-800"
     enter="transition ease-in-out duration-200 transform"
     enter-from="-translate-x-full"
     enter-to="translate-x-0"
@@ -137,7 +151,7 @@ defineExpose({
         <div
           v-show="uiStore.sidebarCtaVisible"
           id="dropdown-cta"
-          class="mt-6 rounded-lg bg-blue-50 p-4 dark:bg-blue-900"
+          class="mt-6 rounded-lg bg-primary-50 p-4 dark:bg-primary-900"
           role="alert"
         >
           <div class="mb-3 flex items-center">
@@ -147,7 +161,7 @@ defineExpose({
             >
             <button
               type="button"
-              class="-mx-1.5 -my-1.5 ml-auto inline-flex h-6 w-6 bg-blue-50 p-1 text-blue-900 hover:bg-blue-200 focus:ring-2 focus:ring-blue-400 dark:bg-blue-900 dark:text-blue-400 dark:hover:bg-blue-800"
+              class="-mx-1.5 -my-1.5 ml-auto inline-flex h-6 w-6 bg-primary-50 p-1 text-primary-900 hover:bg-primary-200 focus:ring-2 focus:ring-primary-400 dark:bg-primary-900 dark:text-primary-400 dark:hover:bg-primary-800"
               @click="uiStore.sidebarCtaVisible = false"
             >
               <span class="sr-only">Close</span>

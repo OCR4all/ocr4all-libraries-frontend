@@ -9,7 +9,7 @@ import AppLayout from "@/layout/AppLayout.vue";
     >
       <div class="mx-auto text-center">
         <h1
-          class="mb-4 text-7xl font-extrabold tracking-tight text-blue-600 dark:text-blue-500 lg:text-9xl"
+          class="mb-4 text-7xl font-extrabold tracking-tight text-primary-600 dark:text-primary-500 lg:text-9xl"
         >
           404
         </h1>

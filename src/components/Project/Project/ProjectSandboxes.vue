@@ -16,7 +16,7 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
 import { useSandboxCreationStore } from "@/stores/sandboxCreation.store";
@@ -80,8 +80,12 @@ async function removeResults() {
       isDeleteDialogVisible.value = false;
       toast.add({
         severity: "success",
-        summary: t("pages.projects.sandbox.results.toasts.remove-results.success.summary"),
-        detail: t("pages.projects.sandbox.results.toasts.remove-results.success.detail"),
+        summary: t(
+          "pages.projects.sandbox.results.toasts.remove-results.success.summary",
+        ),
+        detail: t(
+          "pages.projects.sandbox.results.toasts.remove-results.success.detail",
+        ),
         life: 3000,
       });
     });
@@ -89,17 +93,12 @@ async function removeResults() {
 </script>
 <template>
   <Toast />
-  <Toolbar
-    class="mb-4"
-    :pt="{
-      root: { class: '!rounded-xl !bg-white dark:!bg-zinc-700 !border-none !shadow-md' },
-    }"
-  >
+  <Toolbar class="mb-4">
     <template #start>
       <div class="my-2 space-x-2">
         <button
           type="button"
-          class="rounded-lg bg-blue-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          class="rounded-lg bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
           @click="createSandbox()"
         >
           {{ $t("pages.projects.sandbox.results.toolbar.new") }}
@@ -113,20 +112,12 @@ async function removeResults() {
     :sortOrder="-1"
     :filters="filters"
     :globalFilterFields="['name', 'description', 'state']"
-    :pt="{
-      header: {
-        class: 'rounded-t-xl dark:!bg-zinc-700 dark:!text-white !border-none !shadow-md',
-      },
-      wrapper: { class: 'dark:!bg-zinc-600 dark:!text-white !border-none' },
-      row: { class: 'dark:!bg-zinc-600 dark:!text-white !border-none' },
-      emptyMessage: {
-        class: 'dark:!bg-zinc-600 dark:!text-white !border-none',
-      },
-    }"
   >
     <template #header>
       <div class="flex justify-between">
-        <h2 class="my-4 text-xl">{{ $t("pages.projects.sandbox.results.table.header") }}</h2>
+        <h2 class="my-4 text-xl">
+          {{ $t("pages.projects.sandbox.results.table.header") }}
+        </h2>
         <div class="space-x-2">
           <button @click="refetch">
             <ArrowPathIcon
@@ -138,30 +129,28 @@ async function removeResults() {
           <span class="p-input-icon-left ml-10">
             <InputText
               v-model="filters['global'].value"
-              :placeholder="$t('pages.projects.sandbox.results.table.search.placeholder')"
-              :pt="{
-                root: { class: 'max-w-fit' },
-              }"
+              :placeholder="
+                $t('pages.projects.sandbox.results.table.search.placeholder')
+              "
             />
           </span>
         </div>
       </div>
     </template>
-    <template #empty> {{ $t("pages.projects.sandbox.results.table.empty") }} </template>
+    <template #empty>
+      <span class="text-primary-950 dark:text-primary-50">{{
+        $t("pages.projects.sandbox.results.table.empty")
+      }}</span>
+    </template>
     <Column
       :header="$t('pages.projects.sandbox.results.table.columns.open')"
       :exportable="false"
       style="min-width: 8rem"
-      :pt="{
-        headerCell: { class: 'dark:!bg-zinc-700 !border-none' },
-        headerTitle: { class: 'dark:!text-white !border-none' },
-        bodyCell: { class: 'dark:!border-zinc-600' },
-      }"
     >
       <template #body="slotProps">
         <button
           type="button"
-          class="mr-2 inline-flex items-center rounded-lg bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          class="mr-2 inline-flex items-center rounded-lg bg-primary-600 p-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           @click="
             router.push(`/project/${project}/result/${slotProps.data.id}`)
           "
@@ -173,20 +162,10 @@ async function removeResults() {
     <Column
       field="name"
       :header="$t('pages.projects.sandbox.results.table.columns.name')"
-      :pt="{
-        headerCell: { class: 'dark:!bg-zinc-700 !border-none' },
-        headerTitle: { class: 'dark:!text-white !border-none' },
-        bodyCell: { class: 'dark:!border-zinc-600' },
-      }"
     ></Column>
     <Column
       field="description"
       :header="$t('pages.projects.sandbox.results.table.columns.description')"
-      :pt="{
-        headerCell: { class: 'dark:!bg-zinc-700 !border-none' },
-        headerTitle: { class: 'dark:!text-white !border-none' },
-        bodyCell: { class: 'dark:!border-zinc-600' },
-      }"
     ></Column>
     <Column
       field="state"
@@ -194,11 +173,6 @@ async function removeResults() {
       :header="$t('pages.projects.sandbox.results.table.columns.state')"
       :show-filter-menu="false"
       :filter-menu-style="{ width: '14rem' }"
-      :pt="{
-        headerCell: { class: 'dark:!bg-zinc-700 !border-none' },
-        headerTitle: { class: 'dark:!text-white !border-none' },
-        bodyCell: { class: 'dark:!border-zinc-600' },
-      }"
     >
       <template #body="{ data }">
         <Tag :value="data.state" :style="getColor(data.state)" />
@@ -208,11 +182,6 @@ async function removeResults() {
       field="tracking.updated"
       :header="$t('pages.projects.sandbox.results.table.columns.updated')"
       :sortable="true"
-      :pt="{
-        headerCell: { class: 'dark:!bg-zinc-700 !border-none' },
-        headerTitle: { class: 'dark:!text-white !border-none' },
-        bodyCell: { class: 'dark:!border-zinc-600' },
-      }"
     >
       <template #body="slotProps">
         <UseTimeAgo
@@ -227,11 +196,6 @@ async function removeResults() {
       :header="$t('pages.projects.sandbox.results.table.columns.actions')"
       :exportable="false"
       style="min-width: 8rem"
-      :pt="{
-        headerCell: { class: 'dark:!bg-zinc-700 !border-none' },
-        headerTitle: { class: 'dark:!text-white !border-none' },
-        bodyCell: { class: 'dark:!border-zinc-600' },
-      }"
     >
       <template #body="slotProps">
         <button
@@ -249,17 +213,9 @@ async function removeResults() {
     modal
     :header="$t('pages.projects.sandbox.results.modals.remove-results.header')"
     :style="{ width: '50vw' }"
-    :pt="{
-      root: { class: 'dark:!bg-zinc-800' },
-      header: { class: 'dark:!bg-zinc-800' },
-      headerTitle: { class: 'dark:!text-white' },
-      headerIcons: { class: 'dark:!text-white' },
-      closeButton: { class: 'dark:!text-white' },
-      content: { class: 'dark:!bg-zinc-800' },
-    }"
   >
     <p class="pb-5 dark:text-gray-200">
-      {{ $t('pages.projects.sandbox.results.modals.remove-results.content') }}
+      {{ $t("pages.projects.sandbox.results.modals.remove-results.content") }}
     </p>
     <button
       v-tooltip="'Cancel'"
@@ -267,7 +223,11 @@ async function removeResults() {
       class="mb-2 mr-2 rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-500 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
       @click="isDeleteDialogVisible = false"
     >
-      {{ $t('pages.projects.sandbox.results.modals.remove-results.buttons.cancel.text') }}
+      {{
+        $t(
+          "pages.projects.sandbox.results.modals.remove-results.buttons.cancel.text",
+        )
+      }}
     </button>
     <button
       v-tooltip="'Remove Sandbox'"
@@ -275,7 +235,11 @@ async function removeResults() {
       class="mb-2 mr-2 rounded-lg bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
       @click="removeResults"
     >
-      {{ $t('pages.projects.sandbox.results.modals.remove-results.buttons.delete.text') }}
+      {{
+        $t(
+          "pages.projects.sandbox.results.modals.remove-results.buttons.delete.text",
+        )
+      }}
     </button>
   </Dialog>
 </template>

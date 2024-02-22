@@ -20,7 +20,7 @@ export default defineComponent({
 
     const showContextMenu = ref(false);
     const hasContextMenu = computed(() =>
-      props.type.startsWith(GRAPH_NODE_TYPE_PREFIX)
+      props.type.startsWith(GRAPH_NODE_TYPE_PREFIX),
     );
 
     const openContextMenu = () => {
@@ -29,10 +29,10 @@ export default defineComponent({
 
     const onContextMenuClick = (action: string) => {
       const graphTemplateId = props.type.substring(
-        GRAPH_NODE_TYPE_PREFIX.length
+        GRAPH_NODE_TYPE_PREFIX.length,
       );
       const graphTemplate = viewModel.value.editor.graphTemplates.find(
-        (gt) => gt.id === graphTemplateId
+        (gt) => gt.id === graphTemplateId,
       );
       if (!graphTemplate) {
         return;

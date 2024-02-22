@@ -57,17 +57,12 @@ const states = ref(["active", "closed", "blocked"]);
 </script>
 <template>
   <div class="card">
-    <Toolbar
-      :pt="{
-        root: { class: '!rounded-xl !bg-white dark:!bg-zinc-800 !border-none !shadow-md' },
-      }"
-      class="mb-4"
-    >
+    <Toolbar>
       <template #start>
         <div class="my-2 space-x-2">
           <button
             type="button"
-            class="rounded-lg bg-blue-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            class="rounded-lg bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             @click="router.push('/project/new')"
           >
             {{ $t("pages.projects.overview.toolbar.new") }}
@@ -75,7 +70,7 @@ const states = ref(["active", "closed", "blocked"]);
           <button
             disabled
             type="button"
-            class="rounded-lg bg-blue-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:bg-blue-400 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 dark:disabled:bg-blue-400"
+            class="rounded-lg bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 disabled:bg-primary-400 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 dark:disabled:bg-blue-400"
             @click="router.push('/project/import')"
           >
             {{ $t("pages.projects.overview.toolbar.import") }}
@@ -103,32 +98,30 @@ const states = ref(["active", "closed", "blocked"]);
       sortField="tracking.updated"
       :sortOrder="-1"
       :row-hover="true"
-      :pt="{
-        header: {
-          class: 'rounded-t-xl dark:!bg-zinc-800 dark:!text-white !border-none !shadow-md',
-        },
-        wrapper: { class: 'dark:!bg-zinc-700 dark:!text-white !border-none' },
-        row: { class: 'dark:!bg-zinc-700 dark:!text-white !border-none' },
-        emptyMessage: {
-          class: 'dark:!bg-zinc-700 dark:!text-white !border-none',
-        },
-      }"
       paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :rows-per-page-options="[10, 25, 50]"
       responsive-layout="scroll"
     >
       <template #header>
         <div class="flex justify-between">
-          <h2 class="my-4 text-xl">{{ $t("pages.projects.overview.table.header") }}</h2>
+          <h2 class="my-4 text-xl">
+            {{ $t("pages.projects.overview.table.header") }}
+          </h2>
           <span class="p-input-icon-left ml-10">
             <InputText
               v-model="filters['global'].value"
-              :placeholder="$t('pages.projects.overview.table.search.placeholder')"
+              :placeholder="
+                $t('pages.projects.overview.table.search.placeholder')
+              "
             />
           </span>
         </div>
       </template>
-      <template #empty> {{ $t("pages.projects.overview.table.empty") }} </template>
+      <template #empty>
+        <span class="text-primary-950 dark:text-primary-50">{{
+          $t("pages.projects.overview.table.empty")
+        }}</span>
+      </template>
       <template #loading>
         <DefaultSpinner />
       </template>
@@ -136,11 +129,6 @@ const states = ref(["active", "closed", "blocked"]);
         :exportable="false"
         :header="$t('pages.projects.overview.table.columns.open')"
         style="min-width: 8rem"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       >
         <template #body="slotProps">
           <button
@@ -156,20 +144,10 @@ const states = ref(["active", "closed", "blocked"]);
         field="name"
         :header="$t('pages.projects.overview.table.columns.project')"
         :sortable="true"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       ></Column>
       <Column
         field="description"
         :header="$t('pages.projects.overview.table.columns.description')"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       >
         <template #body="slotProps">
           <p class="max-w-xs truncate">{{ slotProps.data.description }}</p>
@@ -180,11 +158,6 @@ const states = ref(["active", "closed", "blocked"]);
         :header="$t('pages.projects.overview.table.columns.state')"
         :showFilterMenu="false"
         :filterMenuStyle="{ width: '14rem' }"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       >
         <template #body="{ data }">
           <Tag :value="data.state" :severity="getSeverity(data.state)" />
@@ -198,27 +171,6 @@ const states = ref(["active", "closed", "blocked"]);
             class="p-column-filter"
             style="min-width: 12rem"
             :showClear="true"
-            :pt="{
-              root: {
-                class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-              },
-              input: {
-                class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-              },
-              list: {
-                class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-              },
-              header: {
-                class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-              },
-              filterContainer: {
-                class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-              },
-              item: {
-                class:
-                  'dark:!bg-zinc-700 dark:hover:!bg-zinc-500 dark:!text-white dark:!border-none',
-              },
-            }"
           >
             <template #option="slotProps">
               <Tag
@@ -229,14 +181,7 @@ const states = ref(["active", "closed", "blocked"]);
           </Dropdown>
         </template>
       </Column>
-      <Column
-          :header="$t('pages.projects.overview.table.columns.keywords')"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
-      >
+      <Column :header="$t('pages.projects.overview.table.columns.keywords')">
         <template #body="slotProps">
           <Tag
             v-for="keyword in slotProps.data.keywords"
@@ -250,11 +195,6 @@ const states = ref(["active", "closed", "blocked"]);
         field="tracking.created"
         :header="$t('pages.projects.overview.table.columns.created')"
         :sortable="true"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       >
         <template #body="slotProps">
           <UseTimeAgo
@@ -269,11 +209,6 @@ const states = ref(["active", "closed", "blocked"]);
         field="tracking.updated"
         :header="$t('pages.projects.overview.table.columns.last-updated')"
         :sortable="true"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       >
         <template #body="slotProps">
           <UseTimeAgo

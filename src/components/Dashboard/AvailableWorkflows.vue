@@ -44,21 +44,11 @@ refetch();
       paginator
       paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
       :rows="3"
-      :pt="{
-        header: {
-          class: 'rounded-t-xl dark:!bg-zinc-800 dark:!text-white !border-none',
-        },
-        wrapper: { class: 'dark:!bg-zinc-700 dark:!text-white !border-none' },
-        row: { class: 'dark:!bg-zinc-700 dark:!text-white !border-none' },
-        emptyMessage: {
-          class: 'dark:!bg-zinc-700 dark:!text-white !border-none',
-        },
-      }"
     >
       <template #header>
         <div class="flex justify-between">
           <div>
-            <p> {{ $t("pages.dashboard.components.workflows.header") }} </p>
+            <p>{{ $t("pages.dashboard.components.workflows.header") }}</p>
           </div>
           <div class="flex justify-end">
             <button :disabled="isRefetching === true" @click="refetch">
@@ -75,35 +65,24 @@ refetch();
           </div>
         </div>
       </template>
-      <template #empty>{{$t("pages.dashboard.components.workflows.empty")}}</template>
+      <template #empty
+        ><span class="text-primary-950 dark:text-primary-50">{{
+          $t("pages.dashboard.components.workflows.empty")
+        }}</span></template
+      >
       <template #loading>
         <DefaultSpinner />
       </template>
       <Column
         field="label"
         :header="$t('pages.dashboard.components.workflows.columns.name')"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       ></Column>
       <Column
         field="description"
         :header="$t('pages.dashboard.components.workflows.columns.description')"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       ></Column>
       <Column
-          :header="$t('pages.dashboard.components.workflows.columns.updated')"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
+        :header="$t('pages.dashboard.components.workflows.columns.updated')"
       >
         <template #body="slotProps">
           <UseTimeAgo

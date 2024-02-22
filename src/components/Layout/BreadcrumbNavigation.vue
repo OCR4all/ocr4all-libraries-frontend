@@ -13,7 +13,7 @@ defineProps<{
           <RouterLink
             :to="home.to"
             href="#"
-            class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-200 dark:hover:text-white md:ml-2"
+            class="unstyled bg-ml-1 text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-200 dark:hover:text-white md:ml-2"
             >{{ home.label }}</RouterLink
           >
         </div>
@@ -35,7 +35,7 @@ defineProps<{
           </svg>
           <RouterLink
             :to="entry.to"
-            class="ml-1 text-sm font-medium text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-white md:ml-2"
+            class="ml-1 text-sm font-medium text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white md:ml-2"
           >
             {{ entry.label }}</RouterLink
           >

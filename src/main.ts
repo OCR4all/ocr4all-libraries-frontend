@@ -10,7 +10,7 @@ import router from "./router";
 
 // PrimeVue imports
 import PrimeVue from "primevue/config";
-import Tailwind from "primevue/passthrough/tailwind";
+import CPreset from "./presets";
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
 import "primevue/resources/themes/tailwind-light/theme.css";
@@ -25,10 +25,10 @@ const messages = Object.fromEntries(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     import.meta.glob<{ default: any }>("./locales/*.json", {
       eager: true,
-    })
+    }),
   ).map(([key, value]) => {
     return [key.slice(10, -5), value.default];
-  })
+  }),
 );
 
 const i18n = createI18n({
@@ -42,7 +42,7 @@ const i18n = createI18n({
 
 app.use(i18n);
 app.use(createPinia());
-app.use(PrimeVue, { unstyled: true, pt: Tailwind });
+app.use(PrimeVue, { unstyled: true, pt: CPreset });
 app.use(ToastService);
 app.use(router);
 app.directive("tooltip", Tooltip);

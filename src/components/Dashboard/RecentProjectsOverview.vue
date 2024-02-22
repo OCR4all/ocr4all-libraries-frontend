@@ -52,25 +52,19 @@ function getStateSeverity(state) {
       :loading="initialLoading"
       paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       responsive-layout="scroll"
-      :pt="{
-        header: {
-          class: 'rounded-t-xl dark:!bg-zinc-800 dark:!text-white !border-none',
-        },
-        wrapper: { class: 'dark:!bg-zinc-700 dark:!text-white !border-none' },
-        row: { class: 'dark:!bg-zinc-700 dark:!text-white !border-none' },
-        emptyMessage: {
-          class: 'dark:!bg-zinc-700 dark:!text-white !border-none',
-        },
-      }"
     >
-      <template #empty> {{ $t("pages.dashboard.components.recent-projects.empty") }} </template>
+      <template #empty
+        ><span class="text-primary-950 dark:text-primary-50">{{
+          $t("pages.dashboard.components.recent-projects.empty")
+        }}</span></template
+      >
       <template #loading>
         <DefaultSpinner />
       </template>
       <template #header>
         <div class="flex justify-between">
           <div>
-            <p>  {{ $t("pages.dashboard.components.recent-projects.header") }} </p>
+            <p>{{ $t("pages.dashboard.components.recent-projects.header") }}</p>
           </div>
           <div class="flex justify-end">
             <button :disabled="isRefetching === true" @click="refetch">
@@ -89,22 +83,14 @@ function getStateSeverity(state) {
       </template>
       <Column
         field="name"
-        :header="$t('pages.dashboard.components.recent-projects.columns.project')"
+        :header="
+          $t('pages.dashboard.components.recent-projects.columns.project')
+        "
         :sortable="true"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
         >></Column
       >
       <Column
-          :header="$t('pages.dashboard.components.recent-projects.columns.state')"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
+        :header="$t('pages.dashboard.components.recent-projects.columns.state')"
         >>
         <template #body="slotProps">
           <Tag
@@ -115,13 +101,10 @@ function getStateSeverity(state) {
       </Column>
       <Column
         field="tracking.updated"
-        :header="$t('pages.dashboard.components.recent-projects.columns.last-updated')"
+        :header="
+          $t('pages.dashboard.components.recent-projects.columns.last-updated')
+        "
         :sortable="true"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       >
         <template #body="slotProps">
           <UseTimeAgo

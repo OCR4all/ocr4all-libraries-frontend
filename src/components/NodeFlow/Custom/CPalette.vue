@@ -26,11 +26,11 @@ const categories = computed<
   Array<{ name: string; nodeTypes: NodeTypeInformations }>
 >(() => {
   const nodeTypeEntries = Array.from(
-    viewModel.value.editor.nodeTypes.entries()
+    viewModel.value.editor.nodeTypes.entries(),
   );
 
   const categoryNames = new Set(
-    nodeTypeEntries.map(([, ni]) => ni["category"])
+    nodeTypeEntries.map(([, ni]) => ni["category"]),
   );
 
   const categories: Array<{ name: string; nodeTypes: NodeTypeInformations }> =
@@ -38,7 +38,7 @@ const categories = computed<
   for (const category of categoryNames.values()) {
     if (category !== "Subgraphs") {
       let nodeTypesInCategory = nodeTypeEntries.filter(
-        ([, ni]) => ni["category"] === category
+        ([, ni]) => ni["category"] === category,
       );
 
       if (nodeTypesInCategory.length > 0) {
@@ -52,11 +52,7 @@ const categories = computed<
     }
 
     // Hardcode sort order of categories, this should be handled differently in the future (get sort order from backend?)
-    const sortOrder = [
-      "Preprocessing",
-      "Layout Analysis",
-      "Text Recognition",
-    ];
+    const sortOrder = ["Preprocessing", "Layout Analysis", "Text Recognition"];
     categories.sort((x, y) => {
       return sortOrder.indexOf(x as string) - sortOrder.indexOf(y as string);
     });

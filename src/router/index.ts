@@ -5,7 +5,8 @@ const LoginPage = () => import("@/pages/LoginPage.vue");
 const NotFoundPage = () => import("@/pages/NotFoundPage.vue");
 const QueuePage = () => import("@/pages/QueuePage.vue");
 const ProjectPage = () => import("@/pages/ProjectPage.vue");
-const Overview = () => import("@/components/Project/ProjectsOverview.vue");
+const ProjectOverview = () =>
+  import("@/components/Project/ProjectsOverview.vue");
 const New = () => import("@/components/Project/NewProject.vue");
 const Sandbox = () =>
   import("@/components/Project/Project/Sandbox/NewSandbox.vue");
@@ -17,8 +18,14 @@ const ResultViewer = () =>
   import("@/components/Project/Project/Sandbox/ResultViewer.vue");
 const NodeFlowPage = () => import("@/pages/NodeFlowPage.vue");
 const WorkflowsPage = () => import("@/pages/WorkflowsPage.vue");
+const RepositoryOverview = () =>
+  import("@/components/Repository/RepositoryOverview.vue");
+const RepositoryUpload = () =>
+  import("@/components/Repository/RepositoryUpload.vue");
+const RepositoryPage = () => import("@/pages/RepositoryPage.vue");
 
-const UploadPage = () => import("@/pages/repository/UploadPage.vue")
+const ContainerView = () => import("@/components/Repository/ContainerView.vue");
+const AdminPage = () => import("@/pages/AdminPage.vue");
 
 import { useAuthStore } from "@/stores/auth.store";
 import { useConfigStore } from "@/stores/config.store";
@@ -37,13 +44,25 @@ const routes = [
   {
     path: "/repository",
     name: "Repository",
+    redirect: "/repository/overview",
+    component: RepositoryPage,
     children: [
+      {
+        path: "overview",
+        name: "Repository Overview",
+        component: RepositoryOverview,
+      },
       {
         path: "upload",
         name: "Upload",
-        component: UploadPage,
-      }
-    ]
+        component: RepositoryUpload,
+      },
+      {
+        path: "container",
+        name: "Container",
+        component: ContainerView,
+      },
+    ],
   },
   {
     path: "/project",
@@ -54,7 +73,7 @@ const routes = [
       {
         path: "overview",
         name: "Overview",
-        component: Overview,
+        component: ProjectOverview,
       },
       {
         path: "new",
@@ -99,6 +118,11 @@ const routes = [
     path: "/login",
     name: "Login",
     component: LoginPage,
+  },
+  {
+    path: "/admin",
+    name: "Admin",
+    component: AdminPage,
   },
   {
     path: "/404",

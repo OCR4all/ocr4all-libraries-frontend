@@ -33,7 +33,7 @@ async function createSandbox() {
     .slice(0, -8)
     .replace(":", "-")}`;
   const { isFetching, error, data } = await useCustomFetch(
-    `/sandbox/create/${project}?id=${sandboxName}`
+    `/sandbox/create/${project}?id=${sandboxName}`,
   )
     .get()
     .json();
@@ -44,7 +44,7 @@ async function checkImageJob(startedJob) {
   return await new Promise((resolve) => {
     const jobInterval = setInterval(async () => {
       const { isFetching, error, data } = await useCustomFetch(
-        `/job/overview/administration`
+        `/job/overview/administration`,
       )
         .get()
         .json();
@@ -67,7 +67,7 @@ async function importImages() {
     description: "Import images",
   };
   const _sandboxLaunchData = await useCustomFetch(
-    `/spi/launcher/schedule/${project}/${store.sandboxId}`
+    `/spi/launcher/schedule/${project}/${store.sandboxId}`,
   )
     .post(payload)
     .json();
@@ -80,7 +80,7 @@ async function checkWorkflowJob(startedJob) {
   return await new Promise((resolve) => {
     const jobInterval = setInterval(async () => {
       const { isFetching, error, data } = await useCustomFetch(
-        `/job/overview/administration`
+        `/job/overview/administration`,
       )
         .get()
         .json();
@@ -101,7 +101,7 @@ async function launchWorkflow() {
   await importImages();
 
   const { isFetching, error, data } = await useCustomFetch(
-    `/workflow/schedule/${project}/${store.sandboxId}/${selectedWorkflow.value.id}`
+    `/workflow/schedule/${project}/${store.sandboxId}/${selectedWorkflow.value.id}`,
   )
     .post({
       "job-short-description": `${project}_${store.sandboxId}`,
@@ -138,26 +138,9 @@ async function launchWorkflow() {
       option-label="label"
       placeholder="Select a workflow"
       class="mb-4 w-fit"
-      :pt="{
-        root: { class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none' },
-        input: {
-          class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-        },
-        list: { class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none' },
-        header: {
-          class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-        },
-        filterContainer: {
-          class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-        },
-        item: {
-          class:
-            'dark:!bg-zinc-700 dark:hover:!bg-zinc-500 dark:!text-white dark:!border-none',
-        },
-      }"
     />
     <button
-      class="inline-block w-32 rounded-lg bg-blue-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-gray-300 transition duration-100 hover:bg-blue-600 focus-visible:ring active:bg-blue-700 disabled:bg-blue-300 dark:disabled:bg-blue-400 md:text-base"
+      class="inline-block w-32 rounded-lg bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-gray-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 disabled:bg-primary-300 dark:disabled:bg-primary-400 md:text-base"
       :disabled="!selectedWorkflow"
       @click="launchWorkflow"
     >
@@ -200,7 +183,7 @@ async function launchWorkflow() {
       {{ $t("pages.projects.sandbox.workflow.workflow-finished") }}
     </h2>
     <button
-      class="rounded-lg bg-blue-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      class="rounded-lg bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       @click="router.push(`/project/${project}/result/${store.sandboxId}`)"
     >
       {{ $t("pages.projects.sandbox.workflow.buttons.inspect-results") }}

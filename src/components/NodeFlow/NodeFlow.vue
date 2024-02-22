@@ -11,8 +11,6 @@ import InputText from "primevue/inputtext";
 
 import CToolbar from "@/components/NodeFlow/Custom/CToolbar.vue";
 import CPalette from "@/components/NodeFlow/Custom/CPalette.vue";
-import CSidebar from "@/components/NodeFlow/Custom/CSidebar.vue";
-import CNode from "@/components/NodeFlow/Custom/Node/CNode.vue";
 
 import { exportWorkflow } from "@/components/NodeFlow/logic/WorkflowExporter";
 import { importNodesFromAPI } from "@/components/NodeFlow/logic/NodeFactory";
@@ -23,12 +21,18 @@ import InputNode from "@/nodes/InputNode";
 import { useNodeFlowStore } from "@/stores/nodeflow.store";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
 const toast = useToast();
 
 const baklava = useBaklava();
+baklava.settings.enableMinimap = true;
+baklava.settings.palette.enabled = false;
+baklava.settings.sidebar.resizable = true;
+baklava.settings.nodes.resizable = true;
+baklava.settings.contextMenu.enabled = true;
+
 const editor = baklava.editor;
 
 const store = useNodeFlowStore();
@@ -100,20 +104,20 @@ async function saveWorkflow() {
   } else {
     isLoadingSaveWorkflow.value = true;
     const workflowListData = await useCustomFetch(
-      `${import.meta.env.VITE_API_URL}/workflow/list`
+      `${import.meta.env.VITE_API_URL}/workflow/list`,
     )
       .get()
       .json();
     if (
       workflowListData.data.value.filter(
-        (entry) => entry.label === workflowName.value
+        (entry) => entry.label === workflowName.value,
       ).length > 0 &&
       originalWorkflowName.value !== workflowName.value
     ) {
       labelTaken.value = true;
     } else {
       const { isFetching, error, data } = await useCustomFetch(
-        `${import.meta.env.VITE_API_URL}/spi/list`
+        `${import.meta.env.VITE_API_URL}/spi/list`,
       )
         .get()
         .json();
@@ -149,7 +153,7 @@ async function saveWorkflow() {
 
 async function loadWorkflow() {
   const { isFetching, error, data } = await useCustomFetch(
-    `/workflow/pull/${selectedWorkflow.value.id}`
+    `/workflow/pull/${selectedWorkflow.value.id}`,
   )
     .get()
     .json();
@@ -162,7 +166,7 @@ async function loadWorkflow() {
     toast.add({
       severity: "success",
       summary: t("pages.nodeflow.toasts.load.success.summary"),
-      detail: t("pages.nodeflow.toasts.load.success.summary"),
+      detail: t("pages.nodeflow.toasts.load.success.detail"),
       life: 3000,
     });
   } catch (error) {
@@ -188,11 +192,7 @@ function zoomOut() {
 
 <template>
   <Toast />
-  <EditorComponent
-    id="editor"
-    class="rounded-xl shadow-md"
-    :view-model="baklava"
-  >
+  <EditorComponent id="editor" :view-model="baklava">
     <template #toolbar>
       <CToolbar
         @new="newGraph"
@@ -202,14 +202,8 @@ function zoomOut() {
         @zoom-out="zoomOut"
       />
     </template>
-    <template #node="nodeProps">
-      <CNode :key="nodeProps.node.id" v-bind="nodeProps" />
-    </template>
     <template #sidebar>
       <CSidebar />
-    </template>
-    <template #palette>
-      <CPalette />
     </template>
   </EditorComponent>
   <Dialog
@@ -217,14 +211,6 @@ function zoomOut() {
     modal
     header="Load Workflow"
     :style="{ width: '50vw' }"
-    :pt="{
-      root: { class: 'dark:!bg-zinc-800' },
-      header: { class: 'dark:!bg-zinc-800' },
-      headerTitle: { class: 'dark:!text-white' },
-      headerIcons: { class: 'dark:!text-white' },
-      closeButton: { class: 'dark:!text-white' },
-      content: { class: 'dark:!bg-zinc-800' },
-    }"
   >
     <div class="space-y-5">
       <Dropdown
@@ -234,27 +220,6 @@ function zoomOut() {
         filter
         placeholder="Select a Workflow"
         class="md:w-14rem w-full"
-        :pt="{
-          root: {
-            class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-          },
-          input: {
-            class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-          },
-          list: {
-            class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-          },
-          header: {
-            class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-          },
-          filterContainer: {
-            class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-          },
-          item: {
-            class:
-              'dark:!bg-zinc-700 dark:hover:!bg-zinc-500 dark:!text-white dark:!border-none',
-          },
-        }"
       >
         <template #value="slotProps">
           <div v-if="slotProps.value" class="align-items-center flex">
@@ -272,7 +237,7 @@ function zoomOut() {
       </Dropdown>
       <button
         type="button"
-        class="mb-2 mr-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        class="mb-2 mr-2 rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         @click="loadWorkflow"
       >
         Load
@@ -284,14 +249,6 @@ function zoomOut() {
     modal
     header="Save Workflow"
     :style="{ width: '50vw' }"
-    :pt="{
-      root: { class: 'dark:!bg-zinc-800' },
-      header: { class: 'dark:!bg-zinc-800' },
-      headerTitle: { class: 'dark:!text-white' },
-      headerIcons: { class: 'dark:!text-white' },
-      closeButton: { class: 'dark:!text-white' },
-      content: { class: 'dark:!bg-zinc-800' },
-    }"
   >
     <div class="space-y-5">
       <div class="mx-auto grid grid-cols-6 gap-4">
@@ -355,3 +312,9 @@ function zoomOut() {
     </div>
   </Dialog>
 </template>
+
+<style>
+.baklava-minimap {
+  top: 70px;
+}
+</style>

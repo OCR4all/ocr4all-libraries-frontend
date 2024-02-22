@@ -9,8 +9,8 @@ function getPaths(_tree) {
   const paths = [];
   const tree = JSON.parse(
     JSON.stringify(_tree, (key, value) =>
-      ["name", "parent_id"].includes(key) ? undefined : value
-    )
+      ["name", "parent_id"].includes(key) ? undefined : value,
+    ),
   );
   for (const child of tree.children) {
     paths.push(child);
@@ -76,7 +76,7 @@ function getProcessors(connectionMap, nodeMap, parameterGroups) {
       const node = nodeMap.get(entry.name);
       if (node !== undefined) {
         const params = parameterGroups.value.find(
-          (param) => param.name === node.type
+          (param) => param.name === node.type,
         );
         if (params !== undefined) {
           const booleans = [];
@@ -125,7 +125,7 @@ function getProcessors(connectionMap, nodeMap, parameterGroups) {
           }
           if (
             processors.filter(
-              (processor) => processor["path-id"] === entry.name
+              (processor) => processor["path-id"] === entry.name,
             ).length === 0
           ) {
             processors.push({

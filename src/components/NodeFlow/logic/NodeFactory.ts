@@ -73,7 +73,7 @@ function createNodeType(nodeData: any) {
           new SelectInterface(
             entry.argument,
             untangleItems(entry.items, "default"),
-            untangleItems(entry.items, "entries")
+            untangleItems(entry.items, "entries"),
           ).setPort(false);
         break;
       case "integer":
@@ -86,7 +86,7 @@ function createNodeType(nodeData: any) {
             entry.argument,
             entry.value,
             entry.min,
-            entry.max
+            entry.max,
           ).setPort(false);
         break;
       case "boolean":
@@ -128,7 +128,7 @@ function replaceCategories(category: string) {
 
 function constructNodes(nodeData: object[]) {
   nodeData = nodeData.filter(
-    (node) => !["imp", "launcher"].includes(node.type)
+    (node) => !["imp", "launcher"].includes(node.type),
   );
 
   const nodesParameters: object[] = [];
@@ -142,6 +142,7 @@ function constructNodes(nodeData: object[]) {
       id: data.id,
     };
     nodesParameters.push(nodeParameters);
+    /** Temporary opionated blacklist for alpha version, should be removed later on  **/
     const blacklist = [
       "LAREX launcher",
       "ocrd-pagetopdf",
@@ -149,13 +150,8 @@ function constructNodes(nodeData: object[]) {
       "ocrd-tesserocr-segment-word",
       "ocrd-tesserocr-segment-line",
       "ocrd-tesserocr-segment-region",
-      "ocrd-cis-ocropy-denoise",
-      "ocrd-cis-ocropy-deskew",
-      "ocrd-tesserocr-deskew",
-      "ocrd-olena-binarize",
-      "ocrd-tesserocr-crop",
-      "ocrd-fileformat-transform"
-    ]
+      "ocrd-fileformat-transform",
+    ];
     if (!blacklist.includes(data.name))
       nodes.push({
         node: node,

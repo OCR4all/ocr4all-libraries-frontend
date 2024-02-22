@@ -32,7 +32,7 @@ const startResize = () => {
     () => {
       window.removeEventListener("mousemove", onMouseMove);
     },
-    { once: true }
+    { once: true },
   );
 };
 

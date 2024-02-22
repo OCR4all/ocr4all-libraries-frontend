@@ -1,6 +1,11 @@
 <script setup>
 import { UseTimeAgo } from "@vueuse/components";
-import { ArrowPathIcon, ArchiveBoxXMarkIcon, StopIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import {
+  ArrowPathIcon,
+  ArchiveBoxXMarkIcon,
+  StopIcon,
+  XMarkIcon,
+} from "@heroicons/vue/24/outline";
 
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
@@ -11,7 +16,7 @@ import Toast from "primevue/toast";
 import ProgressBar from "primevue/progressbar";
 import { FilterMatchMode } from "primevue/api";
 
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
 import { useToast } from "primevue/usetoast";
@@ -54,7 +59,7 @@ const getColor = (entry) => {
 async function refetch() {
   isRefetching.value = true;
   const { isFetching, error, data } = await useCustomFetch(
-    `/job/overview/administration`
+    `/job/overview/administration`,
   )
     .get()
     .json();
@@ -89,25 +94,33 @@ async function cancelJob(id) {
 }
 
 async function expungeJobs() {
-  useCustomFetch(`job/scheduler/action/expunge`).then(() => {refetch()}).then(() => {
-    toast.add({
-      severity: "success",
-      summary: t("pages.queue.toasts.expunge.success.summary"),
-      detail: t("pages.queue.toasts.expunge.success.detail"),
-      life: 3000,
+  useCustomFetch(`job/scheduler/action/expunge`)
+    .then(() => {
+      refetch();
+    })
+    .then(() => {
+      toast.add({
+        severity: "success",
+        summary: t("pages.queue.toasts.expunge.success.summary"),
+        detail: t("pages.queue.toasts.expunge.success.detail"),
+        life: 3000,
+      });
     });
-  })
 }
 
 async function removeJob(job) {
-  useCustomFetch(`job/remove/${job}`).then(() => {refetch()}).then(() => {
-    toast.add({
-      severity: "success",
-      summary: t("pages.queue.toasts.remove.success.summary"),
-      detail: t("pages.queue.toasts.remove.success.detail"),
-      life: 3000,
+  useCustomFetch(`job/remove/${job}`)
+    .then(() => {
+      refetch();
+    })
+    .then(() => {
+      toast.add({
+        severity: "success",
+        summary: t("pages.queue.toasts.remove.success.summary"),
+        detail: t("pages.queue.toasts.remove.success.detail"),
+        life: 3000,
+      });
     });
-  })
 }
 </script>
 
@@ -125,22 +138,16 @@ async function removeJob(job) {
       :loading="loading"
       :rows="5"
       :rows-per-page-options="[5, 10, 20, 50]"
-      :pt="{
-        header: {
-          class: 'rounded-t-xl dark:!bg-zinc-800 dark:!text-white !border-none',
-        },
-        wrapper: { class: 'dark:!bg-zinc-700 dark:!text-white !border-none' },
-        row: { class: 'dark:!bg-zinc-700 dark:!text-white !border-none' },
-        emptyMessage: {
-          class: 'dark:!bg-zinc-700 dark:!text-white !border-none',
-        },
-      }"
       table-style="min-width: 50rem"
     >
-      <template #empty> {{ $t("pages.queue.table.empty") }} </template>
+      <template #empty>
+        <span class="text-primary-950 dark:text-primary-50">{{
+          $t("pages.queue.table.empty")
+        }}</span>
+      </template>
       <template #header>
         <div class="flex justify-between">
-          <h2 class="my-4 text-xl"> {{ $t("pages.queue.table.header") }} </h2>
+          <h2 class="my-4 text-xl">{{ $t("pages.queue.table.header") }}</h2>
           <span class="p-input-icon-left ml-10 space-x-4">
             <button :disabled="isRefetching === true" @click="refetch">
               <ArrowPathIcon
@@ -149,9 +156,9 @@ async function removeJob(job) {
               />
             </button>
             <button @click="expungeJobs">
-                <ArchiveBoxXMarkIcon
-                    class="mr-2 inline h-6 w-6 text-gray-800 hover:text-red-600 dark:text-gray-200 dark:hover:text-red-600"
-                />
+              <ArchiveBoxXMarkIcon
+                class="mr-2 inline h-6 w-6 text-gray-800 hover:text-red-600 dark:text-gray-200 dark:hover:text-red-600"
+              />
             </button>
             <InputText
               v-model="filters['global'].value"
@@ -160,29 +167,26 @@ async function removeJob(job) {
           </span>
         </div>
       </template>
-      <Column
-        :header="$t('pages.queue.table.columns.actions')"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
-      >
+      <Column :header="$t('pages.queue.table.columns.actions')">
         <template #body="slotProps">
           <span class="space-y-2">
             <button
-                  :disabled="!['running', 'scheduled'].includes(slotProps.data.state)"
-                  type="button"
-                  class="mr-2 inline-flex items-center rounded-lg bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
-                  @click="cancelJob(slotProps.data.id)"
-              >
+              :disabled="
+                !['running', 'scheduled'].includes(slotProps.data.state)
+              "
+              type="button"
+              class="mr-2 inline-flex items-center rounded-lg bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
+              @click="cancelJob(slotProps.data.id)"
+            >
               <StopIcon class="h-6 w-6 text-white" />
             </button>
             <button
-                :disabled="['running', 'scheduled'].includes(slotProps.data.state)"
-                type="button"
-                class="mr-2 inline-flex items-center rounded-lg bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
-                @click="removeJob(slotProps.data.id)"
+              :disabled="
+                ['running', 'scheduled'].includes(slotProps.data.state)
+              "
+              type="button"
+              class="mr-2 inline-flex items-center rounded-lg bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
+              @click="removeJob(slotProps.data.id)"
             >
               <XMarkIcon class="h-6 w-6 text-white" />
             </button>
@@ -193,20 +197,10 @@ async function removeJob(job) {
         field="id"
         :sortable="true"
         :header="$t('pages.queue.table.columns.id')"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       ></Column>
       <Column
         field="description"
         :header="$t('pages.queue.table.columns.description')"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       ></Column>
       <Column
         field="state"
@@ -214,11 +208,6 @@ async function removeJob(job) {
         header="State"
         :show-filter-menu="false"
         :filter-menu-style="{ width: '14rem' }"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       >
         <template #body="{ data }">
           <Tag :value="data.state" :style="getColor(data.state)" />
@@ -230,27 +219,6 @@ async function removeJob(job) {
             :options="states"
             class="p-column-filter"
             :show-clear="true"
-            :pt="{
-              root: {
-                class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-              },
-              input: {
-                class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-              },
-              list: {
-                class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-              },
-              header: {
-                class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-              },
-              filterContainer: {
-                class: 'dark:!bg-zinc-700 dark:!text-white dark:!border-none',
-              },
-              item: {
-                class:
-                  'dark:!bg-zinc-700 dark:hover:!bg-zinc-500 dark:!text-white dark:!border-none',
-              },
-            }"
             @change="filterCallback()"
           >
             <template #option="slotProps">
@@ -268,11 +236,6 @@ async function removeJob(job) {
         sortable
         :show-filter-match-modes="false"
         style="min-width: 12rem"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       >
         <template #body="slotProps">
           <ProgressBar
@@ -286,11 +249,6 @@ async function removeJob(job) {
         :sortable="true"
         field="created"
         :header="$t('pages.queue.table.columns.created')"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       >
         <template #body="slotProps">
           <UseTimeAgo

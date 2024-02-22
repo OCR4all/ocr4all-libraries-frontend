@@ -6,7 +6,7 @@ import { useToast } from "primevue/usetoast";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 const toast = useToast();
 
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
 const projects = ref();
@@ -62,7 +62,9 @@ function openSettings() {
         </template>
       </StatsCard>
       <StatsCard>
-        <template #title> {{ $t("pages.dashboard.stats.workflows") }} </template>
+        <template #title>
+          {{ $t("pages.dashboard.stats.workflows") }}
+        </template>
         <template #value>
           <div v-show="workflows">
             {{ workflows }}
@@ -96,7 +98,9 @@ function openSettings() {
                 alt="Notebook icon"
               />
             </template>
-            <template #text> {{ $t("pages.dashboard.cards.documentation.title") }} </template>
+            <template #text>
+              {{ $t("pages.dashboard.cards.documentation.title") }}
+            </template>
           </IconCard>
         </a>
       </div>
@@ -109,7 +113,9 @@ function openSettings() {
               alt="Notebook icon"
             />
           </template>
-          <template #text> {{ $t("pages.dashboard.cards.settings.title") }} </template>
+          <template #text>
+            {{ $t("pages.dashboard.cards.settings.title") }}
+          </template>
         </IconCard>
       </div>
     </div>
@@ -118,26 +124,34 @@ function openSettings() {
         <WideCard @start-tour="startTour">
           <template #icon>
             <img
-                class="m-auto h-20 w-20"
-                src="/assets/dashboard/play-dynamic-gradient.png"
-                alt="Notebook icon"
+              class="m-auto h-20 w-20"
+              src="/assets/dashboard/play-dynamic-gradient.png"
+              alt="Notebook icon"
             />
           </template>
-          <template #subtitle> {{ $t("pages.dashboard.cards.tour.subtitle") }} </template>
-          <template #title> {{ $t("pages.dashboard.cards.tour.title") }} </template>
+          <template #subtitle>
+            {{ $t("pages.dashboard.cards.tour.subtitle") }}
+          </template>
+          <template #title>
+            {{ $t("pages.dashboard.cards.tour.title") }}
+          </template>
         </WideCard>
       </div>
       <div class="col-span-2 row-span-1">
         <NodeFlowCard>
           <template #icon>
             <img
-                class="m-auto h-20 w-20"
-                src="/assets/dashboard/file-plus-dynamic-gradient.png"
-                alt="Notebook icon"
+              class="m-auto h-20 w-20"
+              src="/assets/dashboard/file-plus-dynamic-gradient.png"
+              alt="Notebook icon"
             />
           </template>
-          <template #subtitle> {{ $t("pages.dashboard.cards.nodeflow.subtitle") }} </template>
-          <template #title> {{ $t("pages.dashboard.cards.nodeflow.title") }} </template>
+          <template #subtitle>
+            {{ $t("pages.dashboard.cards.nodeflow.subtitle") }}
+          </template>
+          <template #title>
+            {{ $t("pages.dashboard.cards.nodeflow.title") }}
+          </template>
         </NodeFlowCard>
       </div>
     </div>

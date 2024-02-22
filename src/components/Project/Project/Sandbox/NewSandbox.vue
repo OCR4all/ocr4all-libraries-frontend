@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Skeleton from "primevue/skeleton";
 const router = useRouter();
 
 const steps = [{ label: "Images" }, { label: "Workflow" }];
@@ -40,7 +41,7 @@ const breadcrumbCurrent = { label: "New Result" };
             <span
               class="h-6 w-6 rounded-full text-center text-[10px]/6 font-bold text-gray-500"
               :class="{
-                'bg-blue-600': index === step,
+                'bg-primary-600': index === step,
                 'text-white': index === step,
                 'bg-gray-100': index !== step,
               }"
@@ -59,7 +60,12 @@ const breadcrumbCurrent = { label: "New Result" };
       v-if="step === 0"
       class="flex items-center justify-center pb-10 pt-0 dark:text-gray-100"
     >
-      <SandboxImportImages @next="next" />
+      <Suspense>
+        <SandboxImportImages @next="next" />
+        <template #fallback>
+          <Skeleton width="80%" height="20rem"></Skeleton>
+        </template>
+      </Suspense>
     </section>
     <section v-if="step === 1">
       <SandboxRunWorkflow @next="next" @back="back" />

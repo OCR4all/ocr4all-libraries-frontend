@@ -5,11 +5,11 @@ import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 function onSubmit(
   values: { username: string; password: string },
-  { setErrors }: any
+  { setErrors }: any,
 ) {
   const authStore = useAuthStore();
   const { username, password } = values;
@@ -20,7 +20,7 @@ function onSubmit(
       summary: t("pages.login.toasts.login.error.summary"),
       detail: t("pages.login.toasts.login.error.detail"),
       life: 3000,
-    })
+    }),
   );
 }
 </script>
@@ -28,7 +28,7 @@ function onSubmit(
 <template>
   <Toast />
   <div
-    class="mx-auto flex flex-col items-center justify-center px-6 py-8 dark:bg-zinc-700 md:h-screen lg:py-0"
+    class="mx-auto flex h-screen flex-col items-center justify-center bg-gray-100 px-6 py-8 dark:bg-zinc-700 lg:py-0"
   >
     <img class="h-20 pb-10" src="/img/logo.png" alt="OCR4all logo" />
     <div
@@ -55,7 +55,7 @@ function onSubmit(
               type="text"
               name="username"
               id="username"
-              class="block w-full border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+              class="block w-full border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
               :class="{ 'is-invalid': errors.username }"
               required=""
             />
@@ -71,7 +71,7 @@ function onSubmit(
               type="password"
               id="password"
               name="password"
-              class="block w-full border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500 sm:text-sm"
+              class="block w-full border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
               :class="{ 'is-invalid': errors.password }"
               required=""
             />
@@ -80,7 +80,7 @@ function onSubmit(
           <button
             :disabled="isSubmitting"
             type="submit"
-            class="w-full bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            class="w-full bg-primary-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
           >
             <span
               v-show="isSubmitting"

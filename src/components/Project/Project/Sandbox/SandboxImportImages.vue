@@ -18,19 +18,23 @@ async function importImages() {
   emit("next");
 }
 
-const folioData = await useCustomFetch(`/folio/list/${project}`)
-  .post({ identifiers: [] })
+const folioData = await useCustomFetch(`/project/folio/list/${project}`)
+  .get()
   .json();
 const imageData = [];
 for (const folio of folioData.data.value) {
-  const imageEntry = { id: folio.id };
-  await useCustomFetch(`/folio/derivative/thumbnail/${project}?id=${folio.id}`)
+  const imageEntry = { id: folio.id, name: folio.name };
+  await useCustomFetch(
+    `/project/folio/derivative/thumbnail/${project}?id=${folio.id}`,
+  )
     .get()
     .blob()
     .then((blob) => {
       imageEntry["thumbnail"] = useObjectUrl(blob.data.value);
     });
-  await useCustomFetch(`/folio/derivative/best/${project}?id=${folio.id}`)
+  await useCustomFetch(
+    `/project/folio/derivative/best/${project}?id=${folio.id}`,
+  )
     .get()
     .blob()
     .then((blob) => {
@@ -39,6 +43,7 @@ for (const folio of folioData.data.value) {
   imageData.push(imageEntry);
 }
 folios.value = [imageData, []];
+console.log(folios);
 </script>
 
 <template>
@@ -53,27 +58,7 @@ folios.value = [imageData, []];
     >
       {{ $t("pages.projects.sandbox.images.directive") }}
     </h2>
-    <PickList
-      v-model="folios"
-      listStyle="height:342px"
-      dataKey="id"
-      :pt="{
-        root: { class: 'dark:!border-zinc-700 w-[50vw]' },
-        sourceWrapper: { class: 'dark:!border-zinc-700' },
-        sourceHeader: {
-          class: 'dark:!bg-zinc-900 dark:!text-white dark:!border-zinc-600',
-        },
-        sourceList: {
-          class: 'dark:!bg-zinc-800 dark:!text-white dark:!border-zinc-600',
-        },
-        targetHeader: {
-          class: 'dark:!bg-zinc-900 dark:!text-white dark:!border-zinc-600',
-        },
-        targetList: {
-          class: 'dark:!bg-zinc-800 dark:!text-white dark:!border-zinc-600',
-        },
-      }"
-    >
+    <PickList v-model="folios" listStyle="height:342px" dataKey="id">
       <template #sourceheader> Available </template>
       <template #targetheader> Selected </template>
       <template #item="slotProps">
@@ -97,7 +82,7 @@ folios.value = [imageData, []];
           <div class="flex-column flex flex-1 gap-2 align-middle">
             <span
               class="font-bold dark:text-white dark:group-hover:text-black"
-              >{{ slotProps.item.id }}</span
+              >{{ slotProps.item.name }}</span
             >
           </div>
         </div>
@@ -105,7 +90,7 @@ folios.value = [imageData, []];
     </PickList>
     <button
       :disabled="folios[1].length === 0"
-      class="mt-12 inline-block rounded-lg bg-blue-600 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-blue-300 transition duration-100 hover:bg-blue-600 focus-visible:ring active:bg-blue-700 disabled:bg-blue-300 dark:disabled:bg-blue-400 md:text-base"
+      class="mt-12 inline-block rounded-lg bg-primary-600 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 disabled:bg-primary-300 dark:disabled:bg-blue-400 md:text-base"
       @click="importImages"
     >
       Select

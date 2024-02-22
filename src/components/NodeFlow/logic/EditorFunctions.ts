@@ -3,7 +3,7 @@ export function addNodeWithCoordinates(
   baklava: IBaklavaViewModel,
   nodeType: any,
   x: number,
-  y: number
+  y: number,
 ) {
   const node = new nodeType();
   baklava.displayedGraph.addNode(node);

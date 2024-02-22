@@ -8,15 +8,15 @@ import { RemovableRef, useStorage } from "@vueuse/core";
 export const useAuthStore = defineStore("auth", () => {
   const user: RemovableRef<string | undefined> = useStorage(
     "pinia/auth/username",
-    undefined
+    undefined,
   );
   const token: RemovableRef<string | undefined> = useStorage(
     "pinia/auth/token",
-    undefined
+    undefined,
   );
   const authority: RemovableRef<string | undefined> = useStorage(
     "pinia/auth/authority",
-    undefined
+    undefined,
   );
   const returnUrl: undefined | string = undefined;
   const config = useConfigStore();

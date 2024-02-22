@@ -2,48 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-.router-link-active {
-  @apply bg-gradient-to-r from-blue-600 to-blue-600 text-white dark:bg-gradient-to-r dark:from-blue-800 dark:to-blue-800;
+.router-link-active:not(.unstyled) {
+  @apply bg-gradient-to-r from-primary-600 to-primary-600 text-white dark:bg-gradient-to-r dark:from-primary-800 dark:to-primary-800;
   svg {
     @apply text-white;
   }
-}
-
-.p-paginator {
-  @apply dark:!bg-zinc-800;
-}
-.p-paginator-page {
-  @apply dark:!border-gray-500 dark:!bg-zinc-700;
-}
-.p-paginator-element {
-  @apply dark:!text-white dark:hover:!text-gray-300;
-}
-
-.p-paginator-page.p-highlight {
-  @apply dark:!bg-blue-600 dark:hover:!text-black;
-}
-
-.p-paginator-current {
-  @apply dark:!text-white;
-}
-
-.p-inputtext {
-  @apply dark:!border-zinc-600 dark:!bg-zinc-600 dark:!text-white;
-}
-.p-inputwrapper-filled {
-  @apply dark:!border-zinc-600 dark:!bg-zinc-600 dark:!text-white;
-}
-.p-column-filter {
-  @apply dark:!border-none dark:!bg-zinc-800 dark:!text-white;
-}
-.p-dropdown-items {
-  @apply dark:!bg-zinc-600 dark:!text-white;
-}
-.p-dropdown-item {
-  @apply dark:!border-zinc-600 dark:!bg-zinc-600 dark:!text-white dark:hover:!bg-zinc-500;
-}
-.p-dropdown-item.p-highlight {
-  @apply dark:!border-zinc-600 dark:!bg-blue-500 dark:!bg-blue-500 dark:!text-white;
 }
 
 *,
@@ -52,16 +15,12 @@
   border-style: none;
 }
 
-.p-highlight div div span {
-  @apply dark:!text-black;
-}
-
 .baklava-input {
   @apply dark:!placeholder-black dark:!placeholder-opacity-80;
 }
 
 html body div div div main {
-  --baklava-control-color-primary: #e28b46;
+  --baklava-control-color-primary: #09090b;
   --baklava-control-color-error: #d00000;
   --baklava-control-color-background: #d1d5db;
   --baklava-control-color-foreground: black;
@@ -88,16 +47,17 @@ html body div div div main {
   --baklava-editor-background-pattern-black: #d1d5db;
 
   --baklava-context-menu-background: white;
+  --baklava-control-color-primary: #e4e4e7;
   --baklava-context-menu-shadow: 0 0 8px rgba(0, 0, 0, 0.65);
 
   --baklava-visual-transition: 0.1s linear;
 }
 
 html.dark body div div div main {
+  --baklava-control-color-foreground: #fff;
   --baklava-control-color-primary: #2563eb;
   --baklava-control-color-error: #dc2626;
   --baklava-control-color-background: #71717a;
-  --baklava-control-color-foreground: #09090b;
   --baklava-control-color-hover: #52525b;
   --baklava-control-color-active: #9ca3af;
   --baklava-control-color-disabled-foreground: #666c75;
@@ -120,7 +80,8 @@ html.dark body div div div main {
   --baklava-editor-background-pattern-line: #3f3f46;
   --baklava-editor-background-pattern-black: #27272a;
 
-  --baklava-context-menu-background: #d4d4d8;
+  --baklava-context-menu-background: #3f3f46;
+  --baklava-control-color-primary: #000;
   --baklava-context-menu-shadow: 0 0 8px rgba(0, 0, 0, 0.65);
 
   --baklava-visual-transition: 0.1s linear;

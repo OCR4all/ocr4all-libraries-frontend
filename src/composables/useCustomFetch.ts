@@ -8,19 +8,20 @@ export const useCustomFetch = createFetch({
   baseUrl: config.baseUrl,
   options: {
     async beforeFetch({ options }) {
-      if (config.mode !== "Desktop"){
+      if (config.mode !== "Desktop") {
         options.headers = {
           ...options.headers,
           Authorization: `Bearer ${auth.token}`,
-        }
+        };
       }
       return { options };
     },
-    async onFetchError({ response }){
-      if(response!.status == 401){
-        await auth.logout()
+    async onFetchError({ response }) {
+      if (response!.status == 401) {
+        console.log(response?.status);
+        //await auth.logout()
       }
-    }
+    },
   },
   fetchOptions: {
     mode: "cors",

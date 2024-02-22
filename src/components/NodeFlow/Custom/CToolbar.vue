@@ -18,7 +18,9 @@ const emit = defineEmits(["new", "load", "save", "zoom-in", "zoom-out"]);
 </script>
 
 <template>
-  <div class="baklava-toolbar dark:!bg-zinc-800">
+  <div
+    class="baklava-toolbar !z-20 !rounded-none !border-b-2 !border-solid !border-gray-200 !bg-gray-50 dark:!border-zinc-950 dark:!bg-zinc-900"
+  >
     <div class="flex justify-start space-x-4">
       <span v-tooltip="'Undo'">
         <ArrowUturnLeftIcon
@@ -46,10 +48,10 @@ const emit = defineEmits(["new", "load", "save", "zoom-in", "zoom-out"]);
         />
       </span>
       <span v-tooltip="'Load Workflow'">
-        <DocumentArrowUpIcon
-          class="h-6 w-6 text-gray-600 hover:cursor-pointer hover:text-black dark:text-gray-400 dark:hover:text-white"
+        <i
+          class="pi pi-save h-6 w-6 self-center text-gray-600 hover:cursor-pointer hover:text-black dark:text-gray-400 dark:hover:text-white"
           @click="emit('load')"
-        />
+        ></i>
       </span>
       <span v-tooltip="'Save Workflow'">
         <DocumentArrowDownIcon
@@ -60,20 +62,20 @@ const emit = defineEmits(["new", "load", "save", "zoom-in", "zoom-out"]);
       <div
         class="inline-block w-0.5 self-stretch bg-gray-500 opacity-100 dark:bg-gray-400 dark:opacity-50"
       ></div>
-      <MagnifyingGlassMinusIcon
-        class="h-6 w-6 text-gray-600 hover:cursor-pointer hover:text-black dark:text-gray-400 dark:hover:text-white"
-        @click="emit('zoom-out')"
-      />
-      <MagnifyingGlassPlusIcon
-        class="h-6 w-6 text-gray-600 hover:cursor-pointer hover:text-black dark:text-gray-400 dark:hover:text-white"
-        @click="emit('zoom-in')"
-      />
+      <span v-tooltip="'Zoom Out'">
+        <MagnifyingGlassMinusIcon
+          class="h-6 w-6 text-gray-600 hover:cursor-pointer hover:text-black dark:text-gray-400 dark:hover:text-white"
+          @click="emit('zoom-out')"
+        />
+      </span>
+      <span v-tooltip="'Zoom In'">
+        <MagnifyingGlassPlusIcon
+          class="h-6 w-6 text-gray-600 hover:cursor-pointer hover:text-black dark:text-gray-400 dark:hover:text-white"
+          @click="emit('zoom-in')"
+        />
+      </span>
     </div>
   </div>
 </template>
 
-<style scoped>
-.baklava-toolbar {
-  @apply z-20 bg-gray-50 shadow-lg;
-}
-</style>
+<style scoped></style>

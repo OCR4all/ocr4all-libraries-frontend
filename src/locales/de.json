@@ -3,6 +3,7 @@
     "sidebar": {
       "links": {
         "dashboard": "Dashboard",
+        "repository": "Repository",
         "projects": "Projekte",
         "workflows": "Workflows",
         "nodeflow": "NodeFlow",
@@ -149,9 +150,7 @@
         }
       },
       "project": {
-        "results": {
-
-        },
+        "results": {},
         "images": {
           "no-images": "Keine Bilder verfügbar"
         },

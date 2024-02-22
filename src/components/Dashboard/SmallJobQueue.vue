@@ -64,25 +64,19 @@ const getSeverity = (entry) => {
       paginator
       paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
       :rows="3"
-      :pt="{
-        header: {
-          class: 'rounded-t-xl dark:!bg-zinc-800 dark:!text-white !border-none',
-        },
-        wrapper: { class: 'dark:!bg-zinc-700 dark:!text-white !border-none' },
-        row: { class: 'dark:!bg-zinc-700 dark:!text-white !border-none' },
-        emptyMessage: {
-          class: 'dark:!bg-zinc-700 dark:!text-white !border-none',
-        },
-      }"
     >
-      <template #empty> {{ $t("pages.dashboard.components.queue.empty") }} </template>
+      <template #empty
+        ><span class="text-primary-950 dark:text-primary-50">
+          {{ $t("pages.dashboard.components.queue.empty") }}
+        </span></template
+      >
       <template #loading>
         <DefaultSpinner />
       </template>
       <template #header>
         <div class="flex justify-between">
           <div>
-            <p> {{ $t("pages.dashboard.components.queue.header") }} </p>
+            <p>{{ $t("pages.dashboard.components.queue.header") }}</p>
           </div>
           <div class="flex justify-end">
             <button :disabled="isRefetching === true" @click="refetch">
@@ -102,20 +96,10 @@ const getSeverity = (entry) => {
       <Column
         field="id"
         :header="$t('pages.dashboard.components.queue.columns.id')"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       ></Column>
       <Column
         field="state"
         :header="$t('pages.dashboard.components.queue.columns.state')"
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
       >
         <template #body="{ data }">
           <Tag
@@ -125,14 +109,7 @@ const getSeverity = (entry) => {
           />
         </template>
       </Column>
-      <Column
-        :pt="{
-          headerCell: { class: 'dark:!bg-zinc-800 !border-none' },
-          headerTitle: { class: 'dark:!text-white !border-none' },
-          bodyCell: { class: 'dark:!border-zinc-600' },
-        }"
-        :header="$t('pages.dashboard.components.queue.columns.queued')"
-      >
+      <Column :header="$t('pages.dashboard.components.queue.columns.queued')">
         <template #body="slotProps">
           <UseTimeAgo
             v-slot="{ timeAgo }"

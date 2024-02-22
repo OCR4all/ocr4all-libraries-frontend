@@ -50,7 +50,7 @@ function skip() {
         <label
           for="text"
           class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
-          >{{$t("pages.projects.new.components.metadata.form.name")}}</label
+          >{{ $t("pages.projects.new.components.metadata.form.name") }}</label
         >
         <InputText v-model="name" type="text" />
       </div>
@@ -59,7 +59,7 @@ function skip() {
         <label
           for="last-name"
           class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
-          >{{$t("pages.projects.new.components.metadata.form.id")}}</label
+          >{{ $t("pages.projects.new.components.metadata.form.id") }}</label
         >
         <InputText v-model="id" disabled type="text" />
       </div>
@@ -68,25 +68,20 @@ function skip() {
         <label
           for="email"
           class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
-          >{{$t("pages.projects.new.components.metadata.form.keywords")}}</label
+          >{{
+            $t("pages.projects.new.components.metadata.form.keywords")
+          }}</label
         >
-        <Chips
-          v-model="keywords"
-          :pt="{
-            root: {
-              class: '!rounded-lg dark:!rounded-lg dark:!bg-zinc-700 !w-fit',
-            },
-            token: { class: 'dark:!bg-zinc-800 dark:!text-white' },
-            input: { class: 'dark:!text-gray-100' },
-          }"
-        />
+        <Chips v-model="keywords" />
       </div>
 
       <div class="col-span-6 flex flex-col">
         <label
           for="message"
           class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
-          >{{ $t("pages.projects.new.components.metadata.form.description") }}</label
+          >{{
+            $t("pages.projects.new.components.metadata.form.description")
+          }}</label
         >
         <Textarea v-model="description" rows="5" cols="30" />
       </div>
