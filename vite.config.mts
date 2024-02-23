@@ -23,6 +23,11 @@ export default defineConfig({
     strictPort: true,
     port: 3333,
   },
+  preview: {
+    host: true,
+    strictPort: true,
+    port: 3334,
+  },
   plugins: [
     VueDevTools(),
     vue(),
