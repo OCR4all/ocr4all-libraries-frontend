@@ -168,6 +168,30 @@ async function generateSandbox(selection: object) {
   formMimeMap.value = JSON.stringify(mimeMap);
   refetch();
 }
+
+async function exportSnapshot(snapshot){
+  const key = Object.keys(snapshot)[0]
+    .split(",")
+    .map(function (item) {
+      return parseInt(item, 10);
+    });
+  const payload = {
+    track: key
+  }
+  useCustomFetch(
+    `/snapshot/zip/${project}/${sandbox}`
+  )
+    .post(payload)
+    .blob()
+    .then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data.value]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${project}_${sandbox}_${key.toString()}.zip`);
+      document.body.appendChild(link);
+      link.click();
+    })
+}
 async function checkJob(startedJob) {
   return await new Promise((resolve) => {
     const jobInterval = setInterval(async () => {
@@ -320,11 +344,22 @@ const breadcrumbCurrent = { label: sandbox };
           v-tooltip="{ value: 'Generate Result View', hideDelay: 300 }"
           :pt="{
             root: {
-              class: 'p-2 bg-primary-300 hover:bg-primary-500 text-surface-50',
+              class: 'p-2 bg-primary-600 hover:bg-primary-700 text-surface-50',
             },
           }"
         >
           Generate Result View
+        </Button>
+        <Button
+          @click="exportSnapshot(selection)"
+          v-tooltip="{ value: 'Export Snapshot', hideDelay: 300 }"
+          :pt="{
+            root: {
+              class: 'p-2 bg-primary-600 hover:bg-primary-700 text-surface-50',
+            },
+          }"
+        >
+          Export
         </Button>
       </div>
       <h2

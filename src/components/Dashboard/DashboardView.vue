@@ -83,7 +83,7 @@ function openSettings() {
     <div class="grid grid-cols-5 grid-rows-1 gap-8 lg:grid-rows-2">
       <div class="col-span-5 row-span-2 xl:col-span-4">
         <div
-          class="group m-0 h-full rounded-xl bg-white p-5 shadow-md dark:bg-zinc-800"
+          class="group m-0 h-full bg-white p-5 shadow-md dark:bg-zinc-800"
         >
           <RecentProjectsOverview />
         </div>
@@ -158,14 +158,14 @@ function openSettings() {
     <div class="grid grid-cols-4 grid-rows-1 gap-8">
       <div class="col-span-4 row-span-1 2xl:col-span-2">
         <div
-          class="group m-0 h-full rounded-xl bg-white p-5 shadow-md dark:bg-zinc-800"
+          class="group m-0 h-full bg-white p-5 shadow-md dark:bg-zinc-800"
         >
           <AvailableWorkflows />
         </div>
       </div>
       <div class="col-span-4 row-span-1 2xl:col-span-2">
         <div
-          class="group m-0 h-full rounded-xl bg-white p-5 shadow-md dark:bg-zinc-800"
+          class="group m-0 h-full bg-white p-5 shadow-md dark:bg-zinc-800"
         >
           <SmallJobQueue />
         </div>

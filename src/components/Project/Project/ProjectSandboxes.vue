@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowPathIcon, EyeIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { ArrowPathIcon, EyeIcon, XMarkIcon, ArchiveBoxArrowDownIcon } from "@heroicons/vue/24/outline";
 import { UseTimeAgo } from "@vueuse/components";
 
 import DataTable from "primevue/datatable";
@@ -20,6 +20,8 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
 import { useSandboxCreationStore } from "@/stores/sandboxCreation.store";
+import Button from "primevue/button";
+import ProgressBar from "primevue/progressbar";
 
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
@@ -90,9 +92,61 @@ async function removeResults() {
       });
     });
 }
+const downloadSandboxToastVisible = ref()
+async function downloadSandbox(sandbox) {
+  useCustomFetch(
+    `/sandbox/zip/${project}?id=${sandbox}`
+  )
+    .blob()
+    .then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data.value]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `${project}_${sandbox}.zip`);
+      document.body.appendChild(link);
+      link.click();
+    })
+}
 </script>
 <template>
   <Toast />
+  <Toast
+    position="top-center"
+    group="headless"
+    @close="downloadSandboxToastVisible = false"
+  >
+    <template #container="{ message, closeCallback }">
+      <section
+        class="grid w-full justify-center gap-3 p-3"
+        style="border-radius: 10px"
+      >
+        <div class="flex w-full gap-3 justify-self-center">
+          <i
+            class="pi pi-cloud-upload text-2xl text-primary-950 dark:text-primary-0"
+          ></i>
+          <p
+            class="m-0 text-base font-semibold text-primary-950 dark:text-primary-0"
+          >
+            {{ message.summary }}
+          </p>
+          <p class="m-0 text-base text-primary-950 dark:text-primary-0">
+            {{ message.detail }}
+          </p>
+        </div>
+        <div class="flex gap-2 justify-self-center">
+          <ProgressBar mode="indeterminate" style="height: 6px"></ProgressBar>
+        </div>
+        <div class="mb-3 flex gap-3 justify-self-center">
+          <Button
+            label="Close"
+            text
+            class="px-2 py-1"
+            @click="closeCallback"
+          ></Button>
+        </div>
+      </section>
+    </template>
+  </Toast>
   <Toolbar class="mb-4">
     <template #start>
       <div class="my-2 space-x-2">
@@ -200,10 +254,17 @@ async function removeResults() {
       <template #body="slotProps">
         <button
           type="button"
-          class="mr-2 inline-flex items-center rounded-lg bg-red-600 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+          class="mr-2 inline-flex items-center bg-red-600 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
           @click="toggleDeleteDialog(slotProps.data.id)"
         >
           <XMarkIcon class="h-6 w-6 text-white" />
+        </button>
+        <button
+          type="button"
+          class="mr-2 inline-flex items-center bg-primary-600 p-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          @click="downloadSandbox(slotProps.data.id)"
+        >
+          <ArchiveBoxArrowDownIcon class="h-6 w-6 text-white" />
         </button>
       </template>
     </Column>

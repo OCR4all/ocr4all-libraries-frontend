@@ -30,8 +30,10 @@ function openContainer() {
 const emit = defineEmits(["refresh", "updateSelection"]);
 
 const actionMenu = ref();
+const actionMenuVisible = ref()
 const toggle = (event: Event) => {
   actionMenu.value.toggle(event);
+  actionMenuVisible.value = actionMenu.value.overlayVisible
 };
 
 const actionMenuItems = ref([
@@ -73,6 +75,15 @@ async function deleteContainer() {
 }
 
 const checked = ref();
+const shareDialogVisible = ref()
+
+async function updateContainerShare(){
+
+}
+
+function actionMenuBlurred(event){
+  actionMenuVisible.value = false
+}
 </script>
 <template>
   <div class="grid grid-cols-1 justify-self-center">
@@ -86,9 +97,9 @@ const checked = ref();
     >
       <div
         class="absolute w-max group-hover:flex"
-        :class="{ hidden: !checked }"
+        :class="{ hidden: !checked && !actionMenuVisible }"
       >
-        <div class="flex justify-between space-x-44 p-4">
+        <div class="flex justify-between space-x-28 p-4">
           <Checkbox
             v-model="checked"
             @update:modelValue="updateSelection"
@@ -101,25 +112,33 @@ const checked = ref();
               },
             }"
           />
-          <Button
-            @click="toggle"
-            icon="pi pi-ellipsis-v"
-            severity="secondary"
-            text
-            rounded
-            aria-haspopup="true"
-            aria-label="overlay_menu"
-            :pt="{
+          <div class="flex space-x-2">
+            <button
+              class="p-2 font-semibold bg-primary-600 hover:bg-primary-800 text-white"
+              @click="openShareModal">
+              Share
+            </button>
+            <Button
+              @click="toggle"
+              icon="pi pi-ellipsis-v"
+              severity="secondary"
+              text
+              rounded
+              aria-haspopup="true"
+              aria-label="overlay_menu"
+              :pt="{
               root: { class: 'z-50 bg-surface-50/80 dark:bg-surface-50 p-1' },
               icon: { class: 'align-center pl-1' },
             }"
-          />
-          <Menu
-            ref="actionMenu"
-            id="overlay_menu"
-            :model="actionMenuItems"
-            :popup="true"
-          />
+            />
+            <Menu
+              ref="actionMenu"
+              id="overlay_menu"
+              @blur="actionMenuBlurred"
+              :model="actionMenuItems"
+              :popup="true"
+            />
+          </div>
         </div>
       </div>
       <div
@@ -149,4 +168,19 @@ const checked = ref();
       </div>
     </div>
   </div>
+  <Dialog v-model:visible="shareDialogVisible" modal header="Edit Profile" :style="{ width: '25rem' }">
+    <span class="p-text-secondary block mb-5">Update your information.</span>
+    <div class="flex align-items-center gap-3 mb-3">
+      <label for="username" class="font-semibold w-6rem">Username</label>
+      <InputText id="username" class="flex-auto" autocomplete="off" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-5">
+      <label for="email" class="font-semibold w-6rem">Email</label>
+      <InputText id="Email" class="flex-auto" autocomplete="off" />
+    </div>
+    <div class="flex justify-content-end gap-2">
+      <Button type="button" label="Cancel" severity="secondary" @click="shareDialogVisible = false"></Button>
+      <Button type="button" label="Save" @click="updateContainerShare"></Button>
+    </div>
+  </Dialog>
 </template>
