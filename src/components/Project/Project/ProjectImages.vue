@@ -7,19 +7,20 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import Toast from "primevue/toast";
 import Toolbar from "primevue/toolbar";
 import Skeleton from "primevue/skeleton";
+import ImageCard from "@/components/Project/Project/ImageCard.vue";
 
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
 
-const activeIndex = ref(0);
-
-const folioData = await useCustomFetch(`/project/folio/list/${project}`)
-  .get()
-  .json();
 const folios = ref([]);
+async function refresh(){
+  const folioData = await useCustomFetch(`/project/folio/list/${project}`)
+    .get()
+    .json();
 
-for (const folio of folioData.data.value) {
-  fetchImages(folio);
+  for (const folio of folioData.data.value) {
+    await fetchImages(folio);
+  }
 }
 
 async function fetchImages(folio) {
@@ -36,29 +37,37 @@ async function fetchImages(folio) {
     .get()
     .blob();
   const image = useObjectUrl(imageBlob.data.value);
-
+  console.log(folio)
   folios.value.push({
     name: folio.name,
     id: folio.id,
+    size: folio.size,
+    format: folio.format,
     img: image,
     thumbnail: thumbnail,
   });
 }
 
-const responsiveOptions = ref([
-  {
-    breakpoint: "991px",
-    numVisible: 4,
-  },
-  {
-    breakpoint: "767px",
-    numVisible: 3,
-  },
-  {
-    breakpoint: "575px",
-    numVisible: 1,
-  },
-]);
+async function importFolios(data){
+  for(const [key, value] of Object.entries(data)){
+    if(value === true){
+      await useCustomFetch(
+        `/project/folio/import/all/${project}?id=${key}`
+      ).get()
+    }else if(value.length > 0){
+      const payload = {
+        "ids": value
+      }
+      await useCustomFetch(
+        `/project/folio/import/list/${project}?id=${key}`
+      ).post(payload)
+    }
+  }
+  imageImportDialogVisible.value = false
+  await refresh()
+}
+
+refresh()
 
 const imageImportDialogVisible = ref(false);
 </script>
@@ -77,7 +86,9 @@ const imageImportDialogVisible = ref(false);
   >
     <template #container="{ closeCallback }">
       <div class="rounded-md bg-surface-50 p-4 dark:bg-surface-700">
-        <ImageSelector />
+        <ImageSelector
+          @import-folios="importFolios"
+        />
       </div>
       <Button label="Close" icon="pi pi-check" @click="closeCallback" />
     </template>
@@ -99,34 +110,18 @@ const imageImportDialogVisible = ref(false);
     </Toolbar>
     <div
       v-if="folios.length"
-      class="grid grid-cols-4 items-center justify-center space-y-2"
+      class="grid grid-cols-4 items-center justify-center space-y-2 space-x-4"
     >
       <Suspense>
-        <Image
+        <ImageCard
           v-for="folio in folios"
           :key="folio.id"
-          alt="Image"
-          class="justify-self-center"
-          preview
-        >
-          <template #indicatoricon>
-            <i class="pi pi-search"></i>
-          </template>
-          <template #image>
-            <img :src="folio.thumbnail" alt="image" />
-          </template>
-          <template #preview="slotProps">
-            <img
-              :src="folio.img"
-              alt="preview"
-              :style="slotProps.style"
-              @click="slotProps.onClick"
-            />
-          </template>
-        </Image>
-        <template #fallback>
-          <Skeleton animation="wave" size="20rem"></Skeleton>
-        </template>
+          :name="folio.name"
+          :thumb="folio.thumbnail"
+          :img="folio.img"
+          :size="folio.size"
+          :format="folio.format"
+        />
       </Suspense>
     </div>
     <div

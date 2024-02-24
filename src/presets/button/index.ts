@@ -19,7 +19,7 @@ export default {
         "shadow-sm": !props.raised && !props.link && !props.text,
         "shadow-lg": props.raised,
       },
-      { "rounded-md": !props.rounded, "rounded-full": props.rounded },
+      { "rounded-0": !props.rounded, "rounded-full": props.rounded },
       {
         "rounded-none first:rounded-l-md last:rounded-r-md self-center":
           parent.instance.$name == "InputGroup",

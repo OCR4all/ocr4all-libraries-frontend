@@ -22,7 +22,6 @@ export default {
           parent.instance.$name !== "InputGroup",
       },
       // Shape
-      { "rounded-md": parent.instance.$name !== "InputGroup" },
       {
         "first:rounded-l-md rounded-none last:rounded-r-md":
           parent.instance.$name == "InputGroup",

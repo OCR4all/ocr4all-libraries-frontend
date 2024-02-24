@@ -187,7 +187,7 @@ async function exportSnapshot(snapshot){
       const url = window.URL.createObjectURL(new Blob([response.data.value]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `${project}_${sandbox}_${key.toString()}.zip`);
+      link.setAttribute('download', `${project}_${sandbox}_${key.toString().replace(',', '_')}.zip`);
       document.body.appendChild(link);
       link.click();
     })

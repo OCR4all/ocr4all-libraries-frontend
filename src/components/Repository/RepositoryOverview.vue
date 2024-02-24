@@ -21,10 +21,13 @@ const containers = ref();
 const router = useRouter();
 
 async function listContainers() {
-  const { isFetching, error, data } = await useCustomFetch(
+  useCustomFetch(
     "/repository/container/list",
-  ).json();
-  containers.value = data.value;
+  )
+    .json()
+    .then((response) => {
+      containers.value = response.data.value;
+    })
 }
 
 await listContainers();
@@ -33,14 +36,16 @@ async function createContainer() {
   const payload = {
     name: newContainerName.value,
   };
-  const { isFetching, error, data } = await useCustomFetch(
+  useCustomFetch(
     `/repository/container/create`,
   )
     .post(payload)
-    .json();
-  listContainers();
-  newContainerName.value = null;
-  toggleCreateContainerPanel(new Event("false"));
+    .json()
+    .then((_) => {
+      listContainers();
+      newContainerName.value = null;
+      toggleCreateContainerPanel(new Event("false"));
+    });
 }
 
 async function deleteContainers() {
@@ -123,62 +128,62 @@ const layout = ref("grid");
 </script>
 <template>
   <div class="bg-surface-0 p-4 dark:bg-surface-800">
-    <DataView
-      class="bg-surface-50 dark:bg-surface-700"
-      :value="containers"
-      :layout="layout"
-    >
-      <template #header>
-        <Toolbar>
-          <template #start>
-            <Button
-              label="Create"
-              icon="pi pi-plus"
-              severity="success"
-              class="mr-2"
-              @click="toggleCreateContainerPanel"
-            />
-            <OverlayPanel ref="createContainerPanel">
-              <div class="flex space-x-1">
-                <InputText v-model="newContainerName" />
-                <Button
-                  icon="pi pi-check"
-                  severity="success"
-                  class="mr-2 w-fit"
-                  @click="createContainer"
-                />
-              </div>
-            </OverlayPanel>
-            <Button
-              label="Delete"
-              icon="pi pi-trash"
-              severity="danger"
-              :disabled="!selectedContainers || !selectedContainers.length"
-              @click="deleteContainers"
-            />
-          </template>
-          <template #end>
-            <DataViewLayoutOptions v-model="layout" />
-          </template>
-        </Toolbar>
-      </template>
+      <DataView
+        class="bg-surface-50 dark:bg-surface-700"
+        :value="containers"
+        :layout="layout"
+      >
+        <template #header>
+          <Toolbar>
+            <template #start>
+              <Button
+                label="Create"
+                icon="pi pi-plus"
+                severity="success"
+                class="mr-2"
+                @click="toggleCreateContainerPanel"
+              />
+              <OverlayPanel ref="createContainerPanel">
+                <div class="flex space-x-1">
+                  <InputText v-model="newContainerName" />
+                  <Button
+                    icon="pi pi-check"
+                    severity="success"
+                    class="mr-2 w-fit"
+                    @click="createContainer"
+                  />
+                </div>
+              </OverlayPanel>
+              <Button
+                label="Delete"
+                icon="pi pi-trash"
+                severity="danger"
+                :disabled="!selectedContainers || !selectedContainers.length"
+                @click="deleteContainers"
+              />
+            </template>
+            <template #end>
+              <DataViewLayoutOptions v-model="layout" />
+            </template>
+          </Toolbar>
+        </template>
 
-      <template #list="slotProps">
-        <DataTable
-          ref="containerDataTable"
-          v-model:selection="selectedContainers"
-          :value="slotProps.items"
-          :filters="filters"
-          lazy
-          :paginator="true"
-          :rows="5"
-          :rows-per-page-options="[5, 10, 20, 50]"
-          table-style="min-width: 50rem"
-        >
-          <template #header>
-            <div class="grid grid-cols-2 justify-between gap-2">
-              <h4 class="m-0">Manage Containers</h4>
-              <span class="relative justify-self-end">
+        <template #list="slotProps">
+          <DataTable
+            ref="containerDataTable"
+            v-model:selection="selectedContainers"
+            :value="slotProps.items"
+            :filters="filters"
+            lazy
+            :paginator="true"
+            :rows="5"
+            :rows-per-page-options="[5, 10, 20, 50]"
+            table-style="min-width: 50rem"
+          >
+            <template #header>
+              <div class="grid grid-cols-2 justify-between gap-2">
+                <h4 class="m-0">Manage Containers</h4>
+                <span class="relative justify-self-end">
                 <i
                   class="pi pi-search absolute left-3 top-2/4 -mt-2 text-surface-400 dark:text-surface-600"
                 />
@@ -188,112 +193,110 @@ const layout = ref("grid");
                   placeholder="Search..."
                 />
               </span>
-            </div>
-          </template>
-          <Column
-            selection-mode="multiple"
-            style="width: 3rem"
-            :exportable="false"
-          ></Column>
-          <Column field="name" header="Name" sortable>
-            <template #loading>
-              <div
-                class="align-items-center flex"
-                :style="{
+              </div>
+            </template>
+            <Column
+              selection-mode="multiple"
+              style="width: 3rem"
+              :exportable="false"
+            ></Column>
+            <Column field="name" header="Name" sortable>
+              <template #loading>
+                <div
+                  class="align-items-center flex"
+                  :style="{
                   height: '17px',
                   'flex-grow': '1',
                   overflow: 'hidden',
                 }"
-              >
-                <Skeleton width="60%" height="1rem" />
-              </div>
-            </template>
-          </Column>
-          <Column field="description" header="Description">
-            <template #loading>
-              <div
-                class="align-items-center flex"
-                :style="{
-                  height: '17px',
-                  'flex-grow': '1',
-                  overflow: 'hidden',
-                }"
-              >
-                <Skeleton width="60%" height="1rem" />
-              </div>
-            </template>
-          </Column>
-          <Column field="keywords" header="Keywords">
-            <template #loading>
-              <div
-                class="align-items-center flex"
-                :style="{
-                  height: '17px',
-                  'flex-grow': '1',
-                  overflow: 'hidden',
-                }"
-              >
-                <Skeleton width="60%" height="1rem" />
-              </div>
-            </template>
-            <template #body="slotProps">
-              <Chip v-for="keyword of slotProps.data.keywords" :key="keyword">{{
-                keyword
-              }}</Chip>
-            </template>
-          </Column>
-          <Column field="actions">
-            <template #loading>
-              <div
-                class="align-items-center flex"
-                :style="{
-                  height: '17px',
-                  'flex-grow': '1',
-                  overflow: 'hidden',
-                }"
-              >
-                <Skeleton width="60%" height="1rem" />
-              </div>
-            </template>
-            <template #body="slotProps">
-              <div class="flex space-x-2">
-                <button
-                  class="bg-primary-300 p-2 text-surface-50 hover:bg-primary-500"
-                  @click="openContainer(slotProps.data.id, slotProps.data.name)"
                 >
-                  Open
-                </button>
-                <button
-                  class="bg-primary-300 p-2 text-surface-50 hover:bg-primary-500"
-                  @click="openContainer(slotProps.data.id)"
+                  <Skeleton width="60%" height="1rem" />
+                </div>
+              </template>
+            </Column>
+            <Column field="description" header="Description">
+              <template #loading>
+                <div
+                  class="align-items-center flex"
+                  :style="{
+                  height: '17px',
+                  'flex-grow': '1',
+                  overflow: 'hidden',
+                }"
                 >
-                  Edit
-                </button>
-              </div>
-            </template>
-          </Column>
-        </DataTable>
-      </template>
+                  <Skeleton width="60%" height="1rem" />
+                </div>
+              </template>
+            </Column>
+            <Column field="keywords" header="Keywords">
+              <template #loading>
+                <div
+                  class="align-items-center flex"
+                  :style="{
+                  height: '17px',
+                  'flex-grow': '1',
+                  overflow: 'hidden',
+                }"
+                >
+                  <Skeleton width="60%" height="1rem" />
+                </div>
+              </template>
+              <template #body="slotProps">
+                <Chip v-for="keyword of slotProps.data.keywords" :key="keyword">{{
+                    keyword
+                  }}</Chip>
+              </template>
+            </Column>
+            <Column field="actions">
+              <template #loading>
+                <div
+                  class="align-items-center flex"
+                  :style="{
+                  height: '17px',
+                  'flex-grow': '1',
+                  overflow: 'hidden',
+                }"
+                >
+                  <Skeleton width="60%" height="1rem" />
+                </div>
+              </template>
+              <template #body="slotProps">
+                <div class="flex space-x-2">
+                  <button
+                    class="bg-primary-300 p-2 text-surface-50 hover:bg-primary-500"
+                    @click="openContainer(slotProps.data.id, slotProps.data.name)"
+                  >
+                    Open
+                  </button>
+                  <button
+                    class="bg-primary-300 p-2 text-surface-50 hover:bg-primary-500"
+                    @click="openContainer(slotProps.data.id)"
+                  >
+                    Edit
+                  </button>
+                </div>
+              </template>
+            </Column>
+          </DataTable>
+        </template>
 
-      <template #grid="slotProps">
-        <div
-          class="3xl:grid-cols-5 grid grid-cols-1 content-center justify-center gap-x-2 gap-y-3 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4"
-        >
-          <Suspense>
-            <div v-for="(item, index) in slotProps.items" :key="index">
-              <ContainerCard
-                :id="item.id"
-                :title="item.name"
-                :description="item.description"
-                :keywords="item.keywords"
-                @refresh="listContainers"
-                @update-selection="updateSelection"
-              />
-            </div>
-          </Suspense>
-        </div>
-      </template>
-    </DataView>
+        <template #grid="slotProps">
+          <div
+            class="3xl:grid-cols-5 grid grid-cols-1 justify-between gap-x-2 gap-y-3 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4"
+          >
+              <div v-for="(item, index) in slotProps.items" :key="index">
+                <ContainerCard
+                  :id="item.id"
+                  :title="item.name"
+                  :description="item.description"
+                  :keywords="item.keywords"
+                  @refresh="listContainers"
+                  @update-selection="updateSelection"
+                />
+              </div>
+          </div>
+        </template>
+      </DataView>
   </div>
 </template>
 <style scoped></style>

@@ -5,6 +5,7 @@ import { ArrowPathIcon, ArrowUpOnSquareIcon } from "@heroicons/vue/24/outline";
 
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
+import Toast from "primevue/toast";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import DefaultSpinner from "@/components/Layout/utils/DefaultSpinner.vue";

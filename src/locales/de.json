@@ -7,7 +7,8 @@
         "projects": "Projekte",
         "workflows": "Workflows",
         "nodeflow": "NodeFlow",
-        "queue": "Warteschlange"
+        "queue": "Warteschlange",
+        "training": "Training"
       },
       "cta": {
         "header": "Alpha",

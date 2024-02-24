@@ -5,11 +5,31 @@ import InputText from "primevue/inputtext";
 import Column from "primevue/column";
 import { ref, onMounted } from "vue";
 import { useCustomFetch } from "@/composables/useCustomFetch";
-
-const emits = defineEmits(["import-folios"]);
+import Image from "primevue/image";
+const emit = defineEmits(["import-folios"]);
 
 function importFolios() {
-  console.log(selectedFolios);
+  const registry = {}
+  const selection = []
+  for(const [key, value] of Object.entries(selectedFolios.value)){
+    if(value.checked === true) selection.push(key)
+  }
+  for(const container of nodes.value){
+    if(selection.includes(container.key)){
+      registry[container.key] = true
+    }else{
+      if(container.children){
+        const selectedFolios = []
+        for(const folio of container.children){
+          if(selection.includes(folio.key)) selectedFolios.push(folio.key)
+        }
+        if(selectedFolios.length){
+          registry[container.key] = selectedFolios
+        }
+      }
+    }
+  }
+  emit("import-folios", registry)
 }
 
 onMounted(() => {
@@ -24,6 +44,7 @@ onMounted(() => {
           data: {
             name: entry.name,
             type: "container",
+            keywords: entry.keywords
           },
           leaf: false,
         });
@@ -37,30 +58,36 @@ const rows = ref(10);
 const loading = ref(false);
 const totalRecords = ref(0);
 const onExpand = (node) => {
+  const isChecked = !!(selectedFolios.value && Object.keys(selectedFolios.value).includes(node.key))
   if (!node.children) {
     loading.value = true;
     useCustomFetch(`/repository/container/folio/list/${node.key}`)
       .json()
-      .then((response) => {
+      .then(async (response) => {
         const children = [];
         for (const folio of response.data.value) {
-          const thumbnail = ref();
-          useCustomFetch(
-            `/repository/container/folio/derivative/thumbnail/${node.key}?id=${folio.id}`,
+          const key = folio.id
+          const { data } = await useCustomFetch(
+            `/repository/container/folio/derivative/thumbnail/${node.key}?id=${key}`,
           )
             .get()
             .blob()
-            .then((response) => {
-              thumbnail.value = useObjectUrl(response.data.value);
-            });
 
           children.push({
-            key: folio.id,
+            key: key,
             data: {
               name: folio.name,
               type: "folio",
+              thumbnail: data.value,
+              keywords: folio.keywords
             },
           });
+          if (isChecked) {
+            selectedFolios.value[`${key}`] = {
+              checked: true,
+              partialChecked: false
+            }
+          }
         }
         node.children = children;
         loading.value = false;
@@ -75,7 +102,7 @@ const filters = ref({
 });
 </script>
 <template>
-  <div class="card justify-content-center grid space-y-2">
+  <div class="card justify-content-center grid space-y-2 pb-8">
     <TreeTable
       :value="nodes"
       :lazy="true"
@@ -88,7 +115,7 @@ const filters = ref({
       v-model:selectionKeys="selectedFolios"
       selectionMode="checkbox"
       scrollable
-      scrollHeight="80rem"
+      scrollHeight="400px"
       @node-expand="onExpand"
     >
       <template #header>
@@ -98,7 +125,7 @@ const filters = ref({
         />
       </template>
       <Column field="name" header="Name" expander></Column>
-      <Column field="img" header="Image"> </Column>
+      <Column field="keywords" header="Keywords"></Column>
     </TreeTable>
     <button
       @click="importFolios"

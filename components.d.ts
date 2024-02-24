@@ -25,6 +25,7 @@ declare module 'vue' {
     DefaultSpinner: typeof import('./src/components/Layout/utils/DefaultSpinner.vue')['default']
     FolioCard: typeof import('./src/components/Repository/FolioCard.vue')['default']
     IconCard: typeof import('./src/components/Dashboard/IconCard.vue')['default']
+    ImageCard: typeof import('./src/components/Project/Project/ImageCard.vue')['default']
     ImageSelector: typeof import('./src/components/Project/ImageSelector.vue')['default']
     NewProject: typeof import('./src/components/Project/NewProject.vue')['default']
     NewSandbox: typeof import('./src/components/Project/Project/Sandbox/NewSandbox.vue')['default']

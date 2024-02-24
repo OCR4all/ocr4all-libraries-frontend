@@ -13,6 +13,7 @@ import {
   XMarkIcon,
   Square3Stack3DIcon,
   ServerIcon,
+  AcademicCapIcon,
 } from "@heroicons/vue/24/outline";
 import { useUiStore } from "@/stores/ui.store";
 
@@ -39,7 +40,16 @@ const mainNavigation = [
     label: "nav.sidebar.links.nodeflow",
     icon: CubeTransparentIcon,
   },
-  { to: "/queue", label: "nav.sidebar.links.queue", icon: QueueListIcon },
+  {
+    to: "/queue",
+    label: "nav.sidebar.links.queue",
+    icon: QueueListIcon
+  },
+  {
+    to: "/training",
+    label: "nav.sidebar.links.training",
+    icon: AcademicCapIcon
+  }
 ];
 
 function toggleSidebarMd(val: boolean) {

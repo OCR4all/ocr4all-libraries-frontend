@@ -17,7 +17,7 @@ export default {
   header: {
     class: [
       "font-semibold",
-      "p-6",
+      "p-2",
       "text-surface-800 dark:text-white/80",
       "bg-surface-0 dark:bg-surface-800",
       "border-surface-200 dark:border-surface-700 border-b",

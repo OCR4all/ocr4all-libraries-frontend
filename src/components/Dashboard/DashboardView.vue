@@ -2,6 +2,8 @@
 import WideCard from "@/components/Dashboard/WideCard.vue";
 
 import Toast from "primevue/toast";
+import Skeleton from "primevue/skeleton";
+
 import { useToast } from "primevue/usetoast";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 const toast = useToast();
@@ -11,7 +13,8 @@ const { t } = useI18n();
 
 const projects = ref();
 const workflows = ref();
-const jobs = ref();
+const collections = ref();
+const folios = ref();
 
 useCustomFetch(`/project/list`)
   .get()
@@ -25,11 +28,21 @@ useCustomFetch(`/workflow/list`)
   .then((response) => {
     workflows.value = `${response.data.value.length}`;
   });
-useCustomFetch(`/job/overview/administration`)
+useCustomFetch(`/repository/container/list`)
   .get()
   .json()
-  .then((response) => {
-    jobs.value = response.data.value;
+  .then(async (response) => {
+    collections.value = response.data.value;
+    const allFolios = []
+    for (const collection of response.data.value) {
+      console.log(collection.id)
+      await useCustomFetch(`/repository/container/folio/list/${collection.id}`)
+        .get()
+        .json()
+        .then((response) => allFolios.push(...response.data.value))
+    }
+    console.log(allFolios)
+    folios.value = allFolios
   });
 
 function startTour() {
@@ -52,12 +65,31 @@ function openSettings() {
 </script>
 <template>
   <div class="space-y-8 pb-8">
-    <div class="grid grid-cols-2 grid-rows-1 gap-8 xl:grid-cols-3">
+    <div class="grid grid-cols-2 grid-rows-1 gap-8 xl:grid-cols-4">
       <StatsCard>
         <template #title> {{ $t("pages.dashboard.stats.projects") }} </template>
         <template #value>
-          <div v-show="projects">
+          <div v-if="projects">
             {{ projects }}
+          </div>
+          <div v-else>
+            <Skeleton width="1rem" height="1rem" />
+          </div>
+        </template>
+      </StatsCard>
+      <StatsCard>
+        <template #title> Collections </template>
+        <template #value>
+          <div v-if="collections">
+            {{ collections.length }}
+          </div>
+        </template>
+      </StatsCard>
+      <StatsCard>
+        <template #title> Folios </template>
+        <template #value>
+          <div v-if="folios">
+            {{ folios.length }}
           </div>
         </template>
       </StatsCard>
@@ -68,14 +100,6 @@ function openSettings() {
         <template #value>
           <div v-show="workflows">
             {{ workflows }}
-          </div>
-        </template>
-      </StatsCard>
-      <StatsCard>
-        <template #title> {{ $t("pages.dashboard.stats.jobs") }} </template>
-        <template #value>
-          <div v-if="jobs">
-            {{ jobs.running.length + jobs.scheduled.length }}
           </div>
         </template>
       </StatsCard>

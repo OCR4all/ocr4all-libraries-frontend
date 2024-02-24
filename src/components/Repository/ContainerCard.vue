@@ -4,6 +4,8 @@ import Button from "primevue/button";
 import Menu from "primevue/menu";
 import Checkbox from "primevue/checkbox";
 import Skeleton from "primevue/skeleton";
+import Dialog from "primevue/dialog";
+import InputText from "primevue/inputtext";
 
 const props = defineProps<{
   title?: string;
