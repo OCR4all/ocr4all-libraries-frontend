@@ -239,7 +239,10 @@
         "workflow": {
           "heading": "Wähle einen Workflow",
           "directive": "Entscheide mit welchem Workflow Resultate generiert werden sollen",
-          "importing-images": "Bilder werden importiert!",
+          "importing-images": {
+            "heading": "Bilder werden importiert",
+            "content": "Bitte verlasse diese Seite nicht, während der Import läuft!"
+          },
           "running-workflows": {
             "heading": "Workflow wird ausgeführt",
             "content": "Du kannst diese Seite jetzt verlassen und den Fortschritt über die Warteschlange verfolgen oder hier warten bis der Workflow ausgeführt wurde"
@@ -343,6 +346,12 @@
           "error": {
             "summary": "Fehler",
             "detail": "Workflow konnte nicht geladen werden"
+          }
+        },
+        "rate-workflow": {
+          "placeholder": {
+            "summary": "Noch nicht verfügbar",
+            "detail": "Workflow-Rating noch nicht verfügbar"
           }
         }
       }

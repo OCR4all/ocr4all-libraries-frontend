@@ -181,6 +181,15 @@ async function loadWorkflow() {
   isLoadDialogVisible.value = false;
 }
 
+function rateWorkflow() {
+  toast.add({
+    severity: "info",
+    summary: t("pages.nodeflow.toasts.rate-workflow.placeholder.summary"),
+    detail: t("pages.nodeflow.toasts.rate-workflow.placeholder.detail"),
+    life: 3000,
+  });
+}
+
 function zoomIn() {
   baklava.displayedGraph.scaling += 0.1;
 }
@@ -200,6 +209,7 @@ function zoomOut() {
         @save="openSaveDialog"
         @zoom-in="zoomIn"
         @zoom-out="zoomOut"
+        @rate-workflow="rateWorkflow"
       />
     </template>
     <template #sidebar>
@@ -315,6 +325,7 @@ function zoomOut() {
 
 <style>
 .baklava-minimap {
+  z-index: 40;
   top: 70px;
 }
 </style>

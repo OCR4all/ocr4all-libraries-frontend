@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import BreadcrumbNavigation from "@/components/Layout/BreadcrumbNavigation.vue";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
@@ -20,7 +21,7 @@ const breadcrumbCurrent = { label: "New" };
 </script>
 
 <template>
-  <Breadcrumbs :home="breadcrumbHome" :current="breadcrumbCurrent" />
+  <BreadcrumbNavigation :home="breadcrumbHome" :current="breadcrumbCurrent" />
   <div
     class="rounded-lg bg-white shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
   >
@@ -45,7 +46,9 @@ const breadcrumbCurrent = { label: "New" };
               {{ index + 1 }}
             </span>
 
-            <span class="hidden text-surface-500 dark:text-surface-100 sm:block">
+            <span
+              class="hidden text-surface-500 dark:text-surface-100 sm:block"
+            >
               {{ stepData.label }}
             </span>
           </li>

@@ -33,16 +33,14 @@ useCustomFetch(`/repository/container/list`)
   .json()
   .then(async (response) => {
     collections.value = response.data.value;
-    const allFolios = []
+    const allFolios = [];
     for (const collection of response.data.value) {
-      console.log(collection.id)
       await useCustomFetch(`/repository/container/folio/list/${collection.id}`)
         .get()
         .json()
-        .then((response) => allFolios.push(...response.data.value))
+        .then((response) => allFolios.push(...response.data.value));
     }
-    console.log(allFolios)
-    folios.value = allFolios
+    folios.value = allFolios;
   });
 
 function startTour() {
@@ -107,7 +105,7 @@ function openSettings() {
     <div class="grid grid-cols-5 grid-rows-1 gap-8 lg:grid-rows-2">
       <div class="col-span-5 row-span-2 xl:col-span-4">
         <div
-          class="group m-0 h-full bg-white p-5 shadow-md dark:bg-zinc-800"
+          class="group m-0 h-full rounded-md bg-white p-5 shadow-md dark:bg-zinc-800"
         >
           <RecentProjectsOverview />
         </div>
@@ -182,14 +180,14 @@ function openSettings() {
     <div class="grid grid-cols-4 grid-rows-1 gap-8">
       <div class="col-span-4 row-span-1 2xl:col-span-2">
         <div
-          class="group m-0 h-full bg-white p-5 shadow-md dark:bg-zinc-800"
+          class="group m-0 h-full rounded-md bg-white p-5 shadow-md dark:bg-zinc-800"
         >
           <AvailableWorkflows />
         </div>
       </div>
       <div class="col-span-4 row-span-1 2xl:col-span-2">
         <div
-          class="group m-0 h-full bg-white p-5 shadow-md dark:bg-zinc-800"
+          class="group m-0 h-full rounded-md bg-white p-5 shadow-md dark:bg-zinc-800"
         >
           <SmallJobQueue />
         </div>

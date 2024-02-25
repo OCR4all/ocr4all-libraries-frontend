@@ -151,26 +151,36 @@ async function launchWorkflow() {
     v-else-if="isRunning"
     class="flex flex-col items-center justify-center dark:text-surface-100 sm:p-24"
   >
-    <h2
-      v-if="isImportingImages"
-      class="m-10 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
-    >
-      {{ $t("pages.projects.sandbox.workflow.importing-images") }}
-    </h2>
+    <div v-if="isImportingImages">
+      <h2
+        v-if="isImportingImages"
+        class="m-10 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
+      >
+        {{ $t("pages.projects.sandbox.workflow.importing-images.heading") }}
+      </h2>
+      <div class="py-5 text-center">
+        <DefaultSpinner />
+      </div>
+      <h3
+        class="text-center text-lg text-black dark:text-white sm:text-xl md:text-2xl"
+      >
+        {{ $t("pages.projects.sandbox.workflow.importing-images.content") }}
+      </h3>
+    </div>
     <div v-else-if="isWorkflowRunning">
       <h2
         class="m-10 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
       >
         {{ $t("pages.projects.sandbox.workflow.running-workflows.heading") }}
       </h2>
+      <div class="py-5 text-center">
+        <DefaultSpinner />
+      </div>
       <h3
         class="text-center text-lg text-black dark:text-white sm:text-xl md:text-2xl"
       >
         {{ $t("pages.projects.sandbox.workflow.running-workflows.content") }}
       </h3>
-    </div>
-    <div class="text-center">
-      <DefaultSpinner />
     </div>
   </section>
   <section
@@ -183,7 +193,7 @@ async function launchWorkflow() {
       {{ $t("pages.projects.sandbox.workflow.workflow-finished") }}
     </h2>
     <button
-      class="rounded-lg bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      class="bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       @click="router.push(`/project/${project}/result/${store.sandboxId}`)"
     >
       {{ $t("pages.projects.sandbox.workflow.buttons.inspect-results") }}

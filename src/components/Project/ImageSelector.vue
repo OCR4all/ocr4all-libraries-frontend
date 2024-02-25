@@ -9,27 +9,27 @@ import Image from "primevue/image";
 const emit = defineEmits(["import-folios"]);
 
 function importFolios() {
-  const registry = {}
-  const selection = []
-  for(const [key, value] of Object.entries(selectedFolios.value)){
-    if(value.checked === true) selection.push(key)
+  const registry = {};
+  const selection = [];
+  for (const [key, value] of Object.entries(selectedFolios.value)) {
+    if (value.checked === true) selection.push(key);
   }
-  for(const container of nodes.value){
-    if(selection.includes(container.key)){
-      registry[container.key] = true
-    }else{
-      if(container.children){
-        const selectedFolios = []
-        for(const folio of container.children){
-          if(selection.includes(folio.key)) selectedFolios.push(folio.key)
+  for (const container of nodes.value) {
+    if (selection.includes(container.key)) {
+      registry[container.key] = true;
+    } else {
+      if (container.children) {
+        const selectedFolios = [];
+        for (const folio of container.children) {
+          if (selection.includes(folio.key)) selectedFolios.push(folio.key);
         }
-        if(selectedFolios.length){
-          registry[container.key] = selectedFolios
+        if (selectedFolios.length) {
+          registry[container.key] = selectedFolios;
         }
       }
     }
   }
-  emit("import-folios", registry)
+  emit("import-folios", registry);
 }
 
 onMounted(() => {
@@ -44,7 +44,7 @@ onMounted(() => {
           data: {
             name: entry.name,
             type: "container",
-            keywords: entry.keywords
+            keywords: entry.keywords,
           },
           leaf: false,
         });
@@ -58,7 +58,9 @@ const rows = ref(10);
 const loading = ref(false);
 const totalRecords = ref(0);
 const onExpand = (node) => {
-  const isChecked = !!(selectedFolios.value && Object.keys(selectedFolios.value).includes(node.key))
+  const isChecked = !!(
+    selectedFolios.value && Object.keys(selectedFolios.value).includes(node.key)
+  );
   if (!node.children) {
     loading.value = true;
     useCustomFetch(`/repository/container/folio/list/${node.key}`)
@@ -66,12 +68,12 @@ const onExpand = (node) => {
       .then(async (response) => {
         const children = [];
         for (const folio of response.data.value) {
-          const key = folio.id
+          const key = folio.id;
           const { data } = await useCustomFetch(
             `/repository/container/folio/derivative/thumbnail/${node.key}?id=${key}`,
           )
             .get()
-            .blob()
+            .blob();
 
           children.push({
             key: key,
@@ -79,14 +81,14 @@ const onExpand = (node) => {
               name: folio.name,
               type: "folio",
               thumbnail: data.value,
-              keywords: folio.keywords
+              keywords: folio.keywords,
             },
           });
           if (isChecked) {
             selectedFolios.value[`${key}`] = {
               checked: true,
-              partialChecked: false
-            }
+              partialChecked: false,
+            };
           }
         }
         node.children = children;

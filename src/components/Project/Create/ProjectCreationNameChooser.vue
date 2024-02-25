@@ -8,12 +8,19 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 
 const nameTaken = ref(false);
 const noName = ref(false);
+const projects = ref([]);
 
 const emit = defineEmits(["back", "next"]);
 
 const projectName = ref();
 
 const store = useProjectCreationStore();
+
+useCustomFetch(`/project/list`)
+  .json()
+  .then((response) => {
+    projects.value = [...response.data.value.map((entry) => entry.id)];
+  });
 
 async function createProject() {
   if (!projectName.value) {
@@ -22,19 +29,18 @@ async function createProject() {
   } else {
     noName.value = false;
 
-    const { isFetching, error, data } =
-      await useCustomFetch(`/project/list`).json();
-    let result = [...data.value.map((e) => e.id)];
-    if (result.includes(projectName.value)) {
+    if (projects.value.includes(projectName.value)) {
       nameTaken.value = true;
     } else {
-      const { isFetching_a, error_a, data_a } = await useCustomFetch(
-        `/project/create?id=${projectName.value}`,
-      ).json();
-      if (!error_a) {
-        store.projectId = projectName.value;
-        emit("next");
-      }
+      useCustomFetch(`/project/create?id=${projectName.value}`)
+        .get()
+        .json()
+        .then((response) => {
+          if (!response.error.value) {
+            store.projectId = projectName.value;
+            emit("next");
+          }
+        });
     }
   }
 }
@@ -52,7 +58,7 @@ async function createProject() {
     <div class="flex flex-col space-y-2">
       <InputText
         v-model="projectName"
-        :class="{ 'p-invalid': nameTaken === true }"
+        :class="{ 'border border-solid border-red-700': nameTaken === true }"
       />
       <InlineMessage v-show="noName">{{
         $t("pages.projects.new.components.name.warning.no-name")

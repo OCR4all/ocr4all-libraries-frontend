@@ -41,12 +41,12 @@ const nodes = ref();
 
 const sandboxGenerationToastVisible = ref(false);
 
-const LAREX_LABEL = "ocr4all-LAREX-launcher v1.0"
+const LAREX_LABEL = "ocr4all-LAREX-launcher v1.0";
 const showSandboxGenerationToast = () => {
   if (!sandboxGenerationToastVisible.value) {
     toast.add({
       severity: "custom",
-      summary: "Generating Result View",
+      summary: "Collecting files for LAREX",
       group: "headless",
     });
     sandboxGenerationToastVisible.value = true;
@@ -82,7 +82,7 @@ async function refetch() {
   }
 }
 
-function getSnapshotFromSelection(selection: object){
+function getSnapshotFromSelection(selection: object) {
   const key = Object.keys(selection)[0]
     .split(",")
     .map(function (item) {
@@ -92,7 +92,7 @@ function getSnapshotFromSelection(selection: object){
 }
 
 async function generateSandbox(selection: object) {
-  const snapshotData = getSnapshotFromSelection(selection)
+  const snapshotData = getSnapshotFromSelection(selection);
   showSandboxGenerationToast();
   if (snapshotData.label === LAREX_LABEL) {
     createdTrack.value = snapshotData.key;
@@ -175,28 +175,29 @@ async function generateSandbox(selection: object) {
   refetch();
 }
 
-async function exportSnapshot(snapshot){
+async function exportSnapshot(snapshot) {
   const key = Object.keys(snapshot)[0]
     .split(",")
     .map(function (item) {
       return parseInt(item, 10);
     });
   const payload = {
-    track: key
-  }
-  useCustomFetch(
-    `/snapshot/zip/${project}/${sandbox}`
-  )
+    track: key,
+  };
+  useCustomFetch(`/snapshot/zip/${project}/${sandbox}`)
     .post(payload)
     .blob()
     .then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data.value]));
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.setAttribute('download', `${project}_${sandbox}_${key.toString().replace(',', '_')}.zip`);
+      link.setAttribute(
+        "download",
+        `${project}_${sandbox}_${key.toString().replace(",", "_")}.zip`,
+      );
       document.body.appendChild(link);
       link.click();
-    })
+    });
 }
 async function checkJob(startedJob) {
   return await new Promise((resolve) => {
@@ -285,6 +286,7 @@ const breadcrumbCurrent = { label: sandbox };
             type="submit"
             name="action"
             class="bg-primary-300 p-2 text-surface-50 hover:bg-primary-500"
+            @click="closeCallback"
           >
             Open
           </button>
@@ -323,7 +325,9 @@ const breadcrumbCurrent = { label: sandbox };
               <div class="flex flex-col">
                 <div class="flex flex-col items-center">
                   <span class="mb-2 font-bold">{{
-                    slotProps.node.label.split(" ")[0].replace("ocr4all-LAREX-launcher", "LAREX")
+                    slotProps.node.label
+                      .split(" ")[0]
+                      .replace("ocr4all-LAREX-launcher", "LAREX")
                   }}</span>
                 </div>
               </div>
@@ -333,78 +337,84 @@ const breadcrumbCurrent = { label: sandbox };
         <div class="card overflow-x-auto"></div>
       </section>
     </div>
-    <TransitionRoot
-      :show="Object.entries(selection).length > 0"
-      as="div"
+    <transition
       class="w-128 flex-1 rounded-lg bg-white p-5 shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
-      enter="transform transition ease-in-out duration-200"
-      enter-from="translate-x-full"
-      enter-to="translate-x-0"
-      leave="transform transition ease-in-out duration-200  "
-      leave-from="translate-x-0"
-      leave-to="translate-x-full"
+      enter-active-class="transform transition ease-in-out duration-200"
+      enter-from-class="translate-x-full"
+      enter-to-class="translate-x-0"
+      leave-active-class="transform transition ease-in-out duration-200  "
+      leave-from-class="translate-x-0"
+      leave-to-class="translate-x-full"
     >
-      <div class="flex space-x-2 pb-6">
-        <Button
-          @click="generateSandbox(selection)"
-          v-tooltip="{ value: 'Generate Result View', hideDelay: 300 }"
-          :pt="{
-            root: {
-              class: 'p-2 bg-primary-600 hover:bg-primary-700 text-surface-50',
-            },
-          }"
-        >
-          <span v-if="getSnapshotFromSelection(selection).label === LAREX_LABEL">
-            Open
-          </span>
-          <span v-else>
-            Generate Result View
-          </span>
-        </Button>
-        <Button
-          @click="exportSnapshot(selection)"
-          v-tooltip="{ value: 'Export Snapshot', hideDelay: 300 }"
-          :pt="{
-            root: {
-              class: 'p-2 bg-primary-600 hover:bg-primary-700 text-surface-50',
-            },
-          }"
-        >
-          Export
-        </Button>
-      </div>
-      <h2
-        class="pb-2 text-2xl font-semibold text-surface-950 dark:text-surface-50"
-      >
-        Info
-      </h2>
-      <table class="w-full text-left text-sm text-surface-500 dark:text-surface-400">
-        <thead
-          class="bg-surface-50 text-xs uppercase text-surface-700 dark:bg-zinc-700 dark:text-white"
-        >
-          <tr>
-            <th scope="col" class="px-6 py-3">Parameter</th>
-            <th scope="col" class="px-6 py-3">Value</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="(value, key) in Object.entries(selectedSnapshotInformation)"
-            :key="key"
-            class="border-b bg-white dark:border-surface-700 dark:bg-zinc-800"
+      <div v-if="Object.entries(selection).length > 0">
+        <div class="flex space-x-2 pb-6">
+          <Button
+            @click="generateSandbox(selection)"
+            v-tooltip="{ value: 'Open in LAREX', hideDelay: 300 }"
+            :pt="{
+              root: {
+                class:
+                  'p-2 bg-primary-600 hover:bg-primary-700 text-surface-50',
+              },
+            }"
           >
-            <th
-              scope="row"
-              class="whitespace-nowrap px-6 py-4 font-medium text-surface-900 dark:text-white"
+            <span
+              v-if="getSnapshotFromSelection(selection).label === LAREX_LABEL"
             >
-              {{ value[0] }}
-            </th>
-            <td class="px-6 py-4 dark:text-white">
-              {{ value[1] }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </TransitionRoot>
+              Open
+            </span>
+            <span v-else> Open in LAREX </span>
+          </Button>
+          <Button
+            @click="exportSnapshot(selection)"
+            v-tooltip="{ value: 'Export Snapshot', hideDelay: 300 }"
+            :pt="{
+              root: {
+                class:
+                  'p-2 bg-primary-600 hover:bg-primary-700 text-surface-50',
+              },
+            }"
+          >
+            Export
+          </Button>
+        </div>
+        <h2
+          class="pb-2 text-2xl font-semibold text-surface-950 dark:text-surface-50"
+        >
+          Info
+        </h2>
+        <table
+          class="w-full text-left text-sm text-surface-500 dark:text-surface-400"
+        >
+          <thead
+            class="bg-surface-50 text-xs uppercase text-surface-700 dark:bg-zinc-700 dark:text-white"
+          >
+            <tr>
+              <th scope="col" class="px-6 py-3">Parameter</th>
+              <th scope="col" class="px-6 py-3">Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(value, key) in Object.entries(
+                selectedSnapshotInformation,
+              )"
+              :key="key"
+              class="border-b bg-white dark:border-surface-700 dark:bg-zinc-800"
+            >
+              <th
+                scope="row"
+                class="whitespace-nowrap px-6 py-4 font-medium text-surface-900 dark:text-white"
+              >
+                {{ value[0] }}
+              </th>
+              <td class="px-6 py-4 dark:text-white">
+                {{ value[1] }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </transition>
   </div>
 </template>

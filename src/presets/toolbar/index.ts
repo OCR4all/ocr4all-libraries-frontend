@@ -3,6 +3,7 @@ export default {
     class: [
       "flex items-center justify-between flex-wrap",
       "gap-6",
+      "rounded-md",
       "px-6 py-2",
       "min-h-[4rem]",
       "bg-surface-50 dark:bg-surface-900",

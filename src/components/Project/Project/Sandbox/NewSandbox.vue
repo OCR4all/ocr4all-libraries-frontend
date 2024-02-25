@@ -49,7 +49,9 @@ const breadcrumbCurrent = { label: "New Result" };
               {{ index + 1 }}
             </span>
 
-            <span class="hidden text-surface-500 dark:text-surface-100 sm:block">
+            <span
+              class="hidden text-surface-500 dark:text-surface-100 sm:block"
+            >
               {{ stepData.label }}
             </span>
           </li>

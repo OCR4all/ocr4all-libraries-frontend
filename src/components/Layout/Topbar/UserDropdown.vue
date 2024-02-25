@@ -68,7 +68,7 @@ function save() {
       leave-to-class="opacity-0 scale-90"
     >
       <MenuItems
-        class="absolute right-0 z-40 mt-2 w-48 origin-top-right overflow-hidden rounded-md border border-surface-100 bg-white shadow-lg focus:outline-none dark:border-surface-700 dark:bg-zinc-800"
+        class="absolute right-0 !z-50 mt-2 w-48 origin-top-right overflow-hidden rounded-md border border-surface-100 bg-white shadow-lg focus:outline-none dark:border-surface-700 dark:bg-zinc-800"
       >
         <template v-for="(item, index) in items" :key="index">
           <MenuItem
@@ -77,7 +77,10 @@ function save() {
           >
             <a
               href="#"
-              :class="{ 'bg-surface-100': active, 'dark:bg-surface-500': active }"
+              :class="{
+                'bg-surface-100': active,
+                'dark:bg-surface-500': active,
+              }"
               class="block px-4 py-2 text-sm text-surface-700 dark:text-white"
               @click="item.action"
               >{{ item.name }}</a

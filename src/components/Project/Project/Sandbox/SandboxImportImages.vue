@@ -47,7 +47,9 @@ console.log(folios);
 </script>
 
 <template>
-  <section class="flex flex-col items-center justify-center dark:text-surface-100">
+  <section
+    class="flex flex-col items-center justify-center dark:text-surface-100"
+  >
     <h2
       class="mb-2 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
     >

@@ -24,6 +24,16 @@ const containerName = router.currentRoute.value.query.name;
 
 const folioRefs = ref([])
 
+const setFolioRef = el => {
+  if (el) {
+    folioRefs.value.push(el)
+  }
+}
+
+onBeforeUpdate(() => {
+  folioRefs.value = []
+})
+
 const uploadToastVisible = ref(false);
 const progress = ref(0);
 const showUploadToast = () => {
@@ -90,6 +100,7 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
           progress.value = parseInt(
             Math.round((progressEvent.loaded / progressEvent.total) * 100),
           );
+          console.log(progress)
         },
       },
     )
@@ -110,7 +121,7 @@ function updateSelection(folio: string, add: boolean) {
   } else if (add) {
     selection.value.push(folio);
   }
-  checked.value = Object.keys(selection.value).length > 0
+  checked.value = Object.keys(selection.value).length > 0;
 }
 
 function updateTotalSelection(event: Event) {
@@ -123,8 +134,8 @@ function updateTotalSelection(event: Event) {
 
 async function deleteSelected() {
   for (const folio of selection.value) {
-    if(selection.value.includes(folio)){
-      updateSelection(folio, false)
+    if (selection.value.includes(folio)) {
+      updateSelection(folio, false);
     }
     await useCustomFetch(
       `/repository/container/folio/remove/entity/${container}?id=${folio}`,
@@ -201,16 +212,9 @@ refresh();
             {{ message.detail }}
           </p>
         </div>
-        <div class="flex gap-2 justify-self-center">
-          <ProgressBar
-            :value="progress"
-            :show-value="false"
-            :style="{ height: '4px' }"
-          ></ProgressBar>
-          <label class="text-right text-xs text-black dark:text-white"
-            >{{ progress }}% uploaded...</label
-          >
-        </div>
+        <ProgressBar
+          :value="progress"
+        ></ProgressBar>
         <div class="mb-3 flex gap-3 justify-self-center">
           <Button
             label="Close"
@@ -222,7 +226,7 @@ refresh();
       </section>
     </template>
   </Toast>
-  <div class="bg-surface-0 p-4 dark:bg-surface-800 @container/content">
+  <div class="bg-surface-0 p-4 @container/content dark:bg-surface-800">
     <div class="m-4 flex space-x-4">
       <FileUpload
         ref="fileUpload"
@@ -234,16 +238,17 @@ refresh();
         :multiple="true"
         accept="image/*"
         :pt="{
-        chooseButton: {
-          class: 'flex bg-primary-600 p-4 text-white cursor-pointer',
-        },
-      }"
+          chooseButton: {
+            class:
+              'rounded-md flex bg-primary-600 p-4 text-white cursor-pointer',
+          },
+        }"
         :max-file-size="1000000000"
         @uploader="uploader"
       >
       </FileUpload>
       <button
-        class="bg-red-600 p-4 text-primary-0 hover:bg-red-700 disabled:bg-red-400"
+        class="rounded-md bg-red-600 p-4 text-primary-0 hover:bg-red-700 disabled:bg-red-400"
         :disabled="selection.length === 0"
         @click="deleteSelected"
       >
@@ -266,13 +271,13 @@ refresh();
             :options="sortModes"
             option-label="name"
             :pt="{
-            root: {
-              class:
-                'inline-flex relative bg-transparent cursor-pointer self-end',
-            },
-            input: { class: 'text-surface-950 dark:text-surface-50 text-xl' },
-            trigger: { class: 'hidden' },
-          }"
+              root: {
+                class:
+                  'inline-flex relative bg-transparent cursor-pointer self-end',
+              },
+              input: { class: 'text-surface-950 dark:text-surface-50 text-xl' },
+              trigger: { class: 'hidden' },
+            }"
             @change="updateSort"
           />
         </div>
@@ -287,12 +292,12 @@ refresh();
             v-model="checked"
             :binary="true"
             :pt="{
-            root: { class: 'z-50 pb-4' },
-            input: {
-              class:
-                'peer absolute h-6 w-6 border border-solid cursor-pointer hover:bg-primary-200',
-            },
-          }"
+              root: { class: 'z-50 pb-4' },
+              input: {
+                class:
+                  'peer absolute h-6 w-6 border border-solid cursor-pointer hover:bg-primary-200',
+              },
+            }"
             @update:model-value="updateTotalSelection"
           />
         </div>
@@ -308,8 +313,8 @@ refresh();
         <FolioCard
           v-for="folio in folios"
           :id="folio.id"
+          :ref="setFolioRef"
           :key="folio.id"
-          ref="folioRefs"
           :src="thumbs[folio.id]"
           :name="folio.name"
           :format="folio.format"

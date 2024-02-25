@@ -28,6 +28,8 @@ const RepositoryPage = () => import("@/pages/RepositoryPage.vue");
 const ContainerView = () => import("@/components/Repository/ContainerView.vue");
 const AdminPage = () => import("@/pages/AdminPage.vue");
 
+const TrainingPage = () => import("@/pages/TrainingPage.vue");
+
 import { useAuthStore } from "@/stores/auth.store";
 import { useConfigStore } from "@/stores/config.store";
 
@@ -114,6 +116,11 @@ const routes = [
     path: "/nodeflow",
     name: "NodeFlow",
     component: NodeFlowPage,
+  },
+  {
+    path: "/training",
+    name: "Training",
+    component: TrainingPage,
   },
   {
     path: "/login",

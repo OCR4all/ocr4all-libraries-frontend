@@ -39,6 +39,7 @@ const selectedProjects = ref(null);
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   state: { value: null, matchMode: FilterMatchMode.EQUALS },
+  keywords: { value: null, matchMode: FilterMatchMode.IN },
 });
 
 const getSeverity = (entry) => {
@@ -62,7 +63,7 @@ const states = ref(["active", "closed", "blocked"]);
         <div class="my-2 space-x-2">
           <button
             type="button"
-            class="rounded-lg bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             @click="router.push('/project/new')"
           >
             {{ $t("pages.projects.overview.toolbar.new") }}
@@ -70,7 +71,7 @@ const states = ref(["active", "closed", "blocked"]);
           <button
             disabled
             type="button"
-            class="rounded-lg bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 disabled:bg-primary-400 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 dark:disabled:bg-blue-400"
+            class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 disabled:bg-primary-400 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 dark:disabled:bg-blue-400"
             @click="router.push('/project/import')"
           >
             {{ $t("pages.projects.overview.toolbar.import") }}
@@ -93,8 +94,9 @@ const states = ref(["active", "closed", "blocked"]);
       :paginator="true"
       :rows="10"
       :loading="loading"
-      :filters="filters"
-      :globalFilterFields="['name', 'description', 'state', 'keywords']"
+      v-model:filters="filters"
+      filter-display="row"
+      :globalFilterFields="['name', 'state', 'keywords']"
       sortField="tracking.updated"
       :sortOrder="-1"
       :row-hover="true"
@@ -150,13 +152,12 @@ const states = ref(["active", "closed", "blocked"]);
         :header="$t('pages.projects.overview.table.columns.description')"
       >
         <template #body="slotProps">
-          <p class="max-w-xs truncate">{{ slotProps.data.description }}</p>
+          <p class="max-w-[10rem] truncate">{{ slotProps.data.description }}</p>
         </template>
       </Column>
       <Column
         field="state"
         :header="$t('pages.projects.overview.table.columns.state')"
-        :showFilterMenu="false"
         :filterMenuStyle="{ width: '14rem' }"
       >
         <template #body="{ data }">
@@ -169,7 +170,7 @@ const states = ref(["active", "closed", "blocked"]);
             :options="states"
             placeholder="Select State"
             class="p-column-filter"
-            style="min-width: 12rem"
+            style="min-width: 5rem; max-width: 12rem"
             :showClear="true"
           >
             <template #option="slotProps">

@@ -9,21 +9,21 @@ const router = useRouter();
 
 const store = useProjectCreationStore();
 
-async function importFolios(data){
-    for(const [key, value] of Object.entries(data)){
-      if(value === true){
-        await useCustomFetch(
-          `/project/folio/import/all/${store.projectId}?id=${key}`
-        ).get()
-      }else if(value.length > 0){
-        const payload = {
-          "ids": value
-        }
-        await useCustomFetch(
-          `/project/folio/import/list/${store.projectId}?id=${key}`
-        ).post(payload)
-      }
+async function importFolios(data) {
+  for (const [key, value] of Object.entries(data)) {
+    if (value === true) {
+      await useCustomFetch(
+        `/project/folio/import/all/${store.projectId}?id=${key}`,
+      ).get();
+    } else if (value.length > 0) {
+      const payload = {
+        ids: value,
+      };
+      await useCustomFetch(
+        `/project/folio/import/list/${store.projectId}?id=${key}`,
+      ).post(payload);
     }
+  }
   await router.push("/project/overview");
 }
 </script>
@@ -38,7 +38,5 @@ async function importFolios(data){
       {{ $t("pages.projects.new.components.images.directive") }}
     </h2>
   </div>
-  <ImageSelector
-    @import-folios="importFolios"
-  />
+  <ImageSelector @import-folios="importFolios" />
 </template>

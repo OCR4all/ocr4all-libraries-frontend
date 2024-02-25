@@ -51,8 +51,8 @@ function updateSelection(event: Event) {
   emit("updateSelection", props.id, event);
 }
 
-function select(doSelect: boolean){
-  checked.value = doSelect
+function select(doSelect: boolean) {
+  checked.value = doSelect;
   emit("updateSelection", props.id, doSelect);
 }
 
@@ -60,20 +60,20 @@ async function deleteFolio() {
   await useCustomFetch(
     `/repository/container/folio/remove/entity/${props.containerId}?id=${props.id}`,
   );
-  select(false)
+  select(false);
   emit("refresh");
 }
 
 const checked = ref();
 
 defineExpose({
-  select
-})
+  select,
+});
 </script>
 <template>
   <div class="grid grid-cols-1 justify-self-center">
     <div
-      class="shadow-xs group relative m-2 grid h-64 w-64 bg-clip-border text-surface-700 hover:bg-primary-200 hover:dark:bg-surface-600"
+      class="shadow-xs group relative m-2 grid h-64 w-64 rounded-md bg-clip-border text-surface-700 hover:bg-primary-200 hover:dark:bg-surface-600"
       :class="[
         checked
           ? ['bg-primary-200', 'dark:bg-surface-700']
@@ -93,7 +93,7 @@ defineExpose({
               root: { class: 'z-50' },
               input: {
                 class:
-                  'peer absolute h-6 w-6 border border-solid cursor-pointer hover:bg-primary-200',
+                  'rounded-md peer absolute h-6 w-6 border border-solid cursor-pointer hover:bg-primary-200',
               },
             }"
           />
@@ -106,7 +106,10 @@ defineExpose({
             aria-haspopup="true"
             aria-label="overlay_menu"
             :pt="{
-              root: { class: 'z-50 bg-surface-50/80 dark:bg-surface-50 p-1' },
+              root: {
+                class:
+                  'rounded-md z-50 bg-surface-50/80 dark:bg-surface-50 p-1',
+              },
               icon: { class: 'align-center pl-1' },
             }"
           />

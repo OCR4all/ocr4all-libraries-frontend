@@ -239,7 +239,10 @@
         "workflow": {
           "heading": "Select a workflow",
           "directive": "Select which workflow should be used to generate results",
-          "importing-images": "Images are getting imported!",
+          "importing-images": {
+            "heading": "Images are getting imported",
+            "content": "Please don't leave this page while the import is running!"
+          },
           "running-workflows": {
             "heading": "Workflow is running",
             "content": "You can now leave this page and track the progress in the queue or just wait here for the workflow to finish"
@@ -272,6 +275,33 @@
           },
           "results-ready": {
             "heading": "Results are ready to be viewed in LAREX"
+          }
+        }
+      }
+    },
+    "repository":
+    {
+      "overview": {
+        "toolbar":
+        {
+          "button": {
+            "create": "Create",
+            "delete": "Delete"
+          }
+
+        },
+        "dataview": {
+          "list": {
+            "header": "Manage Containers",
+            "column": {
+              "name": "Name",
+              "description": "Description",
+              "keywords": "Keywords",
+              "actions": {
+                "open": "Open",
+                "edit": "Edit"
+              }
+            }
           }
         }
       }
@@ -343,6 +373,12 @@
           "error": {
             "summary": "Error",
             "detail": "Couldn't load workflow"
+          }
+        },
+        "rate-workflow": {
+          "placeholder": {
+            "summary": "Not available yet",
+            "detail": "Workflow rating isn't available yet"
           }
         }
       }

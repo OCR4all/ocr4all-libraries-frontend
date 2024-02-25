@@ -18,7 +18,9 @@ import AppLayout from "@/layout/AppLayout.vue";
         >
           Page not found
         </p>
-        <p class="mb-4 text-lg font-light text-surface-500 dark:text-surface-400">
+        <p
+          class="mb-4 text-lg font-light text-surface-500 dark:text-surface-400"
+        >
           Sorry, we can't find that page. You'll find lots to explore on the
           <router-link to="/">Dashboard.</router-link>
         </p>

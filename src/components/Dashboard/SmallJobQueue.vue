@@ -10,7 +10,6 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import DefaultSpinner from "@/components/Layout/utils/DefaultSpinner.vue";
 import Toast from "primevue/toast";
 
-
 const router = useRouter();
 
 const loading = ref(true);

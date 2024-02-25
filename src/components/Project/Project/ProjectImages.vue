@@ -13,7 +13,7 @@ const router = useRouter();
 const project = router.currentRoute.value.params.project;
 
 const folios = ref([]);
-async function refresh(){
+async function refresh() {
   const folioData = await useCustomFetch(`/project/folio/list/${project}`)
     .get()
     .json();
@@ -47,26 +47,26 @@ async function fetchImages(folio) {
   });
 }
 
-async function importFolios(data){
-  for(const [key, value] of Object.entries(data)){
-    if(value === true){
+async function importFolios(data) {
+  for (const [key, value] of Object.entries(data)) {
+    if (value === true) {
       await useCustomFetch(
-        `/project/folio/import/all/${project}?id=${key}`
-      ).get()
-    }else if(value.length > 0){
+        `/project/folio/import/all/${project}?id=${key}`,
+      ).get();
+    } else if (value.length > 0) {
       const payload = {
-        "ids": value
-      }
+        ids: value,
+      };
       await useCustomFetch(
-        `/project/folio/import/list/${project}?id=${key}`
-      ).post(payload)
+        `/project/folio/import/list/${project}?id=${key}`,
+      ).post(payload);
     }
   }
-  imageImportDialogVisible.value = false
-  await refresh()
+  imageImportDialogVisible.value = false;
+  await refresh();
 }
 
-refresh()
+refresh();
 
 const imageImportDialogVisible = ref(false);
 </script>
@@ -85,9 +85,7 @@ const imageImportDialogVisible = ref(false);
   >
     <template #container="{ closeCallback }">
       <div class="rounded-md bg-surface-50 p-4 dark:bg-surface-700">
-        <ImageSelector
-          @import-folios="importFolios"
-        />
+        <ImageSelector @import-folios="importFolios" />
       </div>
       <Button label="Close" icon="pi pi-check" @click="closeCallback" />
     </template>
@@ -109,7 +107,7 @@ const imageImportDialogVisible = ref(false);
     </Toolbar>
     <div
       v-if="folios.length"
-      class="grid grid-cols-1 @[550px]/section:grid-cols-2 @[800px]/section:grid-cols-3 @[1050px]/section:grid-cols-4 justify-between gap-x-2 gap-y-3"
+      class="grid grid-cols-1 justify-between gap-x-2 gap-y-3 @[550px]/section:grid-cols-2 @[800px]/section:grid-cols-3 @[1050px]/section:grid-cols-4"
     >
       <ImageCard
         v-for="folio in folios"

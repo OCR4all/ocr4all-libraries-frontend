@@ -29,6 +29,7 @@ import picklist from "@/presets/picklist";
 import progressbar from "@/presets/progressbar";
 import treetable from "@/presets/treetable";
 import password from "@/presets/password";
+import inlinemessage from "@/presets/inlinemessage";
 
 export default {
   global,
@@ -50,6 +51,7 @@ export default {
   chips,
   textarea,
   password,
+  inlinemessage,
   organizationchart,
   dataviewlayoutoptions,
   dataview,

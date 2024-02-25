@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { ArrowPathIcon, EyeIcon, XMarkIcon, ArchiveBoxArrowDownIcon } from "@heroicons/vue/24/outline";
+import {
+  ArrowPathIcon,
+  EyeIcon,
+  XMarkIcon,
+  ArchiveBoxArrowDownIcon,
+} from "@heroicons/vue/24/outline";
 import { UseTimeAgo } from "@vueuse/components";
 
 import DataTable from "primevue/datatable";
@@ -92,20 +97,18 @@ async function removeResults() {
       });
     });
 }
-const downloadSandboxToastVisible = ref()
+const downloadSandboxToastVisible = ref();
 async function downloadSandbox(sandbox) {
-  useCustomFetch(
-    `/sandbox/zip/${project}?id=${sandbox}`
-  )
+  useCustomFetch(`/sandbox/zip/${project}?id=${sandbox}`)
     .blob()
     .then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data.value]));
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.setAttribute('download', `${project}_${sandbox}.zip`);
+      link.setAttribute("download", `${project}_${sandbox}.zip`);
       document.body.appendChild(link);
       link.click();
-    })
+    });
 }
 </script>
 <template>
