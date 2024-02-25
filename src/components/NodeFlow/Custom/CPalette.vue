@@ -10,6 +10,16 @@ import AccordionTab from "primevue/accordiontab";
 
 type NodeTypeInformations = Record<string, INodeTypeInformation>;
 
+const visible = ref(true)
+
+function toggleVisibility(){
+  visible.value = !visible.value
+}
+
+defineExpose({
+  toggleVisibility
+});
+
 interface IDraggedNode {
   type: string;
   nodeInformation: INodeTypeInformation;
@@ -114,46 +124,51 @@ const onDragStart = (type: string, nodeInformation: INodeTypeInformation) => {
 </script>
 
 <template>
-  <div
-    class="baklava-node-palette !opacity-95 dark:!bg-zinc-800 dark:!opacity-95"
+  <transition
+    enter-active-class="transform transition ease-in-out duration-300"
+    enter-from-class="translate-x-full"
+    enter-to-class="translate-x-0"
+    leave-active-class="transform transition ease-in-out duration-300  "
+    leave-from-class="translate-x-0"
+    leave-to-class="translate-x-full"
   >
-    <h1 class="pb-5 text-center text-xl font-bold text-black dark:text-white">
-      {{ $t("pages.nodeflow.palette.processors") }}
-    </h1>
-    <Accordion :multiple="true" :pt="{ root: { class: 'dark:!bg-zinc-800' } }">
-      <AccordionTab
-        v-for="c in categories"
-        :key="c.name"
-        :header="c.name"
-        :pt="{
-          root: { class: 'dark:!bg-zinc-800' },
-          header: { class: 'dark:!bg-zinc-800' },
-          headerAction: { class: 'dark:!bg-zinc-800 dark:!border-zinc-600' },
-          headerIcon: { class: 'dark:!text-white' },
-          headerTitle: { class: 'dark:!text-white' },
-          content: { class: 'dark:!bg-zinc-800 dark:!border-zinc-600' },
-        }"
-      >
-        <PaletteEntry
-          v-for="(ni, nt) in c.nodeTypes"
-          :key="nt"
-          :type="nt"
-          :title="ni.title"
-          @pointerdown="onDragStart(nt, ni)"
-        />
-      </AccordionTab>
-    </Accordion>
-  </div>
-  <transition name="fade">
     <div
-      v-if="draggedNode"
-      class="baklava-dragged-node"
-      :style="draggedNodeStyles"
-    >
-      <PaletteEntry
-        :type="draggedNode.type"
-        :title="draggedNode.nodeInformation.title"
-      />
+      v-show="visible"
+      class="h-full overflow-scroll-y">
+      <div
+        class="baklava-node-palette !opacity-95 dark:!bg-zinc-800 dark:!opacity-95"
+      >
+        <h1 class="pb-5 text-center text-xl font-bold text-black dark:text-white">
+          {{ $t("pages.nodeflow.palette.processors") }}
+        </h1>
+        <Accordion :multiple="true">
+          <AccordionTab
+            v-for="c in categories"
+            :key="c.name"
+            :header="c.name"
+          >
+            <PaletteEntry
+              v-for="(ni, nt) in c.nodeTypes"
+              :key="nt"
+              :type="nt"
+              :title="ni.title"
+              @pointerdown="onDragStart(nt, ni)"
+            />
+          </AccordionTab>
+        </Accordion>
+      </div>
+      <transition name="fade">
+        <div
+          v-if="draggedNode"
+          class="baklava-dragged-node"
+          :style="draggedNodeStyles"
+        >
+          <PaletteEntry
+            :type="draggedNode.type"
+            :title="draggedNode.nodeInformation.title"
+          />
+        </div>
+      </transition>
     </div>
   </transition>
 </template>

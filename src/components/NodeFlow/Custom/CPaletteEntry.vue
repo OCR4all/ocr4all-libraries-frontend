@@ -39,11 +39,21 @@ export default defineComponent({
       }
     };
 
+    const favorites = [
+      "ocrd-cis-ocropy-binarize",
+      "ocrd-tesserocr-binarize",
+      "ocrd-tesserocr-segment",
+      "ocrd-cis-ocropy-segment",
+      "ocrd-calamari-recognize",
+      "ocrd-tesserocr-recognize"
+    ]
+
     return {
       showContextMenu,
       hasContextMenu,
       openContextMenu,
       onContextMenuClick,
+      favorites
     };
   },
 });
@@ -53,7 +63,7 @@ export default defineComponent({
   <div class="baklava-node --palette" :data-node-type="type">
     <div class="__title">
       <div class="__title-label">
-        {{ title }}
+        {{ title }} {{ favorites.includes(title) ? "⭐" : "" }}
       </div>
     </div>
   </div>

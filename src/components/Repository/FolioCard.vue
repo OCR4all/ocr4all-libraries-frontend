@@ -5,6 +5,11 @@ import Button from "primevue/button";
 import Menu from "primevue/menu";
 import Checkbox from "primevue/checkbox";
 import Image from "primevue/image";
+import Textarea from "primevue/textarea";
+import InlineMessage from "primevue/inlinemessage";
+import InputText from "primevue/inputtext";
+import Dialog from "primevue/dialog";
+import Chips from "primevue/chips";
 
 const props = defineProps<{
   name?: string;
@@ -29,13 +34,13 @@ const actionMenuItems = ref([
   {
     label: "Actions",
     items: [
-      {
+/*      {
         label: "Edit",
         icon: "pi pi-pencil",
         command: () => {
-          console.log("edit");
+          editDialogVisible.value = true
         },
-      },
+      },*/
       {
         label: "Delete",
         icon: "pi pi-times",
@@ -64,7 +69,12 @@ async function deleteFolio() {
   emit("refresh");
 }
 
+const name = ref(props.name)
+const keywords = ref(props.keywords)
+
+
 const checked = ref();
+const editDialogVisible = ref(false)
 
 defineExpose({
   select,

@@ -34,6 +34,7 @@ baklava.settings.nodes.resizable = true;
 baklava.settings.contextMenu.enabled = true;
 
 const editor = baklava.editor;
+const palette = ref()
 
 const store = useNodeFlowStore();
 
@@ -197,6 +198,10 @@ function zoomIn() {
 function zoomOut() {
   baklava.displayedGraph.scaling -= 0.1;
 }
+
+function togglePalette() {
+  palette.value.toggleVisibility()
+}
 </script>
 
 <template>
@@ -210,10 +215,14 @@ function zoomOut() {
         @zoom-in="zoomIn"
         @zoom-out="zoomOut"
         @rate-workflow="rateWorkflow"
+        @toggle-palette="togglePalette"
       />
     </template>
     <template #sidebar>
       <CSidebar />
+    </template>
+    <template #palette>
+      <CPalette ref="palette" />
     </template>
   </EditorComponent>
   <Dialog
@@ -325,7 +334,6 @@ function zoomOut() {
 
 <style>
 .baklava-minimap {
-  z-index: 40;
-  top: 70px;
+  @apply bottom-0 left-0 top-3/4 z-40;
 }
 </style>

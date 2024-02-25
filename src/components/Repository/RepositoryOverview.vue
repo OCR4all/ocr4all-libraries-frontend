@@ -257,13 +257,13 @@ const layout = ref("grid");
             <template #body="slotProps">
               <div class="flex space-x-2">
                 <button
-                  class="bg-primary-300 p-2 text-surface-50 hover:bg-primary-500"
+                  class="bg-primary-600 p-2 text-surface-50 hover:bg-primary-800"
                   @click="openContainer(slotProps.data.id, slotProps.data.name)"
                 >
                   {{ $t('pages.repository.overview.dataview.list.column.actions.open') }}
                 </button>
                 <button
-                  class="bg-primary-300 p-2 text-surface-50 hover:bg-primary-500"
+                  class="bg-primary-600 p-2 text-surface-50 hover:bg-primary-800"
                   @click="openEditDialog(slotProps.data.id)"
                 >
                   {{ $t('pages.repository.overview.dataview.list.column.actions.edit') }}

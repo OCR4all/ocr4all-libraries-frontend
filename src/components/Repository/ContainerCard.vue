@@ -10,6 +10,8 @@ import Toast from "primevue/toast";
 
 import { useToast } from "primevue/usetoast";
 import { useI18n } from "vue-i18n";
+import Chips from "primevue/chips";
+import Textarea from "primevue/textarea";
 const toast = useToast();
 
 const { t } = useI18n();
@@ -20,6 +22,8 @@ const props = defineProps<{
   keywords?: string[];
   id?: string;
 }>();
+
+const editDialogVisible = ref(false)
 
 const folios = ref();
 useCustomFetch(`/repository/container/folio/list/${props.id}`)
@@ -53,7 +57,7 @@ const actionMenuItems = ref([
         label: "Edit",
         icon: "pi pi-pencil",
         command: () => {
-          console.log("edit");
+          editDialogVisible.value = true;
         },
       },
       {
@@ -100,9 +104,92 @@ function openShareModal() {
 function actionMenuBlurred(event) {
   actionMenuVisible.value = false;
 }
+
+async function updateContainer() {
+  const payload = {
+    "name": name.value,
+    "keywords": keywords.value ? Array.from(keywords.value) : [],
+    "description": description.value
+  }
+  const { isFetching, error, data } = await useCustomFetch(`/repository/container/update?id=${props.id}`)
+    .post(payload)
+    .json();
+  emit("refresh")
+  editDialogVisible.value = false
+  if(!error.value){
+    toast.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Container updated",
+      life: 3000,
+    });
+  }else{
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: "Couldn't update container",
+      life: 3000,
+    });
+  }
+}
+
+const name = ref(props.title)
+const keywords = ref(props.keywords)
+const description = ref(props.description)
 </script>
 <template>
   <Toast />
+  <Dialog
+    v-model:visible="editDialogVisible"
+    modal
+    header="Edit"
+    :style="{ width: '50vw' }"
+  >
+    <div class="mx-auto grid grid-cols-6 gap-4">
+      <div class="col-span-3 flex flex-col">
+        <label
+          for="text"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
+        >Label</label
+        >
+        <InputText v-model="name" type="text" />
+      </div>
+
+      <div class="col-span-4 flex flex-col">
+        <label
+          for="description"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
+        >{{ $t("pages.projects.project.information.form.description") }}</label
+        >
+        <Textarea v-model="description" rows="5" cols="30" />
+      </div>
+
+      <div class="col-span-6 flex flex-col">
+        <div class="col-span-4 flex flex-col">
+          <label
+            for="keywords"
+            class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
+          >{{ $t("pages.projects.project.information.form.keywords") }}</label
+          >
+          <Chips v-model="keywords" />
+        </div>
+      </div>
+    </div>
+    <template #footer>
+      <Button
+        label="Cancel"
+        icon="pi pi-times"
+        @click="editDialogVisible = false"
+        text
+      />
+      <Button
+        label="Save"
+        icon="pi pi-check"
+        @click="updateContainer"
+        autofocus
+      />
+    </template>
+  </Dialog>
   <div class="grid grid-cols-1 justify-self-center">
     <div
       class="shadow-xs group relative m-2 grid h-64 w-64 rounded-md bg-clip-border text-surface-700 hover:bg-primary-100 hover:dark:bg-surface-700"

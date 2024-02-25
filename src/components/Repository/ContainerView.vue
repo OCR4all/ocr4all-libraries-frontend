@@ -54,6 +54,12 @@ const hideUploadToast = () => {
     toast.removeGroup("headless");
     uploadToastVisible.value = false;
     progress.value = 0;
+    toast.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Folios successfully uploaded",
+      life: 3000,
+    });
   }, 2000);
 };
 
@@ -100,7 +106,6 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
           progress.value = parseInt(
             Math.round((progressEvent.loaded / progressEvent.total) * 100),
           );
-          console.log(progress)
         },
       },
     )
@@ -134,12 +139,10 @@ function updateTotalSelection(event: Event) {
 
 async function deleteSelected() {
   for (const folio of selection.value) {
-    if (selection.value.includes(folio)) {
-      updateSelection(folio, false);
-    }
     await useCustomFetch(
       `/repository/container/folio/remove/entity/${container}?id=${folio}`,
     );
+    updateSelection(folio, false);
   }
   toast.add({
     severity: "success",
@@ -181,6 +184,8 @@ function updateSort() {
   }
 }
 
+console.log(folios)
+
 const checked = ref();
 const breadcrumbHome = { to: "/repository/overview", label: "Repository" };
 const breadcrumbCurrent = { label: containerName };
@@ -212,9 +217,20 @@ refresh();
             {{ message.detail }}
           </p>
         </div>
-        <ProgressBar
-          :value="progress"
-        ></ProgressBar>
+        <div v-if="progress < 100">
+          <ProgressBar
+            :value="progress"
+          ></ProgressBar>
+        </div>
+        <div
+          v-else-if="progress === 100"
+          class="flex flex-col justify-center space-y-2"
+        >
+          <ProgressBar
+            mode="indeterminate"
+          ></ProgressBar>
+          <p class="self-center font-semibold text-surface-950 dark:text-surface-50">Finalizing upload</p>
+        </div>
         <div class="mb-3 flex gap-3 justify-self-center">
           <Button
             label="Close"

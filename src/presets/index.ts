@@ -1,4 +1,5 @@
 import global from "./global";
+import accordion from "@/presets/accordion";
 import datatable from "./datatable";
 import toolbar from "./toolbar";
 import dropdown from "@/presets/dropdown";
@@ -30,10 +31,12 @@ import progressbar from "@/presets/progressbar";
 import treetable from "@/presets/treetable";
 import password from "@/presets/password";
 import inlinemessage from "@/presets/inlinemessage";
+import scrollpanel from "@/presets/scrollpanel";
 
 export default {
   global,
   datatable,
+  accordion,
   toolbar,
   tabview,
   dropdown,
@@ -42,6 +45,7 @@ export default {
   dialog,
   tag,
   chip,
+  scrollpanel,
   checkbox,
   image,
   toast,
