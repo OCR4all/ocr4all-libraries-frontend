@@ -40,6 +40,8 @@ const createdTrack = ref();
 const nodes = ref();
 
 const sandboxGenerationToastVisible = ref(false);
+
+const LAREX_LABEL = "ocr4all-LAREX-launcher v1.0"
 const showSandboxGenerationToast = () => {
   if (!sandboxGenerationToastVisible.value) {
     toast.add({
@@ -80,15 +82,19 @@ async function refetch() {
   }
 }
 
-async function generateSandbox(selection: object) {
+function getSnapshotFromSelection(selection: object){
   const key = Object.keys(selection)[0]
     .split(",")
     .map(function (item) {
       return parseInt(item, 10);
     });
-  const snapshotData = useFindNestedObject(nodes, "key", key);
+  return useFindNestedObject(nodes, "key", key);
+}
+
+async function generateSandbox(selection: object) {
+  const snapshotData = getSnapshotFromSelection(selection)
   showSandboxGenerationToast();
-  if (snapshotData.label === "ocr4all-LAREX-launcher v1.0") {
+  if (snapshotData.label === LAREX_LABEL) {
     createdTrack.value = snapshotData.key;
     isGeneratingSandbox.value = false;
     isReady.value = true;
@@ -296,7 +302,7 @@ const breadcrumbCurrent = { label: sandbox };
   </Toast>
   <div class="flex space-x-6">
     <div
-      class="flex-1 rounded-lg bg-white p-5 shadow-md dark:border dark:border-gray-700 dark:bg-zinc-800"
+      class="flex-1 rounded-lg bg-white p-5 shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
     >
       <section>
         <h2
@@ -317,7 +323,7 @@ const breadcrumbCurrent = { label: sandbox };
               <div class="flex flex-col">
                 <div class="flex flex-col items-center">
                   <span class="mb-2 font-bold">{{
-                    slotProps.node.label.split(" ")[0]
+                    slotProps.node.label.split(" ")[0].replace("ocr4all-LAREX-launcher", "LAREX")
                   }}</span>
                 </div>
               </div>
@@ -330,7 +336,7 @@ const breadcrumbCurrent = { label: sandbox };
     <TransitionRoot
       :show="Object.entries(selection).length > 0"
       as="div"
-      class="w-128 flex-1 rounded-lg bg-white p-5 shadow-md dark:border dark:border-gray-700 dark:bg-zinc-800"
+      class="w-128 flex-1 rounded-lg bg-white p-5 shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
       enter="transform transition ease-in-out duration-200"
       enter-from="translate-x-full"
       enter-to="translate-x-0"
@@ -348,7 +354,12 @@ const breadcrumbCurrent = { label: sandbox };
             },
           }"
         >
-          Generate Result View
+          <span v-if="getSnapshotFromSelection(selection).label === LAREX_LABEL">
+            Open
+          </span>
+          <span v-else>
+            Generate Result View
+          </span>
         </Button>
         <Button
           @click="exportSnapshot(selection)"
@@ -367,9 +378,9 @@ const breadcrumbCurrent = { label: sandbox };
       >
         Info
       </h2>
-      <table class="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+      <table class="w-full text-left text-sm text-surface-500 dark:text-surface-400">
         <thead
-          class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-zinc-700 dark:text-white"
+          class="bg-surface-50 text-xs uppercase text-surface-700 dark:bg-zinc-700 dark:text-white"
         >
           <tr>
             <th scope="col" class="px-6 py-3">Parameter</th>
@@ -380,11 +391,11 @@ const breadcrumbCurrent = { label: sandbox };
           <tr
             v-for="(value, key) in Object.entries(selectedSnapshotInformation)"
             :key="key"
-            class="border-b bg-white dark:border-gray-700 dark:bg-zinc-800"
+            class="border-b bg-white dark:border-surface-700 dark:bg-zinc-800"
           >
             <th
               scope="row"
-              class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
+              class="whitespace-nowrap px-6 py-4 font-medium text-surface-900 dark:text-white"
             >
               {{ value[0] }}
             </th>

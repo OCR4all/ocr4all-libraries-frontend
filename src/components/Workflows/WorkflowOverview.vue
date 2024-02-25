@@ -170,7 +170,7 @@ async function deleteWorkflow() {
         <button :disabled="isRefetching === true" @click="refetch">
           <ArrowPathIcon
             :class="{ 'animate-spin': isRefetching }"
-            class="mr-2 inline h-6 w-6 text-gray-800 hover:text-black dark:text-gray-200 dark:hover:text-white"
+            class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
           />
         </button>
       </template>
@@ -282,7 +282,7 @@ async function deleteWorkflow() {
         <div class="col-span-3 flex flex-col">
           <label
             for="text"
-            class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
+            class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
             >Label</label
           >
           <InputText v-model="workflowMetadata.label" type="text" />
@@ -294,7 +294,7 @@ async function deleteWorkflow() {
         <div class="col-span-3 flex flex-col">
           <label
             for="last-name"
-            class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
+            class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
             >ID</label
           >
           <InputText disabled v-model="workflowMetadata.id" type="text" />
@@ -303,7 +303,7 @@ async function deleteWorkflow() {
         <div class="col-span-6 flex flex-col">
           <label
             for="message"
-            class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
+            class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
             >Description</label
           >
           <Textarea v-model="workflowMetadata.description" rows="5" cols="30" />
@@ -312,7 +312,7 @@ async function deleteWorkflow() {
         <div class="col-span-3 flex flex-col">
           <label
             for="last-name"
-            class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
+            class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
             >Updated</label
           >
           <InputText disabled v-model="workflowMetadata.date" type="text" />
@@ -348,12 +348,12 @@ async function deleteWorkflow() {
       header="Delete Workflow"
       :style="{ width: '50vw' }"
     >
-      <p class="pb-5 dark:text-gray-200">
+      <p class="pb-5 dark:text-surface-200">
         Do you really want to delete this workflow?
       </p>
       <button
         type="button"
-        class="mb-2 mr-2 border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+        class="mb-2 mr-2 border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
         @click="toggleDeleteDialog"
       >
         Cancel

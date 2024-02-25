@@ -11,12 +11,12 @@ const emit = defineEmits(["start-tour"]);
     </div>
     <div class="my-auto flex flex-col space-y-1">
       <div
-        class="text-center text-xl text-gray-600 group-hover:text-gray-100 dark:text-gray-300 xl:text-end"
+        class="text-center text-xl text-surface-600 group-hover:text-surface-100 dark:text-surface-300 xl:text-end"
       >
         <slot name="subtitle"></slot>
       </div>
       <div
-        class="text-center text-2xl font-bold text-gray-800 group-hover:text-white dark:text-white xl:text-end"
+        class="text-center text-2xl font-bold text-surface-800 group-hover:text-white dark:text-white xl:text-end"
       >
         <slot name="title"></slot>
       </div>

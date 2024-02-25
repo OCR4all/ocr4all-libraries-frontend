@@ -22,6 +22,8 @@ const router = useRouter();
 const container = router.currentRoute.value.query.id;
 const containerName = router.currentRoute.value.query.name;
 
+const folioRefs = ref([])
+
 const uploadToastVisible = ref(false);
 const progress = ref(0);
 const showUploadToast = () => {
@@ -74,6 +76,7 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
     formData.append("files", file);
   }
   showUploadToast();
+  axios.defaults.timeout = 100000;
   axios
     .post(
       `${config.baseUrl}/repository/container/folio/upload/${container}`,
@@ -96,8 +99,8 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
       refresh();
       hideUploadToast();
     })
-    .catch(function () {
-      console.log("error");
+    .catch(function (error) {
+      console.log(error);
     });
 };
 const selection: Ref<string[]> = ref([]);
@@ -107,10 +110,22 @@ function updateSelection(folio: string, add: boolean) {
   } else if (add) {
     selection.value.push(folio);
   }
+  checked.value = Object.keys(selection.value).length > 0
+}
+
+function updateTotalSelection(event: Event) {
+  if(folioRefs.value){
+    for(const folioRef of folioRefs.value){
+      folioRef.select(event)
+    }
+  }
 }
 
 async function deleteSelected() {
   for (const folio of selection.value) {
+    if(selection.value.includes(folio)){
+      updateSelection(folio, false)
+    }
     await useCustomFetch(
       `/repository/container/folio/remove/entity/${container}?id=${folio}`,
     );
@@ -123,7 +138,6 @@ async function deleteSelected() {
   });
   await refresh();
 }
-function toggleSelectAll() {}
 
 const selectedSortMode = ref({
   name: "Name ↓",
@@ -156,7 +170,7 @@ function updateSort() {
   }
 }
 
-const checked = ref([]);
+const checked = ref();
 const breadcrumbHome = { to: "/repository/overview", label: "Repository" };
 const breadcrumbCurrent = { label: containerName };
 refresh();
@@ -208,49 +222,50 @@ refresh();
       </section>
     </template>
   </Toast>
-  <div class="m-4 flex space-x-4">
-    <FileUpload
-      ref="fileUpload"
-      name="folioUpload[]"
-      choose-label="Upload"
-      mode="basic"
-      :auto="true"
-      :custom-upload="true"
-      :multiple="true"
-      accept="image/*"
-      :pt="{
+  <div class="bg-surface-0 p-4 dark:bg-surface-800 @container/content">
+    <div class="m-4 flex space-x-4">
+      <FileUpload
+        ref="fileUpload"
+        name="folioUpload[]"
+        choose-label="Upload"
+        mode="basic"
+        :auto="true"
+        :custom-upload="true"
+        :multiple="true"
+        accept="image/*"
+        :pt="{
         chooseButton: {
           class: 'flex bg-primary-600 p-4 text-white cursor-pointer',
         },
       }"
-      :max-file-size="100000000"
-      @uploader="uploader"
-    >
-    </FileUpload>
-    <button
-      class="bg-red-600 p-4 text-primary-0 hover:bg-red-700 disabled:bg-red-400"
-      :disabled="selection.length === 0"
-      @click="deleteSelected"
-    >
-      Delete
-    </button>
-  </div>
-  <div class="mx-4 mt-10 flex flex-col space-y-8">
-    <h2 class="text-3xl font-bold text-surface-950 dark:text-surface-50">
-      All folios
-    </h2>
-    <div class="align-center flex justify-between">
-      <div class="flex space-x-3">
-        <p
-          class="min-w-fit self-end text-xl font-semibold text-surface-950 dark:text-surface-50"
-        >
-          Sort by
-        </p>
-        <Dropdown
-          v-model="selectedSortMode"
-          :options="sortModes"
-          option-label="name"
-          :pt="{
+        :max-file-size="1000000000"
+        @uploader="uploader"
+      >
+      </FileUpload>
+      <button
+        class="bg-red-600 p-4 text-primary-0 hover:bg-red-700 disabled:bg-red-400"
+        :disabled="selection.length === 0"
+        @click="deleteSelected"
+      >
+        Delete
+      </button>
+    </div>
+    <div class="mx-4 mt-10 flex flex-col space-y-8">
+      <h2 class="text-3xl font-bold text-surface-950 dark:text-surface-50">
+        All folios
+      </h2>
+      <div class="align-center flex justify-between">
+        <div class="flex space-x-3">
+          <p
+            class="min-w-fit self-end text-xl font-semibold text-surface-950 dark:text-surface-50"
+          >
+            Sort by
+          </p>
+          <Dropdown
+            v-model="selectedSortMode"
+            :options="sortModes"
+            option-label="name"
+            :pt="{
             root: {
               class:
                 'inline-flex relative bg-transparent cursor-pointer self-end',
@@ -258,54 +273,56 @@ refresh();
             input: { class: 'text-surface-950 dark:text-surface-50 text-xl' },
             trigger: { class: 'hidden' },
           }"
-          @change="updateSort"
-        />
-      </div>
-      <div class="relative flex items-center space-x-2 space-y-2">
-        <p
-          v-show="selection.length"
-          class="self-center font-bold text-surface-950 dark:text-surface-50"
-        >
-          {{ selection.length }} selected
-        </p>
-        <Checkbox
-          v-model="checked"
-          :binary="true"
-          :pt="{
+            @change="updateSort"
+          />
+        </div>
+        <div class="relative flex items-center space-x-2 space-y-2">
+          <p
+            v-show="selection.length"
+            class="self-center font-bold text-surface-950 dark:text-surface-50"
+          >
+            {{ selection.length }} selected
+          </p>
+          <Checkbox
+            v-model="checked"
+            :binary="true"
+            :pt="{
             root: { class: 'z-50 pb-4' },
             input: {
               class:
                 'peer absolute h-6 w-6 border border-solid cursor-pointer hover:bg-primary-200',
             },
           }"
-          @update:model-value="toggleSelectAll"
-        />
+            @update:model-value="updateTotalSelection"
+          />
+        </div>
       </div>
     </div>
+    <hr
+      class="mb-6 mt-2 h-0.5 border-t-0 bg-surface-300 opacity-40 dark:opacity-20"
+    />
+    <Suspense>
+      <div
+        class="grid grid-cols-1 @[550px]/content:grid-cols-2 @[800px]/content:grid-cols-3 @[1050px]/content:grid-cols-4 content-center justify-center gap-x-2 gap-y-3"
+      >
+        <FolioCard
+          v-for="folio in folios"
+          :id="folio.id"
+          :key="folio.id"
+          ref="folioRefs"
+          :src="thumbs[folio.id]"
+          :name="folio.name"
+          :format="folio.format"
+          :keywords="folio.keywords"
+          :size="folio.size"
+          :date="folio.date"
+          :user="folio.user"
+          :container-id="container"
+          @update-selection="updateSelection"
+          @refresh="refresh"
+        />
+      </div>
+      <template #fallback> Loading folios... </template>
+    </Suspense>
   </div>
-  <hr
-    class="mb-6 mt-2 h-0.5 border-t-0 bg-surface-300 opacity-40 dark:opacity-20"
-  />
-  <Suspense>
-    <div
-      class="3xl:grid-cols-5 grid grid-cols-1 content-center justify-center gap-x-2 gap-y-3 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4"
-    >
-      <FolioCard
-        v-for="folio in folios"
-        :id="folio.id"
-        :key="folio.id"
-        :src="thumbs[folio.id]"
-        :name="folio.name"
-        :format="folio.format"
-        :keywords="folio.keywords"
-        :size="folio.size"
-        :date="folio.date"
-        :user="folio.user"
-        :container-id="container"
-        @update-selection="updateSelection"
-        @refresh="refresh"
-      />
-    </div>
-    <template #fallback> Loading folios... </template>
-  </Suspense>
 </template>

@@ -255,7 +255,7 @@ function zoomOut() {
         <div class="col-span-6 flex flex-col space-y-2">
           <label
             for="text"
-            class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
+            class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
             >Name*</label
           >
           <InputText v-model="workflowName" type="text" />
@@ -270,7 +270,7 @@ function zoomOut() {
         <div class="col-span-6 flex flex-col">
           <label
             for="last-name"
-            class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
+            class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
             >Description</label
           >
           <InputText v-model="workflowDescription" type="text" />

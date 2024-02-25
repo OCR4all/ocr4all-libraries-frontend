@@ -28,14 +28,14 @@ export default {
       { "text-primary-600 bg-transparent ring-transparent": props.link },
       // Plain Button
       {
-        "text-white bg-gray-500 ring-1 ring-gray-500":
+        "text-white bg-surface-500 ring-1 ring-surface-500":
           props.plain && !props.outlined && !props.text,
       },
       // Plain Text Button
       { "text-surface-500": props.plain && props.text },
       // Plain Outlined Button
       {
-        "text-surface-500 ring-1 ring-gray-500": props.plain && props.outlined,
+        "text-surface-500 ring-1 ring-surface-500": props.plain && props.outlined,
       },
       // Text Button
       { "bg-transparent ring-transparent": props.text && !props.plain },
@@ -251,7 +251,7 @@ export default {
       { "focus:ring-primary-500 dark:focus:ring-primary-400": props.link },
       // Plain
       {
-        "hover:bg-gray-600 hover:ring-gray-600":
+        "hover:bg-surface-600 hover:ring-surface-600":
           props.plain && !props.outlined && !props.text,
       },
       // Text & Outlined Button

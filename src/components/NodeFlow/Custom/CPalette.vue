@@ -160,7 +160,7 @@ const onDragStart = (type: string, nodeInformation: INodeTypeInformation) => {
 
 <style scoped>
 .baklava-node-palette {
-  @apply z-10 bg-gray-50 shadow-2xl;
+  @apply z-10 bg-surface-50 shadow-2xl;
   right: 0;
   left: initial;
 }

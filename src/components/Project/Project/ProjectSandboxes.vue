@@ -177,7 +177,7 @@ async function downloadSandbox(sandbox) {
             <ArrowPathIcon
               :disabled="isRefetching"
               :class="{ 'animate-spin': isRefetching }"
-              class="mr-2 inline h-6 w-6 text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white"
+              class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-300 dark:hover:text-white"
             />
           </button>
           <span class="p-input-icon-left ml-10">
@@ -275,13 +275,13 @@ async function downloadSandbox(sandbox) {
     :header="$t('pages.projects.sandbox.results.modals.remove-results.header')"
     :style="{ width: '50vw' }"
   >
-    <p class="pb-5 dark:text-gray-200">
+    <p class="pb-5 dark:text-surface-200">
       {{ $t("pages.projects.sandbox.results.modals.remove-results.content") }}
     </p>
     <button
       v-tooltip="'Cancel'"
       type="button"
-      class="mb-2 mr-2 rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-500 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+      class="mb-2 mr-2 rounded-lg border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-500 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
       @click="isDeleteDialogVisible = false"
     >
       {{

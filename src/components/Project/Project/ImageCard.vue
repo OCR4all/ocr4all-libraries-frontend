@@ -16,10 +16,10 @@ const props = defineProps<{
 <template>
   <div class="grid grid-cols-1 justify-self-center">
     <div
-      class="shadow-xs group relative m-2 grid h-64 w-64 bg-clip-border text-gray-700 bg-primary-100 hover:bg-primary-200 dark:bg-surface-700 hover:dark:bg-surface-800"
+      class="shadow-xs group relative m-2 grid h-64 w-64 bg-clip-border text-surface-700 bg-primary-100 hover:bg-primary-200 dark:bg-surface-900 hover:dark:bg-surface-700"
     >
       <div
-        class="mx-4 mt-4 h-fit w-fit self-center justify-self-center text-gray-700"
+        class="mx-4 mt-4 h-fit w-fit self-center justify-self-center text-surface-700"
       >
         <Image v-if="props.img" alt="Image" preview>
           <template #indicatoricon>

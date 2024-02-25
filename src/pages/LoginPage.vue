@@ -28,15 +28,15 @@ function onSubmit(
 <template>
   <Toast />
   <div
-    class="mx-auto flex h-screen flex-col items-center justify-center bg-gray-100 px-6 py-8 dark:bg-zinc-700 lg:py-0"
+    class="mx-auto flex h-screen flex-col items-center justify-center bg-surface-100 px-6 py-8 dark:bg-surface-700 lg:py-0"
   >
     <img class="h-20 pb-10" src="/img/logo.png" alt="OCR4all logo" />
     <div
-      class="w-full bg-white shadow-md dark:border dark:border-gray-700 dark:bg-zinc-800 sm:max-w-md md:mt-0 xl:p-0"
+      class="w-full bg-white shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800 sm:max-w-md md:mt-0 xl:p-0"
     >
       <div class="space-y-4 p-6 sm:p-8 md:space-y-6">
         <h1
-          class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl"
+          class="text-xl font-bold leading-tight tracking-tight text-surface-900 dark:text-white md:text-2xl"
         >
           {{ $t("pages.login.directive") }}
         </h1>
@@ -48,14 +48,14 @@ function onSubmit(
           <div>
             <label
               for="username"
-              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+              class="mb-2 block text-sm font-medium text-surface-900 dark:text-white"
               >{{ $t("pages.login.input.username") }}</label
             >
             <Field
               type="text"
               name="username"
               id="username"
-              class="block w-full border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
+              class="block w-full border border-surface-300 bg-surface-50 p-2.5 text-surface-900 focus:border-primary-600 focus:ring-primary-600 dark:border-surface-600 dark:bg-surface-700 dark:text-white dark:placeholder-surface-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
               :class="{ 'is-invalid': errors.username }"
               required=""
             />
@@ -64,14 +64,14 @@ function onSubmit(
           <div>
             <label
               for="password"
-              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
+              class="mb-2 block text-sm font-medium text-surface-900 dark:text-white"
               >{{ $t("pages.login.input.password") }}</label
             >
             <Field
               type="password"
               id="password"
               name="password"
-              class="block w-full border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
+              class="block w-full border border-surface-300 bg-surface-50 p-2.5 text-surface-900 focus:border-primary-600 focus:ring-primary-600 dark:border-surface-600 dark:bg-surface-700 dark:text-white dark:placeholder-surface-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
               :class="{ 'is-invalid': errors.password }"
               required=""
             />

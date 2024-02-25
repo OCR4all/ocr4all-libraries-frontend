@@ -37,7 +37,6 @@ async function fetchImages(folio) {
     .get()
     .blob();
   const image = useObjectUrl(imageBlob.data.value);
-  console.log(folio)
   folios.value.push({
     name: folio.name,
     id: folio.id,
@@ -93,7 +92,7 @@ const imageImportDialogVisible = ref(false);
       <Button label="Close" icon="pi pi-check" @click="closeCallback" />
     </template>
   </Dialog>
-  <div>
+  <div class="@container/section">
     <Toast />
     <Toolbar class="mb-4">
       <template #start>
@@ -110,23 +109,21 @@ const imageImportDialogVisible = ref(false);
     </Toolbar>
     <div
       v-if="folios.length"
-      class="grid grid-cols-4 items-center justify-center space-y-2 space-x-4"
+      class="grid grid-cols-1 @[550px]/section:grid-cols-2 @[800px]/section:grid-cols-3 @[1050px]/section:grid-cols-4 justify-between gap-x-2 gap-y-3"
     >
-      <Suspense>
-        <ImageCard
-          v-for="folio in folios"
-          :key="folio.id"
-          :name="folio.name"
-          :thumb="folio.thumbnail"
-          :img="folio.img"
-          :size="folio.size"
-          :format="folio.format"
-        />
-      </Suspense>
+      <ImageCard
+        v-for="folio in folios"
+        :key="folio.id"
+        :name="folio.name"
+        :thumb="folio.thumbnail"
+        :img="folio.img"
+        :size="folio.size"
+        :format="folio.format"
+      />
     </div>
     <div
       v-else
-      class="flex flex-col items-center justify-center dark:text-gray-100"
+      class="flex flex-col items-center justify-center dark:text-surface-100"
     >
       {{ $t("pages.projects.project.images.no-images") }}
     </div>

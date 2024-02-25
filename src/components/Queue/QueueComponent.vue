@@ -127,7 +127,7 @@ async function removeJob(job) {
 <template>
   <Toast />
   <div
-    class="rounded-lg bg-white shadow-md dark:border dark:border-gray-700 dark:bg-zinc-800"
+    class="rounded-lg bg-white shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
   >
     <DataTable
       v-model:filters="filters"
@@ -152,12 +152,12 @@ async function removeJob(job) {
             <button :disabled="isRefetching === true" @click="refetch">
               <ArrowPathIcon
                 :class="{ 'animate-spin': isRefetching }"
-                class="mr-2 inline h-6 w-6 text-gray-800 hover:text-black dark:text-gray-200 dark:hover:text-white"
+                class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
               />
             </button>
             <button @click="expungeJobs">
               <ArchiveBoxXMarkIcon
-                class="mr-2 inline h-6 w-6 text-gray-800 hover:text-red-600 dark:text-gray-200 dark:hover:text-red-600"
+                class="mr-2 inline h-6 w-6 text-surface-800 hover:text-red-600 dark:text-surface-200 dark:hover:text-red-600"
               />
             </button>
             <InputText

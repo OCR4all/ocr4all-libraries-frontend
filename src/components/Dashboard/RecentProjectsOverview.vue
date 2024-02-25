@@ -70,12 +70,12 @@ function getStateSeverity(state) {
             <button :disabled="isRefetching === true" @click="refetch">
               <ArrowPathIcon
                 :class="{ 'animate-spin': isRefetching }"
-                class="mr-2 h-6 w-6 text-gray-500 hover:text-black dark:text-gray-200 dark:hover:text-white"
+                class="mr-2 h-6 w-6 text-surface-500 hover:text-black dark:text-surface-200 dark:hover:text-white"
               />
             </button>
             <ArrowUpOnSquareIcon
               data-tooltip-target="tooltip-project-overview"
-              class="h-6 w-6 text-gray-500 hover:cursor-pointer hover:text-black dark:text-gray-200 dark:hover:text-white"
+              class="h-6 w-6 text-surface-500 hover:cursor-pointer hover:text-black dark:text-surface-200 dark:hover:text-white"
               @click="router.push('/project/overview')"
             />
           </div>

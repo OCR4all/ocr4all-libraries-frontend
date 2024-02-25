@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import DataView from "primevue/dataview";
 import DataViewLayoutOptions from "primevue/dataviewlayoutoptions";
-import Paginator from "primevue/paginator";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Button from "primevue/button";
@@ -14,8 +13,6 @@ import { FilterMatchMode } from "primevue/api";
 import InputText from "primevue/inputtext";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
-import Menu from "primevue/menu";
-import { list } from "postcss";
 
 const containers = ref();
 const router = useRouter();
@@ -116,7 +113,9 @@ const filters = ref({
 function newContainer() {}
 function confirmDeleteSelected() {}
 
-function exportContainers() {}
+function openEditDialog(node) {
+  console.log(node)
+}
 
 function openContainer(containerId: string, containerName: string) {
   router.push({
@@ -127,7 +126,7 @@ function openContainer(containerId: string, containerName: string) {
 const layout = ref("grid");
 </script>
 <template>
-  <div class="bg-surface-0 p-4 dark:bg-surface-800">
+  <div class="bg-surface-0 p-4 dark:bg-surface-800 @container/content">
       <DataView
         class="bg-surface-50 dark:bg-surface-700"
         :value="containers"
@@ -270,7 +269,7 @@ const layout = ref("grid");
                   </button>
                   <button
                     class="bg-primary-300 p-2 text-surface-50 hover:bg-primary-500"
-                    @click="openContainer(slotProps.data.id)"
+                    @click="openEditDialog(slotProps.data.id)"
                   >
                     Edit
                   </button>
@@ -282,9 +281,11 @@ const layout = ref("grid");
 
         <template #grid="slotProps">
           <div
-            class="3xl:grid-cols-5 grid grid-cols-1 justify-between gap-x-2 gap-y-3 sm:grid-cols-2 md:grid-cols-3 2xl:grid-cols-4"
+            class="grid grid-cols-1 @[550px]/content:grid-cols-2 @[800px]/content:grid-cols-3 @[1050px]/content:grid-cols-4 justify-between gap-x-2 gap-y-3"
           >
-              <div v-for="(item, index) in slotProps.items" :key="index">
+              <div
+                v-for="(item, index) in slotProps.items"
+                :key="item.id">
                 <ContainerCard
                   :id="item.id"
                   :title="item.name"

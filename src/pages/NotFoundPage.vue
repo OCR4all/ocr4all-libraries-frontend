@@ -14,11 +14,11 @@ import AppLayout from "@/layout/AppLayout.vue";
           404
         </h1>
         <p
-          class="mb-4 text-3xl font-bold tracking-tight text-gray-900 dark:text-white md:text-4xl"
+          class="mb-4 text-3xl font-bold tracking-tight text-surface-900 dark:text-white md:text-4xl"
         >
           Page not found
         </p>
-        <p class="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">
+        <p class="mb-4 text-lg font-light text-surface-500 dark:text-surface-400">
           Sorry, we can't find that page. You'll find lots to explore on the
           <router-link to="/">Dashboard.</router-link>
         </p>

@@ -47,14 +47,14 @@ console.log(folios);
 </script>
 
 <template>
-  <section class="flex flex-col items-center justify-center dark:text-gray-100">
+  <section class="flex flex-col items-center justify-center dark:text-surface-100">
     <h2
       class="mb-2 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
     >
       {{ $t("pages.projects.sandbox.images.heading") }}
     </h2>
     <h2
-      class="mb-8 text-center text-lg font-bold text-gray-700 dark:text-gray-200 sm:text-lg md:text-lg"
+      class="mb-8 text-center text-lg font-bold text-surface-700 dark:text-surface-200 sm:text-lg md:text-lg"
     >
       {{ $t("pages.projects.sandbox.images.directive") }}
     </h2>

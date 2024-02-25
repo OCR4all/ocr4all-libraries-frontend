@@ -124,6 +124,6 @@ export default {
     class: "mr-2",
   },
   uploadicon: {
-    class: "mr-2",
+    class: "mr-2 mt-1",
   },
 };

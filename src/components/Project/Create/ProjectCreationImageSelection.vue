@@ -30,7 +30,7 @@ async function importFolios(data){
 
 <template>
   <div
-    class="flex flex-col items-center justify-center space-y-10 dark:text-gray-100 sm:p-12"
+    class="flex flex-col items-center justify-center space-y-10 dark:text-surface-100 sm:p-12"
   >
     <h2
       class="mb-2 text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"

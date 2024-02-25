@@ -38,7 +38,7 @@ function skip() {
 
 <template>
   <div
-    class="flex flex-col items-center justify-center space-y-10 dark:text-gray-100 sm:p-12"
+    class="flex flex-col items-center justify-center space-y-10 dark:text-surface-100 sm:p-12"
   >
     <h2
       class="mb-2 text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
@@ -49,7 +49,7 @@ function skip() {
       <div class="col-span-3 flex flex-col">
         <label
           for="text"
-          class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
           >{{ $t("pages.projects.new.components.metadata.form.name") }}</label
         >
         <InputText v-model="name" type="text" />
@@ -58,7 +58,7 @@ function skip() {
       <div class="col-span-3 flex flex-col">
         <label
           for="last-name"
-          class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
           >{{ $t("pages.projects.new.components.metadata.form.id") }}</label
         >
         <InputText v-model="id" disabled type="text" />
@@ -67,7 +67,7 @@ function skip() {
       <div class="col-span-6 flex flex-col">
         <label
           for="email"
-          class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
           >{{
             $t("pages.projects.new.components.metadata.form.keywords")
           }}</label
@@ -78,7 +78,7 @@ function skip() {
       <div class="col-span-6 flex flex-col">
         <label
           for="message"
-          class="mb-2 inline-block text-sm text-gray-800 dark:text-gray-200 sm:text-base"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
           >{{
             $t("pages.projects.new.components.metadata.form.description")
           }}</label
@@ -88,7 +88,7 @@ function skip() {
 
       <div class="flex items-center justify-between sm:col-span-6">
         <button
-          class="inline-block rounded-lg bg-gray-400 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-gray-300 transition duration-100 hover:bg-gray-600 focus-visible:ring active:bg-gray-700 md:text-base"
+          class="inline-block rounded-lg bg-surface-400 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-surface-300 transition duration-100 hover:bg-surface-600 focus-visible:ring active:bg-surface-700 md:text-base"
           @click="skip"
         >
           {{ $t("pages.projects.new.components.metadata.buttons.skip") }}

@@ -13,7 +13,7 @@ defineProps<{
           <RouterLink
             :to="home.to"
             href="#"
-            class="unstyled bg-ml-1 text-sm font-medium text-gray-700 hover:text-primary-600 dark:text-gray-200 dark:hover:text-white md:ml-2"
+            class="unstyled bg-ml-1 text-sm font-medium text-surface-700 hover:text-primary-600 dark:text-surface-200 dark:hover:text-white md:ml-2"
             >{{ home.label }}</RouterLink
           >
         </div>
@@ -22,7 +22,7 @@ defineProps<{
         <div class="flex items-center">
           <svg
             aria-hidden="true"
-            class="h-6 w-6 text-gray-400"
+            class="h-6 w-6 text-surface-400"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +35,7 @@ defineProps<{
           </svg>
           <RouterLink
             :to="entry.to"
-            class="ml-1 text-sm font-medium text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white md:ml-2"
+            class="ml-1 text-sm font-medium text-surface-600 hover:text-primary-600 dark:text-surface-300 dark:hover:text-white md:ml-2"
           >
             {{ entry.label }}</RouterLink
           >
@@ -45,7 +45,7 @@ defineProps<{
         <div class="flex items-center">
           <svg
             aria-hidden="true"
-            class="h-6 w-6 text-gray-400"
+            class="h-6 w-6 text-surface-400"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +57,7 @@ defineProps<{
             ></path>
           </svg>
           <span
-            class="ml-1 text-sm font-medium text-gray-500 dark:text-gray-400 md:ml-2"
+            class="ml-1 text-sm font-medium text-surface-500 dark:text-surface-400 md:ml-2"
             >{{ current.label }}</span
           >
         </div>

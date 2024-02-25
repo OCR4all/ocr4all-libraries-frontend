@@ -7,7 +7,7 @@
         <slot name="icon"></slot>
       </div>
       <div
-        class="truncate pt-8 text-center text-lg font-bold text-gray-900 group-hover:text-white dark:text-gray-100"
+        class="truncate pt-8 text-center text-lg font-bold text-surface-900 group-hover:text-white dark:text-surface-100"
       >
         <slot name="text"></slot>
       </div>

@@ -66,7 +66,7 @@ async function deleteProject() {
     <div class="col-span-4 flex flex-col">
       <label
         for="text"
-        class="mb-2 inline-block text-sm text-gray-800 dark:text-white sm:text-base"
+        class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
         >{{ $t("pages.projects.project.information.form.name") }}</label
       >
       <InputText v-model="name" type="text" />
@@ -75,7 +75,7 @@ async function deleteProject() {
     <div class="col-span-4 flex flex-col">
       <label
         for="id"
-        class="mb-2 inline-block text-sm text-gray-800 dark:text-white sm:text-base"
+        class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
         >{{ $t("pages.projects.project.information.form.id") }}</label
       >
       <InputText v-model="id" disabled type="id" />
@@ -84,7 +84,7 @@ async function deleteProject() {
     <div class="col-span-4 flex flex-col">
       <label
         for="keywords"
-        class="mb-2 inline-block text-sm text-gray-800 dark:text-white sm:text-base"
+        class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
         >{{ $t("pages.projects.project.information.form.keywords") }}</label
       >
       <Chips v-model="keywords" />
@@ -93,7 +93,7 @@ async function deleteProject() {
     <div class="col-span-4 flex flex-col">
       <label
         for="state"
-        class="mb-2 inline-block text-sm text-gray-800 dark:text-white sm:text-base"
+        class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
         >{{ $t("pages.projects.project.information.form.state") }}</label
       >
       <Dropdown
@@ -108,7 +108,7 @@ async function deleteProject() {
     <div class="col-span-4 flex flex-col">
       <label
         for="description"
-        class="mb-2 inline-block text-sm text-gray-800 dark:text-white sm:text-base"
+        class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
         >{{ $t("pages.projects.project.information.form.description") }}</label
       >
       <Textarea v-model="description" rows="5" cols="30" />
@@ -132,12 +132,12 @@ async function deleteProject() {
       :header="$t('pages.projects.project.information.modals.delete.header')"
       :style="{ width: '50vw' }"
     >
-      <p class="pb-5 dark:text-gray-200">
+      <p class="pb-5 dark:text-surface-200">
         {{ $t("pages.projects.project.information.modals.delete.content") }}
       </p>
       <button
         type="button"
-        class="mb-2 mr-2 rounded-lg border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-600 dark:bg-gray-500 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+        class="mb-2 mr-2 rounded-lg border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-500 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
         @click="deleteDialogVisible = false"
       >
         {{

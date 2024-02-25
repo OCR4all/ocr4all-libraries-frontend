@@ -145,12 +145,10 @@ function constructNodes(nodeData: object[]) {
     /** Temporary opionated blacklist for alpha version, should be removed later on  **/
     const blacklist = [
       "LAREX launcher",
-      "ocrd-pagetopdf",
       "ocrd-tesserocr-fontshape",
       "ocrd-tesserocr-segment-word",
       "ocrd-tesserocr-segment-line",
       "ocrd-tesserocr-segment-region",
-      "ocrd-fileformat-transform",
     ];
     if (!blacklist.includes(data.name))
       nodes.push({

@@ -64,7 +64,7 @@ const onMouseMove = (event: MouseEvent) => {
       >
         {{ $t("pages.nodeflow.sidebar.description") }}
       </h2>
-      <p class="text-center text-lg text-black dark:text-gray-200">
+      <p class="text-center text-lg text-black dark:text-surface-200">
         {{ store.sidebarDescriptions["processor"] }}
       </p>
       <div v-show="store.sidebarDescriptions.parameters.length > 0">
@@ -80,7 +80,7 @@ const onMouseMove = (event: MouseEvent) => {
             v-slot="{ open }"
           >
             <DisclosureButton
-              class="flex w-full justify-between rounded-lg bg-zinc-100 px-4 py-2 text-left text-sm font-medium text-white shadow-lg hover:bg-zinc-200 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75 dark:bg-zinc-900 dark:hover:bg-zinc-950"
+              class="flex w-full justify-between rounded-lg bg-zinc-100 px-4 py-2 text-left text-sm font-medium text-white shadow-lg hover:bg-zinc-200 focus:outline-none focus-visible:ring focus-visible:ring-surface-500 focus-visible:ring-opacity-75 dark:bg-zinc-900 dark:hover:bg-zinc-950"
             >
               <span class="text-lg text-black dark:text-white">{{
                 parameter.title
@@ -91,7 +91,7 @@ const onMouseMove = (event: MouseEvent) => {
               />
             </DisclosureButton>
             <DisclosurePanel
-              class="px-4 pb-2 pt-4 text-lg text-gray-800 dark:text-gray-200"
+              class="px-4 pb-2 pt-4 text-lg text-surface-800 dark:text-surface-200"
             >
               {{ parameter.description }}
             </DisclosurePanel>
@@ -103,6 +103,6 @@ const onMouseMove = (event: MouseEvent) => {
 </template>
 <style scoped>
 .baklava-sidebar {
-  @apply !bg-gray-50 text-black dark:!bg-zinc-800 dark:!text-white;
+  @apply !bg-surface-50 text-black dark:!bg-zinc-800 dark:!text-white;
 }
 </style>

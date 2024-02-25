@@ -37,13 +37,6 @@ const actionMenuItems = ref([
         },
       },
       {
-        label: "Share",
-        icon: "pi pi-share-alt",
-        command: () => {
-          console.log("share");
-        },
-      },
-      {
         label: "Delete",
         icon: "pi pi-times",
         command: () => {
@@ -58,23 +51,33 @@ function updateSelection(event: Event) {
   emit("updateSelection", props.id, event);
 }
 
+function select(doSelect: boolean){
+  checked.value = doSelect
+  emit("updateSelection", props.id, doSelect);
+}
+
 async function deleteFolio() {
   await useCustomFetch(
     `/repository/container/folio/remove/entity/${props.containerId}?id=${props.id}`,
   );
+  select(false)
   emit("refresh");
 }
 
 const checked = ref();
+
+defineExpose({
+  select
+})
 </script>
 <template>
   <div class="grid grid-cols-1 justify-self-center">
     <div
-      class="shadow-xs group relative m-2 grid h-64 w-64 bg-clip-border text-gray-700 hover:bg-primary-100 hover:dark:bg-surface-700"
+      class="shadow-xs group relative m-2 grid h-64 w-64 bg-clip-border text-surface-700 hover:bg-primary-200 hover:dark:bg-surface-600"
       :class="[
         checked
-          ? ['bg-primary-100', 'dark:bg-surface-700']
-          : ['bg-surface-0', 'dark:bg-surface-800'],
+          ? ['bg-primary-200', 'dark:bg-surface-700']
+          : ['bg-surface-100', 'dark:bg-surface-900'],
       ]"
     >
       <div
@@ -116,7 +119,7 @@ const checked = ref();
         </div>
       </div>
       <div
-        class="mx-4 mt-4 h-fit w-fit self-center justify-self-center text-gray-700"
+        class="mx-4 mt-4 h-fit w-fit self-center justify-self-center text-surface-700"
       >
         <Image v-if="src" alt="Image" preview>
           <template #indicatoricon>

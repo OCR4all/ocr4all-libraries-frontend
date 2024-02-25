@@ -83,6 +83,10 @@ async function updateContainerShare(){
 
 }
 
+function openShareModal() {
+
+}
+
 function actionMenuBlurred(event){
   actionMenuVisible.value = false
 }
@@ -90,7 +94,7 @@ function actionMenuBlurred(event){
 <template>
   <div class="grid grid-cols-1 justify-self-center">
     <div
-      class="shadow-xs group relative m-2 grid h-64 w-64 bg-clip-border text-gray-700 hover:bg-primary-100 hover:dark:bg-surface-700"
+      class="shadow-xs group relative m-2 grid h-64 w-64 bg-clip-border text-surface-700 hover:bg-primary-100 hover:dark:bg-surface-700"
       :class="[
         checked
           ? ['bg-primary-100', 'dark:bg-surface-700']
@@ -144,7 +148,7 @@ function actionMenuBlurred(event){
         </div>
       </div>
       <div
-        class="mx-4 mt-4 h-fit w-fit self-center justify-self-center text-gray-700"
+        class="mx-4 mt-4 h-fit w-fit self-center justify-self-center text-surface-700"
       >
         <i
           class="pi pi-folder text-7xl text-surface-700 dark:text-surface-0"

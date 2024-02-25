@@ -119,7 +119,7 @@ async function launchWorkflow() {
 <template>
   <section
     v-if="!isRunning && !isWorkflowFinished"
-    class="flex flex-col items-center justify-center dark:text-gray-100 sm:p-24"
+    class="flex flex-col items-center justify-center dark:text-surface-100 sm:p-24"
   >
     <h2
       class="mb-2 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
@@ -127,7 +127,7 @@ async function launchWorkflow() {
       {{ $t("pages.projects.sandbox.workflow.heading") }}
     </h2>
     <h2
-      class="mb-8 text-center text-lg font-bold text-gray-700 dark:text-gray-200 sm:text-lg md:text-lg"
+      class="mb-8 text-center text-lg font-bold text-surface-700 dark:text-surface-200 sm:text-lg md:text-lg"
     >
       {{ $t("pages.projects.sandbox.workflow.directive") }}
     </h2>
@@ -140,7 +140,7 @@ async function launchWorkflow() {
       class="mb-4 w-fit"
     />
     <button
-      class="inline-block w-32 rounded-lg bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-gray-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 disabled:bg-primary-300 dark:disabled:bg-primary-400 md:text-base"
+      class="inline-block w-32 rounded-lg bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-surface-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 disabled:bg-primary-300 dark:disabled:bg-primary-400 md:text-base"
       :disabled="!selectedWorkflow"
       @click="launchWorkflow"
     >
@@ -149,7 +149,7 @@ async function launchWorkflow() {
   </section>
   <section
     v-else-if="isRunning"
-    class="flex flex-col items-center justify-center dark:text-gray-100 sm:p-24"
+    class="flex flex-col items-center justify-center dark:text-surface-100 sm:p-24"
   >
     <h2
       v-if="isImportingImages"
@@ -175,7 +175,7 @@ async function launchWorkflow() {
   </section>
   <section
     v-else-if="isWorkflowFinished"
-    class="flex flex-col items-center justify-center dark:text-gray-100 sm:p-24"
+    class="flex flex-col items-center justify-center dark:text-surface-100 sm:p-24"
   >
     <h2
       class="m-10 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"

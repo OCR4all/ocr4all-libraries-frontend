@@ -71,7 +71,7 @@ defineExpose({
   <TransitionRoot
     :show="sidebarMdOpened"
     as="aside"
-    class="overflow-y-auto border-r border-gray-200 bg-white dark:border-zinc-700 dark:bg-zinc-800"
+    class="overflow-y-auto border-r border-surface-200 bg-white dark:border-surface-700 dark:bg-surface-800"
   >
     <Dialog
       as="div"
@@ -88,15 +88,15 @@ defineExpose({
         as="template"
       >
         <div
-          class="relative z-10 flex h-full w-72 flex-col border-r border-gray-200 bg-white shadow-xl dark:border-zinc-700 dark:bg-zinc-800 lg:hidden"
+          class="relative z-10 flex h-full w-72 flex-col border-r border-surface-200 bg-white shadow-xl dark:border-zinc-700 dark:bg-zinc-800 lg:hidden"
         >
           <button
             value="Close sidebar"
             type="button"
-            class="absolute right-2 top-2 flex h-10 w-10 items-center justify-center rounded-full hover:ring-2 hover:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
+            class="absolute right-2 top-2 flex h-10 w-10 items-center justify-center rounded-full hover:ring-2 hover:ring-surface-300 focus:outline-none focus:ring-2 focus:ring-surface-600"
             @click="toggleSidebarMd(false)"
           >
-            <XMarkIcon class="h-5 w-5 text-gray-800 dark:text-white" />
+            <XMarkIcon class="h-5 w-5 text-surface-800 dark:text-white" />
           </button>
           <div class="px-6 pb-4 pt-4">
             <img src="/img/logo.svg" class="h-9 w-48" alt="OCR4all logo" />
@@ -107,11 +107,11 @@ defineExpose({
                 v-for="(item, index) in mainNavigation"
                 :key="index"
                 :to="item.to"
-                class="flex items-center px-6 py-2.5 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-zinc-700"
+                class="flex items-center px-6 py-2.5 text-surface-900 hover:bg-surface-100 dark:text-white dark:hover:bg-surface-700"
               >
                 <component
                   :is="item.icon"
-                  class="mr-2 h-5 w-5 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-zinc-700"
+                  class="mr-2 h-5 w-5 text-surface-900 hover:bg-surface-100 dark:text-white dark:hover:bg-surface-700"
                 />
                 {{ $t(item.label) }}
               </router-link>
@@ -138,7 +138,7 @@ defineExpose({
   <TransitionRoot
     :show="sidebarLgOpened"
     as="div"
-    class="overflow-y-auto border-r border-solid border-gray-200 bg-white shadow-md dark:border-zinc-700 dark:bg-zinc-800"
+    class="overflow-y-auto border-r border-solid border-surface-200 bg-surface-50 shadow-md dark:border-surface-700 dark:bg-surface-800"
     enter="transition ease-in-out duration-200 transform"
     enter-from="-translate-x-full"
     enter-to="translate-x-0"
@@ -152,7 +152,7 @@ defineExpose({
           v-for="(item, index) in mainNavigation"
           :key="index"
           :to="item.to"
-          class="group flex items-center p-2 px-6 py-2.5 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-zinc-700"
+          class="group flex items-center p-2 px-6 py-2.5 text-surface-900 hover:bg-surface-100 dark:text-white dark:hover:bg-surface-700"
         >
           <component :is="item.icon" class="mr-2 h-5 w-5" />
           {{ $t(item.label) }}

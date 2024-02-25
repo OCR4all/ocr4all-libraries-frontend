@@ -82,7 +82,7 @@ const states = ref(["active", "closed", "blocked"]);
         <button :disabled="isRefetching === true" @click="refetch">
           <ArrowPathIcon
             :class="{ 'animate-spin': isRefetching }"
-            class="mr-2 inline h-6 w-6 text-gray-600 hover:text-black dark:text-gray-200 hover:dark:text-white"
+            class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-200 hover:dark:text-white"
           />
         </button>
       </template>
@@ -187,7 +187,7 @@ const states = ref(["active", "closed", "blocked"]);
             v-for="keyword in slotProps.data.keywords"
             :key="keyword.name"
             :value="keyword"
-            class="mb-1 mr-1 !bg-gray-500"
+            class="mb-1 mr-1 !bg-surface-500"
           />
         </template>
       </Column>

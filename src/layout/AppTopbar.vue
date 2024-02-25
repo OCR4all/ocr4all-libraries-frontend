@@ -7,7 +7,7 @@ const router = useRouter();
 
 <template>
   <nav
-    class="z-20 flex h-16 justify-between space-x-6 border-b border-solid border-gray-200 bg-white px-3 py-3 dark:border-zinc-700 dark:bg-zinc-800 md:space-x-6 md:px-6"
+    class="z-20 flex h-16 justify-between space-x-6 border-b border-solid border-surface-200 bg-white px-3 py-3 dark:border-surface-700 dark:bg-surface-800 md:space-x-6 md:px-6"
   >
     <div class="flex">
       <img
@@ -18,7 +18,7 @@ const router = useRouter();
       />
       <button
         @click="$emit('toggle-sidebar-lg', false)"
-        class="mt-1 hidden cursor-pointer rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:bg-gray-700 dark:focus:ring-gray-700 lg:block"
+        class="mt-1 hidden cursor-pointer rounded-lg text-surface-600 hover:bg-surface-100 hover:text-surface-900 focus:bg-surface-100 focus:ring-4 focus:ring-surface-100 dark:text-surface-300 dark:hover:bg-surface-700 dark:hover:text-white dark:focus:bg-surface-700 dark:focus:ring-surface-700 lg:block"
         type="button"
         value="Open sidebar"
       >
@@ -26,7 +26,7 @@ const router = useRouter();
       </button>
       <button
         @click="$emit('toggle-sidebar-md', false)"
-        class="mt-1 block cursor-pointer rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:bg-gray-700 dark:focus:ring-gray-700 lg:hidden"
+        class="mt-1 block cursor-pointer rounded-lg text-surface-600 hover:bg-surface-100 hover:text-surface-900 focus:bg-surface-100 focus:ring-4 focus:ring-surface-100 dark:text-surface-300 dark:hover:bg-surface-700 dark:hover:text-white dark:focus:bg-surface-700 dark:focus:ring-surface-700 lg:hidden"
         type="button"
         value="Open sidebar"
       >
