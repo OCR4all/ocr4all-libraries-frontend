@@ -52,6 +52,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     SandboxImportImages: typeof import('./src/components/Project/Project/Sandbox/SandboxImportImages.vue')['default']
     SandboxRunWorkflow: typeof import('./src/components/Project/Project/Sandbox/SandboxRunWorkflow.vue')['default']
+    SettingsDialog: typeof import('./src/components/Layout/Topbar/SettingsDialog.vue')['default']
     SmallJobQueue: typeof import('./src/components/Dashboard/SmallJobQueue.vue')['default']
     StatsCard: typeof import('./src/components/Dashboard/StatsCard.vue')['default']
     UserDropdown: typeof import('./src/components/Layout/Topbar/UserDropdown.vue')['default']

@@ -9,7 +9,10 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 const toast = useToast();
 
 import { useI18n } from "vue-i18n";
+import { useUiStore } from "@/stores/ui.store";
 const { t } = useI18n();
+
+const uiStore = useUiStore()
 
 const projects = ref();
 const workflows = ref();
@@ -53,12 +56,7 @@ function startTour() {
 }
 
 function openSettings() {
-  toast.add({
-    severity: "info",
-    summary: t("pages.dashboard.toasts.settings.summary"),
-    detail: t("pages.dashboard.toasts.settings.detail"),
-    life: 3000,
-  });
+  uiStore.settingsDialogOpen = true;
 }
 </script>
 <template>

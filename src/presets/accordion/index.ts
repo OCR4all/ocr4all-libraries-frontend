@@ -8,7 +8,7 @@ export default {
         // Shape
         'border-x-0 border-b-0',
         // Color
-        'border border-surface-200 dark:border-surface-700',
+        'border border-solid border-surface-300 dark:border-surface-500',
         // State
         { 'select-none pointer-events-none cursor-default opacity-60': props == null ? void 0 : props.disabled }
       ]

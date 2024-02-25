@@ -14,6 +14,7 @@ function toggleSidebarLg() {
 </script>
 
 <template>
+  <SettingsDialog />
   <div class="flex h-screen flex-col bg-surface-100 dark:bg-surface-900">
     <AppTopbar
       @toggle-sidebar-md="toggleSidebarMd"

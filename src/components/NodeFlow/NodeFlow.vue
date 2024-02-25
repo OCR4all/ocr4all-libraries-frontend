@@ -334,6 +334,6 @@ function togglePalette() {
 
 <style>
 .baklava-minimap {
-  @apply bottom-0 left-0 top-3/4 z-40;
+  @apply bottom-0 left-0 top-[84%] z-40;
 }
 </style>
