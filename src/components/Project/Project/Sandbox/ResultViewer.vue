@@ -341,9 +341,9 @@ const breadcrumbCurrent = { label: sandbox };
       leave-to-class="-translate-x-full"
     >
       <div v-if="Object.entries(selection).length > 0">
-        <div class="flex space-x-2 pb-6">
+        <div class="grid grid-cols-1 gap-y-2">
           <button
-            class="col-span-4 inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
+            class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
             v-show="!hasLarexView(selection)"
             @click="generateSandbox(selection)"
           >
@@ -355,13 +355,13 @@ const breadcrumbCurrent = { label: sandbox };
             <span v-else> Open in LAREX </span>
           </button>
           <button
-            class="col-span-4 inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
+            class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
             @click="openProcessorDialog"
           >
             Run processor
           </button>
           <button
-            class="col-span-4 inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
+            class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
             @click="exportSnapshot(selection)"
           >
             Export
