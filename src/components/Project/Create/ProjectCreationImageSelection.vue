@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { CloudArrowUpIcon, FolderPlusIcon } from "@heroicons/vue/24/outline";
-
 import { useProjectCreationStore } from "@/stores/projectCreation.store";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
@@ -24,7 +22,7 @@ async function importFolios(data) {
       ).post(payload);
     }
   }
-  await router.push("/project/overview");
+  await router.push(`/project/${store.projectId}/view`);
 }
 </script>
 
