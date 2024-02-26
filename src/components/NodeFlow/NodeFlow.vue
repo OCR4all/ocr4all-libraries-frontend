@@ -62,7 +62,6 @@ const selectedWorkflow = ref({id: store.graphId, label: store.graphLabel});
 const availableWorkflows = ref();
 
 const labelEntered = ref(true);
-const labelTaken = ref(false);
 
 const isLoadDialogVisible = ref(false);
 const isSaveDialogVisible = ref(false);
@@ -118,7 +117,6 @@ async function saveWorkflow() {
       ).length > 0 &&
       originalWorkflowName.value !== workflowName.value
     ) {
-      labelTaken.value = true;
     } else {
       const { isFetching, error, data } = await useCustomFetch(
         `${import.meta.env.VITE_API_URL}/spi/list`,
@@ -282,9 +280,6 @@ function togglePalette() {
             >Name*</label
           >
           <InputText v-model="workflowName" type="text" />
-          <InlineMessage v-show="labelTaken"
-            >A workflow with this name already exists</InlineMessage
-          >
           <InlineMessage v-show="!labelEntered"
             >A workflow name is required</InlineMessage
           >

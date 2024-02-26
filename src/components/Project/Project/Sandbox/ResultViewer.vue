@@ -342,16 +342,10 @@ const breadcrumbCurrent = { label: sandbox };
     >
       <div v-if="Object.entries(selection).length > 0">
         <div class="flex space-x-2 pb-6">
-          <Button
+          <button
+            class="col-span-4 inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
             v-show="!hasLarexView(selection)"
             @click="generateSandbox(selection)"
-            v-tooltip="{ value: 'Generate LAREX view', hideDelay: 300 }"
-            :pt="{
-              root: {
-                class:
-                  'p-2 rounded-md bg-primary-700 hover:bg-primary-800 text-surface-50',
-              },
-            }"
           >
             <span
               v-if="getSnapshotFromSelection(selection).label === LAREX_LABEL"
@@ -359,31 +353,19 @@ const breadcrumbCurrent = { label: sandbox };
               Open
             </span>
             <span v-else> Open in LAREX </span>
-          </Button>
-          <Button
+          </button>
+          <button
+            class="col-span-4 inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
             @click="openProcessorDialog"
-            v-tooltip="{ value: 'Run processor', hideDelay: 300 }"
-            :pt="{
-              root: {
-                class:
-                  'p-2 rounded-md bg-primary-700 hover:bg-primary-800 text-surface-50',
-              },
-            }"
           >
             Run processor
-          </Button>
-          <Button
+          </button>
+          <button
+            class="col-span-4 inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
             @click="exportSnapshot(selection)"
-            v-tooltip="{ value: 'Export Snapshot', hideDelay: 300 }"
-            :pt="{
-              root: {
-                class:
-                  'p-2 rounded-md bg-primary-700 hover:bg-primary-800 text-surface-50',
-              },
-            }"
           >
             Export
-          </Button>
+          </button>
         </div>
         <Accordion>
           <AccordionTab header="Processor Information">

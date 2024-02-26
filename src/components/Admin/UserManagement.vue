@@ -19,6 +19,13 @@ const users = ref();
 const user = ref({});
 const selectedUsers = ref();
 
+useCustomFetch(
+  `/job/overview/administration`,
+)
+  .get()
+  .json()
+  .then((response) => console.log(response.data.value));
+
 async function refetch() {
   useCustomFetch(`/administration/security/user/list`)
     .json()

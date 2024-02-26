@@ -97,7 +97,7 @@ async function checkWorkflowJob(startedJob) {
       for(const job of Object.values(data.value.running)){
         if (job.id === startedJob){
           jobStatus.value = "Running"
-          workflowProgress.value = job.journal.progress * 100
+          workflowProgress.value = Math.round(job.journal.progress * 100)
         }
       }
       for(const job of Object.values(data.value.scheduled)){
