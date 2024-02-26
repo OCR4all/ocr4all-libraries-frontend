@@ -21,6 +21,7 @@ const router = useRouter();
         class="mt-1 hidden cursor-pointer rounded-lg text-surface-600 hover:bg-surface-100 hover:text-surface-900 focus:bg-surface-100 focus:ring-4 focus:ring-surface-100 dark:text-surface-300 dark:hover:bg-surface-700 dark:hover:text-white dark:focus:bg-surface-700 dark:focus:ring-surface-700 lg:block"
         type="button"
         value="Open sidebar"
+        v-tooltip="'Toggle Sidebar'"
       >
         <Bars3CenterLeftIcon class="h-8 w-8" />
       </button>
@@ -29,6 +30,7 @@ const router = useRouter();
         class="mt-1 block cursor-pointer rounded-lg text-surface-600 hover:bg-surface-100 hover:text-surface-900 focus:bg-surface-100 focus:ring-4 focus:ring-surface-100 dark:text-surface-300 dark:hover:bg-surface-700 dark:hover:text-white dark:focus:bg-surface-700 dark:focus:ring-surface-700 lg:hidden"
         type="button"
         value="Open sidebar"
+        v-tooltip="'Open Sidebar'"
       >
         <Bars3CenterLeftIcon class="h-8 w-8" />
       </button>

@@ -67,17 +67,25 @@ function getStateSeverity(state) {
             <p>{{ $t("pages.dashboard.components.recent-projects.header") }}</p>
           </div>
           <div class="flex justify-end">
-            <button :disabled="isRefetching === true" @click="refetch">
+            <button
+              v-tooltip="'Refresh'"
+              :disabled="isRefetching === true"
+              @click="refetch">
               <ArrowPathIcon
                 :class="{ 'animate-spin': isRefetching }"
                 class="mr-2 h-6 w-6 text-surface-500 hover:text-black dark:text-surface-200 dark:hover:text-white"
               />
             </button>
-            <ArrowUpOnSquareIcon
-              data-tooltip-target="tooltip-project-overview"
-              class="h-6 w-6 text-surface-500 hover:cursor-pointer hover:text-black dark:text-surface-200 dark:hover:text-white"
+            <button
+              v-tooltip="'Open project overview'"
               @click="router.push('/project/overview')"
-            />
+            >
+              <ArrowUpOnSquareIcon
+                data-tooltip-target="tooltip-project-overview"
+                class="h-6 w-6 text-surface-500 hover:cursor-pointer hover:text-black dark:text-surface-200 dark:hover:text-white"
+
+              />
+            </button>
           </div>
         </div>
       </template>

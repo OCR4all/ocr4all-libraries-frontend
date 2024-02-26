@@ -6,6 +6,8 @@ import Column from "primevue/column";
 import { ref, onMounted } from "vue";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import Image from "primevue/image";
+import Chip from "primevue/chip";
+import Skeleton from "primevue/skeleton";
 const emit = defineEmits(["import-folios"]);
 
 function importFolios() {
@@ -127,7 +129,25 @@ const filters = ref({
         />
       </template>
       <Column field="name" header="Name" expander></Column>
-      <Column field="keywords" header="Keywords"></Column>
+      <Column :header="$t('pages.repository.overview.dataview.list.column.keywords')">
+        <template #loading>
+          <div
+            class="align-items-center flex"
+            :style="{
+                  height: '17px',
+                  'flex-grow': '1',
+                  overflow: 'hidden',
+                }"
+          >
+            <Skeleton width="60%" height="1rem" />
+          </div>
+        </template>
+        <template #body="slotProps">
+          <Chip v-for="keyword of slotProps.node.data.keywords" :key="keyword">{{
+              keyword
+            }}</Chip>
+        </template>
+      </Column>
     </TreeTable>
     <button
       @click="importFolios"

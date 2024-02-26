@@ -1,6 +1,7 @@
 import global from "./global";
 import accordion from "@/presets/accordion";
 import datatable from "./datatable";
+import tooltip from "@/presets/tooltip";
 import toolbar from "./toolbar";
 import dropdown from "@/presets/dropdown";
 import tabview from "@/presets/tabview";
@@ -35,6 +36,9 @@ import scrollpanel from "@/presets/scrollpanel";
 
 export default {
   global,
+  directives: {
+    tooltip,
+  },
   datatable,
   accordion,
   toolbar,

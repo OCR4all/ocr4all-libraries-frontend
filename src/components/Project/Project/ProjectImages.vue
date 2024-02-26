@@ -2,11 +2,12 @@
 import Dialog from "primevue/dialog";
 import Image from "primevue/image";
 import Button from "primevue/button";
+import Toast from "primevue/toast";
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
-import Toast from "primevue/toast";
 import Toolbar from "primevue/toolbar";
-import Skeleton from "primevue/skeleton";
 import ImageCard from "@/components/Project/Project/ImageCard.vue";
 
 const router = useRouter();
@@ -63,6 +64,12 @@ async function importFolios(data) {
     }
   }
   imageImportDialogVisible.value = false;
+  toast.add({
+    severity: "success",
+    summary: "Success",
+    detail: "Folios succesfully imported into project",
+    life: 3000,
+  })
   await refresh();
 }
 
@@ -71,6 +78,7 @@ refresh();
 const imageImportDialogVisible = ref(false);
 </script>
 <template>
+  <Toast />
   <Dialog
     v-model:visible="imageImportDialogVisible"
     maximizable
@@ -86,8 +94,15 @@ const imageImportDialogVisible = ref(false);
     <template #container="{ closeCallback }">
       <div class="rounded-md bg-surface-50 p-4 dark:bg-surface-700">
         <ImageSelector @import-folios="importFolios" />
+        <div class="flex justify-center">
+          <button
+            @click="closeCallback"
+            class="w-64 justify-self-center bg-primary-500 p-2 font-semibold text-surface-50 hover:bg-primary-600 disabled:bg-primary-200"
+          >
+            Close
+          </button>
+        </div>
       </div>
-      <Button label="Close" icon="pi pi-check" @click="closeCallback" />
     </template>
   </Dialog>
   <div class="@container/section">
