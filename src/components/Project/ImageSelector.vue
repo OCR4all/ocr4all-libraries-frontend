@@ -8,6 +8,7 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import Image from "primevue/image";
 import Chip from "primevue/chip";
 import Skeleton from "primevue/skeleton";
+import DataTable from "primevue/datatable";
 const emit = defineEmits(["import-folios"]);
 
 function importFolios() {
@@ -46,6 +47,7 @@ onMounted(() => {
           data: {
             name: entry.name,
             type: "container",
+            thumbnail: null,
             keywords: entry.keywords,
           },
           leaf: false,
@@ -71,18 +73,23 @@ const onExpand = (node) => {
         const children = [];
         for (const folio of response.data.value) {
           const key = folio.id;
-          const { data } = await useCustomFetch(
+          const thumbnailImgFetch = await useCustomFetch(
             `/repository/container/folio/derivative/thumbnail/${node.key}?id=${key}`,
           )
             .get()
             .blob();
-
+          const detailImgFetch = await useCustomFetch(
+            `/repository/container/folio/derivative/best/${node.key}?id=${key}`,
+          )
+            .get()
+            .blob();
           children.push({
             key: key,
             data: {
               name: folio.name,
               type: "folio",
-              thumbnail: data.value,
+              thumbnail: useObjectUrl(thumbnailImgFetch.data.value),
+              detail: useObjectUrl(detailImgFetch.data.value),
               keywords: folio.keywords,
             },
           });
@@ -102,7 +109,6 @@ const onExpand = (node) => {
 const selectedFolios = ref();
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  state: { value: null, matchMode: FilterMatchMode.EQUALS },
 });
 </script>
 <template>
@@ -113,7 +119,8 @@ const filters = ref({
       :paginator="true"
       :rows="rows"
       :loading="loading"
-      :filters="filters"
+      v-model:filters="filters"
+      filter-display="row"
       :globalFilterFields="['name']"
       :total-records="totalRecords"
       v-model:selectionKeys="selectedFolios"
@@ -129,6 +136,32 @@ const filters = ref({
         />
       </template>
       <Column field="name" header="Name" expander></Column>
+      <Column field="thumbnail" header="Image">
+        <template #body="slotProps">
+          <Suspense>
+            <Image v-if="slotProps.node.data.thumbnail" alt="Image" preview>
+              <template #indicatoricon>
+                <i class="pi pi-search"></i>
+              </template>
+              <template #image>
+                <img
+                  :src="slotProps.node.data.thumbnail"
+                  class="max-w-24 max-h-24 object-scale-down"
+                  alt="image"
+                />
+              </template>
+              <template #preview="props">
+                <img
+                  :src="slotProps.node.data.detail"
+                  alt="preview"
+                  :style="props.style"
+                  @click="props.onClick"
+                />
+              </template>
+            </Image>
+          </Suspense>
+        </template>
+      </Column>
       <Column :header="$t('pages.repository.overview.dataview.list.column.keywords')">
         <template #loading>
           <div

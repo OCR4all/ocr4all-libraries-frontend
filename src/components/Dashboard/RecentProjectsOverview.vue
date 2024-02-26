@@ -99,7 +99,7 @@ function getStateSeverity(state) {
       >
       <Column
         :header="$t('pages.dashboard.components.recent-projects.columns.state')"
-        >>
+        >
         <template #body="slotProps">
           <Tag
             :value="slotProps.data.state"
