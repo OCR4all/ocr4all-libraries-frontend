@@ -306,8 +306,8 @@ const breadcrumbCurrent = { label: sandbox };
           <button
             type="submit"
             name="action"
-            class="bg-primary-300 p-2 text-surface-50 hover:bg-primary-500"
-            @click="closeCallback"
+            class="bg-primary-600 p-2 text-surface-50 hover:bg-primary-800"
+              @click="closeCallback"
           >
             Open
           </button>
