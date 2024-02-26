@@ -50,8 +50,8 @@ Promise.resolve(importNodesFromAPI()).then(async (nodes) => {
   if (store.graphId) {
     selectedWorkflow.value = { id: store.graphId, label: store.graphLabel };
     await loadWorkflow(store.graphId).then(() => {
-/*      store.graphId = ""
-      store.graphLabel = ""*/
+      store.graphId = ""
+      store.graphLabel = ""
     });
   } else {
     addNodeWithCoordinates(baklava, InputNode, 50, 350);
