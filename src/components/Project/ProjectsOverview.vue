@@ -137,7 +137,7 @@ const states = ref(["active", "closed", "blocked"]);
         <template #body="slotProps">
           <button
             type="button"
-            class="mr-2 inline-flex items-center rounded-lg bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            class="mr-2 inline-flex items-center rounded-md bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             @click="router.push(`/project/${slotProps.data.id}/view`)"
           >
             {{ $t('pages.projects.overview.table.columns.open') }}

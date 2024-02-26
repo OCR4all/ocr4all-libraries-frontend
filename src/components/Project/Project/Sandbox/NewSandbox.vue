@@ -26,11 +26,11 @@ const breadcrumbCurrent = { label: "New Result" };
     :current="breadcrumbCurrent"
   />
   <div
-    class="rounded-lg bg-white shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
+    class="rounded-md bg-white shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
   >
     <section id="stepper" class="p-20">
       <div
-        class="relative after:absolute after:inset-x-0 after:top-1/2 after:block after:h-0.5 after:-translate-y-1/2 after:rounded-lg after:bg-surface-200 dark:after:bg-surface-400"
+        class="relative after:absolute after:inset-x-0 after:top-1/2 after:block after:h-0.5 after:-translate-y-1/2 after:rounded-md after:bg-surface-200 dark:after:bg-surface-400"
       >
         <ol class="relative z-10 flex justify-between text-sm font-medium">
           <li

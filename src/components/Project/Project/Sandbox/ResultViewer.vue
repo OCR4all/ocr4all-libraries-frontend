@@ -327,7 +327,7 @@ const breadcrumbCurrent = { label: sandbox };
   </Dialog>
   <div class="flex space-x-6">
     <transition
-      class="w-128 flex-1 rounded-lg bg-white p-5 shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
+      class="w-128 flex-1 rounded-md bg-white p-5 shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
       enter-active-class="transition ease-in-out duration-200 transform"
       enter-from-class="-translate-x-full"
       enter-to-class="translate-x-0"
@@ -418,7 +418,7 @@ const breadcrumbCurrent = { label: sandbox };
       </div>
     </transition>
     <div
-      class="flex-1 rounded-lg bg-white p-5 shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
+      class="flex-1 rounded-md bg-white p-5 shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
     >
       <section>
         <h2

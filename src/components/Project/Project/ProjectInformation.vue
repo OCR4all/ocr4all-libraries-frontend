@@ -114,14 +114,14 @@ async function deleteProject() {
       <Textarea v-model="description" rows="5" cols="30" />
     </div>
     <button
-      class="col-span-4 inline-block rounded-lg bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
+      class="col-span-4 inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
       @click="update"
     >
       {{ $t("pages.projects.project.information.buttons.update") }}
     </button>
     <button
       type="button"
-      class="col-span-4 inline-block rounded-lg bg-red-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 md:col-span-1 md:text-base"
+      class="col-span-4 inline-block rounded-md bg-red-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 md:col-span-1 md:text-base"
       @click="deleteDialogVisible = true"
     >
       {{ $t("pages.projects.project.information.buttons.delete") }}
@@ -137,7 +137,7 @@ async function deleteProject() {
       </p>
       <button
         type="button"
-        class="mb-2 mr-2 rounded-lg border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-500 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
+        class="mb-2 mr-2 rounded-md border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-500 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
         @click="deleteDialogVisible = false"
       >
         {{
@@ -146,7 +146,7 @@ async function deleteProject() {
       </button>
       <button
         type="button"
-        class="mb-2 mr-2 rounded-lg bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+        class="mb-2 mr-2 rounded-md bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
         @click="deleteProject"
       >
         {{

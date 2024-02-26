@@ -127,7 +127,7 @@ async function removeJob(job) {
 <template>
   <Toast />
   <div
-    class="rounded-lg bg-white shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
+    class="rounded-md bg-white shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
   >
     <DataTable
       v-model:filters="filters"
@@ -180,7 +180,7 @@ async function removeJob(job) {
                 !['running', 'scheduled'].includes(slotProps.data.state)
               "
               type="button"
-              class="mr-2 inline-flex items-center rounded-lg bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
+              class="mr-2 inline-flex items-center rounded-md bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
               @click="cancelJob(slotProps.data.id)"
             >
               <StopIcon class="h-6 w-6 text-white" />
@@ -190,7 +190,7 @@ async function removeJob(job) {
                 ['running', 'scheduled'].includes(slotProps.data.state)
               "
               type="button"
-              class="mr-2 inline-flex items-center rounded-lg bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
+              class="mr-2 inline-flex items-center rounded-md bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
               @click="removeJob(slotProps.data.id)"
             >
               <XMarkIcon class="h-6 w-6 text-white" />

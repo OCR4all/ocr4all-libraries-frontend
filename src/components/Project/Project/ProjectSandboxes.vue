@@ -155,7 +155,7 @@ async function downloadSandbox(sandbox) {
       <div class="my-2 space-x-2">
         <button
           type="button"
-          class="rounded-lg bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
           @click="createSandbox()"
         >
           {{ $t("pages.projects.sandbox.results.toolbar.new") }}
@@ -208,7 +208,7 @@ async function downloadSandbox(sandbox) {
       <template #body="slotProps">
         <button
           type="button"
-          class="mr-2 inline-flex items-center rounded-lg bg-primary-600 p-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          class="mr-2 inline-flex items-center rounded-md bg-primary-600 p-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           @click="
             router.push(`/project/${project}/result/${slotProps.data.id}`)
           "
@@ -258,14 +258,14 @@ async function downloadSandbox(sandbox) {
       <template #body="slotProps">
         <button
           type="button"
-          class="mr-2 inline-flex items-center bg-red-600 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+          class="mr-2 rounded-md inline-flex items-center bg-red-600 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
           @click="toggleDeleteDialog(slotProps.data.id)"
         >
           <XMarkIcon class="h-6 w-6 text-white" />
         </button>
         <button
           type="button"
-          class="mr-2 inline-flex items-center bg-primary-600 p-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          class="mr-2 rounded-md inline-flex items-center bg-primary-600 p-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
           @click="downloadSandbox(slotProps.data.id)"
         >
           <ArchiveBoxArrowDownIcon class="h-6 w-6 text-white" />
@@ -285,7 +285,7 @@ async function downloadSandbox(sandbox) {
     <button
       v-tooltip="'Cancel'"
       type="button"
-      class="mb-2 mr-2 rounded-lg border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-500 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
+      class="mb-2 mr-2 rounded-md border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-500 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
       @click="isDeleteDialogVisible = false"
     >
       {{
@@ -297,7 +297,7 @@ async function downloadSandbox(sandbox) {
     <button
       v-tooltip="'Remove Sandbox'"
       type="button"
-      class="mb-2 mr-2 rounded-lg bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+      class="mb-2 mr-2 rounded-md bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
       @click="removeResults"
     >
       {{

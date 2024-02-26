@@ -136,7 +136,7 @@ const onDragStart = (type: string, nodeInformation: INodeTypeInformation) => {
       v-show="visible"
       class="h-full overflow-scroll-y">
       <div
-        class="baklava-node-palette !opacity-95 dark:!bg-zinc-800 dark:!opacity-95"
+        class="baklava-node-palette !w-[290px] !opacity-95 dark:!bg-zinc-800 dark:!opacity-95"
       >
         <h1 class="pb-5 text-center text-xl font-bold text-black dark:text-white">
           {{ $t("pages.nodeflow.palette.processors") }}

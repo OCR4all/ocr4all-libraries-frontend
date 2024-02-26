@@ -161,7 +161,7 @@ defineExpose({
         <div
           v-show="uiStore.sidebarCtaVisible"
           id="dropdown-cta"
-          class="mt-6 rounded-lg bg-primary-50 p-4 dark:bg-primary-900"
+          class="mt-6 rounded-md bg-primary-50 p-4 dark:bg-primary-900"
           role="alert"
         >
           <div class="mb-3 flex items-center">

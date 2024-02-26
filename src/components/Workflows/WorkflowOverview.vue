@@ -218,7 +218,7 @@ async function deleteWorkflow() {
           <div class="space-y-2">
             <button
               type="button"
-              class="mr-2 inline-flex items-center rounded-lg bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              class="mr-2 inline-flex items-center rounded-md bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               @click="loadWorkflow(slotProps.data.id)"
             >
               {{ $t('pages.workflows.table.columns.open') }}
@@ -262,7 +262,7 @@ async function deleteWorkflow() {
           <div class="space-y-2">
             <button
               type="button"
-              class="mr-2 inline-flex items-center rounded-lg bg-green-600 p-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-100 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+              class="mr-2 inline-flex items-center rounded-md bg-green-600 p-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-100 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
               @click="editWorkflow(slotProps.data.id)"
             >
               <PencilIcon class="h-6 w-6 text-white" />
@@ -319,7 +319,7 @@ async function deleteWorkflow() {
 
         <div class="flex items-center justify-between sm:col-span-6">
           <button
-            class="inline-block rounded-lg bg-red-400 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 md:text-base"
+            class="inline-block rounded-md bg-red-400 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 md:text-base"
             @click="toggleDeleteDialog"
           >
             Delete
