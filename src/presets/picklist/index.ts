@@ -131,7 +131,7 @@ export default {
   sourceheader: {
     class: [
       "font-bold",
-      "border-b-0 rounded-t-md",
+      "border-b-0 border-solid rounded-t-md",
       "p-5",
       "text-surface-700 dark:text-white/80",
       "bg-surface-50 dark:bg-surface-800",
@@ -145,7 +145,7 @@ export default {
       "rounded-b-md",
       "text-surface-600 dark:text-white/80",
       "bg-surface-0 dark:bg-surface-800",
-      "border border-surface-200 dark:border-surface-700",
+      "border border-solid border-surface-200 dark:border-surface-700",
       "py-3 px-0",
       "outline-none",
       "overflow-auto",
@@ -433,7 +433,7 @@ export default {
   targetheader: {
     class: [
       "font-bold",
-      "border-b-0 rounded-t-md",
+      "border-b-0 border-solid rounded-t-md",
       "p-5",
       "text-surface-700 dark:text-white/80",
       "bg-surface-50 dark:bg-surface-800",
@@ -447,7 +447,7 @@ export default {
       "rounded-b-md",
       "text-surface-600 dark:text-white/80",
       "bg-surface-0 dark:bg-surface-800",
-      "border border-surface-200 dark:border-surface-700",
+      "border border-solid border-surface-200 dark:border-surface-700",
       "py-3 px-0",
       "outline-none",
       "overflow-auto",
