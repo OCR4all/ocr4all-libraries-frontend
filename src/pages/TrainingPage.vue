@@ -4,43 +4,13 @@ import AppLayout from "@/layout/AppLayout.vue";
 
 <template>
   <AppLayout>
-    <div class="bg-surface-0 p-4 @container/content dark:bg-surface-800">
-      <div class="grid grid-cols-1 gap-x-4 gap-y-4 @xl/content:grid-cols-3">
-        <div
-          class="group flex h-full flex-1 flex-col justify-center rounded-md bg-surface-100 p-5 shadow-md hover:bg-blue-700 dark:bg-surface-900 hover:dark:bg-primary-800"
-        >
-          <div class="flex flex-col">
-            <div
-              class="truncate text-center text-lg font-bold text-surface-900 group-hover:text-white dark:text-surface-100"
-            >
-              Calamari
-            </div>
-          </div>
-        </div>
-
-        <div
-          class="group flex h-full flex-1 flex-col justify-center rounded-md bg-surface-100 p-5 shadow-md hover:bg-blue-700 dark:bg-surface-900 hover:dark:bg-primary-800"
-        >
-          <div class="flex flex-col">
-            <div
-              class="truncate text-center text-lg font-bold text-surface-900 group-hover:text-white dark:text-surface-100"
-            >
-              Kraken
-            </div>
-          </div>
-        </div>
-        <div
-          class="group flex h-full flex-1 flex-col justify-center rounded-md bg-surface-100 p-5 shadow-md hover:bg-blue-700 dark:bg-surface-900 hover:dark:bg-primary-800"
-        >
-          <div class="flex flex-col">
-            <div
-              class="truncate text-center text-lg font-bold text-surface-900 group-hover:text-white dark:text-surface-100"
-            >
-              Tesseract
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="min-h-screen bg-surface-0 dark:bg-surface-900 flex flex-col items-center justify-center">
+      <h1 class="text-5xl text-surface-900 dark:text-white font-bold mb-8 animate-pulse">
+        Coming Soon
+      </h1>
+      <p class="text-surface-800 dark:text-surface-100 text-lg mb-8">
+        Dataset curation and training with <span class="font-bold">calamari</span>, <span class="font-bold">kraken</span> and <span class="font-bold">tesseract</span> is currently being implemented!
+      </p>
     </div>
   </AppLayout>
 </template>

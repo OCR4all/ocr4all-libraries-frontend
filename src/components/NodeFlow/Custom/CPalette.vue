@@ -125,10 +125,10 @@ const onDragStart = (type: string, nodeInformation: INodeTypeInformation) => {
 
 <template>
   <transition
-    enter-active-class="transform transition ease-in-out duration-300"
+    enter-active-class="transform transition ease-in-out duration-200"
     enter-from-class="translate-x-full"
     enter-to-class="translate-x-0"
-    leave-active-class="transform transition ease-in-out duration-300  "
+    leave-active-class="transform transition ease-in-out duration-200  "
     leave-from-class="translate-x-0"
     leave-to-class="translate-x-full"
   >

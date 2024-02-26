@@ -32,6 +32,7 @@ declare module 'vue' {
     NodeFlow: typeof import('./src/components/NodeFlow/NodeFlow.vue')['default']
     NodeFlowCard: typeof import('./src/components/Dashboard/NodeFlowCard.vue')['default']
     NotificationDropdown: typeof import('./src/components/Notifications/NotificationDropdown.vue')['default']
+    ProcessorSelector: typeof import('./src/components/Project/Project/Sandbox/ProcessorSelector.vue')['default']
     ProjectContainer: typeof import('./src/components/Project/ProjectContainer.vue')['default']
     ProjectCreationImageSelection: typeof import('./src/components/Project/Create/ProjectCreationImageSelection.vue')['default']
     ProjectCreationMetadata: typeof import('./src/components/Project/Create/ProjectCreationMetadata.vue')['default']

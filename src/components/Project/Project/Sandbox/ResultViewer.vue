@@ -4,6 +4,7 @@ import { useFindNestedObject } from "@/composables/useFindNestedObject";
 import OrganizationChart from "primevue/organizationchart";
 import Button from "primevue/button";
 import Toast from "primevue/toast";
+import Dialog from "primevue/dialog";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useToast } from "primevue/usetoast";
@@ -20,6 +21,7 @@ const larexURL = import.meta.env.VITE_LAREX_URL;
 import { useI18n } from "vue-i18n";
 import { TransitionRoot } from "@headlessui/vue";
 import ProgressBar from "primevue/progressbar";
+import { run } from "node:test";
 const { t } = useI18n();
 
 const isGeneratingSandbox = ref(false);
@@ -42,6 +44,20 @@ const nodes = ref();
 const sandboxGenerationToastVisible = ref(false);
 
 const LAREX_LABEL = "ocr4all-LAREX-launcher v1.0";
+
+const isProcessorDialogOpen = ref(false)
+function openProcessorDialog(){
+  toast.add({
+    severity: "info",
+    summary: "Not available yet",
+    detail: "Running single processor is currently being implemented",
+  });
+  /*isProcessorDialogOpen.value = true*/
+}
+async function runProcessor(){
+
+}
+
 const showSandboxGenerationToast = () => {
   if (!sandboxGenerationToastVisible.value) {
     toast.add({
@@ -302,7 +318,105 @@ const breadcrumbCurrent = { label: sandbox };
       </section>
     </template>
   </Toast>
+  <Dialog
+    v-model:visible="isProcessorDialogOpen"
+    modal
+    header="Run processor" :style="{ width: '25rem' }">
+
+    <ProcessorSelector />
+  </Dialog>
   <div class="flex space-x-6">
+    <transition
+      class="w-128 flex-1 rounded-lg bg-white p-5 shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
+      enter-active-class="transition ease-in-out duration-200 transform"
+      enter-from-class="-translate-x-full"
+      enter-to-class="translate-x-0"
+      leave-active-class="transition ease-in-out duration-200 transform"
+      leave-from-class="translate-x-0"
+      leave-to-class="-translate-x-full"
+    >
+      <div v-if="Object.entries(selection).length > 0">
+        <div class="flex space-x-2 pb-6">
+          <Button
+            @click="generateSandbox(selection)"
+            v-tooltip="{ value: 'Open in LAREX', hideDelay: 300 }"
+            :pt="{
+              root: {
+                class:
+                  'p-2 rounded-md bg-primary-700 hover:bg-primary-800 text-surface-50',
+              },
+            }"
+          >
+            <span
+              v-if="getSnapshotFromSelection(selection).label === LAREX_LABEL"
+            >
+              Open
+            </span>
+            <span v-else> Open in LAREX </span>
+          </Button>
+          <Button
+            @click="openProcessorDialog"
+            v-tooltip="{ value: 'Run processor', hideDelay: 300 }"
+            :pt="{
+              root: {
+                class:
+                  'p-2 rounded-md bg-primary-700 hover:bg-primary-800 text-surface-50',
+              },
+            }"
+          >
+            Run processor
+          </Button>
+          <Button
+            @click="exportSnapshot(selection)"
+            v-tooltip="{ value: 'Export Snapshot', hideDelay: 300 }"
+            :pt="{
+              root: {
+                class:
+                  'p-2 rounded-md bg-primary-700 hover:bg-primary-800 text-surface-50',
+              },
+            }"
+          >
+            Export
+          </Button>
+        </div>
+        <h2
+          class="pb-2 text-2xl font-semibold text-surface-950 dark:text-surface-50"
+        >
+          Info
+        </h2>
+        <table
+          class="w-full text-left text-sm text-surface-500 dark:text-surface-400"
+        >
+          <thead
+            class="bg-surface-50 text-xs uppercase text-surface-700 dark:bg-zinc-700 dark:text-white"
+          >
+          <tr>
+            <th scope="col" class="px-6 py-3">Parameter</th>
+            <th scope="col" class="px-6 py-3">Value</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr
+            v-for="(value, key) in Object.entries(
+                selectedSnapshotInformation,
+              )"
+            :key="key"
+            class="border-b bg-white dark:border-surface-700 dark:bg-zinc-800"
+          >
+            <th
+              scope="row"
+              class="whitespace-nowrap px-6 py-4 font-medium text-surface-900 dark:text-white"
+            >
+              {{ value[0] }}
+            </th>
+            <td class="px-6 py-4 dark:text-white">
+              {{ value[1] }}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </transition>
     <div
       class="flex-1 rounded-lg bg-white p-5 shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
     >
@@ -337,84 +451,5 @@ const breadcrumbCurrent = { label: sandbox };
         <div class="card overflow-x-auto"></div>
       </section>
     </div>
-    <transition
-      class="w-128 flex-1 rounded-lg bg-white p-5 shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
-      enter-active-class="transform transition ease-in-out duration-200"
-      enter-from-class="translate-x-full"
-      enter-to-class="translate-x-0"
-      leave-active-class="transform transition ease-in-out duration-200  "
-      leave-from-class="translate-x-0"
-      leave-to-class="translate-x-full"
-    >
-      <div v-if="Object.entries(selection).length > 0">
-        <div class="flex space-x-2 pb-6">
-          <Button
-            @click="generateSandbox(selection)"
-            v-tooltip="{ value: 'Open in LAREX', hideDelay: 300 }"
-            :pt="{
-              root: {
-                class:
-                  'p-2 bg-primary-600 hover:bg-primary-700 text-surface-50',
-              },
-            }"
-          >
-            <span
-              v-if="getSnapshotFromSelection(selection).label === LAREX_LABEL"
-            >
-              Open
-            </span>
-            <span v-else> Open in LAREX </span>
-          </Button>
-          <Button
-            @click="exportSnapshot(selection)"
-            v-tooltip="{ value: 'Export Snapshot', hideDelay: 300 }"
-            :pt="{
-              root: {
-                class:
-                  'p-2 bg-primary-600 hover:bg-primary-700 text-surface-50',
-              },
-            }"
-          >
-            Export
-          </Button>
-        </div>
-        <h2
-          class="pb-2 text-2xl font-semibold text-surface-950 dark:text-surface-50"
-        >
-          Info
-        </h2>
-        <table
-          class="w-full text-left text-sm text-surface-500 dark:text-surface-400"
-        >
-          <thead
-            class="bg-surface-50 text-xs uppercase text-surface-700 dark:bg-zinc-700 dark:text-white"
-          >
-            <tr>
-              <th scope="col" class="px-6 py-3">Parameter</th>
-              <th scope="col" class="px-6 py-3">Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="(value, key) in Object.entries(
-                selectedSnapshotInformation,
-              )"
-              :key="key"
-              class="border-b bg-white dark:border-surface-700 dark:bg-zinc-800"
-            >
-              <th
-                scope="row"
-                class="whitespace-nowrap px-6 py-4 font-medium text-surface-900 dark:text-white"
-              >
-                {{ value[0] }}
-              </th>
-              <td class="px-6 py-4 dark:text-white">
-                {{ value[1] }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </transition>
   </div>
 </template>
