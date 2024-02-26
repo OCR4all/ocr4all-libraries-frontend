@@ -41,10 +41,8 @@ export default defineComponent({
 
     const favorites = [
       "ocrd-cis-ocropy-binarize",
-      "ocrd-tesserocr-binarize",
       "ocrd-cis-ocropy-segment",
       "ocrd-calamari-recognize",
-      "ocrd-tesserocr-recognize"
     ]
 
     return {
