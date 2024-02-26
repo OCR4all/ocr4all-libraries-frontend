@@ -12,6 +12,7 @@ import axios from "axios";
 import { useConfigStore } from "@/stores/config.store";
 import { useAuthStore } from "@/stores/auth.store";
 import Checkbox from "primevue/checkbox";
+import Dialog from "primevue/dialog";
 const config = useConfigStore();
 const auth = useAuthStore();
 
@@ -138,19 +139,38 @@ function updateTotalSelection(event: Event) {
 }
 
 async function deleteSelected() {
-  for (const folio of selection.value) {
-    await useCustomFetch(
-      `/repository/container/folio/remove/entity/${container}?id=${folio}`,
-    );
-    updateSelection(folio, false);
+  const payload = {
+    "ids": []
   }
-  toast.add({
-    severity: "success",
-    summary: "Success",
-    detail: "Folios successfully removed",
-    life: 3000,
-  });
-  await refresh();
+  console.log(selection)
+  for(const folio of selection.value){
+    payload["ids"].push(folio)
+  }
+  console.log(payload)
+  useCustomFetch(
+    `/repository/container/folio/remove/list/${container}`,
+  )
+    .post(payload)
+    .then((response) => {
+      if(!response.error.value){
+        toast.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Folios successfully removed",
+          life: 3000,
+        });
+        selection.value = []
+      }else{
+        toast.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Folios couldn't be removed",
+          life: 3000,
+        });
+      }
+      refresh();
+      toggleDeleteDialog();
+    })
 }
 
 const selectedSortMode = ref({
@@ -184,7 +204,11 @@ function updateSort() {
   }
 }
 
-console.log(folios)
+
+const deleteDialogVisible = ref(false);
+function toggleDeleteDialog() {
+  deleteDialogVisible.value = !deleteDialogVisible.value;
+}
 
 const checked = ref();
 const breadcrumbHome = { to: "/repository/overview", label: "Repository" };
@@ -193,6 +217,30 @@ refresh();
 </script>
 <template>
   <BreadcrumbNavigation :home="breadcrumbHome" :current="breadcrumbCurrent" />
+  <Dialog
+    v-model:visible="deleteDialogVisible"
+    modal
+    header="Delete Folio"
+    :style="{ width: '50vw' }"
+  >
+    <p class="pb-5 dark:text-surface-200">
+      Do you really want to delete this folio?
+    </p>
+    <button
+      type="button"
+      class="mb-2 mr-2 border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
+      @click="toggleDeleteDialog"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="mb-2 mr-2 bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+      @click="deleteSelected"
+    >
+      Delete
+    </button>
+  </Dialog>
   <Toast />
   <Toast
     position="top-center"
@@ -266,7 +314,7 @@ refresh();
       <button
         class="rounded-md bg-red-600 p-4 text-primary-0 hover:bg-red-700 disabled:bg-red-400"
         :disabled="selection.length === 0"
-        @click="deleteSelected"
+        @click="toggleDeleteDialog"
       >
         Delete
       </button>

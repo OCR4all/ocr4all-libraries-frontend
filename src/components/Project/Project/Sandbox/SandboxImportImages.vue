@@ -64,7 +64,7 @@ console.log(folios);
       <template #sourceheader> Available </template>
       <template #targetheader> Selected </template>
       <template #item="slotProps">
-        <div class="align-items-center group flex flex-wrap gap-3 p-2">
+        <div class="group flex flex-wrap justify-center gap-3 p-2">
           <Image alt="Image" preview>
             <template #indicatoricon>
               <i class="pi pi-eye"></i>
@@ -81,9 +81,9 @@ console.log(folios);
               />
             </template>
           </Image>
-          <div class="flex-column flex flex-1 gap-2 align-middle">
+          <div class="flex-column flex flex-1 justify-center   gap-2">
             <span
-              class="font-bold dark:text-white dark:group-hover:text-black"
+              class="font-bold dark:text-white"
               >{{ slotProps.item.name }}</span
             >
           </div>

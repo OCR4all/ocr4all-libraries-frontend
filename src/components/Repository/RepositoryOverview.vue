@@ -13,6 +13,10 @@ import { FilterMatchMode } from "primevue/api";
 import InputText from "primevue/inputtext";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
+import Dialog from "primevue/dialog";
+
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 
 const containers = ref();
 const router = useRouter();
@@ -45,6 +49,13 @@ async function deleteContainers() {
   for (const container of selectedContainers.value) {
     await deleteContainer(container.id);
   }
+  toast.add({
+    severity: "success",
+    summary: "Success",
+    detail: "Containers deleted",
+    life: 3000,
+  }),
+  toggleDeleteDialog()
 }
 async function deleteContainer(id: string) {
   useCustomFetch(`/repository/container/remove?id=${id}`).then(() => {
@@ -105,6 +116,10 @@ const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
+const deleteDialogVisible = ref(false)
+function toggleDeleteDialog() {
+  deleteDialogVisible.value = !deleteDialogVisible.value;
+}
 function newContainer() {}
 function confirmDeleteSelected() {}
 
@@ -121,6 +136,31 @@ function openContainer(containerId: string, containerName: string) {
 const layout = ref("grid");
 </script>
 <template>
+  <Toast />
+  <Dialog
+    v-model:visible="deleteDialogVisible"
+    modal
+    header="Delete Containers"
+    :style="{ width: '50vw' }"
+  >
+    <p class="pb-5 dark:text-surface-200">
+      Do you really want to delete the selected containers?
+    </p>
+    <button
+      type="button"
+      class="mb-2 mr-2 border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
+      @click="toggleDeleteDialog"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="mb-2 mr-2 bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+      @click="deleteContainers"
+    >
+      Delete
+    </button>
+  </Dialog>
   <div class="bg-surface-0 p-4 @container/content dark:bg-surface-800">
     <DataView
       class="bg-surface-50 dark:bg-surface-700"
@@ -130,31 +170,34 @@ const layout = ref("grid");
       <template #header>
         <Toolbar>
           <template #start>
-            <Button
-              :label="$t('pages.repository.overview.toolbar.button.create')"
-              icon="pi pi-plus"
-              severity="success"
-              class="mr-2"
-              @click="toggleCreateContainerPanel"
-            />
-            <OverlayPanel ref="createContainerPanel">
-              <div class="flex space-x-1">
-                <InputText v-model="newContainerName" />
-                <Button
-                  icon="pi pi-check"
-                  severity="success"
-                  class="mr-2 w-fit"
-                  @click="createContainer"
-                />
-              </div>
-            </OverlayPanel>
-            <Button
-              :label="$t('pages.repository.overview.toolbar.button.delete')"
-              icon="pi pi-trash"
-              severity="danger"
-              :disabled="!selectedContainers || !selectedContainers.length"
-              @click="deleteContainers"
-            />
+            <div class="flex space-x-2">
+              <button
+                type="button"
+                class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                @click="toggleCreateContainerPanel"
+              >
+                {{ $t('pages.repository.overview.toolbar.button.create') }}
+              </button>
+              <OverlayPanel ref="createContainerPanel">
+                <div class="flex space-x-1">
+                  <InputText v-model="newContainerName" />
+                  <Button
+                    icon="pi pi-check"
+                    severity="info"
+                    class="mr-2 w-fit"
+                    @click="createContainer"
+                  />
+                </div>
+              </OverlayPanel>
+              <button
+                type="button"
+                class="rounded-md bg-red-700 disabled:bg-red-400 px-5 py-3 text-center text-base font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                :disabled="!selectedContainers || !selectedContainers.length"
+                @click="toggleDeleteDialog"
+              >
+                {{ $t('pages.repository.overview.toolbar.button.delete') }}
+              </button>
+            </div>
           </template>
           <template #end>
             <DataViewLayoutOptions v-model="layout" />

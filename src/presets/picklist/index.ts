@@ -45,7 +45,7 @@ export default {
         // Color
         "text-white dark:text-surface-900",
         "bg-primary-500 dark:bg-primary-400",
-        "border border-primary-500 dark:border-primary-400",
+        "border border-solid border-primary-500 dark:border-primary-400",
         // Spacing & Size
         "w-12",
         "m-0",
@@ -53,7 +53,7 @@ export default {
         // Transitions
         "transition duration-200 ease-in-out",
         // State
-        "hover:bg-primary-600 dark:hover:bg-primary-300 hover:border-primary-600 dark:hover:border-primary-300",
+        "hover:bg-primary-600 dark:hover:bg-primary-300 hover:border-solid hover:border-primary-600 dark:hover:border-primary-300",
         "focus:outline-none focus:outline-offset-0 focus:ring",
         "focus:ring-primary-400/50 dark:focus:ring-primary-300/50",
         { "cursor-default pointer-events-none opacity-60": context.disabled },
@@ -75,7 +75,7 @@ export default {
         // Color
         "text-white dark:text-surface-900",
         "bg-primary-500 dark:bg-primary-400",
-        "border border-primary-500 dark:border-primary-400",
+        "border border-solid border-primary-500 dark:border-primary-400",
         // Spacing & Size
         "w-12",
         "m-0",

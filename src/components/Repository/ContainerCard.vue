@@ -8,10 +8,10 @@ import Dialog from "primevue/dialog";
 import InputText from "primevue/inputtext";
 import Toast from "primevue/toast";
 
-import { useToast } from "primevue/usetoast";
 import { useI18n } from "vue-i18n";
 import Chips from "primevue/chips";
 import Textarea from "primevue/textarea";
+import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
 const { t } = useI18n();
@@ -71,7 +71,7 @@ const actionMenuItems = ref([
         label: "Delete",
         icon: "pi pi-times",
         command: () => {
-          deleteContainer();
+          toggleDeleteDialog();
         },
       },
     ],
@@ -84,6 +84,12 @@ function updateSelection(event: Event) {
 
 async function deleteContainer() {
   await useCustomFetch(`/repository/container/remove?id=${props.id}`);
+  toast.add({
+    severity: "success",
+    summary: "Success",
+    detail: "Container deleted",
+    life: 3000,
+  })
   emit("refresh");
 }
 
@@ -133,12 +139,41 @@ async function updateContainer() {
   }
 }
 
+const deleteDialogVisible = ref(false);
+function toggleDeleteDialog() {
+  deleteDialogVisible.value = !deleteDialogVisible.value;
+}
+
 const name = ref(props.title)
 const keywords = ref(props.keywords)
 const description = ref(props.description)
 </script>
 <template>
   <Toast />
+  <Dialog
+    v-model:visible="deleteDialogVisible"
+    modal
+    header="Delete Container"
+    :style="{ width: '50vw' }"
+  >
+    <p class="pb-5 dark:text-surface-200">
+      Do you really want to delete this container?
+    </p>
+    <button
+      type="button"
+      class="mb-2 mr-2 border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
+      @click="toggleDeleteDialog"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="mb-2 mr-2 bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+      @click="deleteContainer"
+    >
+      Delete
+    </button>
+  </Dialog>
   <Dialog
     v-model:visible="editDialogVisible"
     modal

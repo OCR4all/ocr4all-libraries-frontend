@@ -10,6 +10,10 @@ import InlineMessage from "primevue/inlinemessage";
 import InputText from "primevue/inputtext";
 import Dialog from "primevue/dialog";
 import Chips from "primevue/chips";
+import Toast from "primevue/toast"
+
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
 
 const props = defineProps<{
   name?: string;
@@ -45,7 +49,7 @@ const actionMenuItems = ref([
         label: "Delete",
         icon: "pi pi-times",
         command: () => {
-          deleteFolio();
+          toggleDeleteDialog();
         },
       },
     ],
@@ -66,6 +70,13 @@ async function deleteFolio() {
     `/repository/container/folio/remove/entity/${props.containerId}?id=${props.id}`,
   );
   select(false);
+  toast.add({
+    severity: "success",
+    summary: "Success",
+    detail: "Folio deleted",
+    life: 3000,
+  })
+  toggleDeleteDialog()
   emit("refresh");
 }
 
@@ -76,11 +87,41 @@ const keywords = ref(props.keywords)
 const checked = ref();
 const editDialogVisible = ref(false)
 
+const deleteDialogVisible = ref(false);
+function toggleDeleteDialog() {
+  deleteDialogVisible.value = !deleteDialogVisible.value;
+}
+
 defineExpose({
   select,
 });
 </script>
 <template>
+  <Toast />
+  <Dialog
+    v-model:visible="deleteDialogVisible"
+    modal
+    header="Delete Folio"
+    :style="{ width: '50vw' }"
+  >
+    <p class="pb-5 dark:text-surface-200">
+      Do you really want to delete this folio?
+    </p>
+    <button
+      type="button"
+      class="mb-2 mr-2 border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
+      @click="toggleDeleteDialog"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="mb-2 mr-2 bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+      @click="deleteFolio"
+    >
+      Delete
+    </button>
+  </Dialog>
   <div class="grid grid-cols-1 justify-self-center">
     <div
       class="shadow-xs group relative m-2 grid h-64 w-64 rounded-md bg-clip-border text-surface-700 hover:bg-primary-200 hover:dark:bg-surface-600"
