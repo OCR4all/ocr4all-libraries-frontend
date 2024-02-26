@@ -7,7 +7,7 @@ export default {
       // Size
       { "h-full": props.scrollable && props.scrollHeight === "flex" },
       // Shape
-      "border-spacing-0 border-separate",
+      "rounded-md border-spacing-0 border-separate",
     ],
   }),
   loadingoverlay: {
@@ -41,6 +41,8 @@ export default {
       props.showGridlines ? "border-b" : "border-b border-x-0",
       // Spacing
       "py-3.5 px-3",
+      // Shape
+      "rounded-t-md",
       // Color
       "bg-surface-0 dark:bg-surface-800",
       "border-surface-300 dark:border-surface-600",

@@ -149,13 +149,18 @@ async function removeJob(job) {
         <div class="flex justify-between">
           <h2 class="my-4 text-xl">{{ $t("pages.queue.table.header") }}</h2>
           <span class="p-input-icon-left ml-10 space-x-4">
-            <button :disabled="isRefetching === true" @click="refetch">
+            <button
+              v-tooltip="'Refresh'"
+              :disabled="isRefetching === true"
+              @click="refetch">
               <ArrowPathIcon
                 :class="{ 'animate-spin': isRefetching }"
                 class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
               />
             </button>
-            <button @click="expungeJobs">
+            <button
+              v-tooltip="'Expunge queue'"
+              @click="expungeJobs">
               <ArchiveBoxXMarkIcon
                 class="mr-2 inline h-6 w-6 text-surface-800 hover:text-red-600 dark:text-surface-200 dark:hover:text-red-600"
               />

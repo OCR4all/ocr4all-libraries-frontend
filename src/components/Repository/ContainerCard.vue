@@ -147,6 +147,14 @@ function toggleDeleteDialog() {
 const name = ref(props.title)
 const keywords = ref(props.keywords)
 const description = ref(props.description)
+
+function select(doSelect: boolean) {
+  checked.value = doSelect;
+}
+
+defineExpose({
+  select,
+});
 </script>
 <template>
   <Toast />
@@ -214,34 +222,34 @@ const description = ref(props.description)
       <Button
         label="Cancel"
         icon="pi pi-times"
-        @click="editDialogVisible = false"
         text
+        @click="editDialogVisible = false"
       />
       <Button
         label="Save"
         icon="pi pi-check"
-        @click="updateContainer"
         autofocus
+        @click="updateContainer"
       />
     </template>
   </Dialog>
   <div class="grid grid-cols-1 justify-self-center">
     <div
-      class="shadow-xs group relative m-2 grid h-64 w-64 rounded-md bg-clip-border text-surface-700 hover:bg-primary-100 hover:dark:bg-surface-700"
+      class="shadow-xs group relative m-2 cursor-pointer grid h-64 w-64 rounded-md bg-clip-border text-surface-700 hover:bg-primary-100 hover:dark:bg-surface-700"
       :class="[
         checked
           ? ['bg-primary-100', 'dark:bg-surface-700']
           : ['bg-surface-100', 'dark:bg-surface-900'],
       ]"
+      @click.self="openContainer"
     >
       <div
-        class="absolute w-max group-hover:flex"
+        class="absolute w-max group-hover:flex cursor-default"
         :class="{ hidden: !checked && !actionMenuVisible }"
       >
         <div class="flex justify-between space-x-28 p-4">
           <Checkbox
             v-model="checked"
-            @update:modelValue="updateSelection"
             :binary="true"
             :pt="{
               root: { class: 'z-50' },
@@ -250,6 +258,7 @@ const description = ref(props.description)
                   'peer absolute h-6 w-6 border border-solid cursor-pointer hover:bg-primary-200',
               },
             }"
+            @update:model-value="updateSelection"
           />
           <div class="flex space-x-2">
             <button
@@ -259,7 +268,6 @@ const description = ref(props.description)
               Share
             </button>
             <Button
-              @click="toggle"
               icon="pi pi-ellipsis-v"
               severity="secondary"
               text
@@ -270,18 +278,20 @@ const description = ref(props.description)
                 root: { class: 'z-50 bg-surface-50/80 dark:bg-surface-50 p-1' },
                 icon: { class: 'align-center pl-1' },
               }"
+              @click="toggle"
             />
             <Menu
-              ref="actionMenu"
               id="overlay_menu"
-              @blur="actionMenuBlurred"
+              ref="actionMenu"
               :model="actionMenuItems"
               :popup="true"
+              @blur="actionMenuBlurred"
             />
           </div>
         </div>
       </div>
       <div
+        @click="openContainer"
         class="mx-4 mt-4 h-fit w-fit self-center justify-self-center text-surface-700"
       >
         <i
@@ -291,8 +301,8 @@ const description = ref(props.description)
     </div>
     <div class="mx-4 mb-4">
       <p
-        @click="openContainer"
         class="cursor-pointer font-semibold text-black hover:underline dark:text-white"
+        @click="openContainer"
       >
         {{ props.title }}
       </p>

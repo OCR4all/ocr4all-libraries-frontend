@@ -158,7 +158,7 @@ async function deleteWorkflow() {
         <div class="my-2 space-x-2">
           <button
             type="button"
-            class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             @click="router.push('/nodeflow')"
           >
             {{ $t("pages.workflows.toolbar.new") }}
@@ -211,7 +211,6 @@ async function deleteWorkflow() {
         <DefaultSpinner />
       </template>
       <Column
-        :header="$t('pages.workflows.table.columns.open')"
         :exportable="false"
         style="min-width: 8rem"
       >
@@ -222,7 +221,7 @@ async function deleteWorkflow() {
               class="mr-2 inline-flex items-center rounded-lg bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               @click="loadWorkflow(slotProps.data.id)"
             >
-              <EyeIcon class="h-6 w-6 text-white" />
+              {{ $t('pages.workflows.table.columns.open') }}
             </button>
           </div>
         </template>

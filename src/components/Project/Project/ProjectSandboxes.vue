@@ -176,7 +176,9 @@ async function downloadSandbox(sandbox) {
           {{ $t("pages.projects.sandbox.results.table.header") }}
         </h2>
         <div class="space-x-2">
-          <button @click="refetch">
+          <button
+            v-tooltip="'Refresh'"
+            @click="refetch">
             <ArrowPathIcon
               :disabled="isRefetching"
               :class="{ 'animate-spin': isRefetching }"
@@ -200,7 +202,6 @@ async function downloadSandbox(sandbox) {
       }}</span>
     </template>
     <Column
-      :header="$t('pages.projects.sandbox.results.table.columns.open')"
       :exportable="false"
       style="min-width: 8rem"
     >
@@ -212,7 +213,7 @@ async function downloadSandbox(sandbox) {
             router.push(`/project/${project}/result/${slotProps.data.id}`)
           "
         >
-          <EyeIcon class="h-6 w-6 text-white" />
+          {{ $t('pages.projects.sandbox.results.table.columns.open') }}
         </button>
       </template>
     </Column>

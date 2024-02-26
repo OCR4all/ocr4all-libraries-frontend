@@ -7,6 +7,7 @@ import Button from "primevue/button";
 import Toolbar from "primevue/toolbar";
 import OverlayPanel from "primevue/overlaypanel";
 import Skeleton from "primevue/skeleton";
+import Toast from "primevue/toast";
 import Chip from "primevue/chip";
 import { FilterMatchMode } from "primevue/api";
 
@@ -16,10 +17,24 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import Dialog from "primevue/dialog";
 
 import { useToast } from "primevue/usetoast";
+import { useUiStore } from "@/stores/ui.store";
+import Textarea from "primevue/textarea";
+import Chips from "primevue/chips";
+import { list } from "postcss";
 const toast = useToast();
+
+const uiStore = useUiStore()
 
 const containers = ref();
 const router = useRouter();
+
+const containerCardRefs = ref([])
+
+const setContainerCardsRef = el => {
+  if (el) {
+    containerCardRefs.value.push(el)
+  }
+}
 
 async function listContainers() {
   useCustomFetch("/repository/container/list")
@@ -54,7 +69,7 @@ async function deleteContainers() {
     summary: "Success",
     detail: "Containers deleted",
     life: 3000,
-  }),
+  })
   toggleDeleteDialog()
 }
 async function deleteContainer(id: string) {
@@ -84,33 +99,6 @@ const toggleCreateContainerPanel = (event: Event) => {
   createContainerPanel.value.toggle(event);
 };
 
-const actionMenu = ref();
-const toggle = (event: Event) => {
-  actionMenu.value.toggle(event);
-};
-
-const actionMenuItems = ref([
-  {
-    label: "Actions",
-    items: [
-      {
-        label: "Edit",
-        icon: "pi pi-pencil",
-        command: () => {
-          console.log("edit");
-        },
-      },
-      {
-        label: "Delete",
-        icon: "pi pi-times",
-        command: (event) => {
-          deleteContainer();
-        },
-      },
-    ],
-  },
-]);
-
 const selectedContainers = ref([]);
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -120,11 +108,47 @@ const deleteDialogVisible = ref(false)
 function toggleDeleteDialog() {
   deleteDialogVisible.value = !deleteDialogVisible.value;
 }
-function newContainer() {}
-function confirmDeleteSelected() {}
+
+async function updateContainer() {
+  const payload = {
+    "name": name.value,
+    "keywords": keywords.value ? Array.from(keywords.value) : [],
+    "description": description.value
+  }
+  const { isFetching, error, data } = await useCustomFetch(`/repository/container/update?id=${id.value}`)
+    .post(payload)
+    .json();
+  listContainers()
+  editDialogVisible.value = false
+  if(!error.value){
+    toast.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Container updated",
+      life: 3000,
+    });
+  }else{
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: "Couldn't update container",
+      life: 3000,
+    });
+  }
+}
+
+const id = ref()
+const name = ref()
+const description = ref()
+const keywords = ref()
 
 function openEditDialog(node) {
-  console.log(node);
+  id.value = node.id
+  name.value = node.name
+  description.value = node.description
+  keywords.value = node.keywords
+
+  editDialogVisible.value = true
 }
 
 function openContainer(containerId: string, containerName: string) {
@@ -133,10 +157,72 @@ function openContainer(containerId: string, containerName: string) {
     query: { id: containerId, name: containerName },
   });
 }
-const layout = ref("grid");
+
+function updateDataViewLayout(event){
+  uiStore.repositoryDataViewLayout = event
+  if(event === "grid"){
+    console.log(containerCardRefs.value)
+    for(const container of selectedContainers.value){
+      console.log(container)
+    }
+  }
+}
+const editDialogVisible = ref(false)
+const layout = ref(uiStore.repositoryDataViewLayout);
 </script>
 <template>
   <Toast />
+  <Dialog
+    v-model:visible="editDialogVisible"
+    modal
+    header="Edit"
+    :style="{ width: '50vw' }"
+  >
+    <div class="mx-auto grid grid-cols-6 gap-4">
+      <div class="col-span-3 flex flex-col">
+        <label
+          for="text"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
+        >Label</label
+        >
+        <InputText v-model="name" type="text" />
+      </div>
+
+      <div class="col-span-4 flex flex-col">
+        <label
+          for="description"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
+        >{{ $t("pages.projects.project.information.form.description") }}</label
+        >
+        <Textarea v-model="description" rows="5" cols="30" />
+      </div>
+
+      <div class="col-span-6 flex flex-col">
+        <div class="col-span-4 flex flex-col">
+          <label
+            for="keywords"
+            class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
+          >{{ $t("pages.projects.project.information.form.keywords") }}</label
+          >
+          <Chips v-model="keywords" />
+        </div>
+      </div>
+    </div>
+    <template #footer>
+      <Button
+        label="Cancel"
+        icon="pi pi-times"
+        text
+        @click="editDialogVisible = false"
+      />
+      <Button
+        label="Save"
+        icon="pi pi-check"
+        autofocus
+        @click="updateContainer"
+      />
+    </template>
+  </Dialog>
   <Dialog
     v-model:visible="deleteDialogVisible"
     modal
@@ -161,49 +247,49 @@ const layout = ref("grid");
       Delete
     </button>
   </Dialog>
-  <div class="bg-surface-0 p-4 @container/content dark:bg-surface-800">
+  <Toolbar class="mb-4">
+    <template #start>
+      <div class="flex my-2 space-x-2">
+        <button
+          type="button"
+          class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          @click="toggleCreateContainerPanel"
+        >
+          {{ $t('pages.repository.overview.toolbar.button.create') }}
+        </button>
+        <OverlayPanel ref="createContainerPanel">
+          <div class="flex space-x-1">
+            <InputText v-model="newContainerName" />
+            <Button
+              icon="pi pi-check"
+              severity="info"
+              class="mr-2 w-fit"
+              @click="createContainer"
+            />
+          </div>
+        </OverlayPanel>
+        <button
+          type="button"
+          class="rounded-md bg-red-700 disabled:bg-red-400 dark:disabled:bg-red-400 px-5 py-3 text-center text-base font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+          :disabled="!selectedContainers || !selectedContainers.length"
+          @click="toggleDeleteDialog"
+        >
+          {{ $t('pages.repository.overview.toolbar.button.delete') }}
+        </button>
+      </div>
+    </template>
+    <template #end>
+      <DataViewLayoutOptions
+        @update:modelValue="updateDataViewLayout"
+        v-model="layout" />
+    </template>
+  </Toolbar>
+  <div class="bg-surface-0 rounded-md p-4 @container/content dark:bg-surface-800">
     <DataView
       class="bg-surface-50 dark:bg-surface-700"
       :value="containers"
       :layout="layout"
     >
-      <template #header>
-        <Toolbar>
-          <template #start>
-            <div class="flex space-x-2">
-              <button
-                type="button"
-                class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                @click="toggleCreateContainerPanel"
-              >
-                {{ $t('pages.repository.overview.toolbar.button.create') }}
-              </button>
-              <OverlayPanel ref="createContainerPanel">
-                <div class="flex space-x-1">
-                  <InputText v-model="newContainerName" />
-                  <Button
-                    icon="pi pi-check"
-                    severity="info"
-                    class="mr-2 w-fit"
-                    @click="createContainer"
-                  />
-                </div>
-              </OverlayPanel>
-              <button
-                type="button"
-                class="rounded-md bg-red-700 disabled:bg-red-400 px-5 py-3 text-center text-base font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                :disabled="!selectedContainers || !selectedContainers.length"
-                @click="toggleDeleteDialog"
-              >
-                {{ $t('pages.repository.overview.toolbar.button.delete') }}
-              </button>
-            </div>
-          </template>
-          <template #end>
-            <DataViewLayoutOptions v-model="layout" />
-          </template>
-        </Toolbar>
-      </template>
 
       <template #list="slotProps">
         <DataTable
@@ -284,7 +370,7 @@ const layout = ref("grid");
               }}</Chip>
             </template>
           </Column>
-          <Column field="actions">
+          <Column field="actions" header="Actions">
             <template #loading>
               <div
                 class="align-items-center flex"
@@ -300,14 +386,14 @@ const layout = ref("grid");
             <template #body="slotProps">
               <div class="flex space-x-2">
                 <button
-                  class="bg-primary-600 p-2 text-surface-50 hover:bg-primary-800"
+                  class="rounded-md bg-primary-600 p-2 text-surface-50 hover:bg-primary-800"
                   @click="openContainer(slotProps.data.id, slotProps.data.name)"
                 >
                   {{ $t('pages.repository.overview.dataview.list.column.actions.open') }}
                 </button>
                 <button
-                  class="bg-primary-600 p-2 text-surface-50 hover:bg-primary-800"
-                  @click="openEditDialog(slotProps.data.id)"
+                  class="rounded-md bg-primary-600 p-2 text-surface-50 hover:bg-primary-800"
+                  @click="openEditDialog(slotProps.data)"
                 >
                   {{ $t('pages.repository.overview.dataview.list.column.actions.edit') }}
                 </button>
@@ -324,6 +410,7 @@ const layout = ref("grid");
           <div v-for="(item, index) in slotProps.items" :key="item.id">
             <ContainerCard
               :id="item.id"
+              :ref="setContainerCardsRef"
               :title="item.name"
               :description="item.description"
               :keywords="item.keywords"
