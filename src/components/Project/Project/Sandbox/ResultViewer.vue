@@ -5,6 +5,8 @@ import OrganizationChart from "primevue/organizationchart";
 import Button from "primevue/button";
 import Toast from "primevue/toast";
 import Dialog from "primevue/dialog";
+import Accordion from "primevue/accordion";
+import AccordionTab from "primevue/accordiontab";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useToast } from "primevue/usetoast";
@@ -191,6 +193,11 @@ async function generateSandbox(selection: object) {
   refetch();
 }
 
+function hasLarexView(selection){
+  const snapshot = getSnapshotFromSelection(selection)
+  return snapshot.children.map(entry => entry.label).includes("ocr4all-LAREX-launcher v1.0")
+}
+
 async function exportSnapshot(snapshot) {
   const key = Object.keys(snapshot)[0]
     .split(",")
@@ -267,13 +274,11 @@ const breadcrumbCurrent = { label: sandbox };
             {{ message.detail }}
           </p>
         </div>
-        <div class="flex gap-2 justify-self-center">
-          <ProgressBar
-            v-show="isGeneratingSandbox"
-            mode="indeterminate"
-            style="height: 6px"
-          ></ProgressBar>
-        </div>
+        <ProgressBar
+          v-show="isGeneratingSandbox"
+          mode="indeterminate"
+          style="height: 6px"
+        ></ProgressBar>
         <form
           class="justify-self-center"
           v-show="isReady"
@@ -338,8 +343,9 @@ const breadcrumbCurrent = { label: sandbox };
       <div v-if="Object.entries(selection).length > 0">
         <div class="flex space-x-2 pb-6">
           <Button
+            v-show="!hasLarexView(selection)"
             @click="generateSandbox(selection)"
-            v-tooltip="{ value: 'Open in LAREX', hideDelay: 300 }"
+            v-tooltip="{ value: 'Generate LAREX view', hideDelay: 300 }"
             :pt="{
               root: {
                 class:
@@ -379,42 +385,41 @@ const breadcrumbCurrent = { label: sandbox };
             Export
           </Button>
         </div>
-        <h2
-          class="pb-2 text-2xl font-semibold text-surface-950 dark:text-surface-50"
-        >
-          Info
-        </h2>
-        <table
-          class="w-full text-left text-sm text-surface-500 dark:text-surface-400"
-        >
-          <thead
-            class="bg-surface-50 text-xs uppercase text-surface-700 dark:bg-zinc-700 dark:text-white"
-          >
-          <tr>
-            <th scope="col" class="px-6 py-3">Parameter</th>
-            <th scope="col" class="px-6 py-3">Value</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr
-            v-for="(value, key) in Object.entries(
+        <Accordion>
+          <AccordionTab header="Processor Information">
+            <table
+              class="w-full text-left text-sm text-surface-500 dark:text-surface-400"
+            >
+              <thead
+                class="bg-surface-50 text-xs uppercase text-surface-700 dark:bg-zinc-700 dark:text-white"
+              >
+              <tr>
+                <th scope="col" class="px-6 py-3">Parameter</th>
+                <th scope="col" class="px-6 py-3">Value</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr
+                v-for="(value, key) in Object.entries(
                 selectedSnapshotInformation,
               )"
-            :key="key"
-            class="border-b bg-white dark:border-surface-700 dark:bg-zinc-800"
-          >
-            <th
-              scope="row"
-              class="whitespace-nowrap px-6 py-4 font-medium text-surface-900 dark:text-white"
-            >
-              {{ value[0] }}
-            </th>
-            <td class="px-6 py-4 dark:text-white">
-              {{ value[1] }}
-            </td>
-          </tr>
-          </tbody>
-        </table>
+                :key="key"
+                class="border-b bg-white dark:border-surface-700 dark:bg-zinc-800"
+              >
+                <th
+                  scope="row"
+                  class="whitespace-nowrap px-6 py-4 font-medium text-surface-900 dark:text-white"
+                >
+                  {{ value[0] }}
+                </th>
+                <td class="px-6 py-4 dark:text-white">
+                  {{ value[1] }}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </AccordionTab>
+        </Accordion>
       </div>
     </transition>
     <div
