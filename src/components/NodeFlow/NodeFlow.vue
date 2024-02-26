@@ -48,14 +48,17 @@ Promise.resolve(importNodesFromAPI()).then(async (nodes) => {
   }
   nodeParameters.value = nodes[1];
   if (store.graphId) {
-    selectedWorkflow.value = { id: store.graphId };
-    await loadWorkflow(store.graphId).then(() => (store.graphId = ""));
+    selectedWorkflow.value = { id: store.graphId, label: store.graphLabel };
+    await loadWorkflow(store.graphId).then(() => {
+/*      store.graphId = ""
+      store.graphLabel = ""*/
+    });
   } else {
     addNodeWithCoordinates(baklava, InputNode, 50, 350);
   }
 });
 
-const selectedWorkflow = ref();
+const selectedWorkflow = ref({id: store.graphId, label: store.graphLabel});
 const availableWorkflows = ref();
 
 const labelEntered = ref(true);
@@ -237,6 +240,7 @@ function togglePalette() {
         :options="availableWorkflows"
         optionLabel="label"
         filter
+        @change="console.log(selectedWorkflow)"
         placeholder="Select a Workflow"
         class="md:w-14rem w-full"
       >

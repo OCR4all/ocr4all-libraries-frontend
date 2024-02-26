@@ -128,8 +128,9 @@ async function updateWorkflow() {
   }
 }
 
-function loadWorkflow(id) {
-  store.graphId = id;
+function loadWorkflow(data) {
+  store.graphId = data.id;
+  store.graphLabel = data.label;
   router.push("/nodeflow");
 }
 
@@ -219,7 +220,7 @@ async function deleteWorkflow() {
             <button
               type="button"
               class="mr-2 inline-flex items-center rounded-md bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              @click="loadWorkflow(slotProps.data.id)"
+              @click="loadWorkflow(slotProps.data)"
             >
               {{ $t('pages.workflows.table.columns.open') }}
             </button>
