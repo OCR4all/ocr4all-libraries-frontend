@@ -23,13 +23,20 @@ const sidebarMdOpened = ref(false);
 const sidebarLgOpened = ref(true);
 
 const mainNavigation = [
-  { to: "/", label: "nav.sidebar.links.dashboard", icon: HomeIcon },
+  {
+    to: "/",
+    label: "nav.sidebar.links.dashboard",
+    icon: HomeIcon },
   {
     to: "/repository",
     label: "nav.sidebar.links.repository",
     icon: ServerIcon,
   },
-  { to: "/project", label: "nav.sidebar.links.projects", icon: Squares2X2Icon },
+  {
+    to: "/project",
+    label: "nav.sidebar.links.projects",
+    icon: Squares2X2Icon
+  },
   {
     to: "/workflows",
     label: "nav.sidebar.links.workflows",

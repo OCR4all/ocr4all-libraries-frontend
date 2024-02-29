@@ -3,47 +3,48 @@ import WideCard from "@/components/Dashboard/WideCard.vue";
 
 import Toast from "primevue/toast";
 import Skeleton from "primevue/skeleton";
-
 import { useToast } from "primevue/usetoast";
-import { useCustomFetch } from "@/composables/useCustomFetch";
 const toast = useToast();
 
+import { useCustomFetch } from "@/composables/useCustomFetch";
+
 import { useI18n } from "vue-i18n";
-import { useUiStore } from "@/stores/ui.store";
 const { t } = useI18n();
 
+import { useUiStore } from "@/stores/ui.store";
 const uiStore = useUiStore()
 
-const projects = ref();
-const workflows = ref();
-const collections = ref();
-const folios = ref();
+const projects: Ref<number | undefined> = ref();
+const workflows: Ref<number | undefined> = ref();
+const collections: Ref<number | undefined> = ref();
+const folios: Ref<number | undefined> = ref();
 
 useCustomFetch(`/project/list`)
   .get()
   .json()
   .then((response) => {
-    projects.value = `${response.data.value.length}`;
+    projects.value = response.data.value.length;
   });
 useCustomFetch(`/workflow/list`)
   .get()
   .json()
   .then((response) => {
-    workflows.value = `${response.data.value.length}`;
+    workflows.value = response.data.value.length;
   });
 useCustomFetch(`/repository/container/list`)
   .get()
   .json()
   .then(async (response) => {
     collections.value = response.data.value;
-    const allFolios = [];
+    const counter = ref(0);
     for (const collection of response.data.value) {
       await useCustomFetch(`/repository/container/folio/list/${collection.id}`)
         .get()
         .json()
-        .then((response) => allFolios.push(...response.data.value));
+        .then((response) => {counter.value += response.data.value.length})
     }
-    folios.value = allFolios;
+    folios.value = counter.value;
+    console.log(folios.value)
   });
 
 function startTour() {
@@ -85,7 +86,7 @@ function openSettings() {
         <template #title> Folios </template>
         <template #value>
           <div v-if="folios">
-            {{ folios.length }}
+            {{ folios }}
           </div>
         </template>
       </StatsCard>

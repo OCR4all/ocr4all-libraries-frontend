@@ -1,4 +1,8 @@
-<script setup>
+<script setup lang="ts">
+import DefaultSpinner from "@/components/Layout/utils/DefaultSpinner.vue";
+
+import { useCustomFetch } from "@/composables/useCustomFetch";
+
 import { ArrowPathIcon, ArrowUpOnSquareIcon } from "@heroicons/vue/24/outline";
 
 import { UseTimeAgo } from "@vueuse/components";
@@ -6,14 +10,12 @@ import { UseTimeAgo } from "@vueuse/components";
 import Tag from "primevue/tag";
 import Column from "primevue/column";
 import DataTable from "primevue/datatable";
-import { useCustomFetch } from "@/composables/useCustomFetch";
-import DefaultSpinner from "@/components/Layout/utils/DefaultSpinner.vue";
 
 const router = useRouter();
 
-const initialLoading = ref(true);
-const isRefetching = ref(false);
-const projects = ref();
+const initialLoading: Ref<boolean> = ref(true);
+const isRefetching: Ref<boolean> = ref(false);
+const projects: Ref = ref();
 
 async function refetch() {
   isRefetching.value = true;

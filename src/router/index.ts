@@ -30,6 +30,8 @@ const AdminPage = () => import("@/pages/AdminPage.vue");
 
 const TrainingPage = () => import("@/pages/TrainingPage.vue");
 
+const ImageEditor = () => import("@/components/Repository/ImageEditor.vue")
+
 import { useAuthStore } from "@/stores/auth.store";
 import { useConfigStore } from "@/stores/config.store";
 

@@ -1,5 +1,15 @@
 <script setup lang="ts">
-import { ArrowPathIcon, EyeIcon, PencilIcon } from "@heroicons/vue/24/outline";
+interface IWorkflowMetadata {
+  label: string,
+  description: string,
+  id: string
+  date: string
+}
+
+import { useNodeFlowStore } from "@/stores/nodeflow.store";
+import { useCustomFetch } from "@/composables/useCustomFetch";
+
+import { ArrowPathIcon, PencilIcon } from "@heroicons/vue/24/outline";
 
 import { UseTimeAgo } from "@vueuse/components";
 
@@ -17,22 +27,21 @@ import { FilterMatchMode } from "primevue/api";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
+import { Router } from "vue-router";
+
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
 const store = useNodeFlowStore();
 
-import { useNodeFlowStore } from "@/stores/nodeflow.store";
-import { useCustomFetch } from "@/composables/useCustomFetch";
+const router: Router = useRouter();
 
-const router = useRouter();
+const editDialogVisible: Ref<boolean> = ref(false);
+const deleteDialogVisible: Ref<boolean> = ref(false);
 
-const editDialogVisible = ref(false);
-const deleteDialogVisible = ref(false);
-
-const labelTaken = ref(false);
-const originalWorkflowName = ref();
-const workflowMetadata = ref();
+const labelTaken: Ref<boolean> = ref(false);
+const originalWorkflowName: Ref<string | undefined> = ref();
+const workflowMetadata: Ref<IWorkflowMetadata> = ref();
 const workflowView = ref();
 
 const loading = ref(true);

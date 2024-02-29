@@ -1,4 +1,12 @@
 <script setup lang="ts">
+interface ILanguage {
+  name: string,
+  code: string
+}
+
+import { useUiStore } from "@/stores/ui.store";
+import { useAuthStore } from "@/stores/auth.store";
+
 import { useI18n } from "vue-i18n";
 
 const t = useI18n();
@@ -6,21 +14,18 @@ const t = useI18n();
 import Dropdown from "primevue/dropdown";
 import Dialog from "primevue/dialog";
 import Button from "primevue/button";
-import { useUiStore } from "@/stores/ui.store";
-import { useAuthStore } from "@/stores/auth.store";
 
 const uiStore = useUiStore()
 const authStore = useAuthStore()
 
-const countries = ref([
+const countries: Ref<ILanguage[]> = ref([
   { name: "German 🇩🇪", code: "de" },
   { name: "English 🇬🇧", code: "en" },
 ]);
 const selectedCountry = ref(countries.value[1]);
 function save() {
   t.locale.value = selectedCountry.value.code;
-  useStorage("ocr4all/frontend/language", "en").value =
-    selectedCountry.value.code;
+  useStorage("ocr4all/frontend/language", "en").value = selectedCountry.value.code;
   uiStore.settingsDialogOpen = false;
 }
 </script>

@@ -1,4 +1,9 @@
 <script setup lang="ts">
+import { useUiStore } from "@/stores/ui.store";
+const uiStore = useUiStore()
+
+import { useCustomFetch } from "@/composables/useCustomFetch";
+
 import DataView from "primevue/dataview";
 import DataViewLayoutOptions from "primevue/dataviewlayoutoptions";
 import DataTable from "primevue/datatable";
@@ -9,30 +14,37 @@ import OverlayPanel from "primevue/overlaypanel";
 import Skeleton from "primevue/skeleton";
 import Toast from "primevue/toast";
 import Chip from "primevue/chip";
-import { FilterMatchMode } from "primevue/api";
-
 import InputText from "primevue/inputtext";
-
-import { useCustomFetch } from "@/composables/useCustomFetch";
-import Dialog from "primevue/dialog";
-
-import { useToast } from "primevue/usetoast";
-import { useUiStore } from "@/stores/ui.store";
 import Textarea from "primevue/textarea";
 import Chips from "primevue/chips";
-import { list } from "postcss";
+import Dialog from "primevue/dialog";
+
+import { FilterMatchMode } from "primevue/api";
+
+import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
-const uiStore = useUiStore()
+import { Router } from "vue-router";
+const router: Router = useRouter();
 
 const containers = ref();
-const router = useRouter();
 
-const containerCardRefs = ref([])
+const newContainerName = ref();
+const createContainerPanel = ref();
 
-const setContainerCardsRef = el => {
-  if (el) {
-    containerCardRefs.value.push(el)
+const id: Ref<string | undefined> = ref()
+const name: Ref<string | undefined> = ref()
+const description: Ref<string | undefined> = ref()
+const keywords: Ref<string[] | undefined> = ref()
+
+const editDialogVisible = ref(false)
+const layout: Ref< "grid" | "list" | undefined > = ref(uiStore.repositoryDataViewLayout);
+
+const containerCardRefs: Ref<HTMLElement[]> = ref([])
+
+const setContainerCardsRef = ref => {
+  if(ref) {
+    containerCardRefs.value.push(ref)
   }
 }
 
@@ -93,14 +105,13 @@ function updateSelection(selectedContainer: string, add: boolean) {
   }
 }
 
-const newContainerName = ref();
-const createContainerPanel = ref();
+
 const toggleCreateContainerPanel = (event: Event) => {
   createContainerPanel.value.toggle(event);
 };
 
-const selectedContainers = ref([]);
-const filters = ref({
+const selectedContainers: Ref<object[]> = ref([]);
+const filters: Ref = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
@@ -137,11 +148,6 @@ async function updateContainer() {
   }
 }
 
-const id = ref()
-const name = ref()
-const description = ref()
-const keywords = ref()
-
 function openEditDialog(node) {
   id.value = node.id
   name.value = node.name
@@ -167,8 +173,6 @@ function updateDataViewLayout(event){
     }
   }
 }
-const editDialogVisible = ref(false)
-const layout = ref(uiStore.repositoryDataViewLayout);
 </script>
 <template>
   <Toast />
@@ -423,4 +427,3 @@ const layout = ref(uiStore.repositoryDataViewLayout);
     </DataView>
   </div>
 </template>
-<style scoped></style>

@@ -1,4 +1,8 @@
-<script setup>
+<script setup lang="ts">
+import { useCustomFetch } from "@/composables/useCustomFetch";
+
+import DefaultSpinner from "@/components/Layout/utils/DefaultSpinner.vue";
+
 import { UseTimeAgo } from "@vueuse/components";
 
 import { ArrowPathIcon, ArrowUpOnSquareIcon } from "@heroicons/vue/24/outline";
@@ -6,15 +10,13 @@ import { ArrowPathIcon, ArrowUpOnSquareIcon } from "@heroicons/vue/24/outline";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Tag from "primevue/tag";
-import { useCustomFetch } from "@/composables/useCustomFetch";
-import DefaultSpinner from "@/components/Layout/utils/DefaultSpinner.vue";
 import Toast from "primevue/toast";
 
 const router = useRouter();
 
-const loading = ref(true);
-const isRefetching = ref(false);
-const jobs = ref([]);
+const loading: Ref<boolean> = ref(true);
+const isRefetching: Ref<boolean> = ref(false);
+const jobs: Ref = ref([]);
 async function refetch() {
   isRefetching.value = true;
   useCustomFetch(`/job/overview/administration`)

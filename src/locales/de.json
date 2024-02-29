@@ -3,7 +3,7 @@
     "sidebar": {
       "links": {
         "dashboard": "Dashboard",
-        "repository": "Repository",
+        "repository": "Repositorium",
         "projects": "Projekte",
         "workflows": "Workflows",
         "nodeflow": "NodeFlow",

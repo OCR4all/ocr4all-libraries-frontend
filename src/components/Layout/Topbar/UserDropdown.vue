@@ -1,15 +1,22 @@
 <script setup lang="ts">
+interface IUserDropdownEntry {
+  action: () => void,
+  name: string,
+  adminOnly: boolean
+}
+
+import { useAuthStore } from "@/stores/auth.store";
+import { useUiStore } from "@/stores/ui.store";
+
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import { UserIcon } from "@heroicons/vue/24/solid";
 
 const router = useRouter();
 
-import { useAuthStore } from "@/stores/auth.store";
-import { useUiStore } from "@/stores/ui.store";
-
 const uiStore = useUiStore();
 const authStore = useAuthStore();
-const items = [
+
+const items: IUserDropdownEntry[] = [
   { action: openSettings, name: "Settings", adminOnly: false },
   { action: openAdminDashboard, name: "Admin", adminOnly: true },
   { action: logout, name: "Log Out", adminOnly: false },

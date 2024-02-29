@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import { useToast } from "primevue/usetoast";
-import FileUpload, { FileUploadUploaderEvent } from "primevue/fileupload";
-import { useCustomFetch } from "@/composables/useCustomFetch";
-const toast = useToast();
-import axios from "axios";
 import { useAuthStore } from "@/stores/auth.store";
 import { useConfigStore } from "@/stores/config.store";
+
+import FileUpload, { FileUploadUploaderEvent } from "primevue/fileupload";
+import { useToast } from "primevue/usetoast";
+const toast = useToast();
+
+import axios from "axios";
+
 const auth = useAuthStore();
-const fileUpload = ref();
 const config = useConfigStore();
 
-const progress = ref();
+const fileUpload: Ref<FileUpload | undefined> = ref();
+const progress: Ref<number> = ref(0);
 
 const uploader = async function customUploader(event: FileUploadUploaderEvent) {
   const formData = new FormData();
@@ -32,9 +34,7 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
           "Content-Type": "multipart/form-data",
         },
         onUploadProgress: function (progressEvent) {
-          progress.value = parseInt(
-            Math.round((progressEvent.loaded / progressEvent.total) * 100),
-          );
+          progress.value = Math.round((progressEvent.loaded / progressEvent.total) * 100)
         },
       },
     )

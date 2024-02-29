@@ -11,9 +11,12 @@ import InputText from "primevue/inputtext";
 import Dialog from "primevue/dialog";
 import Chips from "primevue/chips";
 import Toast from "primevue/toast"
+import Konva from "konva";
 
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
+
+const router = useRouter()
 
 const props = defineProps<{
   name?: string;
@@ -38,13 +41,13 @@ const actionMenuItems = ref([
   {
     label: "Actions",
     items: [
-/*      {
+      {
         label: "Edit",
         icon: "pi pi-pencil",
         command: () => {
-          editDialogVisible.value = true
+          openImageEditor();
         },
-      },*/
+      },
       {
         label: "Delete",
         icon: "pi pi-times",
@@ -65,6 +68,9 @@ function select(doSelect: boolean) {
   emit("updateSelection", props.id, doSelect);
 }
 
+function openImageEditor() {
+  router.push(`/repository/container/folio/editor?id=${props.id}`)
+}
 async function deleteFolio() {
   await useCustomFetch(
     `/repository/container/folio/remove/entity/${props.containerId}?id=${props.id}`,
@@ -80,12 +86,8 @@ async function deleteFolio() {
   emit("refresh");
 }
 
-const name = ref(props.name)
-const keywords = ref(props.keywords)
-
 
 const checked = ref();
-const editDialogVisible = ref(false)
 
 const deleteDialogVisible = ref(false);
 function toggleDeleteDialog() {
@@ -138,7 +140,6 @@ defineExpose({
         <div class="flex justify-between space-x-44 p-4">
           <Checkbox
             v-model="checked"
-            @update:modelValue="updateSelection"
             :binary="true"
             :pt="{
               root: { class: 'z-50' },
@@ -147,9 +148,9 @@ defineExpose({
                   'rounded-md peer absolute h-6 w-6 border border-solid cursor-pointer hover:bg-primary-200',
               },
             }"
+            @update:model-value="updateSelection"
           />
           <Button
-            @click="toggle"
             icon="pi pi-ellipsis-v"
             severity="secondary"
             text
@@ -163,10 +164,11 @@ defineExpose({
               },
               icon: { class: 'align-center pl-1' },
             }"
+            @click="toggle"
           />
           <Menu
-            ref="actionMenu"
             id="overlay_menu"
+            ref="actionMenu"
             :model="actionMenuItems"
             :popup="true"
           />

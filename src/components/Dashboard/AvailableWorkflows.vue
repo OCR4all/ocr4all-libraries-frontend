@@ -1,4 +1,7 @@
-<script setup>
+<script setup lang="ts">
+import { useCustomFetch } from "@/composables/useCustomFetch";
+import DefaultSpinner from "@/components/Layout/utils/DefaultSpinner.vue";
+
 import { UseTimeAgo } from "@vueuse/components";
 
 import { ArrowPathIcon, ArrowUpOnSquareIcon } from "@heroicons/vue/24/outline";
@@ -7,15 +10,13 @@ import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Toast from "primevue/toast";
 
-import { useCustomFetch } from "@/composables/useCustomFetch";
-import DefaultSpinner from "@/components/Layout/utils/DefaultSpinner.vue";
+import { Router } from "vue-router";
+const router: Router = useRouter();
 
-const router = useRouter();
+const isRefetching: Ref<boolean> = ref(false);
+const loading: Ref<boolean> = ref(true);
 
-const isRefetching = ref(false);
-const loading = ref(true);
-
-const workflows = ref([]);
+const workflows: Ref<object[]> = ref([]);
 async function refetch() {
   isRefetching.value = true;
   useCustomFetch(`/workflow/list`)

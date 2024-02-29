@@ -1,8 +1,13 @@
 <script setup lang="ts">
+interface IBreadCrumbEntry {
+  label: string,
+  to: string,
+}
+
 defineProps<{
-  home?: object;
-  path?: object[];
-  current?: object;
+  home?: IBreadCrumbEntry;
+  path?: IBreadCrumbEntry[];
+  current?: IBreadCrumbEntry;
 }>();
 </script>
 <template>

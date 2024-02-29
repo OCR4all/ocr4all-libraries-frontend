@@ -4,7 +4,7 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useToast } from "primevue/usetoast";
 import Dropdown from "primevue/dropdown";
 
-const toast = useToast();
+const toast: ToastServiceMethods = useToast();
 import Toast from "primevue/toast";
 import Button from "primevue/button";
 import ProgressBar from "primevue/progressbar";
@@ -13,17 +13,20 @@ import { useConfigStore } from "@/stores/config.store";
 import { useAuthStore } from "@/stores/auth.store";
 import Checkbox from "primevue/checkbox";
 import Dialog from "primevue/dialog";
-const config = useConfigStore();
-const auth = useAuthStore();
+import { LocationQueryValue, Router } from "vue-router";
+import { ToastServiceMethods } from "primevue/toastservice";
+import { Store } from "pinia";
+const config: Store = useConfigStore();
+const auth: Store = useAuthStore();
 
 const folios = ref();
 const thumbs = ref({});
 
-const router = useRouter();
-const container = router.currentRoute.value.query.id;
-const containerName = router.currentRoute.value.query.name;
+const router: Router = useRouter();
+const container: LocationQueryValue | LocationQueryValue[] = router.currentRoute.value.query.id;
+const containerName: LocationQueryValue | LocationQueryValue[] = router.currentRoute.value.query.name;
 
-const folioRefs = ref([])
+const folioRefs: Ref<HTMLElement[]> = ref([])
 
 const setFolioRef = el => {
   if (el) {
@@ -142,11 +145,9 @@ async function deleteSelected() {
   const payload = {
     "ids": []
   }
-  console.log(selection)
   for(const folio of selection.value){
     payload["ids"].push(folio)
   }
-  console.log(payload)
   useCustomFetch(
     `/repository/container/folio/remove/list/${container}`,
   )
@@ -160,6 +161,7 @@ async function deleteSelected() {
           life: 3000,
         });
         selection.value = []
+        checked.value = false
       }else{
         toast.add({
           severity: "error",
@@ -210,7 +212,7 @@ function toggleDeleteDialog() {
   deleteDialogVisible.value = !deleteDialogVisible.value;
 }
 
-const checked = ref();
+const checked = ref()
 const breadcrumbHome = { to: "/repository/overview", label: "Repository" };
 const breadcrumbCurrent = { label: containerName };
 refresh();

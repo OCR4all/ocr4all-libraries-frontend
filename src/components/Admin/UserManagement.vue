@@ -11,9 +11,9 @@ import InputText from "primevue/inputtext";
 import Password from "primevue/password";
 import Dialog from "primevue/dialog";
 
-const userDialog = ref();
-const deleteUserDialog = ref();
-const deleteUsersDialog = ref();
+const userDialog: Ref<boolean> = ref(false);
+const deleteUserDialog: Ref<boolean> = ref(false);
+const deleteUsersDialog: Ref<boolean> = ref(false);
 
 const users = ref();
 const user = ref({});

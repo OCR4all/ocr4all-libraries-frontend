@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import OverlayPanel from "primevue/overlaypanel";
+
 import { BellIcon } from "@heroicons/vue/24/solid";
 
-const notificationPanel = ref();
+const notificationPanel: Ref<OverlayPanel | undefined> = ref();
 
 const toggle = (event: Event) => {
-  notificationPanel.value.toggle(event);
+  if(notificationPanel.value) notificationPanel.value.toggle(event);
 };
 </script>
 <template>
