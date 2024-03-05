@@ -87,6 +87,120 @@
         }
       }
     },
+    "repository": {
+      "container": {
+        "overview": {
+          "toast": {
+            "upload": {
+              "headless": {
+                "summary": "Folios werden hochgeladen"
+              },
+              "success": {
+                "summary": "Erfolg",
+                "detail": "Folios wurden erfolgreich hochgeladen"
+              },
+              "error": {
+                "summary": "Fehler",
+                "detail": "Folios konnten nicht gelöscht werden"
+              }
+            },
+            "delete-selected": {
+              "success": {
+                "summary": "Erfolg",
+                "detail": "Folios wurden erfolgreich gelöscht"
+              }
+            }
+          },
+          "dialog": {
+            "delete-folio": {
+              "header": "Folio löschen",
+              "content": "Möchtest du dieses Folio wirklisch löschen?",
+              "button": {
+                "cancel": "Abbrechen",
+                "delete": "Löschen"
+              }
+            }
+          },
+          "sort": {
+            "alphabetically-asc": "Name ↑",
+            "alphabetically-desc": "Name ↓"
+          },
+          "toolbar": {
+            "button": {
+              "file-upload": "Hochladen",
+              "delete": "Löschen"
+            }
+          },
+          "all-folios": "Alle Folios",
+          "sort-by": "Sortieren",
+          "selected": "ausgewählt",
+          "fallback-cards": "Lade Folios..."
+        },
+        "card": {
+          "actions": {
+            "label": "Aktionen",
+            "edit": "Bearbeiten",
+            "share": "Teilen",
+            "delete": "Löschen"
+          },
+          "dialog": {
+            "delete": {
+              "header": "Container löschen",
+              "content": "Möchtest du diesen Container wirklich löschen?",
+              "button": {
+                "cancel": "Abbrechen",
+                "delete": "Löschen"
+              }
+            },
+            "edit": {
+              "header": "Container aktualisieren",
+              "form": {
+                "name": "Label",
+                "description": "Beschreibung",
+                "keywords": "Keywords"
+              },
+              "button": {
+                "cancel": "Abbrechen",
+                "save": "Speichern"
+              }
+            },
+            "share": {
+              "header": "Container teilen"
+            }
+          },
+          "toast": {
+            "delete-container": {
+              "success": {
+                "summary": "Erfolgreich",
+                "detail": "Container gelöscht"
+              }
+            },
+            "share-modal": {
+              "info": {
+                "summary": "Info",
+                "detail": "Teilen ist noch nicht verfügbar"
+              }
+            },
+            "update-container": {
+              "success": {
+                "summary": "Erfolg",
+                "detail": "Container wurde aktualisiert"
+              },
+              "error": {
+                "summary": "Fehler",
+                "detail": "Container konnte nicht aktualisiert werden"
+              }
+            }
+
+          },
+          "button": {
+            "share": "Teilen"
+          },
+          "container": "Container",
+          "folios": "Folios"
+        }
+      }
+    },
     "projects": {
       "overview": {
         "toolbar": {

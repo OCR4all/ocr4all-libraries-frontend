@@ -51,24 +51,24 @@ const toggle = (event: Event) => {
 
 const actionMenuItems = ref([
   {
-    label: "Actions",
+    label: t("pages.repository.container.card.actions.label"),
     items: [
       {
-        label: "Edit",
+        label: t("pages.repository.container.card.actions.edit"),
         icon: "pi pi-pencil",
         command: () => {
           editDialogVisible.value = true;
         },
       },
       {
-        label: "Share",
+        label: t("pages.repository.container.card.actions.share"),
         icon: "pi pi-share-alt",
         command: () => {
           openShareModal()
         },
       },
       {
-        label: "Delete",
+        label: t("pages.repository.container.card.actions.delete"),
         icon: "pi pi-times",
         command: () => {
           toggleDeleteDialog();
@@ -86,8 +86,8 @@ async function deleteContainer() {
   await useCustomFetch(`/repository/container/remove?id=${props.id}`);
   toast.add({
     severity: "success",
-    summary: "Success",
-    detail: "Container deleted",
+    summary: t("pages.repository.container.card.toast.delete-container.summary"),
+    detail: t("pages.repository.container.card.toast.delete-container.detail"),
     life: 3000,
   })
   emit("refresh");
@@ -101,8 +101,8 @@ async function updateContainerShare() {}
 function openShareModal() {
   toast.add({
     severity: "info",
-    summary: "Not available",
-    detail: "Sharing isn't available yet",
+    summary: t("pages.repository.container.card.toast.share-modal.info.summary"),
+    detail: t("pages.repository.container.card.toast.share-modal.info.detail"),
     life: 3000,
   })
 }
@@ -125,15 +125,15 @@ async function updateContainer() {
   if(!error.value){
     toast.add({
       severity: "success",
-      summary: "Success",
-      detail: "Container updated",
+      summary: t("pages.repository.container.card.toast.update-container.success.summary"),
+      detail: t("pages.repository.container.card.toast.update-container.success.detail"),
       life: 3000,
     });
   }else{
     toast.add({
       severity: "error",
-      summary: "Error",
-      detail: "Couldn't update container",
+      summary: t("pages.repository.container.card.toast.update-container.error.summary"),
+      detail: t("pages.repository.container.card.toast.update-container.error.detail"),
       life: 3000,
     });
   }
@@ -161,31 +161,31 @@ defineExpose({
   <Dialog
     v-model:visible="deleteDialogVisible"
     modal
-    header="Delete Container"
+    :header="t('pages.repository.container.card.dialog.delete.header')"
     :style="{ width: '50vw' }"
   >
     <p class="pb-5 dark:text-surface-200">
-      Do you really want to delete this container?
+      {{ t('pages.repository.container.card.dialog.delete.content') }}
     </p>
     <button
       type="button"
       class="mb-2 mr-2 border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
       @click="toggleDeleteDialog"
     >
-      Cancel
+      {{ t('pages.repository.container.card.dialog.delete.button.cancel') }}
     </button>
     <button
       type="button"
       class="mb-2 mr-2 bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
       @click="deleteContainer"
     >
-      Delete
+      {{ t('pages.repository.container.card.dialog.delete.button.delete') }}
     </button>
   </Dialog>
   <Dialog
     v-model:visible="editDialogVisible"
     modal
-    header="Edit"
+    :header="t('pages.repository.container.card.dialog.delete.button.cancel')"
     :style="{ width: '50vw' }"
   >
     <div class="mx-auto grid grid-cols-6 gap-4">
@@ -193,7 +193,7 @@ defineExpose({
         <label
           for="text"
           class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-        >Label</label
+        >{{ t('pages.repository.container.card.dialog.edit.form.name') }}</label
         >
         <InputText v-model="name" type="text" />
       </div>
@@ -202,7 +202,7 @@ defineExpose({
         <label
           for="description"
           class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
-        >{{ $t("pages.projects.project.information.form.description") }}</label
+        >{{ t('pages.repository.container.card.dialog.edit.form.description') }}</label
         >
         <Textarea v-model="description" rows="5" cols="30" />
       </div>
@@ -212,7 +212,7 @@ defineExpose({
           <label
             for="keywords"
             class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
-          >{{ $t("pages.projects.project.information.form.keywords") }}</label
+          >{{ t('pages.repository.container.card.dialog.edit.form.keywords') }}</label
           >
           <Chips v-model="keywords" />
         </div>
@@ -220,13 +220,13 @@ defineExpose({
     </div>
     <template #footer>
       <Button
-        label="Cancel"
+        :label="t('pages.repository.container.card.dialog.edit.button.cancel')"
         icon="pi pi-times"
         text
         @click="editDialogVisible = false"
       />
       <Button
-        label="Save"
+        :label="t('pages.repository.container.card.dialog.edit.button.save')"
         icon="pi pi-check"
         autofocus
         @click="updateContainer"
@@ -265,7 +265,7 @@ defineExpose({
               class="bg-primary-600 p-2 font-semibold text-white hover:bg-primary-800"
               @click="openShareModal"
             >
-              Share
+              {{ t('pages.repository.container.card.button.share') }}
             </button>
             <Button
               icon="pi pi-ellipsis-v"
@@ -308,12 +308,12 @@ defineExpose({
       </p>
       <div class="flex space-x-1">
         <p class="font-light text-surface-600 dark:text-surface-300">
-          Container
+          {{ t('pages.repository.container.card.container') }}
         </p>
         <p class="font-light text-surface-600 dark:text-surface-300">·</p>
         <Skeleton v-if="!folios" width="1rem" height="1rem" />
         <p v-else class="font-light text-surface-600 dark:text-surface-300">
-          {{ folios.length }} folios
+          {{ folios.length }} {{ t('pages.repository.container.card.folios') }}
         </p>
       </div>
     </div>
@@ -321,26 +321,8 @@ defineExpose({
   <Dialog
     v-model:visible="shareDialogVisible"
     modal
-    header="Edit Profile"
+    :header="t('pages.repository.container.card.dialog.share.header')"
     :style="{ width: '25rem' }"
   >
-    <span class="p-text-secondary mb-5 block">Update your information.</span>
-    <div class="align-items-center mb-3 flex gap-3">
-      <label for="username" class="w-6rem font-semibold">Username</label>
-      <InputText id="username" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="align-items-center mb-5 flex gap-3">
-      <label for="email" class="w-6rem font-semibold">Email</label>
-      <InputText id="Email" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="justify-content-end flex gap-2">
-      <Button
-        type="button"
-        label="Cancel"
-        severity="secondary"
-        @click="shareDialogVisible = false"
-      ></Button>
-      <Button type="button" label="Save" @click="updateContainerShare"></Button>
-    </div>
   </Dialog>
 </template>

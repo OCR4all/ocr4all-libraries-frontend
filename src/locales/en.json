@@ -279,30 +279,117 @@
         }
       }
     },
-    "repository":
-    {
-      "overview": {
-        "toolbar":
-        {
-          "button": {
-            "create": "Create",
-            "delete": "Delete"
-          }
-
-        },
-        "dataview": {
-          "list": {
-            "header": "Manage Containers",
-            "column": {
-              "name": "Name",
-              "description": "Description",
-              "keywords": "Keywords",
-              "actions": {
-                "open": "Open",
-                "edit": "Edit"
+    "repository": {
+      "container": {
+        "overview": {
+          "toast": {
+            "upload": {
+              "headless": {
+                "summary": "Folios are uploaded"
+              },
+              "success": {
+                "summary": "Success",
+                "detail": "Folios were uploaded"
+              },
+              "error": {
+                "summary": "Error",
+                "detail": "Folios couldn't get deleted"
+              }
+            },
+            "delete-selected": {
+              "success": {
+                "summary": "Success",
+                "detail": "Folios were deleted"
               }
             }
-          }
+          },
+          "dialog": {
+            "delete-folio": {
+              "header": "Delete folio",
+              "content": "Do you really want to delete this folio?",
+              "button": {
+                "cancel": "Cancel",
+                "delete": "Delete"
+              }
+            }
+          },
+          "sort": {
+            "alphabetically-asc": "Name ↑",
+            "alphabetically-desc": "Name ↓"
+          },
+          "toolbar": {
+            "button": {
+              "file-upload": "Upload",
+              "delete": "Delete"
+            }
+          },
+          "all-folios": "All folios",
+          "sort-by": "Sort by",
+          "selected": "selected",
+          "fallback-cards": "Loading folios..."
+        },
+        "card": {
+          "actions": {
+            "label": "Actions",
+            "edit": "Edit",
+            "share": "Share",
+            "delete": "Delete"
+          },
+          "dialog": {
+            "delete": {
+              "header": "Delete container",
+              "content": "Do you really want to delete this container?",
+              "button": {
+                "cancel": "Cancel",
+                "delete": "Delete"
+              }
+            },
+            "edit": {
+              "header": "Edit container",
+              "form": {
+                "name": "Label",
+                "description": "Description",
+                "keywords": "Keywords"
+              },
+              "button": {
+                "cancel": "Cancel",
+                "save": "Save"
+              }
+            },
+            "share": {
+              "header": "Share container"
+            }
+          },
+          "toast": {
+            "delete-container": {
+              "success": {
+                "summary": "Success",
+                "detail": "Container was deleted"
+              }
+            },
+            "share-modal": {
+              "info": {
+                "summary": "Info",
+                "detail": "Sharing isn't available yet"
+              }
+            },
+            "update-container": {
+              "success": {
+                "summary": "Success",
+                "detail": "Container was updated"
+              },
+              "error": {
+                "summary": "Error",
+                "detail": "Container couldn't get updated"
+              }
+            }
+
+          },
+          "button": {
+            "share": "Share"
+          },
+          "container": "Container",
+          "folios": "Folios"
         }
       }
     },

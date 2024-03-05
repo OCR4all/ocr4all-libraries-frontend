@@ -16,8 +16,11 @@ import Dialog from "primevue/dialog";
 import { LocationQueryValue, Router } from "vue-router";
 import { ToastServiceMethods } from "primevue/toastservice";
 import { Store } from "pinia";
+import { useI18n } from "vue-i18n";
 const config: Store = useConfigStore();
 const auth: Store = useAuthStore();
+
+const { t } = useI18n();
 
 const folios = ref();
 const thumbs = ref({});
@@ -44,7 +47,7 @@ const showUploadToast = () => {
   if (!uploadToastVisible.value) {
     toast.add({
       severity: "custom",
-      summary: "Uploading folios",
+      summary: t('pages.repository.container.overview.toast.upload.headless.summary'),
       group: "headless",
     });
     uploadToastVisible.value = true;
@@ -60,8 +63,8 @@ const hideUploadToast = () => {
     progress.value = 0;
     toast.add({
       severity: "success",
-      summary: "Success",
-      detail: "Folios successfully uploaded",
+      summary: t('pages.repository.container.overview.toast.upload.success.detail'),
+      detail: t('pages.repository.container.overview.toast.upload.success.summary'),
       life: 3000,
     });
   }, 2000);
@@ -156,8 +159,8 @@ async function deleteSelected() {
       if(!response.error.value){
         toast.add({
           severity: "success",
-          summary: "Success",
-          detail: "Folios successfully removed",
+          summary: t('pages.repository.container.overview.toast.delete-selected.success.summary'),
+          detail: t('pages.repository.container.overview.toast.delete-selected.success.detail'),
           life: 3000,
         });
         selection.value = []
@@ -165,8 +168,8 @@ async function deleteSelected() {
       }else{
         toast.add({
           severity: "error",
-          summary: "Error",
-          detail: "Folios couldn't be removed",
+          summary: t('pages.repository.container.overview.toast.delete-selected.error.summary'),
+          detail: t('pages.repository.container.overview.toast.delete-selected.error.detail'),
           life: 3000,
         });
       }
@@ -176,16 +179,16 @@ async function deleteSelected() {
 }
 
 const selectedSortMode = ref({
-  name: "Name ↓",
+  name: t('pages.repository.container.overview.sort.alphabetically-desc'),
   code: "alphabetically-desc",
 });
 const sortModes = ref([
   {
-    name: "Name ↑",
+    name: t('pages.repository.container.overview.sort.alphabetically-asc'),
     code: "alphabetically-asc",
   },
   {
-    name: "Name ↓",
+    name: t('pages.repository.container.overview.sort.alphabetically-desc'),
     code: "alphabetically-desc",
   },
 ]);
@@ -222,25 +225,25 @@ refresh();
   <Dialog
     v-model:visible="deleteDialogVisible"
     modal
-    header="Delete Folio"
+    :header="t('pages.repository.container.overview.dialog.delete-folio.header')"
     :style="{ width: '50vw' }"
   >
     <p class="pb-5 dark:text-surface-200">
-      Do you really want to delete this folio?
+      {{ t('pages.repository.container.overview.dialog.delete-folio.content') }}
     </p>
     <button
       type="button"
       class="rounded-md mb-2 mr-2 border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
       @click="toggleDeleteDialog"
     >
-      Cancel
+      {{ t('pages.repository.container.overview.dialog.delete-folio.button.cancel') }}
     </button>
     <button
       type="button"
       class="rounded-md mb-2 mr-2 bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
       @click="deleteSelected"
     >
-      Delete
+      {{ t('pages.repository.container.overview.dialog.delete-folio.button.delete') }}
     </button>
   </Dialog>
   <Toast />
@@ -297,7 +300,7 @@ refresh();
       <FileUpload
         ref="fileUpload"
         name="folioUpload[]"
-        choose-label="Upload"
+        :choose-label="t('pages.repository.container.overview.toolbar.button.file-upload')"
         mode="basic"
         :auto="true"
         :custom-upload="true"
@@ -318,19 +321,19 @@ refresh();
         :disabled="selection.length === 0"
         @click="toggleDeleteDialog"
       >
-        Delete
+        {{ t('pages.repository.container.overview.toolbar.button.delete') }}
       </button>
     </div>
     <div class="mx-4 mt-10 flex flex-col space-y-8">
       <h2 class="text-3xl font-bold text-surface-950 dark:text-surface-50">
-        All folios
+        {{ t('pages.repository.container.overview.all-folios') }}
       </h2>
       <div class="align-center flex justify-between">
         <div class="flex space-x-3">
           <p
             class="min-w-fit self-end text-xl font-semibold text-surface-950 dark:text-surface-50"
           >
-            Sort by
+            {{ t('pages.repository.container.overview.sort-by') }}
           </p>
           <Dropdown
             v-model="selectedSortMode"
@@ -352,7 +355,7 @@ refresh();
             v-show="selection.length"
             class="self-center font-bold text-surface-950 dark:text-surface-50"
           >
-            {{ selection.length }} selected
+            {{ selection.length }} {{ t('pages.repository.container.overview.selected') }}
           </p>
           <Checkbox
             v-model="checked"
@@ -393,7 +396,7 @@ refresh();
           @refresh="refresh"
         />
       </div>
-      <template #fallback> Loading folios... </template>
+      <template #fallback> {{ t('pages.repository.container.overview.fallback-cards') }} </template>
     </Suspense>
   </div>
 </template>
