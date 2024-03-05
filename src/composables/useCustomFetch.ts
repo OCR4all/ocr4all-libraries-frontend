@@ -18,8 +18,7 @@ export const useCustomFetch = createFetch({
     },
     async onFetchError({ response }) {
       if (response!.status == 401) {
-        console.log(response?.status);
-        //await auth.logout()
+        await auth.logout()
       }
     },
   },

@@ -2,8 +2,6 @@
 import Button from "primevue/button";
 import Image from "primevue/image";
 import Skeleton from "primevue/skeleton";
-import Checkbox from "primevue/checkbox";
-import Menu from "primevue/menu";
 
 const props = defineProps<{
   name?: string;

@@ -12,6 +12,7 @@ import { ArrowPathIcon, EyeIcon } from "@heroicons/vue/24/outline";
 import { UseTimeAgo } from "@vueuse/components";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
+import RefreshIconButton from "@/components/ui/RefreshIconButton.vue";
 
 const router = useRouter();
 
@@ -61,21 +62,23 @@ const states = ref(["active", "closed", "blocked"]);
     <Toolbar class="mb-4">
       <template #start>
         <div class="my-2 space-x-2">
-          <button
-            type="button"
-            class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          <ActionButton
+            rounded
+            size="large"
+            type="primary"
             @click="router.push('/project/new')"
           >
             {{ $t("pages.projects.overview.toolbar.new") }}
-          </button>
-          <button
+          </ActionButton>
+          <ActionButton
             disabled
-            type="button"
-            class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 disabled:bg-primary-400 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 dark:disabled:bg-blue-400"
+            type="primary"
+            size="large"
+            rounded
             @click="router.push('/project/import')"
           >
             {{ $t("pages.projects.overview.toolbar.import") }}
-          </button>
+          </ActionButton>
         </div>
       </template>
 

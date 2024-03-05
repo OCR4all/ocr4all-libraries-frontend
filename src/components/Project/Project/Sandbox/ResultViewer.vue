@@ -413,7 +413,7 @@ const breadcrumbCurrent = { label: sandbox };
         >
           {{ $t("pages.projects.result-viewer.overview.heading") }}
         </h2>
-        <div class="overflow-x-scroll">
+        <div class="overflow-x-scroll dark:[color-scheme:dark]">
           <OrganizationChart
             v-if="nodes"
             @node-select="collectSnapshotInformation"

@@ -436,5 +436,81 @@
         }
       }
     }
+  },
+  "admin": {
+    "user-management": {
+      "table": {
+        "toolbar": {
+          "add-user": "Create user",
+          "delete-user": "Delete user"
+        },
+        "header": "User management",
+        "search-placeholder": "Search...",
+        "columns": {
+          "name": "Name",
+          "login": "Login",
+          "mail": "Mail",
+          "state": "State"
+        }
+      },
+      "dialog": {
+        "create": {
+          "header": "Create user",
+          "body": {
+            "form": {
+              "name": "Name",
+              "login": "Login",
+              "mail": "Mail",
+              "state": "Status",
+              "password": "Password"
+            }
+          },
+          "footer": {
+            "button": {
+              "cancel": "Cancel",
+              "save": "Save"
+            }
+          }
+        },
+        "delete": {
+          "single": {
+            "header": "Delete user",
+            "body": {
+              "warning": "Do you really want to delete the user { user }?"
+            }
+          },
+          "multiple": {
+            "header": "Delete users",
+            "body": {
+              "warning": "Do you really want to delete the following users?"
+            }
+          },
+          "footer": {
+            "button": {
+              "cancel": "Cancel",
+              "save": "Delete"
+            }
+          }
+        },
+        "edit": {
+          "header": "Edit user",
+          "body": {
+            "form": {
+              "name": "Name",
+              "login": "Login",
+              "mail": "Mail",
+              "state": "State",
+              "password": "Password"
+            }
+          },
+          "footer": {
+            "button": {
+              "cancel": "Cancel",
+              "save": "Save"
+            }
+          }
+        }
+      }
+    }
   }
 }

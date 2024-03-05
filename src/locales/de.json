@@ -409,5 +409,81 @@
         }
       }
     }
+  },
+  "admin": {
+    "user-management": {
+      "table": {
+        "toolbar": {
+          "add-user": "Benutzer anlegen",
+          "delete-user": "Löschen"
+        },
+        "header": "Benutzer verwalten",
+        "search-placeholder": "Suchen...",
+        "columns": {
+          "name": "Name",
+          "login": "Login",
+          "mail": "Email",
+          "state": "Status"
+        }
+      },
+      "dialog": {
+        "create": {
+          "header": "Benutzer erstellen",
+          "body": {
+            "form": {
+              "name": "Name",
+              "login": "Login",
+              "mail": "Email",
+              "state": "Status",
+              "password": "Passwort"
+            }
+          },
+          "footer": {
+            "button": {
+              "cancel": "Abbrechen",
+              "save": "Speichern"
+            }
+          }
+        },
+        "delete": {
+          "single": {
+            "header": "Benutzer löschen",
+            "body": {
+              "warning": "Möchtest du wirklich den Benutzer { user } löschen?"
+            }
+          },
+          "multiple": {
+            "header": "Benutzer löschen",
+            "body": {
+              "warning": "Möchtest du wirklich die folgenden Benutzer löschen?"
+            }
+          },
+          "footer": {
+            "button": {
+              "cancel": "Abbrechen",
+              "save": "Löschen"
+            }
+          }
+        },
+        "edit": {
+          "header": "Benutzer bearbeiten",
+          "body": {
+            "form": {
+              "name": "Name",
+              "login": "Login",
+              "mail": "Email",
+              "state": "Status",
+              "password": "Passwort"
+            }
+          },
+          "footer": {
+            "button": {
+              "cancel": "Abbrechen",
+              "save": "Speichern"
+            }
+          }
+        }
+      }
+    }
   }
 }

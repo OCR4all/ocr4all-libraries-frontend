@@ -238,14 +238,14 @@ function updateDataViewLayout(event){
     </p>
     <button
       type="button"
-      class="mb-2 mr-2 border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
+      class="rounded-md mb-2 mr-2 border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
       @click="toggleDeleteDialog"
     >
       Cancel
     </button>
     <button
       type="button"
-      class="mb-2 mr-2 bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+      class="rounded-md mb-2 mr-2 bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
       @click="deleteContainers"
     >
       Delete
@@ -254,13 +254,14 @@ function updateDataViewLayout(event){
   <Toolbar class="mb-4">
     <template #start>
       <div class="flex my-2 space-x-2">
-        <button
-          type="button"
-          class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+        <ActionButton
+          rounded
+          type="primary"
+          size="large"
           @click="toggleCreateContainerPanel"
         >
           {{ $t('pages.repository.overview.toolbar.button.create') }}
-        </button>
+        </ActionButton>
         <OverlayPanel ref="createContainerPanel">
           <div class="flex space-x-1">
             <InputText v-model="newContainerName" />
@@ -272,14 +273,15 @@ function updateDataViewLayout(event){
             />
           </div>
         </OverlayPanel>
-        <button
-          type="button"
-          class="rounded-md bg-red-700 disabled:bg-red-400 dark:disabled:bg-red-400 px-5 py-3 text-center text-base font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+        <ActionButton
+          rounded
+          type="delete"
+          size="large"
           :disabled="!selectedContainers || !selectedContainers.length"
           @click="toggleDeleteDialog"
         >
           {{ $t('pages.repository.overview.toolbar.button.delete') }}
-        </button>
+        </ActionButton>
       </div>
     </template>
     <template #end>
@@ -389,18 +391,22 @@ function updateDataViewLayout(event){
             </template>
             <template #body="slotProps">
               <div class="flex space-x-2">
-                <button
-                  class="rounded-md bg-primary-600 p-2 text-surface-50 hover:bg-primary-800"
+                <ActionButton
+                  type="primary"
+                  size="small"
+                  rounded
                   @click="openContainer(slotProps.data.id, slotProps.data.name)"
                 >
                   {{ $t('pages.repository.overview.dataview.list.column.actions.open') }}
-                </button>
-                <button
-                  class="rounded-md bg-primary-600 p-2 text-surface-50 hover:bg-primary-800"
+                </ActionButton>
+                <ActionButton
+                  type="primary"
+                  size="small"
+                  rounded
                   @click="openEditDialog(slotProps.data)"
                 >
                   {{ $t('pages.repository.overview.dataview.list.column.actions.edit') }}
-                </button>
+                </ActionButton>
               </div>
             </template>
           </Column>

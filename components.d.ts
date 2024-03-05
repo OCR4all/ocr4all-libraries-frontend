@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ActionButton: typeof import('./src/components/ui/ActionButton.vue')['default']
     AvailableWorkflows: typeof import('./src/components/Dashboard/AvailableWorkflows.vue')['default']
     BreadcrumbNavigation: typeof import('./src/components/Layout/BreadcrumbNavigation.vue')['default']
     ContainerCard: typeof import('./src/components/Repository/ContainerCard.vue')['default']
@@ -41,6 +42,7 @@ declare module 'vue' {
     ProjectView: typeof import('./src/components/Project/ProjectView.vue')['default']
     QueueComponent: typeof import('./src/components/Queue/QueueComponent.vue')['default']
     RecentProjectsOverview: typeof import('./src/components/Dashboard/RecentProjectsOverview.vue')['default']
+    RefreshIconButton: typeof import('./src/components/ui/RefreshIconButton.vue')['default']
     RepositoryOverview: typeof import('./src/components/Repository/RepositoryOverview.vue')['default']
     RepositoryUpload: typeof import('./src/components/Repository/RepositoryUpload.vue')['default']
     ResultViewer: typeof import('./src/components/Project/Project/Sandbox/ResultViewer.vue')['default']

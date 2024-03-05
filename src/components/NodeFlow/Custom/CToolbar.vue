@@ -2,16 +2,6 @@
 import { Commands } from "@baklavajs/renderer-vue";
 import { useViewModel } from "baklavajs";
 
-import {
-  ArrowUturnLeftIcon,
-  ArrowUturnRightIcon,
-  DocumentArrowDownIcon,
-  DocumentArrowUpIcon,
-  DocumentPlusIcon,
-  MagnifyingGlassPlusIcon,
-  MagnifyingGlassMinusIcon,
-} from "@heroicons/vue/24/outline";
-
 const { viewModel } = useViewModel();
 
 const emit = defineEmits(["new", "load", "save", "zoom-in", "zoom-out", "rate-workflow", "toggle-palette"]);
@@ -58,6 +48,27 @@ const emit = defineEmits(["new", "load", "save", "zoom-in", "zoom-out", "rate-wo
         <i
           class="pi pi-save self-center text-xl text-surface-600 hover:cursor-pointer hover:text-black dark:text-surface-400 dark:hover:text-white"
           @click="emit('save')"
+        ></i>
+      </span>
+        <div
+          class="inline-block w-0.5 self-stretch bg-surface-500 opacity-100 dark:bg-surface-400 dark:opacity-50"
+        ></div>
+        <span v-tooltip="'Select'">
+        <i
+          class="pi pi-copy self-center text-xl text-surface-600 hover:cursor-pointer hover:text-black dark:text-surface-400 dark:hover:text-white"
+          @click="viewModel.commandHandler.executeCommand(Commands.START_SELECTION_BOX_COMMAND)"
+        ></i>
+      </span>
+        <span v-tooltip="'Copy'">
+        <i
+          class="pi pi-copy self-center text-xl text-surface-600 hover:cursor-pointer hover:text-black dark:text-surface-400 dark:hover:text-white"
+          @click="viewModel.commandHandler.executeCommand(Commands.COPY_COMMAND)"
+        ></i>
+      </span>
+        <span v-tooltip="'Paste'">
+        <i
+          class="pi pi-search-plus self-center text-xl text-surface-600 hover:cursor-pointer hover:text-black dark:text-surface-400 dark:hover:text-white"
+          @click="viewModel.commandHandler.executeCommand(Commands.PASTE_COMMAND)"
         ></i>
       </span>
         <div

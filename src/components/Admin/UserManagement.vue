@@ -140,20 +140,25 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
     <div class="card">
       <Toolbar class="mb-4">
         <template #start>
-          <Button
-            label="New"
-            icon="pi pi-plus"
-            severity="success"
-            class="mr-2"
-            @click="openNewUserDialog"
-          />
-          <Button
-            label="Delete"
-            icon="pi pi-trash"
-            severity="danger"
-            @click="confirmDeleteSelected"
-            :disabled="!selectedUsers || !selectedUsers.length"
-          />
+          <div class="my-2 space-x-2">
+            <ActionButton
+              rounded
+              type="primary"
+              size="large"
+              @click="openNewUserDialog"
+            >
+              {{ $t("admin.user-management.table.toolbar.add-user") }}
+            </ActionButton>
+            <ActionButton
+              rounded
+              type="delete"
+              size="large"
+              @click="confirmDeleteSelected"
+              :disabled="!selectedUsers || !selectedUsers.length"
+            >
+              {{ $t("admin.user-management.table.toolbar.delete-user") }}
+            </ActionButton>
+          </div>
         </template>
       </Toolbar>
 
@@ -171,12 +176,14 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
       >
         <template #header>
           <div
-            class="align-items-center justify-content-between flex flex-wrap gap-2"
+            class="align-items-center justify-between flex flex-wrap gap-2"
           >
-            <h4 class="m-0">Manage Users</h4>
+            <h4 class="m-0">
+              {{ $t("admin.user-management.table.header") }}
+            </h4>
             <InputText
               v-model="filters['global'].value"
-              placeholder="Search..."
+              :placeholder="$t('admin.user-management.table.search-placeholder')"
             />
           </div>
         </template>
@@ -188,25 +195,25 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
         ></Column>
         <Column
           field="name"
-          header="Name"
+          :header="$t('admin.user-management.table.columns.name')"
           sortable
           style="min-width: 16rem"
         ></Column>
         <Column
           field="login"
-          header="Login"
+          :header="$t('admin.user-management.table.columns.login')"
           sortable
           style="min-width: 12rem"
         ></Column>
         <Column
           field="email"
-          header="Email"
+          :header="$t('admin.user-management.table.columns.mail')"
           sortable
           style="min-width: 12rem"
         ></Column>
         <Column
           field="state"
-          header="State"
+          :header="$t('admin.user-management.table.columns.state')"
           sortable
           style="min-width: 12rem"
         ></Column>
@@ -234,178 +241,207 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
     <Dialog
       v-model:visible="userDialog"
       :style="{ width: '450px' }"
-      header="User Details"
+      :header="$t('admin.user-management.dialog.edit.header')"
       :modal="true"
       class="p-fluid"
     >
-      <div class="field">
-        <label for="name">Name</label>
-        <InputText
-          id="name"
-          v-model.trim="user.name"
-          required="true"
-          autofocus
-          :class="{ 'p-invalid': submitted && !product.name }"
-        />
-        <small class="p-error" v-if="submitted && !user.name"
+      <div class="grid grid-cols-2 gap-2">
+        <div class="field">
+          <label for="name">{{ $t('admin.user-management.dialog.edit.body.form.name') }}</label>
+          <InputText
+            id="name"
+            v-model.trim="user.name"
+            required="true"
+            autofocus
+            :class="{ 'p-invalid': submitted && !product.name }"
+          />
+          <small class="p-error" v-if="submitted && !user.name"
           >Name is required.</small
-        >
-      </div>
-      <div class="field">
-        <label for="login">Login</label>
-        <InputText
-          id="login"
-          v-model="user.login"
-          autofocus
-          :class="{ 'p-invalid': submitted && !user.login }"
-        />
-      </div>
-      <div class="field">
-        <label for="email">Email</label>
-        <InputText
-          id="email"
-          v-model="user.email"
-          autofocus
-          :class="{ 'p-invalid': submitted && !user.email }"
-        />
-      </div>
-      <div class="field">
-        <label for="state">State</label>
-        <InputText
-          id="state"
-          v-model="user.state"
-          autofocus
-          :class="{ 'p-invalid': submitted && !user.state }"
-        />
-      </div>
-      <div class="field">
-        <label for="password">Password</label>
-        <Password v-model="user.password" :feedback="false" toggleMask />
+          >
+        </div>
+        <div class="field">
+          <label for="login">{{ $t('admin.user-management.dialog.edit.body.form.login') }}</label>
+          <InputText
+            id="login"
+            v-model="user.login"
+            autofocus
+            :class="{ 'p-invalid': submitted && !user.login }"
+          />
+        </div>
+        <div class="field">
+          <label for="email">{{ $t('admin.user-management.dialog.edit.body.form.mail') }}</label>
+          <InputText
+            id="email"
+            v-model="user.email"
+            autofocus
+            :class="{ 'p-invalid': submitted && !user.email }"
+          />
+        </div>
+        <div class="field">
+          <label for="state">{{ $t('admin.user-management.dialog.edit.body.form.state') }}</label>
+          <InputText
+            id="state"
+            v-model="user.state"
+            autofocus
+            :class="{ 'p-invalid': submitted && !user.state }"
+          />
+        </div>
+        <div class="field">
+          <label for="password">{{ $t('admin.user-management.dialog.edit.body.form.password') }}</label>
+          <Password v-model="user.password" :feedback="false" toggleMask />
+        </div>
       </div>
 
       <template #footer>
-        <Button
-          label="Cancel"
-          icon="pi pi-times"
-          text
+        <ActionButton
+          rounded
+          size="large"
           @click="hideUserDialog"
-        />
-        <Button label="Save" icon="pi pi-check" text @click="updateUser" />
+        >
+          <i class="pi pi-times"></i> {{ $t('admin.user-management.dialog.edit.footer.button.cancel') }}
+        </ActionButton>
+        <ActionButton
+          rounded
+          type="primary"
+          size="large"
+          @click="updateUser"
+        >
+          <i class="pi pi-check"></i> {{ $t('admin.user-management.dialog.edit.footer.button.save') }}
+        </ActionButton>
       </template>
     </Dialog>
 
     <Dialog
       v-model:visible="newUserDialog"
       :style="{ width: '450px' }"
-      header="Create New User"
+      :header="$t('admin.user-management.dialog.create.header')"
       :modal="true"
       class="p-fluid"
     >
-      <div class="field">
-        <label for="name">Name</label>
-        <InputText
-          id="name"
-          v-model.trim="user.name"
-          required="true"
-          autofocus
-          :class="{ 'p-invalid': submitted && !product.name }"
-        />
-        <small class="p-error" v-if="submitted && !user.name"
-          >Name is required.</small
-        >
-      </div>
-      <div class="field">
-        <label for="login">Login</label>
-        <InputText
-          id="login"
-          v-model="user.login"
-          autofocus
-          :class="{ 'p-invalid': submitted && !user.login }"
-        />
-      </div>
-      <div class="field">
-        <label for="email">Email</label>
-        <InputText
-          id="email"
-          v-model="user.email"
-          autofocus
-          :class="{ 'p-invalid': submitted && !user.email }"
-        />
-      </div>
-      <div class="field">
-        <label for="state">State</label>
-        <InputText
-          id="state"
-          v-model="user.state"
-          autofocus
-          :class="{ 'p-invalid': submitted && !user.state }"
-        />
-      </div>
-      <div class="field">
-        <label for="password">Password</label>
-        <Password v-model="user.password" :feedback="false" toggleMask />
+      <div class="grid grid-cols-2 gap-2">
+        <div class="field">
+          <label for="name">{{ $t('admin.user-management.dialog.create.body.form.name') }}</label>
+          <InputText
+            id="name"
+            v-model.trim="user.name"
+            required="true"
+            autofocus
+            :class="{ 'p-invalid': submitted && !product.name }"
+          />
+          <small class="p-error" v-if="submitted && !user.name"
+            >Name is required.</small
+          >
+        </div>
+        <div class="field">
+          <label for="login">{{ $t('admin.user-management.dialog.create.body.form.login') }}</label>
+          <InputText
+            id="login"
+            v-model="user.login"
+            autofocus
+            :class="{ 'p-invalid': submitted && !user.login }"
+          />
+        </div>
+        <div class="field">
+          <label for="email">{{ $t('admin.user-management.dialog.create.body.form.mail') }}</label>
+          <InputText
+            id="email"
+            v-model="user.email"
+            autofocus
+            :class="{ 'p-invalid': submitted && !user.email }"
+          />
+        </div>
+        <div class="field">
+          <label for="state">{{ $t('admin.user-management.dialog.create.body.form.state') }}</label>
+          <InputText
+            id="state"
+            v-model="user.state"
+            autofocus
+            :class="{ 'p-invalid': submitted && !user.state }"
+          />
+        </div>
+        <div class="field">
+          <label for="password">{{ $t('admin.user-management.dialog.create.body.form.password') }}</label>
+          <Password v-model="user.password" :feedback="false" toggleMask />
+        </div>
       </div>
 
       <template #footer>
-        <Button
-          label="Cancel"
-          icon="pi pi-times"
-          text
+        <ActionButton
+          rounded
+          size="large"
           @click="hideNewUserDialog"
-        />
-        <Button label="Save" icon="pi pi-check" text @click="createuser" />
+        >
+          <i class="pi pi-times"></i> {{ $t('admin.user-management.dialog.create.footer.button.cancel') }}
+        </ActionButton>
+        <ActionButton
+          rounded
+          type="primary"
+          size="large"
+          @click="updateUser"
+        >
+          <i class="pi pi-check"></i> {{ $t('admin.user-management.dialog.create.footer.button.save') }}
+        </ActionButton>
       </template>
     </Dialog>
 
     <Dialog
       v-model:visible="deleteUserDialog"
       :style="{ width: '450px' }"
-      header="Confirm"
+      :header="$t('admin.user-management.dialog.delete.single.header')"
       :modal="true"
     >
       <div class="confirmation-content">
-        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-        <span v-if="user"
-          >Are you sure you want to delete <b>{{ user.name }}</b
-          >?</span
-        >
+        <span v-if="user"> {{ $t("admin.user-management.dialog.delete.single.body.warning", { user: user.name }) }} </span>
       </div>
       <template #footer>
-        <Button
-          label="No"
-          icon="pi pi-times"
-          text
+        <ActionButton
+          rounded
+          size="large"
           @click="deleteUserDialog = false"
-        />
-        <Button label="Yes" icon="pi pi-check" text @click="deleteUser" />
+        >
+          <i class="pi pi-times"></i> {{ $t('admin.user-management.dialog.delete.footer.button.cancel') }}
+        </ActionButton>
+        <ActionButton
+          rounded
+          type="delete"
+          size="large"
+          @click="deleteUser"
+        >
+          <i class="pi pi-check"></i> {{ $t('admin.user-management.dialog.delete.footer.button.save') }}
+        </ActionButton>
       </template>
     </Dialog>
 
     <Dialog
       v-model:visible="deleteUsersDialog"
       :style="{ width: '450px' }"
-      header="Confirm"
+      :header="$t('admin.user-management.dialog.delete.multiple.header')"
       :modal="true"
     >
       <div class="confirmation-content">
-        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-        <span v-if="user"
-          >Are you sure you want to delete the following users?</span
-        >
+        <span v-if="user"> {{ $t("admin.user-management.dialog.delete.single.body.warning", { user: user.name }) }} </span>
         <ul>
-          <li v-for="user in selectedUsers" :key="user.key">
-            {{ user.login }}
+          <li v-for="selectedUser in selectedUsers" :key="selectedUser.key">
+            {{ selectedUser.login }}
           </li>
         </ul>
       </div>
       <template #footer>
-        <Button
-          label="No"
-          icon="pi pi-times"
-          text
+        <ActionButton
+          rounded
+          size="large"
           @click="deleteUsersDialog = false"
-        />
-        <Button label="Yes" icon="pi pi-check" text @click="deleteUsers" />
+        >
+          <i class="pi pi-times"></i> {{ $t('admin.user-management.dialog.delete.footer.button.cancel') }}
+        </ActionButton>
+        <ActionButton
+          rounded
+          type="delete"
+          size="large"
+          @click="deleteUsers"
+        >
+          <i class="pi pi-check"></i> {{ $t('admin.user-management.dialog.delete.footer.button.save') }}
+        </ActionButton>
       </template>
     </Dialog>
   </div>

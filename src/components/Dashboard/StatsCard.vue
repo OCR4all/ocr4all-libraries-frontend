@@ -1,6 +1,6 @@
 <template>
   <div
-    class="group rounded-md bg-white p-5 shadow-md hover:bg-blue-700 dark:bg-zinc-800 hover:dark:bg-blue-800"
+    class="group rounded-md bg-white p-5 shadow-sm hover:bg-primary-600 dark:bg-surface-800 hover:dark:bg-primary-600 hover:shadow-md hover:shadow-primary-600/30"
   >
     <div
       class="text-base text-surface-400 group-hover:text-white dark:text-surface-300"
