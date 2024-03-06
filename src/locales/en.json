@@ -411,6 +411,39 @@
           "actions": "Actions"
         }
       },
+      "dialog": {
+        "edit": {
+          "header": "Edit Workflow",
+          "form": {
+            "label": {
+              "label": "Label",
+              "label-taken": "A workflow with this name already exists"
+            },
+            "id": {
+              "label": "ID"
+            },
+            "description": {
+              "label": "Description"
+            },
+            "updated": {
+              "label": "Updated"
+            }
+          },
+          "button": {
+            "toggle-delete-dialog": "Delete",
+            "toggle-edit-dialog": "Cancel",
+            "update-workflow": "Save"
+          }
+        },
+        "delete": {
+          "header": "Delete Workflow",
+          "content": "Do you really want to delete this workflow?",
+          "button": {
+            "cancel": "Cancel",
+            "delete": "Delete"
+          }
+        }
+      },
       "toasts": {
         "update": {
           "error": {

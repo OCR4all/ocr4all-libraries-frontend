@@ -411,6 +411,39 @@
           "actions": "Aktionen"
         }
       },
+      "dialog": {
+        "edit": {
+          "header": "Workflow bearbeiten",
+          "form": {
+            "label": {
+              "label": "Label",
+              "label-taken": "Ein Workflow mit diesem Label existiert bereit!"
+            },
+            "id": {
+              "label": "ID"
+            },
+            "description": {
+              "label": "Beschreibung"
+            },
+            "updated": {
+              "label": "Zuletzt geändert"
+            }
+          },
+          "button": {
+            "toggle-delete-dialog": "Löschen",
+            "toggle-edit-dialog": "Abbrechen",
+            "update-workflow": "Speichern"
+          }
+        },
+        "delete": {
+          "header": "Workflow löschen",
+          "content": "Möchtest du diesen Workflow wirklich löschen?",
+          "button": {
+            "cancel": "Abbrechen",
+            "delete": "Löschen"
+          }
+        }
+      },
       "toasts": {
         "update": {
           "error": {

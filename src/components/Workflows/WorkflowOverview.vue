@@ -284,7 +284,7 @@ async function deleteWorkflow() {
     <Dialog
       v-model:visible="editDialogVisible"
       modal
-      header="Edit"
+      :header="t('pages.workflows.dialog.edit.header')"
       :style="{ width: '50vw' }"
     >
       <div class="mx-auto grid grid-cols-6 gap-4">
@@ -292,11 +292,11 @@ async function deleteWorkflow() {
           <label
             for="text"
             class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-            >Label</label
+            >{{ $t("pages.workflows.dialog.edit.form.label.label") }}</label
           >
           <InputText v-model="workflowMetadata.label" type="text" />
           <InlineMessage v-show="labelTaken"
-            >A workflow with this name already exists</InlineMessage
+            >{{ $t("pages.workflows.dialog.edit.form.label.label-taken") }}</InlineMessage
           >
         </div>
 
@@ -304,7 +304,7 @@ async function deleteWorkflow() {
           <label
             for="last-name"
             class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-            >ID</label
+            >{{ $t("pages.workflows.dialog.edit.form.id.label") }}</label
           >
           <InputText disabled v-model="workflowMetadata.id" type="text" />
         </div>
@@ -313,7 +313,7 @@ async function deleteWorkflow() {
           <label
             for="message"
             class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-            >Description</label
+            >{{ $t("pages.workflows.dialog.edit.form.description.label") }}</label
           >
           <Textarea v-model="workflowMetadata.description" rows="5" cols="30" />
         </div>
@@ -322,7 +322,7 @@ async function deleteWorkflow() {
           <label
             for="last-name"
             class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-            >Updated</label
+            >{{ $t("pages.workflows.dialog.edit.form.updated.label") }}</label
           >
           <InputText disabled v-model="workflowMetadata.date" type="text" />
         </div>
@@ -332,19 +332,19 @@ async function deleteWorkflow() {
             class="inline-block rounded-md bg-red-400 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 md:text-base"
             @click="toggleDeleteDialog"
           >
-            Delete
+            {{ $t("pages.workflows.dialog.edit.button.toggle-delete-dialog") }}
           </button>
         </div>
       </div>
       <template #footer>
         <Button
-          label="Cancel"
+          :label="t('pages.workflows.dialog.edit.button.toggle-edit-dialog')"
           icon="pi pi-times"
           @click="toggleEditDialog"
           text
         />
         <Button
-          label="Save"
+          :label="t('pages.workflows.dialog.edit.button.update-workflow')"
           icon="pi pi-check"
           @click="updateWorkflow"
           autofocus
@@ -354,26 +354,27 @@ async function deleteWorkflow() {
     <Dialog
       v-model:visible="deleteDialogVisible"
       modal
-      header="Delete Workflow"
+      :header="t('pages.workflows.dialog.delete.header')"
       :style="{ width: '50vw' }"
     >
       <p class="pb-5 dark:text-surface-200">
-        Do you really want to delete this workflow?
+        {{ $t("pages.workflows.dialog.delete.content") }}
       </p>
-      <button
-        type="button"
-        class="mb-2 mr-2 border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
+      <ActionButton
+        size="large"
+        rounded
         @click="toggleDeleteDialog"
       >
-        Cancel
-      </button>
-      <button
-        type="button"
-        class="mb-2 mr-2 bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+        {{ $t("pages.workflows.dialog.delete.button.cancel") }}
+      </ActionButton>
+      <ActionButton
+        type="delete"
+        size="large"
+        rounded
         @click="deleteWorkflow"
       >
-        Delete
-      </button>
+        {{ $t("pages.workflows.dialog.delete.button.delete") }}
+      </ActionButton>
     </Dialog>
   </div>
 </template>
