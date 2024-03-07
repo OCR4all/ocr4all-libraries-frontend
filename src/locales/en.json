@@ -555,6 +555,14 @@
           }
         }
       }
+    },
+    "404-page": {
+      "error-code": "404",
+      "error-header": "Page not found",
+      "error-body": {
+        "message": "Sorry, we can't find that page. You'll find lots to explore on the",
+        "link-target": "Dashboard"
+      }
     }
   },
   "admin": {

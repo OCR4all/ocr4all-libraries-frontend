@@ -11,18 +11,17 @@ import AppLayout from "@/layout/AppLayout.vue";
         <h1
           class="mb-4 text-7xl font-extrabold tracking-tight text-primary-600 dark:text-primary-500 lg:text-9xl"
         >
-          404
+          {{ $t("pages.404-page.error-code") }}
         </h1>
         <p
           class="mb-4 text-3xl font-bold tracking-tight text-surface-900 dark:text-white md:text-4xl"
         >
-          Page not found
+          {{ $t("pages.404-page.error-header") }}
         </p>
         <p
           class="mb-4 text-lg font-light text-surface-500 dark:text-surface-400"
         >
-          Sorry, we can't find that page. You'll find lots to explore on the
-          <router-link to="/">Dashboard.</router-link>
+          {{ $t("pages.404-page.error-body.message") }} <router-link class="font-bold hover:underline" to="/">{{ $t("pages.404-page.error-body.link-target") }}.</router-link>
         </p>
       </div>
     </div>

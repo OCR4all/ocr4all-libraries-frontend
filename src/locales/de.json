@@ -555,6 +555,14 @@
           }
         }
       }
+    },
+    "404-page": {
+      "error-code": "404",
+      "error-header": "Seite nicht gefunden",
+      "error-body": {
+        "message": "Entschuldigung, diese Seite konnte nicht gefunden werden. Entdecke alle verfügbaren Seiten auf dem",
+        "link-target": "Dashboard"
+      }
     }
   },
   "admin": {
