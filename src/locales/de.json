@@ -468,6 +468,22 @@
       }
     },
     "nodeflow": {
+      "toolbar": {
+        "tooltips": {
+          "undo": "Rückgängig",
+          "redo": "Wiederholen",
+          "new-workflow": "Neuer Workflow",
+          "load-workflow": "Workflow laden",
+          "save-workflow": "Worklow speichern",
+          "select": "Auswählen",
+          "copy": "Kopieren",
+          "paste": "Einfügen",
+          "zoom-out": "Vergrößern",
+          "zoom-in": "Verkleinern",
+          "rate-workflow": "Workflow bewerten",
+          "toggle-palette": "Palette umschalten"
+        }
+      },
       "sidebar": {
         "description": "Beschreibung",
         "parameters": "Parameter"

@@ -468,6 +468,22 @@
       }
     },
     "nodeflow": {
+      "toolbar": {
+        "tooltips": {
+          "undo": "Undo",
+          "redo": "Redo",
+          "new-workflow": "New Workflow",
+          "load-workflow": "Load Workflow",
+          "save-workflow": "Save Workflow",
+          "select": "Select",
+          "copy": "Copy",
+          "paste": "Paste",
+          "zoom-out": "Zoom Out",
+          "zoom-in": "Zoom In",
+          "rate-workflow": "Rate Workflow",
+          "toggle-palette": "Toggle Palette"
+        }
+      },
       "sidebar": {
         "description": "Description",
         "parameters": "Parameters"
