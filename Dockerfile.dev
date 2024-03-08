@@ -1,5 +1,9 @@
-FROM node:latest
+FROM node:20-slim
 ENV HOST=0.0.0.0
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
 WORKDIR /app
 COPY package.json ./
@@ -8,4 +12,4 @@ RUN yarn
 COPY . .
 
 EXPOSE 3333
-ENTRYPOINT [ "yarn", "dev" ]
+ENTRYPOINT [ "pnpm", "dev" ]

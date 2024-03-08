@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import { NodeInterface } from "@baklavajs/core";
+import { NodeInterface } from "baklavajs";
 import { useNodeFlowStore } from "@/stores/nodeflow.store";
 
 export default defineComponent({

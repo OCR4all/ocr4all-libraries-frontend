@@ -7,7 +7,7 @@ This repository contains the frontend for the new release of OCR4all.
 ### 1. Install packages
 
 ```bash
-yarn
+pnpm install
 ```
 
 ### 2. Run
@@ -15,49 +15,49 @@ yarn
 In development mode
 
 ```bash
-yarn dev
+pnpm dev
 ```
 
 In preview mode
 
 ```bash
-yarn preview
+pnpm preview
 ```
 
 To build for production
 
 ```bash
-yarn build
+pnpm build
 ```
 
 To run tests
 
 ```bash
-yarn test
+pnpm test
 ```
 
 To get test coverage
 
 ```bash
-yarn coverage
+pnpm coverage
 ```
 
 To lint code
 
 ```bash
-yarn lint
+pnpm lint
 ```
 
 To format code
 
 ```bash
-yarn format
+pnpm format
 ```
 
 To update dependencies
 
 ```bash
-yarn deps:update
+pnpm deps:update
 ```
 
 ## Docker
