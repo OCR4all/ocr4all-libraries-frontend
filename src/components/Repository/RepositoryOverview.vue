@@ -376,7 +376,7 @@ function updateDataViewLayout(event){
               }}</Chip>
             </template>
           </Column>
-          <Column field="actions" header="Actions">
+          <Column field="actions" :header="$t('pages.repository.overview.dataview.list.column.actions')">
             <template #loading>
               <div
                 class="align-items-center flex"
@@ -397,7 +397,7 @@ function updateDataViewLayout(event){
                   rounded
                   @click="openContainer(slotProps.data.id, slotProps.data.name)"
                 >
-                  {{ $t('pages.repository.overview.dataview.list.column.actions.open') }}
+                  {{ $t('pages.repository.overview.dataview.list.action.open') }}
                 </ActionButton>
                 <ActionButton
                   type="primary"
@@ -405,7 +405,7 @@ function updateDataViewLayout(event){
                   rounded
                   @click="openEditDialog(slotProps.data)"
                 >
-                  {{ $t('pages.repository.overview.dataview.list.column.actions.edit') }}
+                  {{ $t('pages.repository.overview.dataview.list.action.edit') }}
                 </ActionButton>
               </div>
             </template>

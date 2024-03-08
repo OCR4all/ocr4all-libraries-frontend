@@ -280,6 +280,29 @@
       }
     },
     "repository": {
+      "overview": {
+        "toolbar": {
+          "button": {
+            "create": "Create",
+            "delete": "Delete"
+          }
+        },
+        "dataview": {
+          "list":{
+            "header": "Manage collections",
+            "column": {
+              "name": "Name",
+              "description": "Description",
+              "keywords": "Keywords",
+              "actions": "Actions"
+            },
+            "action": {
+              "open": "Open",
+              "edit": "Edit"
+            }
+          }
+        }
+      },
       "container": {
         "overview": {
           "toast": {

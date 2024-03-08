@@ -199,6 +199,29 @@
           "container": "Container",
           "folios": "Folios"
         }
+      },
+      "overview": {
+        "toolbar": {
+          "button": {
+            "create": "Erstellen",
+            "delete": "Löschen"
+          }
+        },
+        "dataview": {
+          "list":{
+            "header": "Kollektionen verwalten",
+            "column": {
+              "name": "Name",
+              "description": "Beschreibung",
+              "keywords": "Stichworte",
+              "actions": "Aktionen"
+            },
+            "action": {
+              "open": "Öffnen",
+              "edit": "Bearbeiten"
+            }
+          }
+        }
       }
     },
     "projects": {
