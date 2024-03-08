@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Commands } from "@baklavajs/renderer-vue";
+import { Commands } from "baklavajs";
 import { useViewModel } from "baklavajs";
 import { useI18n } from "vue-i18n";
 

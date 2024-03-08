@@ -1,6 +1,6 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
-import { GRAPH_NODE_TYPE_PREFIX } from "@baklavajs/core";
+import { GRAPH_NODE_TYPE_PREFIX } from "baklavajs";
 
 import { useViewModel } from "baklavajs";
 

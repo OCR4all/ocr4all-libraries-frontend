@@ -1,6 +1,6 @@
 <script setup>
 import { EditorComponent, useBaklava } from "baklavajs";
-import "@baklavajs/themes/dist/syrup-dark.css";
+import "@/assets/nodeflow-theme.css"
 
 import Toast from "primevue/toast";
 import Dialog from "primevue/dialog";
@@ -332,7 +332,5 @@ function togglePalette() {
 </template>
 
 <style>
-.baklava-minimap {
-  @apply bottom-0 left-0 top-[84%] z-40;
-}
+
 </style>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, CSSProperties, inject, Ref, ref, reactive } from "vue";
 import { usePointer } from "@vueuse/core";
-import { AbstractNode, INodeTypeInformation } from "@baklavajs/core";
+import { AbstractNode, INodeTypeInformation } from "baklavajs";
 import PaletteEntry from "./CPaletteEntry.vue";
 import { useViewModel, useTransform } from "baklavajs";
 
