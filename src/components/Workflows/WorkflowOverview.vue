@@ -1,9 +1,9 @@
 <script setup lang="ts">
 interface IWorkflowMetadata {
-  label: string,
-  description: string,
-  id: string
-  date: string
+  label: string;
+  description: string;
+  id: string;
+  date: string;
 }
 
 import { useNodeFlowStore } from "@/stores/nodeflow.store";
@@ -220,10 +220,7 @@ async function deleteWorkflow() {
       <template #loading>
         <DefaultSpinner />
       </template>
-      <Column
-        :exportable="false"
-        style="min-width: 8rem"
-      >
+      <Column :exportable="false" style="min-width: 8rem">
         <template #body="slotProps">
           <div class="space-y-2">
             <button
@@ -231,7 +228,7 @@ async function deleteWorkflow() {
               class="mr-2 inline-flex items-center rounded-md bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               @click="loadWorkflow(slotProps.data)"
             >
-              {{ $t('pages.workflows.table.columns.open') }}
+              {{ $t("pages.workflows.table.columns.open") }}
             </button>
           </div>
         </template>
@@ -295,9 +292,9 @@ async function deleteWorkflow() {
             >{{ $t("pages.workflows.dialog.edit.form.label.label") }}</label
           >
           <InputText v-model="workflowMetadata.label" type="text" />
-          <InlineMessage v-show="labelTaken"
-            >{{ $t("pages.workflows.dialog.edit.form.label.label-taken") }}</InlineMessage
-          >
+          <InlineMessage v-show="labelTaken">{{
+            $t("pages.workflows.dialog.edit.form.label.label-taken")
+          }}</InlineMessage>
         </div>
 
         <div class="col-span-3 flex flex-col">
@@ -313,7 +310,9 @@ async function deleteWorkflow() {
           <label
             for="message"
             class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-            >{{ $t("pages.workflows.dialog.edit.form.description.label") }}</label
+            >{{
+              $t("pages.workflows.dialog.edit.form.description.label")
+            }}</label
           >
           <Textarea v-model="workflowMetadata.description" rows="5" cols="30" />
         </div>
@@ -360,19 +359,10 @@ async function deleteWorkflow() {
       <p class="pb-5 dark:text-surface-200">
         {{ $t("pages.workflows.dialog.delete.content") }}
       </p>
-      <ActionButton
-        size="large"
-        rounded
-        @click="toggleDeleteDialog"
-      >
+      <ActionButton size="large" rounded @click="toggleDeleteDialog">
         {{ $t("pages.workflows.dialog.delete.button.cancel") }}
       </ActionButton>
-      <ActionButton
-        type="delete"
-        size="large"
-        rounded
-        @click="deleteWorkflow"
-      >
+      <ActionButton type="delete" size="large" rounded @click="deleteWorkflow">
         {{ $t("pages.workflows.dialog.delete.button.delete") }}
       </ActionButton>
     </Dialog>

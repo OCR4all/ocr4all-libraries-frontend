@@ -19,9 +19,7 @@ const users = ref();
 const user = ref({});
 const selectedUsers = ref();
 
-useCustomFetch(
-  `/job/overview/administration`,
-)
+useCustomFetch(`/job/overview/administration`)
   .get()
   .json()
   .then((response) => console.log(response.data.value));
@@ -175,15 +173,15 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
       >
         <template #header>
-          <div
-            class="align-items-center justify-between flex flex-wrap gap-2"
-          >
+          <div class="align-items-center flex flex-wrap justify-between gap-2">
             <h4 class="m-0">
               {{ $t("admin.user-management.table.header") }}
             </h4>
             <InputText
               v-model="filters['global'].value"
-              :placeholder="$t('admin.user-management.table.search-placeholder')"
+              :placeholder="
+                $t('admin.user-management.table.search-placeholder')
+              "
             />
           </div>
         </template>
@@ -247,7 +245,9 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
     >
       <div class="grid grid-cols-2 gap-2">
         <div class="field">
-          <label for="name">{{ $t('admin.user-management.dialog.edit.body.form.name') }}</label>
+          <label for="name">{{
+            $t("admin.user-management.dialog.edit.body.form.name")
+          }}</label>
           <InputText
             id="name"
             v-model.trim="user.name"
@@ -256,11 +256,13 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
             :class="{ 'p-invalid': submitted && !product.name }"
           />
           <small class="p-error" v-if="submitted && !user.name"
-          >Name is required.</small
+            >Name is required.</small
           >
         </div>
         <div class="field">
-          <label for="login">{{ $t('admin.user-management.dialog.edit.body.form.login') }}</label>
+          <label for="login">{{
+            $t("admin.user-management.dialog.edit.body.form.login")
+          }}</label>
           <InputText
             id="login"
             v-model="user.login"
@@ -269,7 +271,9 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
           />
         </div>
         <div class="field">
-          <label for="email">{{ $t('admin.user-management.dialog.edit.body.form.mail') }}</label>
+          <label for="email">{{
+            $t("admin.user-management.dialog.edit.body.form.mail")
+          }}</label>
           <InputText
             id="email"
             v-model="user.email"
@@ -278,7 +282,9 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
           />
         </div>
         <div class="field">
-          <label for="state">{{ $t('admin.user-management.dialog.edit.body.form.state') }}</label>
+          <label for="state">{{
+            $t("admin.user-management.dialog.edit.body.form.state")
+          }}</label>
           <InputText
             id="state"
             v-model="user.state"
@@ -287,26 +293,21 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
           />
         </div>
         <div class="field">
-          <label for="password">{{ $t('admin.user-management.dialog.edit.body.form.password') }}</label>
+          <label for="password">{{
+            $t("admin.user-management.dialog.edit.body.form.password")
+          }}</label>
           <Password v-model="user.password" :feedback="false" toggleMask />
         </div>
       </div>
 
       <template #footer>
-        <ActionButton
-          rounded
-          size="large"
-          @click="hideUserDialog"
-        >
-          <i class="pi pi-times"></i> {{ $t('admin.user-management.dialog.edit.footer.button.cancel') }}
+        <ActionButton rounded size="large" @click="hideUserDialog">
+          <i class="pi pi-times"></i>
+          {{ $t("admin.user-management.dialog.edit.footer.button.cancel") }}
         </ActionButton>
-        <ActionButton
-          rounded
-          type="primary"
-          size="large"
-          @click="updateUser"
-        >
-          <i class="pi pi-check"></i> {{ $t('admin.user-management.dialog.edit.footer.button.save') }}
+        <ActionButton rounded type="primary" size="large" @click="updateUser">
+          <i class="pi pi-check"></i>
+          {{ $t("admin.user-management.dialog.edit.footer.button.save") }}
         </ActionButton>
       </template>
     </Dialog>
@@ -320,7 +321,9 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
     >
       <div class="grid grid-cols-2 gap-2">
         <div class="field">
-          <label for="name">{{ $t('admin.user-management.dialog.create.body.form.name') }}</label>
+          <label for="name">{{
+            $t("admin.user-management.dialog.create.body.form.name")
+          }}</label>
           <InputText
             id="name"
             v-model.trim="user.name"
@@ -333,7 +336,9 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
           >
         </div>
         <div class="field">
-          <label for="login">{{ $t('admin.user-management.dialog.create.body.form.login') }}</label>
+          <label for="login">{{
+            $t("admin.user-management.dialog.create.body.form.login")
+          }}</label>
           <InputText
             id="login"
             v-model="user.login"
@@ -342,7 +347,9 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
           />
         </div>
         <div class="field">
-          <label for="email">{{ $t('admin.user-management.dialog.create.body.form.mail') }}</label>
+          <label for="email">{{
+            $t("admin.user-management.dialog.create.body.form.mail")
+          }}</label>
           <InputText
             id="email"
             v-model="user.email"
@@ -351,7 +358,9 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
           />
         </div>
         <div class="field">
-          <label for="state">{{ $t('admin.user-management.dialog.create.body.form.state') }}</label>
+          <label for="state">{{
+            $t("admin.user-management.dialog.create.body.form.state")
+          }}</label>
           <InputText
             id="state"
             v-model="user.state"
@@ -360,26 +369,21 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
           />
         </div>
         <div class="field">
-          <label for="password">{{ $t('admin.user-management.dialog.create.body.form.password') }}</label>
+          <label for="password">{{
+            $t("admin.user-management.dialog.create.body.form.password")
+          }}</label>
           <Password v-model="user.password" :feedback="false" toggleMask />
         </div>
       </div>
 
       <template #footer>
-        <ActionButton
-          rounded
-          size="large"
-          @click="hideNewUserDialog"
-        >
-          <i class="pi pi-times"></i> {{ $t('admin.user-management.dialog.create.footer.button.cancel') }}
+        <ActionButton rounded size="large" @click="hideNewUserDialog">
+          <i class="pi pi-times"></i>
+          {{ $t("admin.user-management.dialog.create.footer.button.cancel") }}
         </ActionButton>
-        <ActionButton
-          rounded
-          type="primary"
-          size="large"
-          @click="updateUser"
-        >
-          <i class="pi pi-check"></i> {{ $t('admin.user-management.dialog.create.footer.button.save') }}
+        <ActionButton rounded type="primary" size="large" @click="updateUser">
+          <i class="pi pi-check"></i>
+          {{ $t("admin.user-management.dialog.create.footer.button.save") }}
         </ActionButton>
       </template>
     </Dialog>
@@ -391,23 +395,22 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
       :modal="true"
     >
       <div class="confirmation-content">
-        <span v-if="user"> {{ $t("admin.user-management.dialog.delete.single.body.warning", { user: user.name }) }} </span>
+        <span v-if="user">
+          {{
+            $t("admin.user-management.dialog.delete.single.body.warning", {
+              user: user.name,
+            })
+          }}
+        </span>
       </div>
       <template #footer>
-        <ActionButton
-          rounded
-          size="large"
-          @click="deleteUserDialog = false"
-        >
-          <i class="pi pi-times"></i> {{ $t('admin.user-management.dialog.delete.footer.button.cancel') }}
+        <ActionButton rounded size="large" @click="deleteUserDialog = false">
+          <i class="pi pi-times"></i>
+          {{ $t("admin.user-management.dialog.delete.footer.button.cancel") }}
         </ActionButton>
-        <ActionButton
-          rounded
-          type="delete"
-          size="large"
-          @click="deleteUser"
-        >
-          <i class="pi pi-check"></i> {{ $t('admin.user-management.dialog.delete.footer.button.save') }}
+        <ActionButton rounded type="delete" size="large" @click="deleteUser">
+          <i class="pi pi-check"></i>
+          {{ $t("admin.user-management.dialog.delete.footer.button.save") }}
         </ActionButton>
       </template>
     </Dialog>
@@ -419,7 +422,13 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
       :modal="true"
     >
       <div class="confirmation-content">
-        <span v-if="user"> {{ $t("admin.user-management.dialog.delete.single.body.warning", { user: user.name }) }} </span>
+        <span v-if="user">
+          {{
+            $t("admin.user-management.dialog.delete.single.body.warning", {
+              user: user.name,
+            })
+          }}
+        </span>
         <ul>
           <li v-for="selectedUser in selectedUsers" :key="selectedUser.key">
             {{ selectedUser.login }}
@@ -427,20 +436,13 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
         </ul>
       </div>
       <template #footer>
-        <ActionButton
-          rounded
-          size="large"
-          @click="deleteUsersDialog = false"
-        >
-          <i class="pi pi-times"></i> {{ $t('admin.user-management.dialog.delete.footer.button.cancel') }}
+        <ActionButton rounded size="large" @click="deleteUsersDialog = false">
+          <i class="pi pi-times"></i>
+          {{ $t("admin.user-management.dialog.delete.footer.button.cancel") }}
         </ActionButton>
-        <ActionButton
-          rounded
-          type="delete"
-          size="large"
-          @click="deleteUsers"
-        >
-          <i class="pi pi-check"></i> {{ $t('admin.user-management.dialog.delete.footer.button.save') }}
+        <ActionButton rounded type="delete" size="large" @click="deleteUsers">
+          <i class="pi pi-check"></i>
+          {{ $t("admin.user-management.dialog.delete.footer.button.save") }}
         </ActionButton>
       </template>
     </Dialog>

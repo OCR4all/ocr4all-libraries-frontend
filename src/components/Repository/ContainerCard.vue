@@ -23,7 +23,7 @@ const props = defineProps<{
   id?: string;
 }>();
 
-const editDialogVisible = ref(false)
+const editDialogVisible = ref(false);
 
 const folios = ref();
 useCustomFetch(`/repository/container/folio/list/${props.id}`)
@@ -64,7 +64,7 @@ const actionMenuItems = ref([
         label: t("pages.repository.container.card.actions.share"),
         icon: "pi pi-share-alt",
         command: () => {
-          openShareModal()
+          openShareModal();
         },
       },
       {
@@ -86,10 +86,12 @@ async function deleteContainer() {
   await useCustomFetch(`/repository/container/remove?id=${props.id}`);
   toast.add({
     severity: "success",
-    summary: t("pages.repository.container.card.toast.delete-container.summary"),
+    summary: t(
+      "pages.repository.container.card.toast.delete-container.summary",
+    ),
     detail: t("pages.repository.container.card.toast.delete-container.detail"),
     life: 3000,
-  })
+  });
   emit("refresh");
 }
 
@@ -101,10 +103,12 @@ async function updateContainerShare() {}
 function openShareModal() {
   toast.add({
     severity: "info",
-    summary: t("pages.repository.container.card.toast.share-modal.info.summary"),
+    summary: t(
+      "pages.repository.container.card.toast.share-modal.info.summary",
+    ),
     detail: t("pages.repository.container.card.toast.share-modal.info.detail"),
     life: 3000,
-  })
+  });
 }
 
 function actionMenuBlurred(event) {
@@ -113,27 +117,37 @@ function actionMenuBlurred(event) {
 
 async function updateContainer() {
   const payload = {
-    "name": name.value,
-    "keywords": keywords.value ? Array.from(keywords.value) : [],
-    "description": description.value
-  }
-  const { isFetching, error, data } = await useCustomFetch(`/repository/container/update?id=${props.id}`)
+    name: name.value,
+    keywords: keywords.value ? Array.from(keywords.value) : [],
+    description: description.value,
+  };
+  const { isFetching, error, data } = await useCustomFetch(
+    `/repository/container/update?id=${props.id}`,
+  )
     .post(payload)
     .json();
-  emit("refresh")
-  editDialogVisible.value = false
-  if(!error.value){
+  emit("refresh");
+  editDialogVisible.value = false;
+  if (!error.value) {
     toast.add({
       severity: "success",
-      summary: t("pages.repository.container.card.toast.update-container.success.summary"),
-      detail: t("pages.repository.container.card.toast.update-container.success.detail"),
+      summary: t(
+        "pages.repository.container.card.toast.update-container.success.summary",
+      ),
+      detail: t(
+        "pages.repository.container.card.toast.update-container.success.detail",
+      ),
       life: 3000,
     });
-  }else{
+  } else {
     toast.add({
       severity: "error",
-      summary: t("pages.repository.container.card.toast.update-container.error.summary"),
-      detail: t("pages.repository.container.card.toast.update-container.error.detail"),
+      summary: t(
+        "pages.repository.container.card.toast.update-container.error.summary",
+      ),
+      detail: t(
+        "pages.repository.container.card.toast.update-container.error.detail",
+      ),
       life: 3000,
     });
   }
@@ -144,9 +158,9 @@ function toggleDeleteDialog() {
   deleteDialogVisible.value = !deleteDialogVisible.value;
 }
 
-const name = ref(props.title)
-const keywords = ref(props.keywords)
-const description = ref(props.description)
+const name = ref(props.title);
+const keywords = ref(props.keywords);
+const description = ref(props.description);
 
 function select(doSelect: boolean) {
   checked.value = doSelect;
@@ -165,21 +179,21 @@ defineExpose({
     :style="{ width: '50vw' }"
   >
     <p class="pb-5 dark:text-surface-200">
-      {{ t('pages.repository.container.card.dialog.delete.content') }}
+      {{ t("pages.repository.container.card.dialog.delete.content") }}
     </p>
     <button
       type="button"
       class="mb-2 mr-2 border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
       @click="toggleDeleteDialog"
     >
-      {{ t('pages.repository.container.card.dialog.delete.button.cancel') }}
+      {{ t("pages.repository.container.card.dialog.delete.button.cancel") }}
     </button>
     <button
       type="button"
       class="mb-2 mr-2 bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
       @click="deleteContainer"
     >
-      {{ t('pages.repository.container.card.dialog.delete.button.delete') }}
+      {{ t("pages.repository.container.card.dialog.delete.button.delete") }}
     </button>
   </Dialog>
   <Dialog
@@ -193,7 +207,9 @@ defineExpose({
         <label
           for="text"
           class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-        >{{ t('pages.repository.container.card.dialog.edit.form.name') }}</label
+          >{{
+            t("pages.repository.container.card.dialog.edit.form.name")
+          }}</label
         >
         <InputText v-model="name" type="text" />
       </div>
@@ -202,7 +218,9 @@ defineExpose({
         <label
           for="description"
           class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
-        >{{ t('pages.repository.container.card.dialog.edit.form.description') }}</label
+          >{{
+            t("pages.repository.container.card.dialog.edit.form.description")
+          }}</label
         >
         <Textarea v-model="description" rows="5" cols="30" />
       </div>
@@ -212,7 +230,9 @@ defineExpose({
           <label
             for="keywords"
             class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
-          >{{ t('pages.repository.container.card.dialog.edit.form.keywords') }}</label
+            >{{
+              t("pages.repository.container.card.dialog.edit.form.keywords")
+            }}</label
           >
           <Chips v-model="keywords" />
         </div>
@@ -235,7 +255,7 @@ defineExpose({
   </Dialog>
   <div class="grid grid-cols-1 justify-self-center">
     <div
-      class="shadow-xs group relative m-2 cursor-pointer grid h-64 w-64 rounded-md bg-clip-border text-surface-700 hover:bg-primary-100 hover:dark:bg-surface-700"
+      class="shadow-xs group relative m-2 grid h-64 w-64 cursor-pointer rounded-md bg-clip-border text-surface-700 hover:bg-primary-100 hover:dark:bg-surface-700"
       :class="[
         checked
           ? ['bg-primary-100', 'dark:bg-surface-700']
@@ -244,7 +264,7 @@ defineExpose({
       @click.self="openContainer"
     >
       <div
-        class="absolute w-max group-hover:flex cursor-default"
+        class="absolute w-max cursor-default group-hover:flex"
         :class="{ hidden: !checked && !actionMenuVisible }"
       >
         <div class="flex justify-between space-x-28 p-4">
@@ -265,7 +285,7 @@ defineExpose({
               class="bg-primary-600 p-2 font-semibold text-white hover:bg-primary-800"
               @click="openShareModal"
             >
-              {{ t('pages.repository.container.card.button.share') }}
+              {{ t("pages.repository.container.card.button.share") }}
             </button>
             <Button
               icon="pi pi-ellipsis-v"
@@ -308,12 +328,12 @@ defineExpose({
       </p>
       <div class="flex space-x-1">
         <p class="font-light text-surface-600 dark:text-surface-300">
-          {{ t('pages.repository.container.card.container') }}
+          {{ t("pages.repository.container.card.container") }}
         </p>
         <p class="font-light text-surface-600 dark:text-surface-300">·</p>
         <Skeleton v-if="!folios" width="1rem" height="1rem" />
         <p v-else class="font-light text-surface-600 dark:text-surface-300">
-          {{ folios.length }} {{ t('pages.repository.container.card.folios') }}
+          {{ folios.length }} {{ t("pages.repository.container.card.folios") }}
         </p>
       </div>
     </div>

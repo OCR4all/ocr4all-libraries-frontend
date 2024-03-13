@@ -10,13 +10,13 @@ import InlineMessage from "primevue/inlinemessage";
 import InputText from "primevue/inputtext";
 import Dialog from "primevue/dialog";
 import Chips from "primevue/chips";
-import Toast from "primevue/toast"
+import Toast from "primevue/toast";
 import Konva from "konva";
 
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
-const router = useRouter()
+const router = useRouter();
 
 const props = defineProps<{
   name?: string;
@@ -69,7 +69,7 @@ function select(doSelect: boolean) {
 }
 
 function openImageEditor() {
-  router.push(`/repository/container/folio/editor?id=${props.id}`)
+  router.push(`/repository/container/folio/editor?id=${props.id}`);
 }
 async function deleteFolio() {
   await useCustomFetch(
@@ -81,11 +81,10 @@ async function deleteFolio() {
     summary: "Success",
     detail: "Folio deleted",
     life: 3000,
-  })
-  toggleDeleteDialog()
+  });
+  toggleDeleteDialog();
   emit("refresh");
 }
-
 
 const checked = ref();
 

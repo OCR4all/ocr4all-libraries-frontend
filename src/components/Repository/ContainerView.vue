@@ -26,20 +26,22 @@ const folios = ref();
 const thumbs = ref({});
 
 const router: Router = useRouter();
-const container: LocationQueryValue | LocationQueryValue[] = router.currentRoute.value.query.id;
-const containerName: LocationQueryValue | LocationQueryValue[] = router.currentRoute.value.query.name;
+const container: LocationQueryValue | LocationQueryValue[] =
+  router.currentRoute.value.query.id;
+const containerName: LocationQueryValue | LocationQueryValue[] =
+  router.currentRoute.value.query.name;
 
-const folioRefs: Ref<HTMLElement[]> = ref([])
+const folioRefs: Ref<HTMLElement[]> = ref([]);
 
-const setFolioRef = el => {
+const setFolioRef = (el) => {
   if (el) {
-    folioRefs.value.push(el)
+    folioRefs.value.push(el);
   }
-}
+};
 
 onBeforeUpdate(() => {
-  folioRefs.value = []
-})
+  folioRefs.value = [];
+});
 
 const uploadToastVisible = ref(false);
 const progress = ref(0);
@@ -47,7 +49,9 @@ const showUploadToast = () => {
   if (!uploadToastVisible.value) {
     toast.add({
       severity: "custom",
-      summary: t('pages.repository.container.overview.toast.upload.headless.summary'),
+      summary: t(
+        "pages.repository.container.overview.toast.upload.headless.summary",
+      ),
       group: "headless",
     });
     uploadToastVisible.value = true;
@@ -63,8 +67,12 @@ const hideUploadToast = () => {
     progress.value = 0;
     toast.add({
       severity: "success",
-      summary: t('pages.repository.container.overview.toast.upload.success.detail'),
-      detail: t('pages.repository.container.overview.toast.upload.success.summary'),
+      summary: t(
+        "pages.repository.container.overview.toast.upload.success.detail",
+      ),
+      detail: t(
+        "pages.repository.container.overview.toast.upload.success.summary",
+      ),
       life: 3000,
     });
   }, 2000);
@@ -137,58 +145,64 @@ function updateSelection(folio: string, add: boolean) {
 }
 
 function updateTotalSelection(event: Event) {
-  if(folioRefs.value){
-    for(const folioRef of folioRefs.value){
-      folioRef.select(event)
+  if (folioRefs.value) {
+    for (const folioRef of folioRefs.value) {
+      folioRef.select(event);
     }
   }
 }
 
 async function deleteSelected() {
   const payload = {
-    "ids": []
+    ids: [],
+  };
+  for (const folio of selection.value) {
+    payload["ids"].push(folio);
   }
-  for(const folio of selection.value){
-    payload["ids"].push(folio)
-  }
-  useCustomFetch(
-    `/repository/container/folio/remove/list/${container}`,
-  )
+  useCustomFetch(`/repository/container/folio/remove/list/${container}`)
     .post(payload)
     .then((response) => {
-      if(!response.error.value){
+      if (!response.error.value) {
         toast.add({
           severity: "success",
-          summary: t('pages.repository.container.overview.toast.delete-selected.success.summary'),
-          detail: t('pages.repository.container.overview.toast.delete-selected.success.detail'),
+          summary: t(
+            "pages.repository.container.overview.toast.delete-selected.success.summary",
+          ),
+          detail: t(
+            "pages.repository.container.overview.toast.delete-selected.success.detail",
+          ),
           life: 3000,
         });
-        selection.value = []
-        checked.value = false
-      }else{
+        selection.value = [];
+        checked.value = false;
+      } else {
         toast.add({
           severity: "error",
-          summary: t('pages.repository.container.overview.toast.delete-selected.error.summary'),
-          detail: t('pages.repository.container.overview.toast.delete-selected.error.detail'),
+          summary: t(
+            "pages.repository.container.overview.toast.delete-selected.error.summary",
+          ),
+          detail: t(
+            "pages.repository.container.overview.toast.delete-selected.error.detail",
+          ),
           life: 3000,
         });
       }
       refresh();
       toggleDeleteDialog();
-    })
+    });
 }
 
 const selectedSortMode = ref({
-  name: t('pages.repository.container.overview.sort.alphabetically-desc'),
+  name: t("pages.repository.container.overview.sort.alphabetically-desc"),
   code: "alphabetically-desc",
 });
 const sortModes = ref([
   {
-    name: t('pages.repository.container.overview.sort.alphabetically-asc'),
+    name: t("pages.repository.container.overview.sort.alphabetically-asc"),
     code: "alphabetically-asc",
   },
   {
-    name: t('pages.repository.container.overview.sort.alphabetically-desc'),
+    name: t("pages.repository.container.overview.sort.alphabetically-desc"),
     code: "alphabetically-desc",
   },
 ]);
@@ -209,13 +223,12 @@ function updateSort() {
   }
 }
 
-
 const deleteDialogVisible = ref(false);
 function toggleDeleteDialog() {
   deleteDialogVisible.value = !deleteDialogVisible.value;
 }
 
-const checked = ref()
+const checked = ref();
 const breadcrumbHome = { to: "/repository/overview", label: "Repository" };
 const breadcrumbCurrent = { label: containerName };
 refresh();
@@ -225,25 +238,35 @@ refresh();
   <Dialog
     v-model:visible="deleteDialogVisible"
     modal
-    :header="t('pages.repository.container.overview.dialog.delete-folio.header')"
+    :header="
+      t('pages.repository.container.overview.dialog.delete-folio.header')
+    "
     :style="{ width: '50vw' }"
   >
     <p class="pb-5 dark:text-surface-200">
-      {{ t('pages.repository.container.overview.dialog.delete-folio.content') }}
+      {{ t("pages.repository.container.overview.dialog.delete-folio.content") }}
     </p>
     <button
       type="button"
-      class="rounded-md mb-2 mr-2 border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
+      class="mb-2 mr-2 rounded-md border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
       @click="toggleDeleteDialog"
     >
-      {{ t('pages.repository.container.overview.dialog.delete-folio.button.cancel') }}
+      {{
+        t(
+          "pages.repository.container.overview.dialog.delete-folio.button.cancel",
+        )
+      }}
     </button>
     <button
       type="button"
-      class="rounded-md mb-2 mr-2 bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+      class="mb-2 mr-2 rounded-md bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
       @click="deleteSelected"
     >
-      {{ t('pages.repository.container.overview.dialog.delete-folio.button.delete') }}
+      {{
+        t(
+          "pages.repository.container.overview.dialog.delete-folio.button.delete",
+        )
+      }}
     </button>
   </Dialog>
   <Toast />
@@ -271,18 +294,18 @@ refresh();
           </p>
         </div>
         <div v-if="progress < 100">
-          <ProgressBar
-            :value="progress"
-          ></ProgressBar>
+          <ProgressBar :value="progress"></ProgressBar>
         </div>
         <div
           v-else-if="progress === 100"
           class="flex flex-col justify-center space-y-2"
         >
-          <ProgressBar
-            mode="indeterminate"
-          ></ProgressBar>
-          <p class="self-center font-semibold text-surface-950 dark:text-surface-50">Finalizing upload</p>
+          <ProgressBar mode="indeterminate"></ProgressBar>
+          <p
+            class="self-center font-semibold text-surface-950 dark:text-surface-50"
+          >
+            Finalizing upload
+          </p>
         </div>
         <div class="mb-3 flex gap-3 justify-self-center">
           <Button
@@ -300,7 +323,9 @@ refresh();
       <FileUpload
         ref="fileUpload"
         name="folioUpload[]"
-        :choose-label="t('pages.repository.container.overview.toolbar.button.file-upload')"
+        :choose-label="
+          t('pages.repository.container.overview.toolbar.button.file-upload')
+        "
         mode="basic"
         :auto="true"
         :custom-upload="true"
@@ -321,19 +346,19 @@ refresh();
         :disabled="selection.length === 0"
         @click="toggleDeleteDialog"
       >
-        {{ t('pages.repository.container.overview.toolbar.button.delete') }}
+        {{ t("pages.repository.container.overview.toolbar.button.delete") }}
       </button>
     </div>
     <div class="mx-4 mt-10 flex flex-col space-y-8">
       <h2 class="text-3xl font-bold text-surface-950 dark:text-surface-50">
-        {{ t('pages.repository.container.overview.all-folios') }}
+        {{ t("pages.repository.container.overview.all-folios") }}
       </h2>
       <div class="align-center flex justify-between">
         <div class="flex space-x-3">
           <p
             class="min-w-fit self-end text-xl font-semibold text-surface-950 dark:text-surface-50"
           >
-            {{ t('pages.repository.container.overview.sort-by') }}
+            {{ t("pages.repository.container.overview.sort-by") }}
           </p>
           <Dropdown
             v-model="selectedSortMode"
@@ -355,7 +380,8 @@ refresh();
             v-show="selection.length"
             class="self-center font-bold text-surface-950 dark:text-surface-50"
           >
-            {{ selection.length }} {{ t('pages.repository.container.overview.selected') }}
+            {{ selection.length }}
+            {{ t("pages.repository.container.overview.selected") }}
           </p>
           <Checkbox
             v-model="checked"
@@ -377,7 +403,7 @@ refresh();
     />
     <Suspense>
       <div
-        class="grid grid-cols-1 @[550px]/content:grid-cols-2 @[800px]/content:grid-cols-3 @[1050px]/content:grid-cols-4 content-center justify-center gap-x-2 gap-y-3"
+        class="grid grid-cols-1 content-center justify-center gap-x-2 gap-y-3 @[550px]/content:grid-cols-2 @[800px]/content:grid-cols-3 @[1050px]/content:grid-cols-4"
       >
         <FolioCard
           v-for="folio in folios"
@@ -396,7 +422,9 @@ refresh();
           @refresh="refresh"
         />
       </div>
-      <template #fallback> {{ t('pages.repository.container.overview.fallback-cards') }} </template>
+      <template #fallback>
+        {{ t("pages.repository.container.overview.fallback-cards") }}
+      </template>
     </Suspense>
   </div>
 </template>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 interface IUserDropdownEntry {
-  action: () => void,
-  name: string,
-  adminOnly: boolean
+  action: () => void;
+  name: string;
+  adminOnly: boolean;
 }
 
 import { useAuthStore } from "@/stores/auth.store";

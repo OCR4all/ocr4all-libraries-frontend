@@ -162,23 +162,27 @@ const filters = ref({
           </Suspense>
         </template>
       </Column>
-      <Column :header="$t('pages.repository.overview.dataview.list.column.keywords')">
+      <Column
+        :header="$t('pages.repository.overview.dataview.list.column.keywords')"
+      >
         <template #loading>
           <div
             class="align-items-center flex"
             :style="{
-                  height: '17px',
-                  'flex-grow': '1',
-                  overflow: 'hidden',
-                }"
+              height: '17px',
+              'flex-grow': '1',
+              overflow: 'hidden',
+            }"
           >
             <Skeleton width="60%" height="1rem" />
           </div>
         </template>
         <template #body="slotProps">
-          <Chip v-for="keyword of slotProps.node.data.keywords" :key="keyword">{{
-              keyword
-            }}</Chip>
+          <Chip
+            v-for="keyword of slotProps.node.data.keywords"
+            :key="keyword"
+            >{{ keyword }}</Chip
+          >
         </template>
       </Column>
     </TreeTable>

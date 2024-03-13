@@ -80,11 +80,10 @@ folios.value = [imageData, []];
               />
             </template>
           </Image>
-          <div class="flex-column flex flex-1 justify-center   gap-2">
-            <span
-              class="font-bold dark:text-white"
-              >{{ slotProps.item.name }}</span
-            >
+          <div class="flex-column flex flex-1 justify-center gap-2">
+            <span class="font-bold dark:text-white">{{
+              slotProps.item.name
+            }}</span>
           </div>
         </div>
       </template>

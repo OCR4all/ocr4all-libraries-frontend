@@ -8,7 +8,7 @@ import "./assets/index.postcss";
 
 import router from "./router";
 
-import { VueQueryPlugin } from '@tanstack/vue-query'
+import { VueQueryPlugin } from "@tanstack/vue-query";
 // PrimeVue imports
 import PrimeVue from "primevue/config";
 import CPreset from "./presets";
@@ -19,7 +19,7 @@ import Tooltip from "primevue/tooltip";
 
 import ToastService from "primevue/toastservice";
 
-import VueKonva from 'vue-konva';
+import VueKonva from "vue-konva";
 const app = createApp(App);
 
 const messages = Object.fromEntries(
@@ -43,7 +43,7 @@ const i18n = createI18n({
 });
 
 app.use(VueKonva);
-app.use(VueQueryPlugin)
+app.use(VueQueryPlugin);
 app.use(i18n);
 app.use(createPinia());
 app.use(PrimeVue, { unstyled: true, pt: CPreset });

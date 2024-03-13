@@ -1,7 +1,7 @@
 <script setup lang="ts">
 interface IBreadCrumbEntry {
-  label: string,
-  to: string,
+  label: string;
+  to: string;
 }
 
 defineProps<{

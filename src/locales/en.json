@@ -288,7 +288,7 @@
           }
         },
         "dataview": {
-          "list":{
+          "list": {
             "header": "Manage collections",
             "column": {
               "name": "Name",
@@ -406,7 +406,6 @@
                 "detail": "Container couldn't get updated"
               }
             }
-
           },
           "button": {
             "share": "Share"

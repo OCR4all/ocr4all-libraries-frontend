@@ -12,7 +12,7 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
 import { useUiStore } from "@/stores/ui.store";
-const uiStore = useUiStore()
+const uiStore = useUiStore();
 
 const projects: Ref<number | undefined> = ref();
 const workflows: Ref<number | undefined> = ref();
@@ -41,10 +41,12 @@ useCustomFetch(`/repository/container/list`)
       await useCustomFetch(`/repository/container/folio/list/${collection.id}`)
         .get()
         .json()
-        .then((response) => {counter.value += response.data.value.length})
+        .then((response) => {
+          counter.value += response.data.value.length;
+        });
     }
     folios.value = counter.value;
-    console.log(folios.value)
+    console.log(folios.value);
   });
 
 function startTour() {

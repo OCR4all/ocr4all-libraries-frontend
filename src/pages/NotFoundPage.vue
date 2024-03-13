@@ -21,7 +21,10 @@ import AppLayout from "@/layout/AppLayout.vue";
         <p
           class="mb-4 text-lg font-light text-surface-500 dark:text-surface-400"
         >
-          {{ $t("pages.404-page.error-body.message") }} <router-link class="font-bold hover:underline" to="/">{{ $t("pages.404-page.error-body.link-target") }}.</router-link>
+          {{ $t("pages.404-page.error-body.message") }}
+          <router-link class="font-bold hover:underline" to="/"
+            >{{ $t("pages.404-page.error-body.link-target") }}.</router-link
+          >
         </p>
       </div>
     </div>

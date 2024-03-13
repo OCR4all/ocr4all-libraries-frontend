@@ -191,7 +191,6 @@
                 "detail": "Container konnte nicht aktualisiert werden"
               }
             }
-
           },
           "button": {
             "share": "Teilen"
@@ -208,7 +207,7 @@
           }
         },
         "dataview": {
-          "list":{
+          "list": {
             "header": "Kollektionen verwalten",
             "column": {
               "name": "Name",

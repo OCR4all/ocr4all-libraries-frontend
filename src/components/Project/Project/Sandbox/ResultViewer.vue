@@ -47,8 +47,8 @@ const sandboxGenerationToastVisible = ref(false);
 
 const LAREX_LABEL = "ocr4all-LAREX-launcher v1.0";
 
-const isProcessorDialogOpen = ref(false)
-function openProcessorDialog(){
+const isProcessorDialogOpen = ref(false);
+function openProcessorDialog() {
   toast.add({
     severity: "info",
     summary: "Not available yet",
@@ -56,9 +56,7 @@ function openProcessorDialog(){
   });
   /*isProcessorDialogOpen.value = true*/
 }
-async function runProcessor(){
-
-}
+async function runProcessor() {}
 
 const showSandboxGenerationToast = () => {
   if (!sandboxGenerationToastVisible.value) {
@@ -193,9 +191,11 @@ async function generateSandbox(selection: object) {
   refetch();
 }
 
-function hasLarexView(selection){
-  const snapshot = getSnapshotFromSelection(selection)
-  return snapshot.children.map(entry => entry.label).includes("ocr4all-LAREX-launcher v1.0")
+function hasLarexView(selection) {
+  const snapshot = getSnapshotFromSelection(selection);
+  return snapshot.children
+    .map((entry) => entry.label)
+    .includes("ocr4all-LAREX-launcher v1.0");
 }
 
 async function exportSnapshot(snapshot) {
@@ -307,7 +307,7 @@ const breadcrumbCurrent = { label: sandbox };
             type="submit"
             name="action"
             class="bg-primary-600 p-2 text-surface-50 hover:bg-primary-800"
-              @click="closeCallback"
+            @click="closeCallback"
           >
             Open
           </button>
@@ -326,8 +326,9 @@ const breadcrumbCurrent = { label: sandbox };
   <Dialog
     v-model:visible="isProcessorDialogOpen"
     modal
-    header="Run processor" :style="{ width: '25rem' }">
-
+    header="Run processor"
+    :style="{ width: '25rem' }"
+  >
     <ProcessorSelector />
   </Dialog>
   <div class="flex space-x-6">
@@ -375,29 +376,29 @@ const breadcrumbCurrent = { label: sandbox };
               <thead
                 class="bg-surface-50 text-xs uppercase text-surface-700 dark:bg-zinc-700 dark:text-white"
               >
-              <tr>
-                <th scope="col" class="px-6 py-3">Parameter</th>
-                <th scope="col" class="px-6 py-3">Value</th>
-              </tr>
+                <tr>
+                  <th scope="col" class="px-6 py-3">Parameter</th>
+                  <th scope="col" class="px-6 py-3">Value</th>
+                </tr>
               </thead>
               <tbody>
-              <tr
-                v-for="(value, key) in Object.entries(
-                selectedSnapshotInformation,
-              )"
-                :key="key"
-                class="border-b bg-white dark:border-surface-700 dark:bg-zinc-800"
-              >
-                <th
-                  scope="row"
-                  class="whitespace-nowrap px-6 py-4 font-medium text-surface-900 dark:text-white"
+                <tr
+                  v-for="(value, key) in Object.entries(
+                    selectedSnapshotInformation,
+                  )"
+                  :key="key"
+                  class="border-b bg-white dark:border-surface-700 dark:bg-zinc-800"
                 >
-                  {{ value[0] }}
-                </th>
-                <td class="px-6 py-4 dark:text-white">
-                  {{ value[1] }}
-                </td>
-              </tr>
+                  <th
+                    scope="row"
+                    class="whitespace-nowrap px-6 py-4 font-medium text-surface-900 dark:text-white"
+                  >
+                    {{ value[0] }}
+                  </th>
+                  <td class="px-6 py-4 dark:text-white">
+                    {{ value[1] }}
+                  </td>
+                </tr>
               </tbody>
             </table>
           </AccordionTab>

@@ -1,6 +1,6 @@
 <script setup>
 import { EditorComponent, useBaklava } from "baklavajs";
-import "@/assets/nodeflow-theme.css"
+import "@/assets/nodeflow-theme.css";
 
 import Toast from "primevue/toast";
 import Dialog from "primevue/dialog";
@@ -34,7 +34,7 @@ baklava.settings.nodes.resizable = true;
 baklava.settings.contextMenu.enabled = true;
 
 const editor = baklava.editor;
-const palette = ref()
+const palette = ref();
 
 const store = useNodeFlowStore();
 
@@ -50,15 +50,15 @@ Promise.resolve(importNodesFromAPI()).then(async (nodes) => {
   if (store.graphId) {
     selectedWorkflow.value = { id: store.graphId, label: store.graphLabel };
     await loadWorkflow(store.graphId).then(() => {
-      store.graphId = ""
-      store.graphLabel = ""
+      store.graphId = "";
+      store.graphLabel = "";
     });
   } else {
     addNodeWithCoordinates(baklava, InputNode, 50, 350);
   }
 });
 
-const selectedWorkflow = ref({id: store.graphId, label: store.graphLabel});
+const selectedWorkflow = ref({ id: store.graphId, label: store.graphLabel });
 const availableWorkflows = ref();
 
 const labelEntered = ref(true);
@@ -201,7 +201,7 @@ function zoomOut() {
 }
 
 function togglePalette() {
-  palette.value.toggleVisibility()
+  palette.value.toggleVisibility();
 }
 </script>
 
@@ -331,6 +331,4 @@ function togglePalette() {
   </Dialog>
 </template>
 
-<style>
-
-</style>
+<style></style>

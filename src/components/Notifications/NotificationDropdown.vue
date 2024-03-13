@@ -6,7 +6,7 @@ import { BellIcon } from "@heroicons/vue/24/solid";
 const notificationPanel: Ref<OverlayPanel | undefined> = ref();
 
 const toggle = (event: Event) => {
-  if(notificationPanel.value) notificationPanel.value.toggle(event);
+  if (notificationPanel.value) notificationPanel.value.toggle(event);
 };
 </script>
 <template>

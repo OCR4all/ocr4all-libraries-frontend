@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useUiStore } from "@/stores/ui.store";
-const uiStore = useUiStore()
+const uiStore = useUiStore();
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
@@ -32,21 +32,23 @@ const containers = ref();
 const newContainerName = ref();
 const createContainerPanel = ref();
 
-const id: Ref<string | undefined> = ref()
-const name: Ref<string | undefined> = ref()
-const description: Ref<string | undefined> = ref()
-const keywords: Ref<string[] | undefined> = ref()
+const id: Ref<string | undefined> = ref();
+const name: Ref<string | undefined> = ref();
+const description: Ref<string | undefined> = ref();
+const keywords: Ref<string[] | undefined> = ref();
 
-const editDialogVisible = ref(false)
-const layout: Ref< "grid" | "list" | undefined > = ref(uiStore.repositoryDataViewLayout);
+const editDialogVisible = ref(false);
+const layout: Ref<"grid" | "list" | undefined> = ref(
+  uiStore.repositoryDataViewLayout,
+);
 
-const containerCardRefs: Ref<HTMLElement[]> = ref([])
+const containerCardRefs: Ref<HTMLElement[]> = ref([]);
 
-const setContainerCardsRef = ref => {
-  if(ref) {
-    containerCardRefs.value.push(ref)
+const setContainerCardsRef = (ref) => {
+  if (ref) {
+    containerCardRefs.value.push(ref);
   }
-}
+};
 
 async function listContainers() {
   useCustomFetch("/repository/container/list")
@@ -81,8 +83,8 @@ async function deleteContainers() {
     summary: "Success",
     detail: "Containers deleted",
     life: 3000,
-  })
-  toggleDeleteDialog()
+  });
+  toggleDeleteDialog();
 }
 async function deleteContainer(id: string) {
   useCustomFetch(`/repository/container/remove?id=${id}`).then(() => {
@@ -105,7 +107,6 @@ function updateSelection(selectedContainer: string, add: boolean) {
   }
 }
 
-
 const toggleCreateContainerPanel = (event: Event) => {
   createContainerPanel.value.toggle(event);
 };
@@ -115,30 +116,32 @@ const filters: Ref = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
-const deleteDialogVisible = ref(false)
+const deleteDialogVisible = ref(false);
 function toggleDeleteDialog() {
   deleteDialogVisible.value = !deleteDialogVisible.value;
 }
 
 async function updateContainer() {
   const payload = {
-    "name": name.value,
-    "keywords": keywords.value ? Array.from(keywords.value) : [],
-    "description": description.value
-  }
-  const { isFetching, error, data } = await useCustomFetch(`/repository/container/update?id=${id.value}`)
+    name: name.value,
+    keywords: keywords.value ? Array.from(keywords.value) : [],
+    description: description.value,
+  };
+  const { isFetching, error, data } = await useCustomFetch(
+    `/repository/container/update?id=${id.value}`,
+  )
     .post(payload)
     .json();
-  listContainers()
-  editDialogVisible.value = false
-  if(!error.value){
+  listContainers();
+  editDialogVisible.value = false;
+  if (!error.value) {
     toast.add({
       severity: "success",
       summary: "Success",
       detail: "Container updated",
       life: 3000,
     });
-  }else{
+  } else {
     toast.add({
       severity: "error",
       summary: "Error",
@@ -149,12 +152,12 @@ async function updateContainer() {
 }
 
 function openEditDialog(node) {
-  id.value = node.id
-  name.value = node.name
-  description.value = node.description
-  keywords.value = node.keywords
+  id.value = node.id;
+  name.value = node.name;
+  description.value = node.description;
+  keywords.value = node.keywords;
 
-  editDialogVisible.value = true
+  editDialogVisible.value = true;
 }
 
 function openContainer(containerId: string, containerName: string) {
@@ -164,12 +167,12 @@ function openContainer(containerId: string, containerName: string) {
   });
 }
 
-function updateDataViewLayout(event){
-  uiStore.repositoryDataViewLayout = event
-  if(event === "grid"){
-    console.log(containerCardRefs.value)
-    for(const container of selectedContainers.value){
-      console.log(container)
+function updateDataViewLayout(event) {
+  uiStore.repositoryDataViewLayout = event;
+  if (event === "grid") {
+    console.log(containerCardRefs.value);
+    for (const container of selectedContainers.value) {
+      console.log(container);
     }
   }
 }
@@ -187,7 +190,7 @@ function updateDataViewLayout(event){
         <label
           for="text"
           class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-        >Label</label
+          >Label</label
         >
         <InputText v-model="name" type="text" />
       </div>
@@ -196,7 +199,9 @@ function updateDataViewLayout(event){
         <label
           for="description"
           class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
-        >{{ $t("pages.projects.project.information.form.description") }}</label
+          >{{
+            $t("pages.projects.project.information.form.description")
+          }}</label
         >
         <Textarea v-model="description" rows="5" cols="30" />
       </div>
@@ -206,7 +211,7 @@ function updateDataViewLayout(event){
           <label
             for="keywords"
             class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
-          >{{ $t("pages.projects.project.information.form.keywords") }}</label
+            >{{ $t("pages.projects.project.information.form.keywords") }}</label
           >
           <Chips v-model="keywords" />
         </div>
@@ -238,14 +243,14 @@ function updateDataViewLayout(event){
     </p>
     <button
       type="button"
-      class="rounded-md mb-2 mr-2 border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
+      class="mb-2 mr-2 rounded-md border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
       @click="toggleDeleteDialog"
     >
       Cancel
     </button>
     <button
       type="button"
-      class="rounded-md mb-2 mr-2 bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+      class="mb-2 mr-2 rounded-md bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
       @click="deleteContainers"
     >
       Delete
@@ -253,14 +258,14 @@ function updateDataViewLayout(event){
   </Dialog>
   <Toolbar class="mb-4">
     <template #start>
-      <div class="flex my-2 space-x-2">
+      <div class="my-2 flex space-x-2">
         <ActionButton
           rounded
           type="primary"
           size="large"
           @click="toggleCreateContainerPanel"
         >
-          {{ $t('pages.repository.overview.toolbar.button.create') }}
+          {{ $t("pages.repository.overview.toolbar.button.create") }}
         </ActionButton>
         <OverlayPanel ref="createContainerPanel">
           <div class="flex space-x-1">
@@ -280,23 +285,25 @@ function updateDataViewLayout(event){
           :disabled="!selectedContainers || !selectedContainers.length"
           @click="toggleDeleteDialog"
         >
-          {{ $t('pages.repository.overview.toolbar.button.delete') }}
+          {{ $t("pages.repository.overview.toolbar.button.delete") }}
         </ActionButton>
       </div>
     </template>
     <template #end>
       <DataViewLayoutOptions
         @update:modelValue="updateDataViewLayout"
-        v-model="layout" />
+        v-model="layout"
+      />
     </template>
   </Toolbar>
-  <div class="bg-surface-0 rounded-md p-4 @container/content dark:bg-surface-800">
+  <div
+    class="rounded-md bg-surface-0 p-4 @container/content dark:bg-surface-800"
+  >
     <DataView
       class="bg-surface-50 dark:bg-surface-700"
       :value="containers"
       :layout="layout"
     >
-
       <template #list="slotProps">
         <DataTable
           ref="containerDataTable"
@@ -311,7 +318,9 @@ function updateDataViewLayout(event){
         >
           <template #header>
             <div class="grid grid-cols-2 justify-between gap-2">
-              <h4 class="m-0">{{ $t('pages.repository.overview.dataview.list.header') }}</h4>
+              <h4 class="m-0">
+                {{ $t("pages.repository.overview.dataview.list.header") }}
+              </h4>
               <span class="relative justify-self-end">
                 <i
                   class="pi pi-search absolute left-3 top-2/4 -mt-2 text-surface-400 dark:text-surface-600"
@@ -329,7 +338,11 @@ function updateDataViewLayout(event){
             style="width: 3rem"
             :exportable="false"
           ></Column>
-          <Column field="name" :header="$t('pages.repository.overview.dataview.list.column.name')" sortable>
+          <Column
+            field="name"
+            :header="$t('pages.repository.overview.dataview.list.column.name')"
+            sortable
+          >
             <template #loading>
               <div
                 class="align-items-center flex"
@@ -343,7 +356,12 @@ function updateDataViewLayout(event){
               </div>
             </template>
           </Column>
-          <Column field="description" :header="$t('pages.repository.overview.dataview.list.column.description')">
+          <Column
+            field="description"
+            :header="
+              $t('pages.repository.overview.dataview.list.column.description')
+            "
+          >
             <template #loading>
               <div
                 class="align-items-center flex"
@@ -357,7 +375,12 @@ function updateDataViewLayout(event){
               </div>
             </template>
           </Column>
-          <Column field="keywords" :header="$t('pages.repository.overview.dataview.list.column.keywords')">
+          <Column
+            field="keywords"
+            :header="
+              $t('pages.repository.overview.dataview.list.column.keywords')
+            "
+          >
             <template #loading>
               <div
                 class="align-items-center flex"
@@ -376,7 +399,12 @@ function updateDataViewLayout(event){
               }}</Chip>
             </template>
           </Column>
-          <Column field="actions" :header="$t('pages.repository.overview.dataview.list.column.actions')">
+          <Column
+            field="actions"
+            :header="
+              $t('pages.repository.overview.dataview.list.column.actions')
+            "
+          >
             <template #loading>
               <div
                 class="align-items-center flex"
@@ -397,7 +425,9 @@ function updateDataViewLayout(event){
                   rounded
                   @click="openContainer(slotProps.data.id, slotProps.data.name)"
                 >
-                  {{ $t('pages.repository.overview.dataview.list.action.open') }}
+                  {{
+                    $t("pages.repository.overview.dataview.list.action.open")
+                  }}
                 </ActionButton>
                 <ActionButton
                   type="primary"
@@ -405,7 +435,9 @@ function updateDataViewLayout(event){
                   rounded
                   @click="openEditDialog(slotProps.data)"
                 >
-                  {{ $t('pages.repository.overview.dataview.list.action.edit') }}
+                  {{
+                    $t("pages.repository.overview.dataview.list.action.edit")
+                  }}
                 </ActionButton>
               </div>
             </template>

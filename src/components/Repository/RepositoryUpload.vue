@@ -34,7 +34,9 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
           "Content-Type": "multipart/form-data",
         },
         onUploadProgress: function (progressEvent) {
-          progress.value = Math.round((progressEvent.loaded / progressEvent.total) * 100)
+          progress.value = Math.round(
+            (progressEvent.loaded / progressEvent.total) * 100,
+          );
         },
       },
     )

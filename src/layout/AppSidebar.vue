@@ -26,7 +26,8 @@ const mainNavigation = [
   {
     to: "/",
     label: "nav.sidebar.links.dashboard",
-    icon: HomeIcon },
+    icon: HomeIcon,
+  },
   {
     to: "/repository",
     label: "nav.sidebar.links.repository",
@@ -35,7 +36,7 @@ const mainNavigation = [
   {
     to: "/project",
     label: "nav.sidebar.links.projects",
-    icon: Squares2X2Icon
+    icon: Squares2X2Icon,
   },
   {
     to: "/workflows",
@@ -129,10 +130,10 @@ defineExpose({
                 role="alert"
               >
                 <div class="mb-3 flex items-center">
-            <span
-              class="mr-2 bg-orange-100 px-2.5 py-0.5 text-sm font-semibold text-orange-800 dark:bg-orange-200 dark:text-orange-900"
-            >{{ $t("nav.sidebar.cta.header") }}</span
-            >
+                  <span
+                    class="mr-2 bg-orange-100 px-2.5 py-0.5 text-sm font-semibold text-orange-800 dark:bg-orange-200 dark:text-orange-900"
+                    >{{ $t("nav.sidebar.cta.header") }}</span
+                  >
                   <button
                     type="button"
                     class="-mx-1.5 -my-1.5 ml-auto inline-flex h-6 w-6 bg-primary-50 p-1 text-primary-900 hover:bg-primary-200 focus:ring-2 focus:ring-primary-400 dark:bg-primary-900 dark:text-primary-200 dark:hover:bg-primary-800"

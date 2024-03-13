@@ -87,30 +87,30 @@ async function checkWorkflowJob(startedJob) {
         .json();
       for (const job of Object.values(data.value.done)) {
         if (job.id === startedJob && job.state == "completed") {
-          jobStatus.value = "Done"
+          jobStatus.value = "Done";
           clearInterval(jobInterval);
           isWorkflowRunning.value = false;
           isWorkflowFinished.value = true;
           resolve(true);
         }
       }
-      for(const job of Object.values(data.value.running)){
-        if (job.id === startedJob){
-          jobStatus.value = "Running"
-          workflowProgress.value = Math.round(job.journal.progress * 100)
+      for (const job of Object.values(data.value.running)) {
+        if (job.id === startedJob) {
+          jobStatus.value = "Running";
+          workflowProgress.value = Math.round(job.journal.progress * 100);
         }
       }
-      for(const job of Object.values(data.value.scheduled)){
-        if (job.id === startedJob){
-          jobStatus.value = "Scheduled"
+      for (const job of Object.values(data.value.scheduled)) {
+        if (job.id === startedJob) {
+          jobStatus.value = "Scheduled";
         }
       }
     }, 1000);
   });
 }
 
-const workflowProgress = ref(0)
-const jobStatus = ref("Scheduled")
+const workflowProgress = ref(0);
+const jobStatus = ref("Scheduled");
 
 async function launchWorkflow() {
   isRunning.value = true;
@@ -175,11 +175,9 @@ async function launchWorkflow() {
       >
         {{ $t("pages.projects.sandbox.workflow.importing-images.heading") }}
       </h2>
-      <ProgressBar
-        mode="indeterminate"
-      ></ProgressBar>
+      <ProgressBar mode="indeterminate"></ProgressBar>
       <h3
-        class="text-center text-lg text-black dark:text-white pt-4 sm:text-xl md:text-2xl"
+        class="pt-4 text-center text-lg text-black dark:text-white sm:text-xl md:text-2xl"
       >
         {{ $t("pages.projects.sandbox.workflow.importing-images.content") }}
       </h3>
@@ -190,12 +188,14 @@ async function launchWorkflow() {
       >
         {{ $t("pages.projects.sandbox.workflow.running-workflows.heading") }}
       </h2>
-      <p class="text-center text-lg font-semibold text-black dark:text-surface-100">Status: {{ jobStatus }}</p>
-      <ProgressBar
-        :value="workflowProgress"
-      ></ProgressBar>
+      <p
+        class="text-center text-lg font-semibold text-black dark:text-surface-100"
+      >
+        Status: {{ jobStatus }}
+      </p>
+      <ProgressBar :value="workflowProgress"></ProgressBar>
       <h3
-        class="text-center text-lg text-black dark:text-white pt-4 sm:text-xl md:text-2xl"
+        class="pt-4 text-center text-lg text-black dark:text-white sm:text-xl md:text-2xl"
       >
         {{ $t("pages.projects.sandbox.workflow.running-workflows.content") }}
       </h3>
@@ -211,7 +211,7 @@ async function launchWorkflow() {
       {{ $t("pages.projects.sandbox.workflow.workflow-finished") }}
     </h2>
     <button
-      class="bg-primary-700 rounded-md px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       @click="router.push(`/project/${project}/result/${store.sandboxId}`)"
     >
       {{ $t("pages.projects.sandbox.workflow.buttons.inspect-results") }}

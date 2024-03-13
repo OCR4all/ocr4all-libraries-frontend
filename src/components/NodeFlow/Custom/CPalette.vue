@@ -10,14 +10,14 @@ import AccordionTab from "primevue/accordiontab";
 
 type NodeTypeInformations = Record<string, INodeTypeInformation>;
 
-const visible = ref(true)
+const visible = ref(true);
 
-function toggleVisibility(){
-  visible.value = !visible.value
+function toggleVisibility() {
+  visible.value = !visible.value;
 }
 
 defineExpose({
-  toggleVisibility
+  toggleVisibility,
 });
 
 interface IDraggedNode {
@@ -132,21 +132,17 @@ const onDragStart = (type: string, nodeInformation: INodeTypeInformation) => {
     leave-from-class="translate-x-0"
     leave-to-class="translate-x-full"
   >
-    <div
-      v-show="visible"
-      class="h-full overflow-scroll-y">
+    <div v-show="visible" class="overflow-scroll-y h-full">
       <div
         class="baklava-node-palette !w-[290px] !opacity-95 dark:!bg-zinc-800 dark:!opacity-95"
       >
-        <h1 class="pb-5 text-center text-xl font-bold text-black dark:text-white">
+        <h1
+          class="pb-5 text-center text-xl font-bold text-black dark:text-white"
+        >
           {{ $t("pages.nodeflow.palette.processors") }}
         </h1>
         <Accordion :multiple="true">
-          <AccordionTab
-            v-for="c in categories"
-            :key="c.name"
-            :header="c.name"
-          >
+          <AccordionTab v-for="c in categories" :key="c.name" :header="c.name">
             <PaletteEntry
               v-for="(ni, nt) in c.nodeTypes"
               :key="nt"

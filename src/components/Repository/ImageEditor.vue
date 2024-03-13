@@ -1,32 +1,32 @@
 <script setup lang="ts">
 import Konva from "konva";
 
-const router = useRouter()
+const router = useRouter();
 const containerName = router.currentRoute.value.query.id;
 
-const visible: Ref<boolean | null> = ref(null)
-const stage: Ref<KonvaNode<Konva.Stage> | null> = ref(null)
-const container: Ref<HTMLDivElement | null> = ref(null)
+const visible: Ref<boolean | null> = ref(null);
+const stage: Ref<KonvaNode<Konva.Stage> | null> = ref(null);
+const container: Ref<HTMLDivElement | null> = ref(null);
 const rasterImage: Ref<HTMLImageElement | null> = ref(null);
 
-const testRef = ref(null)
+const testRef = ref(null);
 
-function toggle(){
-  visible.value = !visible.value
-  console.log(testRef.value)
+function toggle() {
+  visible.value = !visible.value;
+  console.log(testRef.value);
 }
 
 onMounted(() => {
-  console.log(testRef.value)
-})
+  console.log(testRef.value);
+});
 
-function setImage(image: string){
+function setImage(image: string) {
   Konva.Image.fromURL(image, function (node) {
     const imageLayer = new Konva.Layer();
     stage.value?.getStage().add(imageLayer);
-    imageLayer.add(node)
+    imageLayer.add(node);
   });
-  fitStageToParent()
+  fitStageToParent();
 }
 interface KonvaNode<NodeTy extends Konva.Node> {
   getNode(): NodeTy;
@@ -45,7 +45,10 @@ function fitStageToParent() {
   }
 
   const editorContainer = container.value;
-  const [width, height] = [editorContainer.offsetWidth, editorContainer.offsetHeight];
+  const [width, height] = [
+    editorContainer.offsetWidth,
+    editorContainer.offsetHeight,
+  ];
   stageConfig.value.width = width;
   stageConfig.value.height = height;
 }
@@ -53,17 +56,12 @@ function fitStageToParent() {
 defineExpose({
   setImage,
   toggle,
-  fitStageToParent
-})
+  fitStageToParent,
+});
 </script>
 <template>
-  <div
-    id="stage-container"
-    ref="container"
-  >
-    <v-stage
-      ref="stage"
-      :config="stageConfig">
+  <div id="stage-container" ref="container">
+    <v-stage ref="stage" :config="stageConfig">
       <v-layer>
         <v-image
           v-show="rasterImage"

@@ -72,7 +72,8 @@ function getStateSeverity(state) {
             <button
               v-tooltip="'Refresh'"
               :disabled="isRefetching === true"
-              @click="refetch">
+              @click="refetch"
+            >
               <ArrowPathIcon
                 :class="{ 'animate-spin': isRefetching }"
                 class="mr-2 h-6 w-6 text-surface-500 hover:text-black dark:text-surface-200 dark:hover:text-white"
@@ -85,7 +86,6 @@ function getStateSeverity(state) {
               <ArrowUpOnSquareIcon
                 data-tooltip-target="tooltip-project-overview"
                 class="h-6 w-6 text-surface-500 hover:cursor-pointer hover:text-black dark:text-surface-200 dark:hover:text-white"
-
               />
             </button>
           </div>
@@ -101,7 +101,7 @@ function getStateSeverity(state) {
       >
       <Column
         :header="$t('pages.dashboard.components.recent-projects.columns.state')"
-        >
+      >
         <template #body="slotProps">
           <Tag
             :value="slotProps.data.state"

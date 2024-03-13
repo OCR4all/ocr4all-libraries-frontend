@@ -56,7 +56,8 @@ refetch();
             <button
               v-tooltip="'Refresh'"
               :disabled="isRefetching === true"
-              @click="refetch">
+              @click="refetch"
+            >
               <ArrowPathIcon
                 :class="{ 'animate-spin': isRefetching }"
                 class="mr-2 h-6 w-6 text-surface-500 hover:text-black dark:text-surface-200 dark:hover:text-white"
@@ -64,11 +65,11 @@ refetch();
             </button>
             <button
               v-tooltip="'Open workflow overview'"
-              @click="router.push('/workflows')">
+              @click="router.push('/workflows')"
+            >
               <ArrowUpOnSquareIcon
                 data-tooltip-target="tooltip-project-overview"
                 class="h-6 w-6 text-surface-500 hover:cursor-pointer hover:text-black dark:text-surface-200 dark:hover:text-white"
-
               />
             </button>
           </div>

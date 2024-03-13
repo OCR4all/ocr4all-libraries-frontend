@@ -176,9 +176,7 @@ async function downloadSandbox(sandbox) {
           {{ $t("pages.projects.sandbox.results.table.header") }}
         </h2>
         <div class="space-x-2">
-          <button
-            v-tooltip="'Refresh'"
-            @click="refetch">
+          <button v-tooltip="'Refresh'" @click="refetch">
             <ArrowPathIcon
               :disabled="isRefetching"
               :class="{ 'animate-spin': isRefetching }"
@@ -201,10 +199,7 @@ async function downloadSandbox(sandbox) {
         $t("pages.projects.sandbox.results.table.empty")
       }}</span>
     </template>
-    <Column
-      :exportable="false"
-      style="min-width: 8rem"
-    >
+    <Column :exportable="false" style="min-width: 8rem">
       <template #body="slotProps">
         <button
           type="button"
@@ -213,7 +208,7 @@ async function downloadSandbox(sandbox) {
             router.push(`/project/${project}/result/${slotProps.data.id}`)
           "
         >
-          {{ $t('pages.projects.sandbox.results.table.columns.open') }}
+          {{ $t("pages.projects.sandbox.results.table.columns.open") }}
         </button>
       </template>
     </Column>
@@ -258,14 +253,14 @@ async function downloadSandbox(sandbox) {
       <template #body="slotProps">
         <button
           type="button"
-          class="mr-2 rounded-md inline-flex items-center bg-red-600 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+          class="mr-2 inline-flex items-center rounded-md bg-red-600 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
           @click="toggleDeleteDialog(slotProps.data.id)"
         >
           <XMarkIcon class="h-6 w-6 text-white" />
         </button>
         <button
           type="button"
-          class="mr-2 rounded-md inline-flex items-center bg-primary-600 p-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          class="mr-2 inline-flex items-center rounded-md bg-primary-600 p-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
           @click="downloadSandbox(slotProps.data.id)"
         >
           <ArchiveBoxArrowDownIcon class="h-6 w-6 text-white" />

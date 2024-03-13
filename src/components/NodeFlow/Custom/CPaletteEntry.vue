@@ -43,14 +43,14 @@ export default defineComponent({
       "ocrd-cis-ocropy-binarize",
       "ocrd-cis-ocropy-segment",
       "ocrd-calamari-recognize",
-    ]
+    ];
 
     return {
       showContextMenu,
       hasContextMenu,
       openContextMenu,
       onContextMenuClick,
-      favorites
+      favorites,
     };
   },
 });

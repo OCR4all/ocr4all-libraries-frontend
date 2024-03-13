@@ -69,7 +69,7 @@ async function importFolios(data) {
     summary: "Success",
     detail: "Folios succesfully imported into project",
     life: 3000,
-  })
+  });
   await refresh();
 }
 

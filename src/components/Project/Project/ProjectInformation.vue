@@ -44,8 +44,12 @@ async function update() {
     .json();
   toast.add({
     severity: "success",
-    summary: t("pages.projects.project.information.toasts.update.success.summary"),
-    detail: t("pages.projects.project.information.toasts.update.success.detail"),
+    summary: t(
+      "pages.projects.project.information.toasts.update.success.summary",
+    ),
+    detail: t(
+      "pages.projects.project.information.toasts.update.success.detail",
+    ),
     life: 3000,
   });
 }

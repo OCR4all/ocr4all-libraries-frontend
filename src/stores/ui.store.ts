@@ -12,7 +12,10 @@ export const useUiStore = defineStore({
     sidebarCtaVisible: useStorage("pinia/ui/sidebarCtaVisible", true),
     tourSpeedDialVisible: false,
     settingsDialogOpen: false,
-    repositoryDataViewLayout: useStorage("pinia/ui/repositoryDataViewLayout", "grid")
+    repositoryDataViewLayout: useStorage(
+      "pinia/ui/repositoryDataViewLayout",
+      "grid",
+    ),
   }),
   actions: {},
 });

@@ -86,7 +86,8 @@ const states = ref(["active", "closed", "blocked"]);
         <button
           v-tooltip="'Refresh'"
           :disabled="isRefetching === true"
-          @click="refetch">
+          @click="refetch"
+        >
           <ArrowPathIcon
             :class="{ 'animate-spin': isRefetching }"
             class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-200 hover:dark:text-white"
@@ -133,17 +134,14 @@ const states = ref(["active", "closed", "blocked"]);
       <template #loading>
         <DefaultSpinner />
       </template>
-      <Column
-        :exportable="false"
-        style="min-width: 8rem"
-      >
+      <Column :exportable="false" style="min-width: 8rem">
         <template #body="slotProps">
           <button
             type="button"
             class="mr-2 inline-flex items-center rounded-md bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             @click="router.push(`/project/${slotProps.data.id}/view`)"
           >
-            {{ $t('pages.projects.overview.table.columns.open') }}
+            {{ $t("pages.projects.overview.table.columns.open") }}
           </button>
         </template>
       </Column>
