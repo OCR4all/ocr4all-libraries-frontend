@@ -1,6 +1,6 @@
 export default {
   root: ({ props, context, parent }) => {
-    var _a;
+    let _a;
     return {
       class: [
         // Font

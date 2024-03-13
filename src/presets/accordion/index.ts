@@ -13,7 +13,7 @@ export default {
         { 'select-none pointer-events-none cursor-default opacity-60': props == null ? void 0 : props.disabled }
       ]
     }),
-      headerAction: ({ context }) => ({
+      headerAction: ({ _context }) => ({
       class: [
         //Font
         'font-semibold',

@@ -30,7 +30,7 @@ export default {
     ],
   },
   meterlabel: ({ instance }) => {
-    var _a, _b, _c;
+    let _a, _b, _c;
     return {
       class: [
         // Size
