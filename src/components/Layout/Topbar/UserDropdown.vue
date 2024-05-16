@@ -5,16 +5,18 @@ interface IUserDropdownEntry {
   adminOnly: boolean;
 }
 
+import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useAuthStore } from "@/stores/auth.store";
 import { useUiStore } from "@/stores/ui.store";
 
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import { UserIcon } from "@heroicons/vue/24/solid";
 
 const router = useRouter();
 
 const uiStore = useUiStore();
 const authStore = useAuthStore();
+
+const user: Ref<object | undefined> = ref()
 
 const items: IUserDropdownEntry[] = [
   { action: openSettings, name: "Settings", adminOnly: false },
@@ -32,17 +34,21 @@ function openAdminDashboard() {
 function logout() {
   authStore.logout();
 }
+
+await useCustomFetch(`/account`)
+  .get()
+  .json()
+  .then((response) => {
+    user.value = response.data.value
+  })
 </script>
 
 <template>
-  <Menu as="div" class="mt-2">
+  <Menu as="div">
     <MenuButton
-      class="mx-2 rounded-full focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+      class="mx-2 my-1 rounded-full focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
     >
-      <UserIcon
-        aria-hidden="true"
-        class="h-6 w-6 flex-shrink-0 text-surface-500 transition duration-75 group-hover:text-surface-900 dark:text-surface-400 dark:group-hover:text-white"
-      />
+      <AvatarInitials :name="user.name" status="admin" />
     </MenuButton>
     <transition
       enter-active-class="transition duration-100 ease-out transform"
@@ -68,7 +74,7 @@ function logout() {
               }"
               class="block px-4 py-2 text-sm text-surface-700 dark:text-white"
               @click="item.action"
-              >{{ item.name }}</a
+            >{{ item.name }}</a
             >
           </MenuItem>
         </template>

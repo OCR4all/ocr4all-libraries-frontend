@@ -3,7 +3,7 @@ export default {
     class: [
       "rounded-lg",
       "shadow-xl",
-      "border-0 dark:border",
+      "border dark:border",
       "absolute left-0 top-0 mt-2",
       "z-40 transform origin-center",
       "bg-surface-0 dark:bg-surface-800",
