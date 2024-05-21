@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import AppTopbar from "@/layout/AppTopbar.vue";
 import AppSidebar from "@/layout/AppSidebar.vue";
+import AppSidebarMobile from "@/layout/AppSidebarMobile.vue";
 
 const props = defineProps<{
   padded?: boolean
 }>()
 
-const sidebarRef = ref();
+const mobileSidebarRef = ref();
 
 function toggleSidebarMobile() {
-  sidebarRef.value.toggleSidebarMobile();
+  mobileSidebarRef.value.toggleSidebarMobile();
 }
 </script>
 
@@ -17,7 +18,8 @@ function toggleSidebarMobile() {
   <SettingsDialog />
   <div class="h-screen bg-surface-100 dark:bg-surface-950">
     <div class="h-screen flex flex-1 overflow-hidden">
-      <AppSidebar ref="sidebarRef" />
+      <AppSidebar />
+      <AppSidebarMobile ref="mobileSidebarRef" />
       <main
         class="flex-1 lg:rounded-xl justify-center shadow-sm border dark:border-surface-800 bg-surface-0 lg:m-2 dark:bg-surface-800"
       >

@@ -134,7 +134,7 @@ const states = ref(["active", "closed", "blocked"]);
       <template #loading>
         <DefaultSpinner />
       </template>
-      <Column :exportable="false" style="min-width: 8rem">
+      <Column :exportable="false">
         <template #body="slotProps">
           <button
             type="button"
