@@ -150,8 +150,8 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
-  const ui = useUiStore()
-  ui.flush()
+  const ui = useUiStore();
+  ui.flush();
   const config = useConfigStore();
 
   if (config.mode !== "Desktop") {

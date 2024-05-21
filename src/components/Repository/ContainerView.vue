@@ -317,7 +317,7 @@ refresh();
       </section>
     </template>
   </Toast>
-  <div class="bg-surface-0 p-4 @container/content dark:bg-surface-800">
+  <div class="bg-surface-0 p-4 @container/content dark:bg-surface-800 rounded-xl">
     <div class="m-4 flex space-x-4">
       <FileUpload
         ref="fileUpload"

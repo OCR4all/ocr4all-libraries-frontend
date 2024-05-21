@@ -18,19 +18,23 @@ const router = useRouter();
 
 const minimized = ref(false);
 
-const fixedSidebar = ref()
-const sidebarHovered = useElementHover(fixedSidebar)
+const fixedSidebar = ref();
+const sidebarHovered = useElementHover(fixedSidebar);
 
-const maximized = computed(() => sidebarHovered.value || !minimized.value)
+const maximized = computed(() => sidebarHovered.value || !minimized.value);
 
-function toggleSidebar(){
-  minimized.value = !minimized.value
+function toggleSidebar() {
+  minimized.value = !minimized.value;
 }
 </script>
 
 <template>
-  <div ref="fixedSidebar" class="hidden m-2 lg:block" :class="[maximized ? 'w-64' : 'w-22' ]">
-    <div class="flex my-4 mx-6 justify-between">
+  <div
+    ref="fixedSidebar"
+    class="m-2 hidden lg:block"
+    :class="[maximized ? 'w-64' : 'w-22']"
+  >
+    <div class="mx-6 my-4 flex justify-between">
       <img
         @click="router.push({ name: 'Dashboard' })"
         src="/img/logo.svg"
@@ -48,12 +52,12 @@ function toggleSidebar(){
         <Bars3CenterLeftIcon class="h-8 w-8" />
       </button>
     </div>
-    <div class="mb-10 space-y-2 space-x 2 px-4 py-4">
+    <div class="space-x 2 mb-10 space-y-2 px-4 py-4">
       <router-link
         v-for="(item, index) in navigation"
         :key="index"
         :to="item.to"
-        class="group flex items-center rounded-md space-x-4 px-4 py-2.5 text-surface-900 hover:bg-surface-200 dark:text-white dark:hover:bg-surface-800"
+        class="group flex items-center space-x-4 rounded-md px-4 py-2.5 text-surface-900 hover:bg-surface-200 dark:text-white dark:hover:bg-surface-800"
         :class="[maximized ? 'justify-start' : 'justify-center']"
       >
         <component :is="item.icon" class="h-6 w-6" />
@@ -97,10 +101,10 @@ function toggleSidebar(){
         </p>
       </div>
       <div v-else-if="uiStore.sidebarCtaVisible" class="flex justify-center">
-          <span
-            class="bg-orange-100 px-2.5 py-0.5 text-sm font-semibold text-orange-800 dark:bg-orange-200 dark:text-orange-900"
+        <span
+          class="bg-orange-100 px-2.5 py-0.5 text-sm font-semibold text-orange-800 dark:bg-orange-200 dark:text-orange-900"
           >{{ $t("nav.sidebar.cta.header") }}</span
-          >
+        >
       </div>
     </div>
   </div>

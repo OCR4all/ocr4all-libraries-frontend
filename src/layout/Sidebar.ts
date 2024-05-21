@@ -1,20 +1,21 @@
 import {
   AcademicCapIcon,
   CubeTransparentIcon,
-  HomeIcon, QueueListIcon,
+  HomeIcon,
+  QueueListIcon,
   ServerIcon,
   Square3Stack3DIcon,
-  Squares2X2Icon
+  Squares2X2Icon,
 } from "@heroicons/vue/24/outline";
 import { FunctionalComponent, HTMLAttributes, VNodeProps } from "vue";
 
-interface navigationEntry{
-  to: string,
-  label: string,
-  icon: FunctionalComponent<HTMLAttributes & VNodeProps>,
+interface navigationEntry {
+  to: string;
+  label: string;
+  icon: FunctionalComponent<HTMLAttributes & VNodeProps>;
 }
 
-export const navigation: navigationEntry[]  = [
+export const navigation: navigationEntry[] = [
   {
     to: "/",
     label: "nav.sidebar.links.dashboard",

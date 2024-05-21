@@ -16,7 +16,7 @@ const router = useRouter();
 const uiStore = useUiStore();
 const authStore = useAuthStore();
 
-const user: Ref<object | undefined> = ref()
+const user: Ref<object | undefined> = ref();
 
 const items: IUserDropdownEntry[] = [
   { action: openSettings, name: "Settings", adminOnly: false },
@@ -39,8 +39,8 @@ await useCustomFetch(`/account`)
   .get()
   .json()
   .then((response) => {
-    user.value = response.data.value
-  })
+    user.value = response.data.value;
+  });
 </script>
 
 <template>
@@ -74,7 +74,7 @@ await useCustomFetch(`/account`)
               }"
               class="block px-4 py-2 text-sm text-surface-700 dark:text-white"
               @click="item.action"
-            >{{ item.name }}</a
+              >{{ item.name }}</a
             >
           </MenuItem>
         </template>

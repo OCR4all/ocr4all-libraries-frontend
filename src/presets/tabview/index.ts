@@ -3,6 +3,7 @@ export default {
     class: [
       // Position
       "relative",
+      "rounded-xl",
       // Misc
       { "overflow-hidden": props.scrollable },
     ],
@@ -44,6 +45,7 @@ export default {
   nav: {
     class: [
       "flex flex-1",
+      "rounded-t-xl",
       "list-none",
       "p-0 m-0",
       "bg-surface-0 dark:bg-surface-800",

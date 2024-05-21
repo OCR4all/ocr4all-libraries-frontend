@@ -8,7 +8,7 @@ export default {
       { "h-full": props.scrollable && props.scrollHeight === "flex" },
       // Shape
       "rounded-md border dark:border-surface-700",
-      "px-4"
+      "px-4",
     ],
   }),
   loadingoverlay: {

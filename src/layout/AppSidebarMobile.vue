@@ -1,13 +1,19 @@
 <script setup lang="ts">
-import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from "@headlessui/vue";
+import {
+  Dialog,
+  DialogOverlay,
+  TransitionChild,
+  TransitionRoot,
+} from "@headlessui/vue";
 import {
   AcademicCapIcon,
   CubeTransparentIcon,
-  HomeIcon, QueueListIcon,
+  HomeIcon,
+  QueueListIcon,
   ServerIcon,
   Square3Stack3DIcon,
   Squares2X2Icon,
-  XMarkIcon
+  XMarkIcon,
 } from "@heroicons/vue/24/outline";
 import { navigation } from "@/layout/Sidebar";
 import { useUiStore } from "@/stores/ui.store";
@@ -16,8 +22,8 @@ const uiStore = useUiStore();
 
 const sidebarMobileOpen = ref(false);
 
-function toggleSidebarMobile(){
-  sidebarMobileOpen.value = !sidebarMobileOpen.value
+function toggleSidebarMobile() {
+  sidebarMobileOpen.value = !sidebarMobileOpen.value;
 }
 
 defineExpose({
@@ -28,11 +34,11 @@ defineExpose({
   <TransitionRoot
     :show="sidebarMobileOpen"
     as="aside"
-    class="overflow-y-auto border-r border-surface-200 bg-surface-0 dark:border-surface-700 dark:bg-surface-800"
+    class="overflow-y-auto border-r border-surface-200 bg-surface-100 dark:border-surface-700 dark:bg-surface-900 md:bg-surface-0 dark:md:bg-surface-800"
   >
     <Dialog
       as="div"
-      class="fixed h-screen inset-0 z-40 lg:hidden"
+      class="fixed inset-0 z-40 h-screen lg:hidden"
       @close="toggleSidebarMobile"
     >
       <TransitionChild
@@ -45,7 +51,7 @@ defineExpose({
         as="template"
       >
         <div
-          class="relative z-10 flex h-full w-72 flex-col border-r border-surface-200 bg-white shadow-xl dark:border-zinc-700 dark:bg-surface-800 lg:hidden"
+          class="relative z-10 flex h-full w-72 flex-col border-r border-surface-200 bg-surface-100 shadow-xl dark:border-zinc-700 dark:bg-surface-900 md:bg-white dark:md:bg-surface-800 lg:hidden"
         >
           <button
             value="Close sidebar"
@@ -81,7 +87,7 @@ defineExpose({
                 <div class="mb-3 flex items-center">
                   <span
                     class="mr-2 bg-orange-100 px-2.5 py-0.5 text-sm font-semibold text-orange-800 dark:bg-orange-200 dark:text-orange-900"
-                  >{{ $t("nav.sidebar.cta.header") }}</span
+                    >{{ $t("nav.sidebar.cta.header") }}</span
                   >
                   <button
                     type="button"

@@ -309,9 +309,7 @@ async function deleteWorkflow() {
         <label
           for="message"
           class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-          >{{
-            $t("pages.workflows.dialog.edit.form.description.label")
-          }}</label
+          >{{ $t("pages.workflows.dialog.edit.form.description.label") }}</label
         >
         <Textarea v-model="workflowMetadata.description" rows="5" cols="30" />
       </div>

@@ -16,8 +16,8 @@ const project: string[] = router.currentRoute.value.params.project;
 uiStore.breadcrumb = {
   home: { to: "/project/overview", label: "Projects" },
   current: { label: project },
-}
-console.log(uiStore.breadcrumb)
+};
+console.log(uiStore.breadcrumb);
 </script>
 
 <template>

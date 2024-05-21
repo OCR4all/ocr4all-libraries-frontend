@@ -326,15 +326,15 @@ function updateDataViewLayout(event) {
                     {{ $t("pages.repository.overview.dataview.list.header") }}
                   </h4>
                   <span class="relative justify-self-end">
-                <i
-                  class="pi pi-search absolute left-3 top-2/4 -mt-2 text-surface-400 dark:text-surface-600"
-                />
-                <InputText
-                  v-model="filters['global'].value"
-                  class="pl-10"
-                  placeholder="Search..."
-                />
-              </span>
+                  <i
+                    class="pi pi-search absolute left-3 top-2/4 -mt-2 text-surface-400 dark:text-surface-600"
+                  />
+                  <InputText
+                    v-model="filters['global'].value"
+                    class="pl-10"
+                    placeholder="Search..."
+                  />
+                </span>
                 </div>
               </template>
               <Column
@@ -344,17 +344,19 @@ function updateDataViewLayout(event) {
               ></Column>
               <Column
                 field="name"
-                :header="$t('pages.repository.overview.dataview.list.column.name')"
+                :header="
+                $t('pages.repository.overview.dataview.list.column.name')
+              "
                 sortable
               >
                 <template #loading>
                   <div
                     class="align-items-center flex"
                     :style="{
-                  height: '17px',
-                  'flex-grow': '1',
-                  overflow: 'hidden',
-                }"
+                    height: '17px',
+                    'flex-grow': '1',
+                    overflow: 'hidden',
+                  }"
                   >
                     <Skeleton width="60%" height="1rem" />
                   </div>
@@ -363,17 +365,19 @@ function updateDataViewLayout(event) {
               <Column
                 field="description"
                 :header="
-              $t('pages.repository.overview.dataview.list.column.description')
-            "
+                $t(
+                  'pages.repository.overview.dataview.list.column.description',
+                )
+              "
               >
                 <template #loading>
                   <div
                     class="align-items-center flex"
                     :style="{
-                  height: '17px',
-                  'flex-grow': '1',
-                  overflow: 'hidden',
-                }"
+                    height: '17px',
+                    'flex-grow': '1',
+                    overflow: 'hidden',
+                  }"
                   >
                     <Skeleton width="60%" height="1rem" />
                   </div>
@@ -382,41 +386,43 @@ function updateDataViewLayout(event) {
               <Column
                 field="keywords"
                 :header="
-              $t('pages.repository.overview.dataview.list.column.keywords')
-            "
+                $t('pages.repository.overview.dataview.list.column.keywords')
+              "
               >
                 <template #loading>
                   <div
                     class="align-items-center flex"
                     :style="{
-                  height: '17px',
-                  'flex-grow': '1',
-                  overflow: 'hidden',
-                }"
+                    height: '17px',
+                    'flex-grow': '1',
+                    overflow: 'hidden',
+                  }"
                   >
                     <Skeleton width="60%" height="1rem" />
                   </div>
                 </template>
                 <template #body="slotProps">
-                  <Chip v-for="keyword of slotProps.data.keywords" :key="keyword">{{
-                      keyword
-                    }}</Chip>
+                  <Chip
+                    v-for="keyword of slotProps.data.keywords"
+                    :key="keyword"
+                  >{{ keyword }}</Chip
+                  >
                 </template>
               </Column>
               <Column
                 field="actions"
                 :header="
-              $t('pages.repository.overview.dataview.list.column.actions')
-            "
+                $t('pages.repository.overview.dataview.list.column.actions')
+              "
               >
                 <template #loading>
                   <div
                     class="align-items-center flex"
                     :style="{
-                  height: '17px',
-                  'flex-grow': '1',
-                  overflow: 'hidden',
-                }"
+                    height: '17px',
+                    'flex-grow': '1',
+                    overflow: 'hidden',
+                  }"
                   >
                     <Skeleton width="60%" height="1rem" />
                   </div>
@@ -427,10 +433,14 @@ function updateDataViewLayout(event) {
                       type="primary"
                       size="small"
                       rounded
-                      @click="openContainer(slotProps.data.id, slotProps.data.name)"
+                      @click="
+                      openContainer(slotProps.data.id, slotProps.data.name)
+                    "
                     >
                       {{
-                        $t("pages.repository.overview.dataview.list.action.open")
+                        $t(
+                          "pages.repository.overview.dataview.list.action.open",
+                        )
                       }}
                     </ActionButton>
                     <ActionButton
@@ -440,7 +450,9 @@ function updateDataViewLayout(event) {
                       @click="openEditDialog(slotProps.data)"
                     >
                       {{
-                        $t("pages.repository.overview.dataview.list.action.edit")
+                        $t(
+                          "pages.repository.overview.dataview.list.action.edit",
+                        )
                       }}
                     </ActionButton>
                   </div>

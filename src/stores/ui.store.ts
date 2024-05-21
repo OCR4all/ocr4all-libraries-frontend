@@ -18,11 +18,11 @@ export const useUiStore = defineStore({
       "pinia/ui/repositoryDataViewLayout",
       "grid",
     ),
-    breadcrumb: undefined
+    breadcrumb: undefined,
   }),
   actions: {
     flush() {
       this.breadcrumb = undefined;
-    }
+    },
   },
 });
