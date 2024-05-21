@@ -4,7 +4,7 @@ import Dashboard from "@/components/Dashboard/DashboardView.vue";
 </script>
 
 <template>
-  <AppLayout>
+  <AppLayout padded>
     <Dashboard />
   </AppLayout>
 </template>

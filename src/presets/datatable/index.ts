@@ -7,7 +7,8 @@ export default {
       // Size
       { "h-full": props.scrollable && props.scrollHeight === "flex" },
       // Shape
-      "rounded-md border-spacing-0 border-separate",
+      "rounded-md border dark:border-surface-700",
+      "px-4"
     ],
   }),
   loadingoverlay: {
@@ -241,7 +242,7 @@ export default {
           "rounded-md",
           "shadow-sm",
           // Color and Background
-          "bg-surface-0 dark:bg-surface-900",
+          "bg-surface-0 dark:bg-surface-800",
           {
             "ring-1 ring-inset ring-surface-300 dark:ring-surface-700":
               !state.focused,
@@ -361,7 +362,7 @@ export default {
           // Color and Background
           "text-surface-800 dark:text-white/80",
           "placeholder:text-surface-400 dark:placeholder:text-surface-500",
-          "bg-surface-0 dark:bg-surface-900",
+          "bg-surface-0 dark:bg-surface-800",
           {
             "ring-1 ring-inset ring-surface-300 dark:ring-surface-700":
               !state.focused,
@@ -718,7 +719,7 @@ export default {
           // Colors
           {
             "text-surface-700 dark:text-white/80": !props.modelValue,
-            "bg-surface-0 dark:bg-surface-900": !props.modelValue,
+            "bg-surface-0 dark:bg-surface-800": !props.modelValue,
             "border-surface-300 dark:border-surface-700": !props.modelValue,
             "border-primary-500 dark:border-primary-400": props.modelValue,
           },
@@ -781,7 +782,7 @@ export default {
           // Colors
           "text-surface-600",
           {
-            "border-surface-300 bg-surface-0 dark:border-surface-700 dark:bg-surface-900":
+            "border-surface-300 bg-surface-0 dark:border-surface-700 dark:bg-surface-800":
               !context.checked,
             "border-primary-500 bg-primary-500 dark:border-primary-400 dark:bg-primary-400":
               context.checked,
@@ -860,7 +861,7 @@ export default {
           // Colors
           "text-surface-600",
           {
-            "border-surface-300 bg-surface-0 dark:border-surface-700 dark:bg-surface-900":
+            "border-surface-300 bg-surface-0 dark:border-surface-700 dark:bg-surface-800":
               !context.checked,
             "border-primary-500 bg-primary-500 dark:border-primary-400 dark:bg-primary-400":
               context.checked,
@@ -936,7 +937,7 @@ export default {
       },
       { "bg-surface-0 dark:bg-surface-800": props.frozenRow },
       {
-        "odd:bg-surface-0 odd:text-surface-600 dark:odd:bg-surface-800 even:bg-surface-50 even:text-surface-600 dark:even:bg-surface-900/60":
+        "odd:bg-surface-0 odd:text-surface-600 dark:odd:bg-surface-800 even:bg-surface-50 even:text-surface-600 dark:even:bg-surface-800/60":
           context.stripedRows && !context.selected,
       },
       // State

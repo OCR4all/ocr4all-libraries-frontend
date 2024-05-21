@@ -108,7 +108,7 @@ export default {
         // Colors
         "text-surface-600",
         {
-          "border-surface-300 bg-surface-0 dark:border-surface-700 dark:bg-surface-900":
+          "border-surface-300 bg-surface-0 dark:border-surface-700 dark:bg-surface-800":
             !context.checked,
           "border-primary-500 bg-primary-500 dark:border-primary-400 dark:bg-primary-400":
             context.checked,
@@ -179,7 +179,7 @@ export default {
       "rounded-md",
       "text-surface-900 dark:text-surface-0",
       "placeholder:text-surface-400 dark:placeholder:text-surface-500",
-      "bg-surface-0 dark:bg-surface-900",
+      "bg-surface-0 dark:bg-surface-800",
       "ring-1 ring-inset ring-surface-300 dark:ring-surface-700 ring-offset-0",
       "hover:border-primary-500 dark:hover:border-primary-400",
       "focus:outline-none focus:outline-offset-0 focus:ring-2 focus:ring-inset focus:ring-primary-500 dark:focus:ring-primary-400",

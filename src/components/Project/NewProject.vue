@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BreadcrumbNavigation from "@/components/Layout/BreadcrumbNavigation.vue";
+import BreadcrumbNavigation from "@/components/Layout/Breadcrumb/BreadcrumbNavigation.vue";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
@@ -21,9 +21,8 @@ const breadcrumbCurrent = { label: "New" };
 </script>
 
 <template>
-  <BreadcrumbNavigation :home="breadcrumbHome" :current="breadcrumbCurrent" />
   <div
-    class="rounded-md bg-white shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800"
+    class="rounded-md bg-white border dark:border-surface-700 dark:bg-surface-800"
   >
     <section id="stepper" class="p-20">
       <div
@@ -33,7 +32,7 @@ const breadcrumbCurrent = { label: "New" };
           <li
             v-for="(stepData, index) in steps"
             :key="index"
-            class="flex items-center gap-2 bg-white p-2 dark:bg-zinc-800"
+            class="flex items-center gap-2 bg-white p-2 dark:bg-surface-800"
           >
             <span
               class="h-6 w-6 rounded-full text-center text-[10px]/6 font-bold text-surface-500"

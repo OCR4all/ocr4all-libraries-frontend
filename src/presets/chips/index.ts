@@ -23,7 +23,7 @@ export default {
       "rounded-md",
       // Color
       "text-surface-900 dark:text-surface-0",
-      "bg-surface-0 dark:bg-surface-900",
+      "bg-surface-0 dark:bg-surface-800",
       "placeholder:text-surface-400 dark:placeholder:text-surface-500",
       "shadow-sm",
       // States

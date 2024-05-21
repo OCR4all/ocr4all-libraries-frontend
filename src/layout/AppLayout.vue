@@ -2,30 +2,29 @@
 import AppTopbar from "@/layout/AppTopbar.vue";
 import AppSidebar from "@/layout/AppSidebar.vue";
 
+const props = defineProps<{
+  padded?: boolean
+}>()
+
 const sidebarRef = ref();
 
-function toggleSidebarMd() {
-  sidebarRef.value.toggleSidebarMd(true);
-}
-
-function toggleSidebarLg() {
-  sidebarRef.value.toggleSidebarLg();
+function toggleSidebarMobile() {
+  sidebarRef.value.toggleSidebarMobile();
 }
 </script>
 
 <template>
   <SettingsDialog />
-  <div class="flex h-screen flex-col bg-surface-100 dark:bg-surface-900">
-    <AppTopbar
-      @toggle-sidebar-md="toggleSidebarMd"
-      @toggle-sidebar-lg="toggleSidebarLg"
-    />
-    <div class="flex flex-1 overflow-hidden">
+  <div class="h-screen bg-surface-100 dark:bg-surface-950">
+    <div class="h-screen flex flex-1 overflow-hidden">
       <AppSidebar ref="sidebarRef" />
       <main
-        class="mx-auto flex flex-1 justify-center overflow-y-auto bg-surface-100 px-8 py-8 dark:bg-surface-900"
+        class="flex-1 lg:rounded-xl justify-center shadow-sm border dark:border-surface-800 bg-surface-0 lg:m-2 dark:bg-surface-800"
       >
-        <div class="h-full w-full lg:w-11/12">
+        <AppTopbar
+          @toggle-sidebar-mobile="toggleSidebarMobile"
+        />
+        <div class="h-[calc(100vh-82px)] w-full overflow-y-auto rounded-b-2xl" :class="{'p-8': padded}">
           <slot />
         </div>
       </main>

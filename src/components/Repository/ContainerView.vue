@@ -234,7 +234,6 @@ const breadcrumbCurrent = { label: containerName };
 refresh();
 </script>
 <template>
-  <BreadcrumbNavigation :home="breadcrumbHome" :current="breadcrumbCurrent" />
   <Dialog
     v-model:visible="deleteDialogVisible"
     modal

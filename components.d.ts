@@ -10,7 +10,7 @@ declare module 'vue' {
     ActionButton: typeof import('./src/components/ui/ActionButton.vue')['default']
     AvailableWorkflows: typeof import('./src/components/Dashboard/AvailableWorkflows.vue')['default']
     AvatarInitials: typeof import('./src/components/ui/AvatarInitials.vue')['default']
-    BreadcrumbNavigation: typeof import('./src/components/Layout/BreadcrumbNavigation.vue')['default']
+    BreadcrumbNavigation: typeof import('./src/components/Layout/Breadcrumb/BreadcrumbNavigation.vue')['default']
     ContainerCard: typeof import('./src/components/Repository/ContainerCard.vue')['default']
     ContainerView: typeof import('./src/components/Repository/ContainerView.vue')['default']
     CPalette: typeof import('./src/components/NodeFlow/Custom/CPalette.vue')['default']

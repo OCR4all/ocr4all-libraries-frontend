@@ -3,7 +3,7 @@ import AppLayout from "@/layout/AppLayout.vue";
 </script>
 
 <template>
-  <AppLayout>
+  <AppLayout padded>
     <router-view />
   </AppLayout>
 </template>

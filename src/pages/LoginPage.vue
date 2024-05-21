@@ -32,7 +32,7 @@ function onSubmit(
   >
     <img class="h-20 pb-10" src="/img/logo.png" alt="OCR4all logo" />
     <div
-      class="w-full rounded-md bg-white shadow-md dark:border dark:border-surface-700 dark:bg-zinc-800 sm:max-w-md md:mt-0 xl:p-0"
+      class="w-full rounded-md bg-white shadow-md dark:border dark:border-surface-700 dark:bg-surface-800 sm:max-w-md md:mt-0 xl:p-0"
     >
       <div class="space-y-4 p-6 sm:p-8 md:space-y-6">
         <h1
@@ -68,8 +68,8 @@ function onSubmit(
               >{{ $t("pages.login.input.password") }}</label
             >
             <Field
-              type="password"
               id="password"
+              type="password"
               name="password"
               class="block w-full rounded-md border border-surface-300 bg-surface-50 p-2.5 text-surface-900 focus:border-primary-600 focus:ring-primary-600 dark:border-surface-600 dark:bg-surface-700 dark:text-white dark:placeholder-surface-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
               :class="{ 'is-invalid': errors.password }"

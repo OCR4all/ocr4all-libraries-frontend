@@ -32,7 +32,7 @@ export default {
 
       // Color
       "text-surface-900 dark:text-surface-0/80",
-      "bg-surface-0 dark:bg-surface-900",
+      "bg-surface-0 dark:bg-surface-800",
       "ring-1 ring-inset ring-surface-200 dark:ring-surface-800 ring-offset-0",
 
       // Misc

@@ -29,6 +29,7 @@ useCustomFetch(`/workflow/list`)
   .get()
   .json()
   .then((response) => {
+    console.log(response.data.value.length)
     workflows.value = response.data.value.length;
   });
 useCustomFetch(`/repository/container/list`)
@@ -46,7 +47,6 @@ useCustomFetch(`/repository/container/list`)
         });
     }
     folios.value = counter.value;
-    console.log(folios.value);
   });
 
 function startTour() {
@@ -87,7 +87,7 @@ function openSettings() {
       <StatsCard>
         <template #title> Folios </template>
         <template #value>
-          <div v-if="folios">
+          <div>
             {{ folios }}
           </div>
         </template>
@@ -97,7 +97,7 @@ function openSettings() {
           {{ $t("pages.dashboard.stats.workflows") }}
         </template>
         <template #value>
-          <div v-show="workflows">
+          <div>
             {{ workflows }}
           </div>
         </template>
@@ -106,7 +106,7 @@ function openSettings() {
     <div class="grid grid-cols-5 grid-rows-1 gap-8 lg:grid-rows-2">
       <div class="col-span-5 row-span-2 xl:col-span-4">
         <div
-          class="group m-0 h-full rounded-md bg-white p-5 shadow-sm dark:bg-zinc-800"
+          class="group m-0 h-full rounded-md dark:border-surface-700 bg-white dark:bg-surface-800"
         >
           <RecentProjectsOverview />
         </div>
@@ -181,14 +181,14 @@ function openSettings() {
     <div class="grid grid-cols-4 grid-rows-1 gap-8">
       <div class="col-span-4 row-span-1 2xl:col-span-2">
         <div
-          class="group m-0 h-full rounded-md bg-white p-5 shadow-sm dark:bg-zinc-800"
+          class="group m-0 h-full rounded-md bg-white dark:bg-surface-800"
         >
           <AvailableWorkflows />
         </div>
       </div>
       <div class="col-span-4 row-span-1 2xl:col-span-2">
         <div
-          class="group m-0 h-full rounded-md bg-white p-5 shadow-sm dark:bg-zinc-800"
+          class="group m-0 h-full rounded-md bg-white dark:bg-surface-800"
         >
           <SmallJobQueue />
         </div>

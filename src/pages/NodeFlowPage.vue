@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import WorkflowEditor from "@/components/NodeFlow/NodeFlow.vue";
-import AppLayoutFull from "@/layout/AppLayoutFull.vue";
+import AppLayout from "@/layout/AppLayout.vue";
 </script>
 
 <template>
-  <AppLayoutFull>
+  <AppLayout>
     <WorkflowEditor />
-  </AppLayoutFull>
+  </AppLayout>
 </template>

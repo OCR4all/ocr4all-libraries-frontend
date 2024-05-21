@@ -8,7 +8,7 @@ export default {
       "absolute",
       "inset-0 opacity-0 transition-opacity duration-300",
       "bg-transparent text-surface-100",
-      "hover:opacity-100 hover:cursor-pointer hover:bg-surface-900 hover:bg-opacity-50",
+      "hover:opacity-100 hover:cursor-pointer hover:bg-surface-800 hover:bg-opacity-50",
     ],
   },
   mask: {
@@ -16,7 +16,7 @@ export default {
       "flex items-center justify-center",
       "fixed top-0 left-0",
       "w-full h-full",
-      "bg-surface-900/90",
+      "bg-surface-800/90",
     ],
   },
   toolbar: {

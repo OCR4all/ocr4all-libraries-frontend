@@ -125,11 +125,11 @@ defineExpose({
   </Dialog>
   <div class="grid grid-cols-1 justify-self-center">
     <div
-      class="shadow-xs group relative m-2 grid h-64 w-64 rounded-md bg-clip-border text-surface-700 hover:bg-primary-200 hover:dark:bg-surface-600"
+      class="shadow-xs group relative m-2 grid h-64 w-64 rounded-md bg-clip-border text-surface-700 hover:bg-primary-200 hover:dark:bg-surface-700"
       :class="[
         checked
           ? ['bg-primary-200', 'dark:bg-surface-700']
-          : ['bg-surface-100', 'dark:bg-surface-900'],
+          : ['bg-surface-100', 'dark:bg-surface-950'],
       ]"
     >
       <div
@@ -191,6 +191,7 @@ defineExpose({
             <img
               :src="src"
               alt="preview"
+              class="max-h-screen"
               :style="slotProps.style"
               @click="slotProps.onClick"
             />

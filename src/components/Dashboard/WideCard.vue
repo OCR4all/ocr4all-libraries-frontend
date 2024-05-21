@@ -3,7 +3,7 @@ const emit = defineEmits(["start-tour"]);
 </script>
 <template>
   <div
-    class="group flex flex-col justify-between rounded-md bg-white p-5 shadow-sm hover:cursor-pointer hover:bg-blue-700 dark:bg-zinc-800 hover:dark:bg-blue-800 xl:flex-row"
+    class="group flex flex-col justify-between rounded-md border dark:border-surface-700 bg-white p-5 hover:cursor-pointer hover:bg-blue-700 dark:bg-surface-800 hover:dark:bg-blue-800 xl:flex-row"
     @click="emit('start-tour')"
   >
     <div class="my-auto">

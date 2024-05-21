@@ -14,7 +14,7 @@ const props = defineProps<{
 <template>
   <div class="grid grid-cols-1 justify-self-center">
     <div
-      class="shadow-xs group relative m-2 grid h-64 w-64 bg-primary-100 bg-clip-border text-surface-700 hover:bg-primary-200 dark:bg-surface-900 hover:dark:bg-surface-700"
+      class="shadow-xs group relative m-2 grid h-64 w-64 bg-primary-100 bg-clip-border text-surface-700 hover:bg-primary-200 dark:bg-surface-800 hover:dark:bg-surface-700"
     >
       <div
         class="mx-4 mt-4 h-fit w-fit self-center justify-self-center text-surface-700"
@@ -34,6 +34,7 @@ const props = defineProps<{
             <img
               :src="props.img"
               alt="preview"
+              class="max-h-screen"
               :style="slotProps.style"
               @click="slotProps.onClick"
             />

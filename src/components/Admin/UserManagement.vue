@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
-import BreadcrumbNavigation from "@/components/Layout/BreadcrumbNavigation.vue";
+import BreadcrumbNavigation from "@/components/Layout/Breadcrumb/BreadcrumbNavigation.vue";
 import { FilterMatchMode } from "primevue/api";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
@@ -133,7 +133,6 @@ const breadcrumbHome = { to: "/admin", label: "Admin Dashboard" };
 const breadcrumbCurrent = { to: "/admin", label: "User Management" };
 </script>
 <template>
-  <BreadcrumbNavigation :home="breadcrumbHome" :current="breadcrumbCurrent" />
   <div>
     <div class="card">
       <Toolbar class="mb-4">

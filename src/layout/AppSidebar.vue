@@ -7,6 +7,7 @@ import {
 } from "@headlessui/vue";
 import {
   CubeTransparentIcon,
+  Bars3CenterLeftIcon,
   Squares2X2Icon,
   QueueListIcon,
   HomeIcon,
@@ -19,8 +20,9 @@ import { useUiStore } from "@/stores/ui.store";
 
 const uiStore = useUiStore();
 
-const sidebarMdOpened = ref(false);
+const sidebarMobileOpen = ref(false);
 const sidebarLgOpened = ref(true);
+const minimized = ref(false);
 
 const mainNavigation = [
   {
@@ -60,31 +62,32 @@ const mainNavigation = [
   },
 ];
 
-function toggleSidebarMd(val: boolean) {
-  sidebarMdOpened.value = val;
+const router = useRouter();
+
+function toggleSidebar(){
+  minimized.value = !minimized.value
 }
 
-function toggleSidebarLg() {
-  sidebarLgOpened.value = !sidebarLgOpened.value;
+function toggleSidebarMobile(){
+  sidebarMobileOpen.value = !sidebarMobileOpen.value
 }
 
 defineExpose({
-  toggleSidebarMd,
-  toggleSidebarLg,
+  toggleSidebarMobile,
 });
 </script>
 
 <template>
   <!-- Collapsible Sidebar -->
   <TransitionRoot
-    :show="sidebarMdOpened"
+    :show="sidebarMobileOpen"
     as="aside"
     class="overflow-y-auto border-r border-surface-200 bg-surface-0 dark:border-surface-700 dark:bg-surface-800"
   >
     <Dialog
       as="div"
       class="fixed inset-0 z-40 lg:hidden"
-      @close="toggleSidebarMd(false)"
+      @close="toggleSidebarMobile"
     >
       <TransitionChild
         enter="transition ease-in-out duration-200 transform"
@@ -96,13 +99,13 @@ defineExpose({
         as="template"
       >
         <div
-          class="relative z-10 flex h-full w-72 flex-col border-r border-surface-200 bg-white shadow-xl dark:border-zinc-700 dark:bg-zinc-800 lg:hidden"
+          class="relative z-10 flex hn-full w-72 flex-col border-r border-surface-200 bg-white shadow-xl dark:border-zinc-700 dark:bg-surface-800 lg:hidden"
         >
           <button
             value="Close sidebar"
             type="button"
-            class="absolute right-2 top-2 flex h-10 w-10 items-center justify-center rounded-full rounded-md hover:ring-2 hover:ring-surface-300 focus:outline-none focus:ring-2 focus:ring-surface-600"
-            @click="toggleSidebarMd(false)"
+            class="absolute right-2 top-2 flex h-10 w-10 items-center justify-center rounded-md hover:ring-2 hover:ring-surface-300 focus:outline-none focus:ring-2 focus:ring-surface-600"
+            @click="toggleSidebarMobile"
           >
             <XMarkIcon class="h-5 w-5 text-surface-800 dark:text-white" />
           </button>
@@ -182,7 +185,7 @@ defineExpose({
   <TransitionRoot
     :show="sidebarLgOpened"
     as="div"
-    class="overflow-y-auto border-r border-solid border-surface-200 bg-surface-0 shadow-md dark:border-surface-700 dark:bg-surface-800"
+    class="overflow-y-auto bg-surface-100 dark:bg-surface-950 rounded-xl"
     enter="transition ease-in-out duration-200 transform"
     enter-from="-translate-x-full"
     enter-to="translate-x-0"
@@ -190,16 +193,33 @@ defineExpose({
     leave-from="translate-x-0"
     leave-to="-translate-x-full"
   >
-    <div class="hidden w-64 lg:block">
-      <div class="mb-10 space-y-2 px-6 py-8 pb-4">
+    <div class="hidden w-64 m-2 lg:block">
+      <div class="flex my-4 mx-6 justify-between">
+        <img
+          @click="router.push({ name: 'Dashboard' })"
+          src="/img/logo.svg"
+          class="h-12 w-12 cursor-pointer"
+          alt="OCR4all logo"
+        />
+        <button
+          @click="toggleSidebar"
+          class="mt-1 hidden cursor-pointer rounded-md text-surface-600 hover:bg-surface-100 hover:text-surface-900 focus:bg-surface-100 focus:ring-4 focus:ring-surface-100 dark:text-surface-300 dark:hover:bg-surface-700 dark:hover:text-white dark:focus:bg-surface-700 dark:focus:ring-surface-700 lg:block"
+          type="button"
+          value="Open sidebar"
+          v-tooltip="'Toggle Sidebar'"
+        >
+          <Bars3CenterLeftIcon class="h-8 w-8" />
+        </button>
+      </div>
+      <div class="mb-10 space-y-2 px-4 py-4">
         <router-link
           v-for="(item, index) in mainNavigation"
           :key="index"
           :to="item.to"
-          class="group flex items-center rounded-md p-2 px-6 py-2.5 text-surface-900 hover:bg-surface-100 dark:text-white dark:hover:bg-surface-700"
+          class="group flex items-center rounded-md px-4 py-2.5 text-surface-900 hover:bg-surface-200 dark:text-white dark:hover:bg-surface-800"
         >
           <component :is="item.icon" class="mr-2 h-5 w-5" />
-          {{ $t(item.label) }}
+          <p v-show="!minimized" class="pr-20" >{{ $t(item.label) }}</p>
         </router-link>
         <!-- CTA -->
         <div

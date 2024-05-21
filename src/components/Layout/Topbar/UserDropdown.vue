@@ -59,7 +59,7 @@ await useCustomFetch(`/account`)
       leave-to-class="opacity-0 scale-90"
     >
       <MenuItems
-        class="absolute right-0 !z-50 mt-2 w-48 origin-top-right overflow-hidden rounded-md border border-surface-100 bg-white shadow-lg focus:outline-none dark:border-surface-700 dark:bg-zinc-800"
+        class="absolute right-0 !z-50 mt-2 w-48 origin-top-right overflow-hidden rounded-md border border-surface-100 bg-white shadow-lg focus:outline-none dark:border-surface-700 dark:bg-surface-800"
       >
         <template v-for="(item, index) in items" :key="index">
           <MenuItem

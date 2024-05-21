@@ -32,6 +32,7 @@ const TrainingPage = () => import("@/pages/TrainingPage.vue");
 
 import { useAuthStore } from "@/stores/auth.store";
 import { useConfigStore } from "@/stores/config.store";
+import { useUiStore } from "@/stores/ui.store";
 
 const routes = [
   {
@@ -149,6 +150,8 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
+  const ui = useUiStore()
+  ui.flush()
   const config = useConfigStore();
 
   if (config.mode !== "Desktop") {

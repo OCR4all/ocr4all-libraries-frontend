@@ -162,209 +162,207 @@ async function deleteWorkflow() {
 </script>
 <template>
   <Toast />
-  <div class="card">
-    <Toolbar class="mb-4">
-      <template #start>
-        <div class="my-2 space-x-2">
+  <Toolbar class="mb-4">
+    <template #start>
+      <div class="my-2 space-x-2">
+        <button
+          type="button"
+          class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          @click="router.push('/nodeflow')"
+        >
+          {{ $t("pages.workflows.toolbar.new") }}
+        </button>
+      </div>
+    </template>
+
+    <template #end>
+      <button :disabled="isRefetching === true" @click="refetch">
+        <ArrowPathIcon
+          :class="{ 'animate-spin': isRefetching }"
+          class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
+        />
+      </button>
+    </template>
+  </Toolbar>
+  <DataTable
+    :value="workflows"
+    :paginator="true"
+    :rows="10"
+    :loading="loading"
+    :filters="filters"
+    :globalFilterFields="['label', 'description']"
+    sortField="date"
+    :sortOrder="-1"
+    :row-hover="true"
+    paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+    :rows-per-page-options="[10, 25, 50]"
+    responsive-layout="scroll"
+  >
+    <template #header>
+      <div class="flex justify-between">
+        <h2 class="my-4 text-xl">
+          {{ $t("pages.workflows.table.heading") }}
+        </h2>
+        <span class="p-input-icon-left ml-10">
+          <InputText
+            v-model="filters['global'].value"
+            :placeholder="$t('pages.workflows.table.search.placeholder')"
+          />
+        </span>
+      </div>
+    </template>
+    <template #empty>
+      <span class="text-primary-950 dark:text-primary-50">{{
+        $t("pages.workflows.table.empty")
+      }}</span>
+    </template>
+    <template #loading>
+      <DefaultSpinner />
+    </template>
+    <Column :exportable="false" style="min-width: 8rem">
+      <template #body="slotProps">
+        <div class="space-y-2">
           <button
             type="button"
-            class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            @click="router.push('/nodeflow')"
+            class="mr-2 inline-flex items-center rounded-md bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            @click="loadWorkflow(slotProps.data)"
           >
-            {{ $t("pages.workflows.toolbar.new") }}
+            {{ $t("pages.workflows.table.columns.open") }}
           </button>
         </div>
       </template>
-
-      <template #end>
-        <button :disabled="isRefetching === true" @click="refetch">
-          <ArrowPathIcon
-            :class="{ 'animate-spin': isRefetching }"
-            class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
-          />
-        </button>
-      </template>
-    </Toolbar>
-    <DataTable
-      :value="workflows"
-      :paginator="true"
-      :rows="10"
-      :loading="loading"
-      :filters="filters"
-      :globalFilterFields="['label', 'description']"
-      sortField="date"
-      :sortOrder="-1"
-      :row-hover="true"
-      paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-      :rows-per-page-options="[10, 25, 50]"
-      responsive-layout="scroll"
+    </Column>
+    <Column
+      field="label"
+      :header="$t('pages.workflows.table.columns.name')"
+      :sortable="true"
+    ></Column>
+    <Column
+      field="description"
+      :header="$t('pages.workflows.table.columns.description')"
     >
-      <template #header>
-        <div class="flex justify-between">
-          <h2 class="my-4 text-xl">
-            {{ $t("pages.workflows.table.heading") }}
-          </h2>
-          <span class="p-input-icon-left ml-10">
-            <InputText
-              v-model="filters['global'].value"
-              :placeholder="$t('pages.workflows.table.search.placeholder')"
-            />
-          </span>
-        </div>
+      <template #body="slotProps">
+        <p class="max-w-xs truncate">{{ slotProps.data.description }}</p>
       </template>
-      <template #empty>
-        <span class="text-primary-950 dark:text-primary-50">{{
-          $t("pages.workflows.table.empty")
-        }}</span>
-      </template>
-      <template #loading>
-        <DefaultSpinner />
-      </template>
-      <Column :exportable="false" style="min-width: 8rem">
-        <template #body="slotProps">
-          <div class="space-y-2">
-            <button
-              type="button"
-              class="mr-2 inline-flex items-center rounded-md bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              @click="loadWorkflow(slotProps.data)"
-            >
-              {{ $t("pages.workflows.table.columns.open") }}
-            </button>
-          </div>
-        </template>
-      </Column>
-      <Column
-        field="label"
-        :header="$t('pages.workflows.table.columns.name')"
-        :sortable="true"
-      ></Column>
-      <Column
-        field="description"
-        :header="$t('pages.workflows.table.columns.description')"
-      >
-        <template #body="slotProps">
-          <p class="max-w-xs truncate">{{ slotProps.data.description }}</p>
-        </template>
-      </Column>
-      <Column
-        field="date"
-        :header="$t('pages.workflows.table.columns.updated')"
-        :sortable="true"
-      >
-        <template #body="slotProps">
-          <UseTimeAgo
-            v-slot="{ timeAgo }"
-            :time="Date.parse(slotProps.data.date)"
-          >
-            {{ timeAgo }}
-          </UseTimeAgo>
-        </template>
-      </Column>
-      <Column
-        :header="$t('pages.workflows.table.columns.actions')"
-        :exportable="false"
-        style="min-width: 8rem"
-      >
-        <template #body="slotProps">
-          <div class="space-y-2">
-            <button
-              type="button"
-              class="mr-2 inline-flex items-center rounded-md bg-green-600 p-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-100 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-              @click="editWorkflow(slotProps.data.id)"
-            >
-              <PencilIcon class="h-6 w-6 text-white" />
-            </button>
-          </div>
-        </template>
-      </Column>
-    </DataTable>
-    <Dialog
-      v-model:visible="editDialogVisible"
-      modal
-      :header="t('pages.workflows.dialog.edit.header')"
-      :style="{ width: '50vw' }"
+    </Column>
+    <Column
+      field="date"
+      :header="$t('pages.workflows.table.columns.updated')"
+      :sortable="true"
     >
-      <div class="mx-auto grid grid-cols-6 gap-4">
-        <div class="col-span-3 flex flex-col">
-          <label
-            for="text"
-            class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-            >{{ $t("pages.workflows.dialog.edit.form.label.label") }}</label
-          >
-          <InputText v-model="workflowMetadata.label" type="text" />
-          <InlineMessage v-show="labelTaken">{{
-            $t("pages.workflows.dialog.edit.form.label.label-taken")
-          }}</InlineMessage>
-        </div>
-
-        <div class="col-span-3 flex flex-col">
-          <label
-            for="last-name"
-            class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-            >{{ $t("pages.workflows.dialog.edit.form.id.label") }}</label
-          >
-          <InputText disabled v-model="workflowMetadata.id" type="text" />
-        </div>
-
-        <div class="col-span-6 flex flex-col">
-          <label
-            for="message"
-            class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-            >{{
-              $t("pages.workflows.dialog.edit.form.description.label")
-            }}</label
-          >
-          <Textarea v-model="workflowMetadata.description" rows="5" cols="30" />
-        </div>
-
-        <div class="col-span-3 flex flex-col">
-          <label
-            for="last-name"
-            class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-            >{{ $t("pages.workflows.dialog.edit.form.updated.label") }}</label
-          >
-          <InputText disabled v-model="workflowMetadata.date" type="text" />
-        </div>
-
-        <div class="flex items-center justify-between sm:col-span-6">
+      <template #body="slotProps">
+        <UseTimeAgo
+          v-slot="{ timeAgo }"
+          :time="Date.parse(slotProps.data.date)"
+        >
+          {{ timeAgo }}
+        </UseTimeAgo>
+      </template>
+    </Column>
+    <Column
+      :header="$t('pages.workflows.table.columns.actions')"
+      :exportable="false"
+      style="min-width: 8rem"
+    >
+      <template #body="slotProps">
+        <div class="space-y-2">
           <button
-            class="inline-block rounded-md bg-red-400 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 md:text-base"
-            @click="toggleDeleteDialog"
+            type="button"
+            class="mr-2 inline-flex items-center rounded-md bg-green-600 p-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-100 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+            @click="editWorkflow(slotProps.data.id)"
           >
-            {{ $t("pages.workflows.dialog.edit.button.toggle-delete-dialog") }}
+            <PencilIcon class="h-6 w-6 text-white" />
           </button>
         </div>
-      </div>
-      <template #footer>
-        <Button
-          :label="t('pages.workflows.dialog.edit.button.toggle-edit-dialog')"
-          icon="pi pi-times"
-          @click="toggleEditDialog"
-          text
-        />
-        <Button
-          :label="t('pages.workflows.dialog.edit.button.update-workflow')"
-          icon="pi pi-check"
-          @click="updateWorkflow"
-          autofocus
-        />
       </template>
-    </Dialog>
-    <Dialog
-      v-model:visible="deleteDialogVisible"
-      modal
-      :header="t('pages.workflows.dialog.delete.header')"
-      :style="{ width: '50vw' }"
-    >
-      <p class="pb-5 dark:text-surface-200">
-        {{ $t("pages.workflows.dialog.delete.content") }}
-      </p>
-      <ActionButton size="large" rounded @click="toggleDeleteDialog">
-        {{ $t("pages.workflows.dialog.delete.button.cancel") }}
-      </ActionButton>
-      <ActionButton type="delete" size="large" rounded @click="deleteWorkflow">
-        {{ $t("pages.workflows.dialog.delete.button.delete") }}
-      </ActionButton>
-    </Dialog>
-  </div>
+    </Column>
+  </DataTable>
+  <Dialog
+    v-model:visible="editDialogVisible"
+    modal
+    :header="t('pages.workflows.dialog.edit.header')"
+    :style="{ width: '50vw' }"
+  >
+    <div class="mx-auto grid grid-cols-6 gap-4">
+      <div class="col-span-3 flex flex-col">
+        <label
+          for="text"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
+          >{{ $t("pages.workflows.dialog.edit.form.label.label") }}</label
+        >
+        <InputText v-model="workflowMetadata.label" type="text" />
+        <InlineMessage v-show="labelTaken">{{
+          $t("pages.workflows.dialog.edit.form.label.label-taken")
+        }}</InlineMessage>
+      </div>
+
+      <div class="col-span-3 flex flex-col">
+        <label
+          for="last-name"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
+          >{{ $t("pages.workflows.dialog.edit.form.id.label") }}</label
+        >
+        <InputText disabled v-model="workflowMetadata.id" type="text" />
+      </div>
+
+      <div class="col-span-6 flex flex-col">
+        <label
+          for="message"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
+          >{{
+            $t("pages.workflows.dialog.edit.form.description.label")
+          }}</label
+        >
+        <Textarea v-model="workflowMetadata.description" rows="5" cols="30" />
+      </div>
+
+      <div class="col-span-3 flex flex-col">
+        <label
+          for="last-name"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
+          >{{ $t("pages.workflows.dialog.edit.form.updated.label") }}</label
+        >
+        <InputText disabled v-model="workflowMetadata.date" type="text" />
+      </div>
+
+      <div class="flex items-center justify-between sm:col-span-6">
+        <button
+          class="inline-block rounded-md bg-red-400 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 md:text-base"
+          @click="toggleDeleteDialog"
+        >
+          {{ $t("pages.workflows.dialog.edit.button.toggle-delete-dialog") }}
+        </button>
+      </div>
+    </div>
+    <template #footer>
+      <Button
+        :label="t('pages.workflows.dialog.edit.button.toggle-edit-dialog')"
+        icon="pi pi-times"
+        @click="toggleEditDialog"
+        text
+      />
+      <Button
+        :label="t('pages.workflows.dialog.edit.button.update-workflow')"
+        icon="pi pi-check"
+        @click="updateWorkflow"
+        autofocus
+      />
+    </template>
+  </Dialog>
+  <Dialog
+    v-model:visible="deleteDialogVisible"
+    modal
+    :header="t('pages.workflows.dialog.delete.header')"
+    :style="{ width: '50vw' }"
+  >
+    <p class="pb-5 dark:text-surface-200">
+      {{ $t("pages.workflows.dialog.delete.content") }}
+    </p>
+    <ActionButton size="large" rounded @click="toggleDeleteDialog">
+      {{ $t("pages.workflows.dialog.delete.button.cancel") }}
+    </ActionButton>
+    <ActionButton type="delete" size="large" rounded @click="deleteWorkflow">
+      {{ $t("pages.workflows.dialog.delete.button.delete") }}
+    </ActionButton>
+  </Dialog>
 </template>

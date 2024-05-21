@@ -18,6 +18,8 @@ import InputText from "primevue/inputtext";
 import Textarea from "primevue/textarea";
 import Chips from "primevue/chips";
 import Dialog from "primevue/dialog";
+import TabView from "primevue/tabview";
+import TabPanel from "primevue/tabpanel";
 
 import { FilterMatchMode } from "primevue/api";
 
@@ -256,72 +258,74 @@ function updateDataViewLayout(event) {
       Delete
     </button>
   </Dialog>
-  <Toolbar class="mb-4">
-    <template #start>
-      <div class="my-2 flex space-x-2">
-        <ActionButton
-          rounded
-          type="primary"
-          size="large"
-          @click="toggleCreateContainerPanel"
-        >
-          {{ $t("pages.repository.overview.toolbar.button.create") }}
-        </ActionButton>
-        <OverlayPanel ref="createContainerPanel">
-          <div class="flex space-x-1">
-            <InputText v-model="newContainerName" />
-            <Button
-              icon="pi pi-check"
-              severity="info"
-              class="mr-2 w-fit"
-              @click="createContainer"
-            />
+  <TabView>
+    <TabPanel header="Images">
+      <Toolbar class="mb-4">
+        <template #start>
+          <div class="my-2 flex space-x-2">
+            <ActionButton
+              rounded
+              type="primary"
+              size="large"
+              @click="toggleCreateContainerPanel"
+            >
+              {{ $t("pages.repository.overview.toolbar.button.create") }}
+            </ActionButton>
+            <OverlayPanel ref="createContainerPanel">
+              <div class="flex space-x-1">
+                <InputText v-model="newContainerName" />
+                <Button
+                  icon="pi pi-check"
+                  severity="info"
+                  class="mr-2 w-fit"
+                  @click="createContainer"
+                />
+              </div>
+            </OverlayPanel>
+            <ActionButton
+              rounded
+              type="delete"
+              size="large"
+              :disabled="!selectedContainers || !selectedContainers.length"
+              @click="toggleDeleteDialog"
+            >
+              {{ $t("pages.repository.overview.toolbar.button.delete") }}
+            </ActionButton>
           </div>
-        </OverlayPanel>
-        <ActionButton
-          rounded
-          type="delete"
-          size="large"
-          :disabled="!selectedContainers || !selectedContainers.length"
-          @click="toggleDeleteDialog"
+        </template>
+        <template #end>
+          <DataViewLayoutOptions
+            @update:modelValue="updateDataViewLayout"
+            v-model="layout"
+          />
+        </template>
+      </Toolbar>
+      <div
+        class="rounded-md bg-surface-0 @container/content dark:bg-surface-800"
+      >
+        <DataView
+          class="bg-surface-50 dark:bg-surface-700"
+          :value="containers"
+          :layout="layout"
         >
-          {{ $t("pages.repository.overview.toolbar.button.delete") }}
-        </ActionButton>
-      </div>
-    </template>
-    <template #end>
-      <DataViewLayoutOptions
-        @update:modelValue="updateDataViewLayout"
-        v-model="layout"
-      />
-    </template>
-  </Toolbar>
-  <div
-    class="rounded-md bg-surface-0 p-4 @container/content dark:bg-surface-800"
-  >
-    <DataView
-      class="bg-surface-50 dark:bg-surface-700"
-      :value="containers"
-      :layout="layout"
-    >
-      <template #list="slotProps">
-        <DataTable
-          ref="containerDataTable"
-          v-model:selection="selectedContainers"
-          :value="slotProps.items"
-          :filters="filters"
-          lazy
-          :paginator="true"
-          :rows="5"
-          :rows-per-page-options="[5, 10, 20, 50]"
-          table-style="min-width: 50rem"
-        >
-          <template #header>
-            <div class="grid grid-cols-2 justify-between gap-2">
-              <h4 class="m-0">
-                {{ $t("pages.repository.overview.dataview.list.header") }}
-              </h4>
-              <span class="relative justify-self-end">
+          <template #list="slotProps">
+            <DataTable
+              ref="containerDataTable"
+              v-model:selection="selectedContainers"
+              :value="slotProps.items"
+              :filters="filters"
+              lazy
+              :paginator="true"
+              :rows="5"
+              :rows-per-page-options="[5, 10, 20, 50]"
+              table-style="min-width: 50rem"
+            >
+              <template #header>
+                <div class="grid grid-cols-2 justify-between gap-2">
+                  <h4 class="m-0">
+                    {{ $t("pages.repository.overview.dataview.list.header") }}
+                  </h4>
+                  <span class="relative justify-self-end">
                 <i
                   class="pi pi-search absolute left-3 top-2/4 -mt-2 text-surface-400 dark:text-surface-600"
                 />
@@ -331,137 +335,142 @@ function updateDataViewLayout(event) {
                   placeholder="Search..."
                 />
               </span>
-            </div>
-          </template>
-          <Column
-            selection-mode="multiple"
-            style="width: 3rem"
-            :exportable="false"
-          ></Column>
-          <Column
-            field="name"
-            :header="$t('pages.repository.overview.dataview.list.column.name')"
-            sortable
-          >
-            <template #loading>
-              <div
-                class="align-items-center flex"
-                :style="{
+                </div>
+              </template>
+              <Column
+                selection-mode="multiple"
+                style="width: 3rem"
+                :exportable="false"
+              ></Column>
+              <Column
+                field="name"
+                :header="$t('pages.repository.overview.dataview.list.column.name')"
+                sortable
+              >
+                <template #loading>
+                  <div
+                    class="align-items-center flex"
+                    :style="{
                   height: '17px',
                   'flex-grow': '1',
                   overflow: 'hidden',
                 }"
-              >
-                <Skeleton width="60%" height="1rem" />
-              </div>
-            </template>
-          </Column>
-          <Column
-            field="description"
-            :header="
+                  >
+                    <Skeleton width="60%" height="1rem" />
+                  </div>
+                </template>
+              </Column>
+              <Column
+                field="description"
+                :header="
               $t('pages.repository.overview.dataview.list.column.description')
             "
-          >
-            <template #loading>
-              <div
-                class="align-items-center flex"
-                :style="{
+              >
+                <template #loading>
+                  <div
+                    class="align-items-center flex"
+                    :style="{
                   height: '17px',
                   'flex-grow': '1',
                   overflow: 'hidden',
                 }"
-              >
-                <Skeleton width="60%" height="1rem" />
-              </div>
-            </template>
-          </Column>
-          <Column
-            field="keywords"
-            :header="
+                  >
+                    <Skeleton width="60%" height="1rem" />
+                  </div>
+                </template>
+              </Column>
+              <Column
+                field="keywords"
+                :header="
               $t('pages.repository.overview.dataview.list.column.keywords')
             "
-          >
-            <template #loading>
-              <div
-                class="align-items-center flex"
-                :style="{
+              >
+                <template #loading>
+                  <div
+                    class="align-items-center flex"
+                    :style="{
                   height: '17px',
                   'flex-grow': '1',
                   overflow: 'hidden',
                 }"
-              >
-                <Skeleton width="60%" height="1rem" />
-              </div>
-            </template>
-            <template #body="slotProps">
-              <Chip v-for="keyword of slotProps.data.keywords" :key="keyword">{{
-                keyword
-              }}</Chip>
-            </template>
-          </Column>
-          <Column
-            field="actions"
-            :header="
+                  >
+                    <Skeleton width="60%" height="1rem" />
+                  </div>
+                </template>
+                <template #body="slotProps">
+                  <Chip v-for="keyword of slotProps.data.keywords" :key="keyword">{{
+                      keyword
+                    }}</Chip>
+                </template>
+              </Column>
+              <Column
+                field="actions"
+                :header="
               $t('pages.repository.overview.dataview.list.column.actions')
             "
-          >
-            <template #loading>
-              <div
-                class="align-items-center flex"
-                :style="{
+              >
+                <template #loading>
+                  <div
+                    class="align-items-center flex"
+                    :style="{
                   height: '17px',
                   'flex-grow': '1',
                   overflow: 'hidden',
                 }"
-              >
-                <Skeleton width="60%" height="1rem" />
-              </div>
-            </template>
-            <template #body="slotProps">
-              <div class="flex space-x-2">
-                <ActionButton
-                  type="primary"
-                  size="small"
-                  rounded
-                  @click="openContainer(slotProps.data.id, slotProps.data.name)"
-                >
-                  {{
-                    $t("pages.repository.overview.dataview.list.action.open")
-                  }}
-                </ActionButton>
-                <ActionButton
-                  type="primary"
-                  size="small"
-                  rounded
-                  @click="openEditDialog(slotProps.data)"
-                >
-                  {{
-                    $t("pages.repository.overview.dataview.list.action.edit")
-                  }}
-                </ActionButton>
-              </div>
-            </template>
-          </Column>
-        </DataTable>
-      </template>
+                  >
+                    <Skeleton width="60%" height="1rem" />
+                  </div>
+                </template>
+                <template #body="slotProps">
+                  <div class="flex space-x-2">
+                    <ActionButton
+                      type="primary"
+                      size="small"
+                      rounded
+                      @click="openContainer(slotProps.data.id, slotProps.data.name)"
+                    >
+                      {{
+                        $t("pages.repository.overview.dataview.list.action.open")
+                      }}
+                    </ActionButton>
+                    <ActionButton
+                      type="primary"
+                      size="small"
+                      rounded
+                      @click="openEditDialog(slotProps.data)"
+                    >
+                      {{
+                        $t("pages.repository.overview.dataview.list.action.edit")
+                      }}
+                    </ActionButton>
+                  </div>
+                </template>
+              </Column>
+            </DataTable>
+          </template>
 
-      <template #grid="slotProps">
-        <div
-          class="grid grid-cols-1 justify-between gap-x-2 gap-y-3 @[550px]/content:grid-cols-2 @[800px]/content:grid-cols-3 @[1050px]/content:grid-cols-4"
-        >
-          <div v-for="(item, index) in slotProps.items" :key="item.id">
-            <ContainerCard
-              :id="item.id"
-              :ref="setContainerCardsRef"
-              :title="item.name"
-              :description="item.description"
-              :keywords="item.keywords"
-              @refresh="listContainers"
-              @update-selection="updateSelection"
-            />
-          </div>
-        </div>
-      </template>
-    </DataView>
-  </div>
+          <template #grid="slotProps">
+            <div
+              class="grid grid-cols-1 justify-between gap-x-2 gap-y-3 @[550px]/content:grid-cols-2 @[800px]/content:grid-cols-3 @[1050px]/content:grid-cols-4"
+            >
+              <div v-for="(item, index) in slotProps.items" :key="item.id">
+                <ContainerCard
+                  :id="item.id"
+                  :ref="setContainerCardsRef"
+                  :title="item.name"
+                  :description="item.description"
+                  :keywords="item.keywords"
+                  @refresh="listContainers"
+                  @update-selection="updateSelection"
+                />
+              </div>
+            </div>
+          </template>
+        </DataView>
+      </div>
+    </TabPanel>
+    <TabPanel header="Datasets" :disabled="true"></TabPanel>
+    <TabPanel header="Models" :disabled="true"></TabPanel>
+    <TabPanel header="Workflows" :disabled="true"></TabPanel>
+  </TabView>
 </template>

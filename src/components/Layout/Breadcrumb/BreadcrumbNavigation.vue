@@ -1,29 +1,24 @@
 <script setup lang="ts">
-interface IBreadCrumbEntry {
-  label: string;
-  to: string;
-}
+import { IBreadcrumb } from "@/components/Layout/Breadcrumb/Breadcrumb.interface";
+import { useUiStore } from "@/stores/ui.store";
 
-defineProps<{
-  home?: IBreadCrumbEntry;
-  path?: IBreadCrumbEntry[];
-  current?: IBreadCrumbEntry;
-}>();
+const store = useUiStore();
+const breadcrumb: IBreadcrumb | undefined = store.breadcrumb;
 </script>
 <template>
-  <nav class="flex pb-5" aria-label="Breadcrumb">
+  <nav v-if="breadcrumb" class="flex pb-5" aria-label="Breadcrumb">
     <ol class="inline-flex items-center space-x-1 md:space-x-3">
       <li>
         <div class="flex items-center">
           <RouterLink
-            :to="home.to"
+            :to="breadcrumb.home.to"
             href="#"
             class="unstyled bg-ml-1 text-sm font-medium text-surface-700 hover:text-primary-600 dark:text-surface-200 dark:hover:text-white md:ml-2"
-            >{{ home.label }}</RouterLink
+            >{{ breadcrumb.home.label }}</RouterLink
           >
         </div>
       </li>
-      <li v-for="entry of path" :key="entry.label">
+      <li v-for="entry of breadcrumb.path" :key="entry.label">
         <div class="flex items-center">
           <svg
             aria-hidden="true"
@@ -63,7 +58,7 @@ defineProps<{
           </svg>
           <span
             class="ml-1 text-sm font-medium text-surface-500 dark:text-surface-400 md:ml-2"
-            >{{ current.label }}</span
+            >{{ breadcrumb.current.label }}</span
           >
         </div>
       </li>

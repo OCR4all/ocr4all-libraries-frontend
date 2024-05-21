@@ -255,11 +255,11 @@ defineExpose({
   </Dialog>
   <div class="grid grid-cols-1 justify-self-center">
     <div
-      class="shadow-xs group relative m-2 grid h-64 w-64 cursor-pointer rounded-md bg-clip-border text-surface-700 hover:bg-primary-100 hover:dark:bg-surface-700"
+      class="shadow-xs group relative m-2 grid h-64 w-64 cursor-pointer rounded-md bg-clip-border text-surface-700 hover:bg-primary-100 hover:dark:bg-surface-800"
       :class="[
         checked
           ? ['bg-primary-100', 'dark:bg-surface-700']
-          : ['bg-surface-100', 'dark:bg-surface-900'],
+          : ['bg-surface-100', 'dark:bg-surface-950'],
       ]"
       @click.self="openContainer"
     >
