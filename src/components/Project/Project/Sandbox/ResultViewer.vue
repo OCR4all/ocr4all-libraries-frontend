@@ -49,12 +49,7 @@ const LAREX_LABEL = "ocr4all-LAREX-launcher v1.0";
 
 const isProcessorDialogOpen = ref(false);
 function openProcessorDialog() {
-  toast.add({
-    severity: "info",
-    summary: "Not available yet",
-    detail: "Running single processor is currently being implemented",
-  });
-  /*isProcessorDialogOpen.value = true*/
+  isProcessorDialogOpen.value = true;
 }
 async function runProcessor() {}
 
@@ -282,6 +277,9 @@ const breadcrumbCurrent = { label: sandbox };
           method="POST"
           target="_blank"
         >
+          {{ formFileMap }}
+          {{ formMimeMap }}
+
           <input
             id="fileMap"
             v-model="formFileMap"
@@ -328,7 +326,7 @@ const breadcrumbCurrent = { label: sandbox };
   </Dialog>
   <div class="flex space-x-6">
     <transition
-      class="w-128 flex-1 rounded-md bg-white p-5 shadow-md dark:border dark:border-surface-700 dark:bg-surface-800"
+      class="w-128 flex-1 rounded-md border bg-white p-5 dark:border-surface-700 dark:bg-surface-850"
       enter-active-class="transition ease-in-out duration-200 transform"
       enter-from-class="-translate-x-full"
       enter-to-class="translate-x-0"
@@ -382,7 +380,7 @@ const breadcrumbCurrent = { label: sandbox };
                     selectedSnapshotInformation,
                   )"
                   :key="key"
-                  class="border-b bg-white dark:border-surface-700 dark:bg-surface-800"
+                  class="border-b bg-white dark:border-surface-700 dark:bg-surface-850"
                 >
                   <th
                     scope="row"
@@ -401,7 +399,7 @@ const breadcrumbCurrent = { label: sandbox };
       </div>
     </transition>
     <div
-      class="flex-1 rounded-md bg-white p-5 shadow-md dark:border dark:border-surface-700 dark:bg-surface-800"
+      class="flex-1 rounded-md border bg-white p-5 dark:border-surface-700 dark:bg-surface-850"
     >
       <section>
         <h2
@@ -409,7 +407,7 @@ const breadcrumbCurrent = { label: sandbox };
         >
           {{ $t("pages.projects.result-viewer.overview.heading") }}
         </h2>
-        <div class="overflow-x-scroll dark:[color-scheme:dark]">
+        <div class="overflow-x-auto dark:[color-scheme:dark]">
           <OrganizationChart
             v-if="nodes"
             @node-select="collectSnapshotInformation"

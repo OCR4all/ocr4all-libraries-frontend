@@ -3,7 +3,7 @@ const router = useRouter();
 </script>
 <template>
   <div
-    class="group flex flex-col justify-between rounded-md border bg-white p-5 hover:cursor-pointer hover:bg-blue-700 dark:border-surface-700 dark:bg-surface-800 hover:dark:bg-blue-800 xl:flex-row"
+    class="group flex flex-col justify-between rounded-md border bg-white p-5 hover:cursor-pointer hover:bg-blue-700 dark:border-surface-700 dark:bg-surface-850 hover:dark:bg-blue-800 xl:flex-row"
     @click="router.push('/nodeflow')"
   >
     <div class="my-auto">

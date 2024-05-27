@@ -3,10 +3,12 @@ import { IBreadcrumb } from "@/components/Layout/Breadcrumb/Breadcrumb.interface
 import { useUiStore } from "@/stores/ui.store";
 
 const store = useUiStore();
-const breadcrumb: IBreadcrumb | undefined = store.breadcrumb;
+/*const breadcrumb: IBreadcrumb | undefined = store.breadcrumb;*/
+const breadcrumb = store.breadcrumb;
 </script>
 <template>
-  <nav v-if="breadcrumb" class="flex pb-5" aria-label="Breadcrumb">
+  {{ breadcrumb }}
+  <!--  <nav v-if="breadcrumb" class="flex pb-5" aria-label="Breadcrumb">
     <ol class="inline-flex items-center space-x-1 md:space-x-3">
       <li>
         <div class="flex items-center">
@@ -63,5 +65,5 @@ const breadcrumb: IBreadcrumb | undefined = store.breadcrumb;
         </div>
       </li>
     </ol>
-  </nav>
+  </nav>-->
 </template>

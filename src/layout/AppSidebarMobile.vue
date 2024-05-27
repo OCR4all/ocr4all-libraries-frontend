@@ -34,7 +34,7 @@ defineExpose({
   <TransitionRoot
     :show="sidebarMobileOpen"
     as="aside"
-    class="overflow-y-auto border-r border-surface-200 bg-surface-100 dark:border-surface-700 dark:bg-surface-900 md:bg-surface-0 dark:md:bg-surface-800"
+    class="overflow-y-auto border-r border-surface-200 bg-surface-100 dark:border-surface-700 dark:bg-surface-900 md:bg-surface-0 dark:md:bg-surface-850"
   >
     <Dialog
       as="div"
@@ -51,7 +51,7 @@ defineExpose({
         as="template"
       >
         <div
-          class="relative z-10 flex h-full w-72 flex-col border-r border-surface-200 bg-surface-100 shadow-xl dark:border-zinc-700 dark:bg-surface-900 md:bg-white dark:md:bg-surface-800 lg:hidden"
+          class="relative z-10 flex h-full w-72 flex-col border-r border-surface-200 bg-surface-100 shadow-xl dark:border-zinc-700 dark:bg-surface-900 md:bg-white dark:md:bg-surface-850 lg:hidden"
         >
           <button
             value="Close sidebar"

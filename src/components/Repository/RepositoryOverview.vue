@@ -245,7 +245,7 @@ function updateDataViewLayout(event) {
     </p>
     <button
       type="button"
-      class="mb-2 mr-2 rounded-md border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
+      class="mb-2 mr-2 rounded-md border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-850 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
       @click="toggleDeleteDialog"
     >
       Cancel
@@ -301,7 +301,7 @@ function updateDataViewLayout(event) {
         </template>
       </Toolbar>
       <div
-        class="rounded-md bg-surface-0 @container/content dark:bg-surface-800"
+        class="rounded-md bg-surface-0 @container/content dark:bg-surface-850"
       >
         <DataView
           class="bg-surface-50 dark:bg-surface-700"
@@ -326,15 +326,15 @@ function updateDataViewLayout(event) {
                     {{ $t("pages.repository.overview.dataview.list.header") }}
                   </h4>
                   <span class="relative justify-self-end">
-                  <i
-                    class="pi pi-search absolute left-3 top-2/4 -mt-2 text-surface-400 dark:text-surface-600"
-                  />
-                  <InputText
-                    v-model="filters['global'].value"
-                    class="pl-10"
-                    placeholder="Search..."
-                  />
-                </span>
+                    <i
+                      class="pi pi-search absolute left-3 top-2/4 -mt-2 text-surface-400 dark:text-surface-600"
+                    />
+                    <InputText
+                      v-model="filters['global'].value"
+                      class="pl-10"
+                      placeholder="Search..."
+                    />
+                  </span>
                 </div>
               </template>
               <Column
@@ -345,18 +345,18 @@ function updateDataViewLayout(event) {
               <Column
                 field="name"
                 :header="
-                $t('pages.repository.overview.dataview.list.column.name')
-              "
+                  $t('pages.repository.overview.dataview.list.column.name')
+                "
                 sortable
               >
                 <template #loading>
                   <div
                     class="align-items-center flex"
                     :style="{
-                    height: '17px',
-                    'flex-grow': '1',
-                    overflow: 'hidden',
-                  }"
+                      height: '17px',
+                      'flex-grow': '1',
+                      overflow: 'hidden',
+                    }"
                   >
                     <Skeleton width="60%" height="1rem" />
                   </div>
@@ -365,19 +365,19 @@ function updateDataViewLayout(event) {
               <Column
                 field="description"
                 :header="
-                $t(
-                  'pages.repository.overview.dataview.list.column.description',
-                )
-              "
+                  $t(
+                    'pages.repository.overview.dataview.list.column.description',
+                  )
+                "
               >
                 <template #loading>
                   <div
                     class="align-items-center flex"
                     :style="{
-                    height: '17px',
-                    'flex-grow': '1',
-                    overflow: 'hidden',
-                  }"
+                      height: '17px',
+                      'flex-grow': '1',
+                      overflow: 'hidden',
+                    }"
                   >
                     <Skeleton width="60%" height="1rem" />
                   </div>
@@ -386,17 +386,17 @@ function updateDataViewLayout(event) {
               <Column
                 field="keywords"
                 :header="
-                $t('pages.repository.overview.dataview.list.column.keywords')
-              "
+                  $t('pages.repository.overview.dataview.list.column.keywords')
+                "
               >
                 <template #loading>
                   <div
                     class="align-items-center flex"
                     :style="{
-                    height: '17px',
-                    'flex-grow': '1',
-                    overflow: 'hidden',
-                  }"
+                      height: '17px',
+                      'flex-grow': '1',
+                      overflow: 'hidden',
+                    }"
                   >
                     <Skeleton width="60%" height="1rem" />
                   </div>
@@ -405,24 +405,24 @@ function updateDataViewLayout(event) {
                   <Chip
                     v-for="keyword of slotProps.data.keywords"
                     :key="keyword"
-                  >{{ keyword }}</Chip
+                    >{{ keyword }}</Chip
                   >
                 </template>
               </Column>
               <Column
                 field="actions"
                 :header="
-                $t('pages.repository.overview.dataview.list.column.actions')
-              "
+                  $t('pages.repository.overview.dataview.list.column.actions')
+                "
               >
                 <template #loading>
                   <div
                     class="align-items-center flex"
                     :style="{
-                    height: '17px',
-                    'flex-grow': '1',
-                    overflow: 'hidden',
-                  }"
+                      height: '17px',
+                      'flex-grow': '1',
+                      overflow: 'hidden',
+                    }"
                   >
                     <Skeleton width="60%" height="1rem" />
                   </div>
@@ -434,8 +434,8 @@ function updateDataViewLayout(event) {
                       size="small"
                       rounded
                       @click="
-                      openContainer(slotProps.data.id, slotProps.data.name)
-                    "
+                        openContainer(slotProps.data.id, slotProps.data.name)
+                      "
                     >
                       {{
                         $t(

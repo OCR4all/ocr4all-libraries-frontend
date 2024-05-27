@@ -13,11 +13,11 @@ const uiStore = useUiStore();
 const router = useRouter();
 const project: string[] = router.currentRoute.value.params.project;
 
-uiStore.breadcrumb = {
+/*uiStore.breadcrumb = {
   home: { to: "/project/overview", label: "Projects" },
   current: { label: project },
-};
-console.log(uiStore.breadcrumb);
+};*/
+uiStore.breadcrumb = project;
 </script>
 
 <template>

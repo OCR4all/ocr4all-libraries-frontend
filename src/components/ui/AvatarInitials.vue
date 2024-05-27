@@ -1,7 +1,11 @@
 <script setup lang="ts">
+import { useStringToHexColor } from "@/composables/useStringToHexColor";
+
 const props = defineProps<{
   name: string;
   status: string;
+  admin: boolean;
+  small: boolean;
 }>();
 
 const initials = computed(() => {
@@ -11,9 +15,13 @@ const initials = computed(() => {
 </script>
 <template>
   <div
-    class="relative inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-primary-100 dark:bg-primary-200"
+    class="relative inline-flex items-center justify-center overflow-hidden rounded-full bg-primary-100 dark:bg-primary-200"
+    :class="[small ? 'h-4 w-4' : 'h-8 w-8']"
   >
-    <span class="text-sm font-medium text-gray-600 dark:text-surface-900">
+    <span
+      class="font-medium text-gray-600 dark:text-surface-900"
+      :class="[small ? 'text-[6px]' : 'text-sm']"
+    >
       {{ initials }}
     </span>
   </div>

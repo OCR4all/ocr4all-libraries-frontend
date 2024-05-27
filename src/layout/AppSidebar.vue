@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import {
-  CubeTransparentIcon,
   Bars3CenterLeftIcon,
-  Squares2X2Icon,
-  QueueListIcon,
-  HomeIcon,
-  Square3Stack3DIcon,
-  ServerIcon,
-  AcademicCapIcon,
 } from "@heroicons/vue/24/outline";
 import { useUiStore } from "@/stores/ui.store";
 import { navigation } from "@/layout/Sidebar";
@@ -31,7 +24,7 @@ function toggleSidebar() {
 <template>
   <div
     ref="fixedSidebar"
-    class="m-2 hidden lg:block"
+    class="m-1 hidden lg:block"
     :class="[maximized ? 'w-64' : 'w-22']"
   >
     <div class="mx-6 my-4 flex justify-between">
@@ -57,7 +50,7 @@ function toggleSidebar() {
         v-for="(item, index) in navigation"
         :key="index"
         :to="item.to"
-        class="group flex items-center space-x-4 rounded-md px-4 py-2.5 text-surface-900 hover:bg-surface-200 dark:text-white dark:hover:bg-surface-800"
+        class="group flex items-center space-x-4 rounded-md px-4 py-2.5 text-surface-900 hover:bg-surface-200 dark:text-white dark:hover:bg-surface-850"
         :class="[maximized ? 'justify-start' : 'justify-center']"
       >
         <component :is="item.icon" class="h-6 w-6" />

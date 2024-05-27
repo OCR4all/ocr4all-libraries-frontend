@@ -247,7 +247,7 @@ refresh();
     </p>
     <button
       type="button"
-      class="mb-2 mr-2 rounded-md border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
+      class="mb-2 mr-2 rounded-md border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-850 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
       @click="toggleDeleteDialog"
     >
       {{
@@ -317,7 +317,9 @@ refresh();
       </section>
     </template>
   </Toast>
-  <div class="bg-surface-0 p-4 @container/content dark:bg-surface-800 rounded-xl">
+  <div
+    class="rounded-xl bg-surface-0 p-4 @container/content dark:bg-surface-850"
+  >
     <div class="m-4 flex space-x-4">
       <FileUpload
         ref="fileUpload"

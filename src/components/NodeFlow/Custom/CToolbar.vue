@@ -66,7 +66,7 @@ const emit = defineEmits([
         ></div>
         <span v-tooltip="t('pages.nodeflow.toolbar.tooltips.select')">
           <i
-            class="pi pi-copy self-center text-xl text-surface-600 hover:cursor-pointer hover:text-black dark:text-surface-400 dark:hover:text-white"
+            class="pi pi-pen-to-square self-center text-xl text-surface-600 hover:cursor-pointer hover:text-black dark:text-surface-400 dark:hover:text-white"
             @click="
               viewModel.commandHandler.executeCommand(
                 Commands.START_SELECTION_BOX_COMMAND,
@@ -84,7 +84,7 @@ const emit = defineEmits([
         </span>
         <span v-tooltip="t('pages.nodeflow.toolbar.tooltips.paste')">
           <i
-            class="pi pi-search-plus self-center text-xl text-surface-600 hover:cursor-pointer hover:text-black dark:text-surface-400 dark:hover:text-white"
+            class="pi pi-clipboard self-center text-xl text-surface-600 hover:cursor-pointer hover:text-black dark:text-surface-400 dark:hover:text-white"
             @click="
               viewModel.commandHandler.executeCommand(Commands.PASTE_COMMAND)
             "

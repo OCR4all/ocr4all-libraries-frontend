@@ -3,8 +3,8 @@ import AppLayout from "@/layout/AppLayout.vue";
 </script>
 
 <template>
-  <AppLayout>
+  <AppLayout padded>
     <UserManagement />
-    <!--    <router-view />-->
+    <GroupManagement />
   </AppLayout>
 </template>
