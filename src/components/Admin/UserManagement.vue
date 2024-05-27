@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
-import BreadcrumbNavigation from "@/components/Layout/Breadcrumb/BreadcrumbNavigation.vue";
 import { FilterMatchMode } from "primevue/api";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
@@ -31,7 +30,6 @@ async function refetch() {
       users.value = response.data.value;
     });
 }
-function openNew() {}
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -44,7 +42,6 @@ function editUser(data) {
 
 function confirmDeleteUser(data) {
   user.value = data;
-  console.log(user.value);
   deleteUserDialog.value = true;
 }
 
@@ -101,7 +98,7 @@ async function updateUser() {
     });
 }
 
-async function createuser() {
+async function createUser() {
   const payload = {
     login: user.value.login,
     state: user.value.state,
@@ -112,7 +109,7 @@ async function createuser() {
   useCustomFetch(`/administration/security/user/create`)
     .post(payload)
     .then((response) => {
-      hideUserDialog();
+      hideNewUserDialog();
       refetch();
     });
 }
@@ -128,9 +125,6 @@ function hideNewUserDialog() {
 }
 
 refetch();
-
-const breadcrumbHome = { to: "/admin", label: "Admin Dashboard" };
-const breadcrumbCurrent = { to: "/admin", label: "User Management" };
 </script>
 <template>
   <div>
@@ -254,7 +248,7 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
             autofocus
             :class="{ 'p-invalid': submitted && !product.name }"
           />
-          <small class="p-error" v-if="submitted && !user.name"
+          <small v-if="submitted && !user.name" class="p-error"
             >Name is required.</small
           >
         </div>
@@ -330,7 +324,7 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
             autofocus
             :class="{ 'p-invalid': submitted && !product.name }"
           />
-          <small class="p-error" v-if="submitted && !user.name"
+          <small v-if="submitted && !user.name" class="p-error"
             >Name is required.</small
           >
         </div>
@@ -380,7 +374,7 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
           <i class="pi pi-times"></i>
           {{ $t("admin.user-management.dialog.create.footer.button.cancel") }}
         </ActionButton>
-        <ActionButton rounded type="primary" size="large" @click="updateUser">
+        <ActionButton rounded type="primary" size="large" @click="createUser">
           <i class="pi pi-check"></i>
           {{ $t("admin.user-management.dialog.create.footer.button.save") }}
         </ActionButton>
@@ -446,4 +440,6 @@ const breadcrumbCurrent = { to: "/admin", label: "User Management" };
       </template>
     </Dialog>
   </div>
+  {{ users }}
+  <p>das</p>
 </template>
