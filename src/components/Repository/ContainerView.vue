@@ -237,6 +237,10 @@ uiStore.breadcrumb = [
     to: "/repository/overview"
   },
   {
+    label: "Images",
+    to: "/repository/overview"
+  },
+  {
     label: containerName,
   },
 ]
