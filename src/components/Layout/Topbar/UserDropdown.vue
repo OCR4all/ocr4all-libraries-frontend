@@ -14,19 +14,17 @@ interface IUserDropdownEntry {
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useAuthStore } from "@/stores/auth.store";
-import { useUiStore } from "@/stores/ui.store";
+import { RemovableRef } from "@vueuse/core";
 
 import OverlayPanel from "primevue/overlaypanel";
-import Button from "primevue/button";
 
 const router = useRouter();
 
-const uiStore = useUiStore();
 const authStore = useAuthStore();
 
 const op = ref();
 
-const user: Ref<object | undefined> = ref();
+const user: RemovableRef<object> = ref();
 
 const profileItems: IUserDropdownEntry[] = [
   { action: openSettings, label: "Settings", icon: Cog8ToothIcon }
@@ -38,10 +36,6 @@ const adminItems: IUserDropdownEntry[] = [
 
 function openSettings() {
   router.push("/settings");
-}
-
-function openHelp() {
-
 }
 
 function openAdminDashboard() {
@@ -56,7 +50,6 @@ await useCustomFetch(`/account`)
   .json()
   .then((response) => {
     user.value = response.data.value;
-    console.log(user.value);
   });
 
 const toggle = (event) => {
@@ -66,7 +59,7 @@ const toggle = (event) => {
 
 <template>
   <button class="pt-1 pl-1" @click="toggle">
-    <AvatarInitials :name="user.name" status="admin" />
+    <AvatarInitials :name="user.name" :admin="authStore.isAdmin" />
   </button>
   <OverlayPanel ref="op" class="mr-1">
     <div class="flex flex-col">

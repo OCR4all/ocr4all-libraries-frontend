@@ -62,6 +62,5 @@ app.use(ToastService);
 app.use(router);
 app.use(plugin, defaultConfig(formkitConfig));
 app.use(autoAnimatePlugin)
-app.directive("tooltip", Tooltip);
 
 app.mount("#app");

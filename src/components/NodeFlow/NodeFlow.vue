@@ -22,9 +22,12 @@ import { useNodeFlowStore } from "@/stores/nodeflow.store";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
 import { useI18n } from "vue-i18n";
+import { useUiStore } from "@/stores/ui.store";
 const { t } = useI18n();
 
 const toast = useToast();
+
+const uiStore = useUiStore();
 
 const baklava = useBaklava();
 baklava.settings.enableMinimap = true;
@@ -58,8 +61,7 @@ Promise.resolve(importNodesFromAPI()).then(async (nodes) => {
   }
 });
 
-const selectedWorkflow = ref({ id: store.graphId, label: store.graphLabel });
-console.log(selectedWorkflow.value)
+const selectedWorkflow = ref();
 const availableWorkflows = ref();
 
 const labelEntered = ref(true);
@@ -96,6 +98,13 @@ function newGraph() {
   workflowName.value = null;
   originalWorkflowName.value = null;
   workflowDescription.value = null;
+
+
+  uiStore.breadcrumb = [
+    {
+      label: "NodeFlow",
+    },
+  ]
 }
 
 async function openSaveDialog() {
@@ -166,6 +175,15 @@ async function loadWorkflow() {
     workflowDescription.value = data.value.metadata.description;
     workflowName.value = data.value.metadata.label;
     originalWorkflowName.value = data.value.metadata.label;
+
+    uiStore.breadcrumb = [
+      {
+        label: "NodeFlow",
+      },
+      {
+        label: selectedWorkflow.value.label
+      }
+    ]
     toast.add({
       severity: "success",
       summary: t("pages.nodeflow.toasts.load.success.summary"),
@@ -241,7 +259,6 @@ function togglePalette() {
         filter
         placeholder="Select a Workflow"
         class="md:w-14rem w-full"
-        @change="console.log(selectedWorkflow)"
       >
         <template #value="slotProps">
           <div v-if="slotProps.value" class="align-items-center flex">

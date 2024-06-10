@@ -13,6 +13,7 @@ import { UseTimeAgo } from "@vueuse/components";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import RefreshIconButton from "@/components/ui/RefreshIconButton.vue";
+import { useUiStore } from "@/stores/ui.store";
 
 const router = useRouter();
 
@@ -56,6 +57,14 @@ const getSeverity = (entry) => {
   }
 };
 const states = ref(["active", "closed", "blocked"]);
+
+const uiStore = useUiStore()
+uiStore.breadcrumb = [
+  {
+    label: "Projects",
+    to: "/project/overview"
+  },
+]
 </script>
 <template>
   <div class="card">

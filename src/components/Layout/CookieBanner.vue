@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Dialog from 'primevue/dialog';
+import Button from 'primevue/button';
 import { useUiStore } from "@/stores/ui.store";
 
 const uiStore = useUiStore();

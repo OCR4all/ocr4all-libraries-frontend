@@ -27,8 +27,8 @@ importers:
         specifier: ^2.1.3
         version: 2.1.3(vue@3.4.27(typescript@5.3.3))
       '@tanstack/vue-query':
-        specifier: ^5.40.1
-        version: 5.40.1(vue@3.4.27(typescript@5.3.3))
+        specifier: ^5.41.0
+        version: 5.41.0(vue@3.4.27(typescript@5.3.3))
       '@vee-validate/i18n':
         specifier: ^4.13.1
         version: 4.13.1
@@ -160,8 +160,8 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1
       prettier-plugin-tailwindcss:
-        specifier: ^0.6.1
-        version: 0.6.1(prettier@3.3.1)
+        specifier: ^0.6.2
+        version: 0.6.2(prettier@3.3.1)
       rollup-plugin-visualizer:
         specifier: ^5.12.0
         version: 5.12.0(rollup@4.18.0)
@@ -1032,8 +1032,8 @@ packages:
   '@tanstack/virtual-core@3.5.0':
     resolution: {integrity: sha512-KnPRCkQTyqhanNC0K63GBG3wA8I+D1fQuVnAvcBF8f13akOKeQp1gSbu6f77zCxhEk727iV5oQnbHLYzHrECLg==}
 
-  '@tanstack/vue-query@5.40.1':
-    resolution: {integrity: sha512-S6zUwFPcLyfwpJO3llD2iTZtQp0Na8cTh+LggdRulIcHMxgjVAKRkjPETFE5fnQiVvtXDkz3pCmTl1Yf5/xxFQ==}
+  '@tanstack/vue-query@5.41.0':
+    resolution: {integrity: sha512-kpKyicifRROxdzkyk/CA1q6G9VSw+ZNVCIK3cmG+hcKnCrhc6OyMinEQ8drfMuyxahScBOR+DVkqu/0H+Y/f1Q==}
     peerDependencies:
       '@vue/composition-api': ^1.1.2
       vue: ^2.6.0 || ^3.3.0
@@ -2834,8 +2834,8 @@ packages:
     resolution: {integrity: sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==}
     engines: {node: '>=6.0.0'}
 
-  prettier-plugin-tailwindcss@0.6.1:
-    resolution: {integrity: sha512-AnbeYZu0WGj+QgKciUgdMnRxrqcxltleZPgdwfA5104BHM3siBLONN/HLW1yS2HvzSNkzpQ/JAj+LN0jcJO+0w==}
+  prettier-plugin-tailwindcss@0.6.2:
+    resolution: {integrity: sha512-eFefm4cg+1c2B57+H274Qm//CTWBdtQN9ansl0YTP/8TC8x3bugCTQSS/e4FC5Ctl9djhTzsbcMrZ7x2/abIow==}
     engines: {node: '>=14.21.3'}
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
@@ -4349,7 +4349,7 @@ snapshots:
 
   '@tanstack/virtual-core@3.5.0': {}
 
-  '@tanstack/vue-query@5.40.1(vue@3.4.27(typescript@5.3.3))':
+  '@tanstack/vue-query@5.41.0(vue@3.4.27(typescript@5.3.3))':
     dependencies:
       '@tanstack/match-sorter-utils': 8.15.1
       '@tanstack/query-core': 5.40.0
@@ -6351,7 +6351,7 @@ snapshots:
     dependencies:
       fast-diff: 1.3.0
 
-  prettier-plugin-tailwindcss@0.6.1(prettier@3.3.1):
+  prettier-plugin-tailwindcss@0.6.2(prettier@3.3.1):
     dependencies:
       prettier: 3.3.1
 

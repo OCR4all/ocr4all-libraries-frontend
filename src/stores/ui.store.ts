@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { RemovableRef } from "@vueuse/core";
-import { IBreadcrumb } from "@/components/Layout/Breadcrumb/Breadcrumb.interface";
+import { IBreadCrumbEntry } from "@/components/Layout/Breadcrumb/Breadcrumb.interface";
 
 interface IUiStore {
   sidebarCtaVisible: RemovableRef<boolean>;
@@ -8,8 +8,7 @@ interface IUiStore {
   cookieBannerVisible: RemovableRef<boolean>;
   tourSpeedDialVisible: boolean;
   repositoryDataViewLayout: RemovableRef<string>;
-  /*breadcrumb: RemovableRef<IBreadcrumb> | undefined;*/
-  breadcrumb: string;
+  breadcrumb: RemovableRef<IBreadCrumbEntry[]> | undefined;
 }
 
 export const useUiStore = defineStore({
@@ -23,11 +22,11 @@ export const useUiStore = defineStore({
       "pinia/ui/repositoryDataViewLayout",
       "grid",
     ),
-    breadcrumb: "",
+    breadcrumb: undefined,
   }),
   actions: {
     flush() {
-      this.breadcrumb = "";
+      this.breadcrumb = undefined;
     },
   },
 });

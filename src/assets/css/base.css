@@ -40,7 +40,7 @@
   --primary-active-color: var(--primary-600);
 
   --primary-highlight-opacity: 0.1;
-  --primary-highlight-inverse: var(--primary-700);
+  --primary-highlight-inverse: var(--primary-100);
   --primary-highlight-hover-opacity: 0.2;
 }
 

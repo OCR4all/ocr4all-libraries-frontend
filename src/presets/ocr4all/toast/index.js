@@ -3,7 +3,6 @@ export default {
         class: [
             //Size and Shape
             'w-96 rounded-md',
-
             // Positioning
             { '-translate-x-2/4': props.position == 'top-center' || props.position == 'bottom-center' }
         ]
@@ -13,7 +12,6 @@ export default {
             'mb-4 rounded-md w-full',
             'border border-transparent',
             'backdrop-blur-[10px] shadow-md',
-
             // Colors
             {
                 'bg-blue-50/90 dark:bg-blue-500/20': props.message.severity == 'info',
@@ -58,12 +56,7 @@ export default {
         ]
     }),
     text: {
-        class: [
-            // Font and Text
-            'text-base leading-[normal]',
-            'ml-2',
-            'flex-1'
-        ]
+        class: ['text-base leading-[normal]', 'ml-2', 'flex-1']
     },
     summary: {
         class: 'font-medium block'
@@ -75,22 +68,16 @@ export default {
         class: [
             // Flexbox
             'flex items-center justify-center',
-
             // Size
             'w-7 h-7',
-
             // Spacing and Misc
             'ml-auto  relative',
-
             // Shape
             'rounded-full',
-
             // Colors
             'bg-transparent',
-
             // Transitions
             'transition duration-200 ease-in-out',
-
             // States
             'hover:bg-surface-0/30 dark:hover:bg-[rgba(255,255,255,0.03)]',
             'focus:outline-none focus:outline-offset-0 focus:ring-1',
@@ -102,7 +89,6 @@ export default {
                 'focus:ring-red-500 dark:focus:ring-red-4000': props.severity == 'error',
                 'focus:ring-surface-0 dark:focus:ring-surface-950': props.severity == 'contrast'
             },
-
             // Misc
             'overflow-hidden'
         ]

@@ -17,6 +17,7 @@ import { LocationQueryValue, Router } from "vue-router";
 import { ToastServiceMethods } from "primevue/toastservice";
 import { Store } from "pinia";
 import { useI18n } from "vue-i18n";
+import { useUiStore } from "@/stores/ui.store";
 const config: Store = useConfigStore();
 const auth: Store = useAuthStore();
 
@@ -229,8 +230,16 @@ function toggleDeleteDialog() {
 }
 
 const checked = ref();
-const breadcrumbHome = { to: "/repository/overview", label: "Repository" };
-const breadcrumbCurrent = { label: containerName };
+const uiStore = useUiStore()
+uiStore.breadcrumb = [
+  {
+    label: "Repository",
+    to: "/repository/overview"
+  },
+  {
+    label: containerName,
+  },
+]
 refresh();
 </script>
 <template>

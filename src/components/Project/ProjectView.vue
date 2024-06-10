@@ -8,16 +8,19 @@ import Information from "@/components/Project/Project/ProjectInformation.vue";
 import Results from "@/components/Project/Project/ProjectSandboxes.vue";
 import { useUiStore } from "@/stores/ui.store";
 
-const uiStore = useUiStore();
-
 const router = useRouter();
 const project: string[] = router.currentRoute.value.params.project;
 
-/*uiStore.breadcrumb = {
-  home: { to: "/project/overview", label: "Projects" },
-  current: { label: project },
-};*/
-uiStore.breadcrumb = project;
+const uiStore = useUiStore()
+uiStore.breadcrumb = [
+  {
+    label: "Projects",
+    to: "/project/overview"
+  },
+  {
+    label: project,
+  },
+]
 </script>
 
 <template>

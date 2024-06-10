@@ -3,9 +3,8 @@ import { useStringToHexColor } from "@/composables/useStringToHexColor";
 
 const props = defineProps<{
   name: string;
-  status: string;
   admin: boolean;
-  small: boolean;
+  small?: boolean;
 }>();
 
 const initials = computed(() => {

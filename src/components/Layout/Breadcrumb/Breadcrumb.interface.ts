@@ -1,10 +1,6 @@
+import { RouteLocationRaw } from "vue-router";
+
 export interface IBreadCrumbEntry {
   label: string;
-  to?: string;
-}
-
-export interface IBreadcrumb {
-  home: IBreadCrumbEntry;
-  path?: IBreadCrumbEntry[];
-  current: IBreadCrumbEntry;
+  to?: RouteLocationRaw;
 }

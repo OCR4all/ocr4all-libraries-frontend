@@ -22,6 +22,7 @@ const larexURL = import.meta.env.VITE_LAREX_URL;
 
 import { useI18n } from "vue-i18n";
 import ProgressBar from "primevue/progressbar";
+import { useUiStore } from "@/stores/ui.store";
 const { t } = useI18n();
 
 const isGeneratingSandbox = ref(false);
@@ -74,7 +75,6 @@ async function refetch() {
     .get()
     .json();
   const snapshots = data.value["snapshot-synopsis"];
-  console.log(data.value)
   if (snapshots !== undefined) {
     const root = snapshots["root-processor"];
     const firstClassChildren = root["derived-processors"];
@@ -237,9 +237,20 @@ async function checkJob(startedJob) {
 }
 refetch();
 
-const breadcrumbHome = { to: "/project/overview", label: "Projects" };
-const breadcrumbPaths = [{ to: `/project/${project}/view`, label: project }];
-const breadcrumbCurrent = { label: sandbox };
+const uiStore = useUiStore()
+uiStore.breadcrumb = [
+  {
+    label: "Projects",
+    to: "/project/overview"
+  },
+  {
+    label: project,
+    to: `/project/${project}/view`
+  },
+  {
+    label: sandbox
+  }
+]
 </script>
 <template>
   <Toast />
@@ -295,20 +306,18 @@ const breadcrumbCurrent = { label: sandbox };
           <button
             type="submit"
             name="action"
-            class="bg-primary-600 p-2 text-surface-50 hover:bg-primary-800"
+            class="bg-primary-600 p-2 text-surface-50 hover:bg-primary-800 rounded-md"
             @click="closeCallback"
           >
             Open
           </button>
-        </form>
-        <div class="mb-3 flex gap-3 justify-self-center">
           <Button
             label="Close"
             text
             class="px-2 py-1"
             @click="closeCallback"
           ></Button>
-        </div>
+        </form>
       </section>
     </template>
   </Toast>
