@@ -26,6 +26,7 @@ export default {
             "font-bold",
             // Shape
             props.showGridlines ? "border-x border-t border-b-0" : "border-y border-x-0",
+            "rounded-t-md",
             // Spacing
             "p-4",
             // Color

@@ -7,7 +7,6 @@ import { ArrowPathIcon, ArrowUpOnSquareIcon } from "@heroicons/vue/24/outline";
 
 import { UseTimeAgo } from "@vueuse/components";
 
-import Tag from "primevue/tag";
 import Column from "primevue/column";
 import DataTable from "primevue/datatable";
 
@@ -31,17 +30,6 @@ async function refetch() {
 }
 
 refetch();
-
-function getStateSeverity(state) {
-  switch (state) {
-    case "finished":
-      return "success";
-    case "active":
-      return "info";
-    case "archived":
-      return "warning";
-  }
-}
 </script>
 
 <template>
@@ -53,7 +41,6 @@ function getStateSeverity(state) {
       :row-hover="true"
       :loading="initialLoading"
       paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-      responsive-layout="scroll"
     >
       <template #empty
         ><span class="text-primary-950 dark:text-primary-50">{{
@@ -99,16 +86,6 @@ function getStateSeverity(state) {
         :sortable="true"
         >></Column
       >
-      <Column
-        :header="$t('pages.dashboard.components.recent-projects.columns.state')"
-      >
-        <template #body="slotProps">
-          <Tag
-            :value="slotProps.data.state"
-            :severity="getStateSeverity(slotProps.data.state)"
-          />
-        </template>
-      </Column>
       <Column
         field="tracking.updated"
         :header="

@@ -49,7 +49,7 @@
       },
       "components": {
         "recent-projects": {
-          "header": "Recent Projects",
+          "header": "Your Projects",
           "empty": "No projects found.",
           "columns": {
             "project": "Project",
@@ -58,7 +58,7 @@
           }
         },
         "queue": {
-          "header": "Job Queue",
+          "header": "Your Job Queue",
           "empty": "No jobs found.",
           "columns": {
             "id": "ID",
@@ -67,7 +67,7 @@
           }
         },
         "workflows": {
-          "header": "Available Workflows",
+          "header": "Your Workflows",
           "empty": "No workflows found.",
           "columns": {
             "name": "Name",

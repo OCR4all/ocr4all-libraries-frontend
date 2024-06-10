@@ -86,49 +86,49 @@ await useCustomFetch(`/account`)
     <span class="ml-2 group-hover:animate-waving-hand">👋</span>
   </h1>
   <div class="space-y-8 pb-8">
-<!--    <div class="grid grid-cols-2 grid-rows-1 gap-8 xl:grid-cols-4">-->
-<!--      <StatsCard>-->
-<!--        <template #title> {{ $t("pages.dashboard.stats.projects") }} </template>-->
-<!--        <template #value>-->
-<!--          <div v-if="projects">-->
-<!--            {{ projects }}-->
-<!--          </div>-->
-<!--          <div v-else>-->
-<!--            <Skeleton width="1rem" height="1rem" />-->
-<!--          </div>-->
-<!--        </template>-->
-<!--      </StatsCard>-->
-<!--      <StatsCard>-->
-<!--        <template #title> Collections </template>-->
-<!--        <template #value>-->
-<!--          <div v-if="collections">-->
-<!--            {{ collections.length }}-->
-<!--          </div>-->
-<!--        </template>-->
-<!--      </StatsCard>-->
-<!--      <StatsCard>-->
-<!--        <template #title> Folios </template>-->
-<!--        <template #value>-->
-<!--          <div>-->
-<!--            {{ folios }}-->
-<!--          </div>-->
-<!--        </template>-->
-<!--      </StatsCard>-->
-<!--      <StatsCard>-->
-<!--        <template #title>-->
-<!--          {{ $t("pages.dashboard.stats.workflows") }}-->
-<!--        </template>-->
-<!--        <template #value>-->
-<!--          <div>-->
-<!--            {{ workflows }}-->
-<!--          </div>-->
-<!--        </template>-->
-<!--      </StatsCard>-->
-<!--    </div>-->
+    <div class="grid grid-cols-2 grid-rows-1 gap-8 xl:grid-cols-4">
+      <StatsCard>
+        <template #title> {{ $t("pages.dashboard.stats.projects") }} </template>
+        <template #value>
+          <div v-if="projects">
+            {{ projects }}
+          </div>
+          <div v-else>
+            <Skeleton width="1rem" height="1rem" />
+          </div>
+        </template>
+      </StatsCard>
+      <StatsCard>
+        <template #title> Collections </template>
+        <template #value>
+          <div v-if="collections">
+            {{ collections.length }}
+          </div>
+        </template>
+      </StatsCard>
+      <StatsCard>
+        <template #title> Folios </template>
+        <template #value>
+          <div>
+            {{ folios }}
+          </div>
+        </template>
+      </StatsCard>
+      <StatsCard>
+        <template #title>
+          {{ $t("pages.dashboard.stats.workflows") }}
+        </template>
+        <template #value>
+          <div>
+            {{ workflows }}
+          </div>
+        </template>
+      </StatsCard>
+    </div>
     <div class="grid grid-cols-5 grid-rows-1 gap-8 lg:grid-rows-2">
       <div class="col-span-5 row-span-2 xl:col-span-4">
         <div
-          class="group m-2 h-full rounded-md bg-white dark:border-surface-800 dark:bg-surface-900"
+          class="group h-full rounded-md bg-white border border-surface-200 dark:border-surface-800 dark:bg-surface-900"
         >
           <RecentProjectsOverview />
         </div>
@@ -202,12 +202,12 @@ await useCustomFetch(`/account`)
     </div>
     <div class="grid grid-cols-4 grid-rows-1 gap-8">
       <div class="col-span-4 row-span-1 2xl:col-span-2">
-        <div class="group m-0 h-full rounded-md bg-white dark:bg-surface-900">
+        <div class="group m-0 h-full rounded-md border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900">
           <AvailableWorkflows />
         </div>
       </div>
       <div class="col-span-4 row-span-1 2xl:col-span-2">
-        <div class="group m-0 h-full rounded-md bg-white dark:bg-surface-900">
+        <div class="group m-0 h-full rounded-md border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900">
           <SmallJobQueue />
         </div>
       </div>

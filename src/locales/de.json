@@ -49,7 +49,7 @@
       },
       "components": {
         "recent-projects": {
-          "header": "Zuletzt bearbeitete Projekte",
+          "header": "Deine Projekte",
           "empty": "Keine Projekte vorhanden.",
           "columns": {
             "project": "Projekt",
@@ -58,7 +58,7 @@
           }
         },
         "queue": {
-          "header": "Warteschlange",
+          "header": "Deine Warteschlange",
           "empty": "Keine Aufträge in der Warteschlange.",
           "columns": {
             "id": "ID",
@@ -67,7 +67,7 @@
           }
         },
         "workflows": {
-          "header": "Verfügbare Workflows",
+          "header": "Deine Workflows",
           "empty": "Keine Workflows vorhanden.",
           "columns": {
             "name": "Name",
