@@ -22,6 +22,8 @@ import Dialog from "primevue/dialog";
 import Toast from "primevue/toast";
 import InlineMessage from "primevue/inlinemessage";
 import Textarea from "primevue/textarea";
+import Menu from 'primevue/menu';
+
 import { FilterMatchMode } from "primevue/api";
 
 import { useI18n } from "vue-i18n";
@@ -43,6 +45,12 @@ const labelTaken: Ref<boolean> = ref(false);
 const originalWorkflowName: Ref<string | undefined> = ref();
 const workflowMetadata: Ref<IWorkflowMetadata> = ref();
 const workflowView = ref();
+
+const menu = ref();
+
+const toggle = (event) => {
+  menu.value.toggle(event);
+};
 
 const loading = ref(true);
 const isRefetching = ref(false);
@@ -260,19 +268,20 @@ async function deleteWorkflow() {
       </template>
     </Column>
     <Column
-      :header="$t('pages.workflows.table.columns.actions')"
       :exportable="false"
       style="min-width: 8rem"
     >
       <template #body="slotProps">
         <div class="space-y-2">
-          <button
+          <Button type="button" icon="pi pi-ellipsis-v" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" />
+          <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
+<!--          <button
             type="button"
             class="mr-2 inline-flex items-center rounded-md bg-green-600 p-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-100 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
             @click="editWorkflow(slotProps.data.id)"
           >
             <PencilIcon class="h-6 w-6 text-white" />
-          </button>
+          </button>-->
         </div>
       </template>
     </Column>

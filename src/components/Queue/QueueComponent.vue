@@ -13,6 +13,8 @@ import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
 import Dropdown from "primevue/dropdown";
 import Toast from "primevue/toast";
+import Button from "primevue/button";
+import Menu  from "primevue/menu";
 import ProgressBar from "primevue/progressbar";
 import { FilterMatchMode } from "primevue/api";
 
@@ -66,6 +68,7 @@ async function refetch() {
   const _jobs = [];
   for (const entries of Object.values(data.value)) {
     for (const job of entries) {
+      console.log(job)
       _jobs.push(job);
     }
   }
@@ -204,7 +207,6 @@ async function removeJob(job) {
       :sortable="true"
       header="State"
       :show-filter-menu="false"
-      :filter-menu-style="{ width: '14rem' }"
     >
       <template #body="{ data }">
         <Tag :value="data.state" :style="getColor(data.state)" />
@@ -256,5 +258,12 @@ async function removeJob(job) {
         </UseTimeAgo>
       </template>
     </Column>
+<!--    <Column
+    field="actions">
+      <template #body="slotProps">
+        <Button type="button" icon="pi pi-ellipsis-v" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" />
+        <Menu ref="menu" id="overlay_menu" :popup="true" />
+      </template>
+    </Column>-->
   </DataTable>
 </template>

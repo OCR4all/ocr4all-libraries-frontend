@@ -22,7 +22,7 @@ const breadcrumbCurrent = { label: "New" };
 
 <template>
   <div
-    class="rounded-md border bg-white dark:border-surface-700 dark:bg-surface-850"
+    class="rounded-md border bg-white dark:border-surface-800 dark:bg-surface-900"
   >
     <section id="stepper" class="p-20">
       <div
@@ -32,7 +32,7 @@ const breadcrumbCurrent = { label: "New" };
           <li
             v-for="(stepData, index) in steps"
             :key="index"
-            class="flex items-center gap-2 bg-white p-2 dark:bg-surface-850"
+            class="flex items-center gap-2 bg-white p-2 dark:bg-surface-900"
           >
             <span
               class="h-6 w-6 rounded-full text-center text-[10px]/6 font-bold text-surface-500"

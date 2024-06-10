@@ -32,7 +32,7 @@ function onSubmit(
   >
     <img class="h-20 pb-10" src="/img/logo.png" alt="OCR4all logo" />
     <div
-      class="w-full rounded-md border bg-white dark:border-surface-700 dark:bg-surface-850 sm:max-w-md md:mt-0 xl:p-0"
+      class="w-full rounded-md border bg-white dark:border-surface-700 dark:bg-surface-800 sm:max-w-md md:mt-0 xl:p-0"
     >
       <div class="space-y-4 p-6 sm:p-8 md:space-y-6">
         <h1

@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import {
-  Bars3CenterLeftIcon,
-} from "@heroicons/vue/24/outline";
 import { useUiStore } from "@/stores/ui.store";
 import { navigation } from "@/layout/Sidebar";
 
@@ -9,48 +6,32 @@ const uiStore = useUiStore();
 
 const router = useRouter();
 
-const minimized = ref(false);
-
-const fixedSidebar = ref();
-const sidebarHovered = useElementHover(fixedSidebar);
-
-const maximized = computed(() => sidebarHovered.value || !minimized.value);
-
-function toggleSidebar() {
-  minimized.value = !minimized.value;
-}
+const maximized = computed(() => !uiStore.sidebarMinimized);
 </script>
 
 <template>
   <div
-    ref="fixedSidebar"
     class="m-1 hidden lg:block"
     :class="[maximized ? 'w-64' : 'w-22']"
   >
-    <div class="mx-6 my-4 flex justify-between">
+    <div
+      class="mx-6 my-4 flex justify-between"
+      :class="{'flex-col space-y-6': !maximized }">
       <img
-        @click="router.push({ name: 'Dashboard' })"
         src="/img/logo.svg"
         class="h-12 w-12 cursor-pointer"
         alt="OCR4all logo"
+        @click="router.push({ name: 'Dashboard' })"
       />
-      <button
-        @click="toggleSidebar"
-        v-show="maximized"
-        class="mt-1 hidden cursor-pointer rounded-md text-surface-600 hover:bg-surface-0 hover:text-surface-900 focus:bg-surface-0 focus:ring-4 focus:ring-surface-0 dark:text-surface-300 dark:hover:bg-surface-700 dark:hover:text-white dark:focus:bg-surface-700 dark:focus:ring-surface-700 lg:block"
-        type="button"
-        value="Open sidebar"
-        v-tooltip="'Toggle Sidebar'"
-      >
-        <Bars3CenterLeftIcon class="h-8 w-8" />
-      </button>
+      <SidebarToggle />
     </div>
     <div class="space-x 2 mb-10 space-y-2 px-4 py-4">
       <router-link
         v-for="(item, index) in navigation"
+        v-tooltip="{ value: $t(item.label), showDelay: 250, hideDelay: 250, disabled: maximized }"
         :key="index"
         :to="item.to"
-        class="group flex items-center space-x-4 rounded-md px-4 py-2.5 text-surface-900 hover:bg-surface-200 dark:text-white dark:hover:bg-surface-850"
+        class="group flex items-center space-x-4 rounded-md px-4 py-2.5 text-surface-900 hover:bg-surface-200 dark:text-white dark:hover:bg-surface-800"
         :class="[maximized ? 'justify-start' : 'justify-center']"
       >
         <component :is="item.icon" class="h-6 w-6" />

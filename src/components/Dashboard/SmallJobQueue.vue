@@ -19,7 +19,7 @@ const isRefetching: Ref<boolean> = ref(false);
 const jobs: Ref = ref([]);
 async function refetch() {
   isRefetching.value = true;
-  useCustomFetch(`/job/overview/domain`)
+  useCustomFetch(`/job/overview/administration`)
     .get()
     .json()
     .then((response) => {

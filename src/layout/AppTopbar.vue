@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useAuthStore } from "@/stores/auth.store";
 import { Bars3CenterLeftIcon } from "@heroicons/vue/24/outline";
+import { useUiStore } from "@/stores/ui.store";
 const authStore = useAuthStore();
+const uiStore = useUiStore()
 
 const router = useRouter();
 
@@ -10,7 +12,7 @@ defineEmits(["toggle-sidebar-mobile"]);
 
 <template>
   <nav
-    class="z-20 flex h-16 justify-between bg-surface-100 px-8 py-3 dark:bg-surface-900 md:space-x-6 md:border-solid md:border-surface-200 dark:md:border-surface-700 lg:rounded-t-2xl lg:border-b lg:bg-white dark:lg:bg-surface-850"
+    class="z-20 flex h-16 justify-between bg-surface-100 px-8 py-3 dark:bg-surface-900 md:space-x-6 md:border-solid md:border-surface-200 dark:md:border-surface-800 lg:rounded-t-2xl lg:border-b lg:bg-white"
   >
     <div class="flex space-x-6 lg:hidden">
       <img
@@ -30,7 +32,7 @@ defineEmits(["toggle-sidebar-mobile"]);
       </button>
     </div>
     <div class="flex">
-      <BreadcrumbNavigation />
+
     </div>
     <div class="flex">
       <InstanceTag />
@@ -43,4 +45,3 @@ defineEmits(["toggle-sidebar-mobile"]);
   </nav>
 </template>
 
-<style scoped></style>

@@ -7,6 +7,8 @@ import { useViewModel, useTransform } from "baklavajs";
 
 import Accordion from "primevue/accordion";
 import AccordionTab from "primevue/accordiontab";
+import Tree from "primevue/tree";
+import InputNode from "@/nodes/InputNode";
 
 type NodeTypeInformations = Record<string, INodeTypeInformation>;
 
@@ -35,32 +37,46 @@ const draggedNode = ref<IDraggedNode | null>(null);
 const categories = computed<
   Array<{ name: string; nodeTypes: NodeTypeInformations }>
 >(() => {
-  const nodeTypeEntries = Array.from(
+/*  const nodeTypeEntries = Array.from(
     viewModel.value.editor.nodeTypes.entries(),
-  );
-
-  const categoryNames = new Set(
-    nodeTypeEntries.map(([, ni]) => ni["category"]),
-  );
+  );*/
+  const nodeTypeEntries: any[] = []
+  const categoryNames: Set<string> = new Set()
+  for(const [key, value] of viewModel.value.editor.nodeTypes.entries()){
+    nodeTypeEntries.push({
+      key: key,
+      label: value.title,
+      category: value.category,
+      type: "node",
+      nt: value.type,
+      ni: value,
+    })
+    categoryNames.add(value.category)
+  }
 
   const categories: Array<{ name: string; nodeTypes: NodeTypeInformations }> =
     [];
   for (const category of categoryNames.values()) {
+    const nodeTypesInCategory = []
     if (category !== "Subgraphs") {
-      let nodeTypesInCategory = nodeTypeEntries.filter(
-        ([, ni]) => ni["category"] === category,
-      );
+      for(const node of nodeTypeEntries){
+        if(node.category === category){
+          nodeTypesInCategory.push(
+            node
+          )
+        }
+      }
 
       if (nodeTypesInCategory.length > 0) {
         if (category !== "default") {
           categories.push({
-            name: category,
-            nodeTypes: Object.fromEntries(nodeTypesInCategory),
-          });
+            key: category,
+            label: category,
+            children: nodeTypesInCategory
+          })
         }
       }
     }
-
     // Hardcode sort order of categories, this should be handled differently in the future (get sort order from backend?)
     const sortOrder = ["Preprocessing", "Layout Analysis", "Text Recognition"];
     categories.sort((x, y) => {
@@ -116,11 +132,18 @@ const onDragStart = (type: string, nodeInformation: INodeTypeInformation) => {
     // @ts-ignore
     instance.position.y = y;
 
+    console.log(x, y)
+
     draggedNode.value = null;
     document.removeEventListener("pointerup", onDragEnd);
   };
   document.addEventListener("pointerup", onDragEnd);
 };
+
+import { useMouseInElement } from '@vueuse/core'
+const palette = ref()
+
+const { x, y, isOutside } = useMouseInElement(palette)
 </script>
 
 <template>
@@ -132,26 +155,25 @@ const onDragStart = (type: string, nodeInformation: INodeTypeInformation) => {
     leave-from-class="translate-x-0"
     leave-to-class="translate-x-full"
   >
-    <div v-show="visible" class="overflow-scroll-y h-full">
+    <div v-show="visible" ref="palette" class="overflow-scroll-y h-full">
       <div
-        class="baklava-node-palette !w-[290px] !opacity-95 dark:!bg-zinc-800 dark:!opacity-95"
+        class="baklava-node-palette !w-96 !opacity-95 dark:!bg-zinc-800 dark:!opacity-95"
       >
         <h1
-          class="pb-5 text-center text-xl font-bold text-black dark:text-white"
+          class="pb-5 text-center text-xl font-bold text-surface-0"
         >
           {{ $t("pages.nodeflow.palette.processors") }}
         </h1>
-        <Accordion :multiple="true">
-          <AccordionTab v-for="c in categories" :key="c.name" :header="c.name">
+        <Tree :value="categories" :filter="true" filterMode="lenient" class="w-full">
+          <template #node="slotProps">
             <PaletteEntry
-              v-for="(ni, nt) in c.nodeTypes"
-              :key="nt"
-              :type="nt"
-              :title="ni.title"
-              @pointerdown="onDragStart(nt, ni)"
+              :key="slotProps.node.key"
+              :type="slotProps.node.nt"
+              :title="slotProps.node.label"
+              @pointerdown="onDragStart(slotProps.node.label, slotProps.node.ni)"
             />
-          </AccordionTab>
-        </Accordion>
+          </template>
+        </Tree>
       </div>
       <transition name="fade">
         <div
@@ -168,11 +190,3 @@ const onDragStart = (type: string, nodeInformation: INodeTypeInformation) => {
     </div>
   </transition>
 </template>
-
-<style scoped>
-.baklava-node-palette {
-  @apply z-10 bg-surface-50 shadow-2xl;
-  right: 0;
-  left: initial;
-}
-</style>

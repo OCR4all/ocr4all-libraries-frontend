@@ -14,3 +14,9 @@ FROM nginx as production-stage
 RUN mkdir /app
 COPY --from=build-stage /app/dist /app
 COPY nginx.conf /etc/nginx/nginx.conf
+
+
+FROM ocrd/all:maximum-cuda-2024-05-27 as ocrd-stage
+FROM ocr4all-spi-api as production-stage
+COPY --from=ocrd-stage [Benötigte Dateien] .
+RUN [Backend starten]

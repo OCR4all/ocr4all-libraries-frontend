@@ -62,10 +62,6 @@ function startTour() {
   });
 }
 
-function openSettings() {
-  uiStore.settingsDialogOpen = true;
-}
-
 const user = ref();
 
 await useCustomFetch(`/account`)
@@ -79,24 +75,9 @@ await useCustomFetch(`/account`)
   <h1
     class="group mb-4 flex text-3xl font-bold text-surface-900 dark:text-surface-0"
   >
-    Hello {{ user.name }}
+    Hello, {{ user.name }}
     <span class="ml-2 group-hover:animate-waving-hand">👋</span>
   </h1>
-  <!--  <h2 class="font-semibold text-xl mb-2 dark:text-surface-0">Your Repositories</h2>
-  <div class="grid grid-cols-2 xl:grid-cols-4 grid-rows-1 gap-8">
-    <div>
-      <h3 class="font-regular text-lg mb-4 text-surface-950 dark:text-surface-0">Images</h3>
-    </div>
-    <div>
-      <h3 class="font-regular text-lg mb-4 text-surface-950 dark:text-surface-0">Datasets</h3>
-    </div>
-    <div>
-      <h3 class="font-regular text-lg mb-4 text-surface-950 dark:text-surface-0">Models</h3>
-    </div>
-    <div>
-      <h3 class="font-regular text-lg mb-4 text-surface-950 dark:text-surface-0">Workflows</h3>
-    </div>
-  </div>-->
   <div class="space-y-8 pb-8">
     <div class="grid grid-cols-2 grid-rows-1 gap-8 xl:grid-cols-4">
       <StatsCard>
@@ -140,7 +121,7 @@ await useCustomFetch(`/account`)
     <div class="grid grid-cols-5 grid-rows-1 gap-8 lg:grid-rows-2">
       <div class="col-span-5 row-span-2 xl:col-span-4">
         <div
-          class="group m-0 h-full rounded-md bg-white dark:border-surface-700 dark:bg-surface-850"
+          class="group m-0 h-full rounded-md bg-white dark:border-surface-800 dark:bg-surface-900"
         >
           <RecentProjectsOverview />
         </div>
@@ -214,12 +195,12 @@ await useCustomFetch(`/account`)
     </div>
     <div class="grid grid-cols-4 grid-rows-1 gap-8">
       <div class="col-span-4 row-span-1 2xl:col-span-2">
-        <div class="group m-0 h-full rounded-md bg-white dark:bg-surface-850">
+        <div class="group m-0 h-full rounded-md bg-white dark:bg-surface-900">
           <AvailableWorkflows />
         </div>
       </div>
       <div class="col-span-4 row-span-1 2xl:col-span-2">
-        <div class="group m-0 h-full rounded-md bg-white dark:bg-surface-850">
+        <div class="group m-0 h-full rounded-md bg-white dark:bg-surface-900">
           <SmallJobQueue />
         </div>
       </div>

@@ -96,11 +96,11 @@ const states = ref(["active", "closed", "blocked"]);
       </template>
     </Toolbar>
     <DataTable
-      v-model:selection="selectedProjects"
       :value="projects"
       :paginator="true"
       :rows="10"
       :loading="loading"
+      scrollable
       v-model:filters="filters"
       filter-display="row"
       :globalFilterFields="['name', 'state', 'keywords']"
@@ -109,7 +109,6 @@ const states = ref(["active", "closed", "blocked"]);
       :row-hover="true"
       paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :rows-per-page-options="[10, 25, 50]"
-      responsive-layout="scroll"
     >
       <template #header>
         <div class="flex justify-between">
@@ -191,7 +190,9 @@ const states = ref(["active", "closed", "blocked"]);
             v-for="keyword in slotProps.data.keywords"
             :key="keyword.name"
             :value="keyword"
-            class="mb-1 mr-1 !bg-surface-500"
+            :pt="{
+              root: { class: 'text-xs font-bold bg-surface-200 inline-flex items-center justify-center px-2 py-1 rounded-md text-surface-800 dark:text-white bg-surface-200 dark:bg-surface-600'}
+            }"
           />
         </template>
       </Column>
@@ -226,4 +227,4 @@ const states = ref(["active", "closed", "blocked"]);
     </DataTable>
   </div>
 </template>
-<style></style>
+

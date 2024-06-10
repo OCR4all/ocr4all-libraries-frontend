@@ -21,9 +21,7 @@ const larexLocation = import.meta.env.VITE_LAREX_LOCATION;
 const larexURL = import.meta.env.VITE_LAREX_URL;
 
 import { useI18n } from "vue-i18n";
-import { TransitionRoot } from "@headlessui/vue";
 import ProgressBar from "primevue/progressbar";
-import { run } from "node:test";
 const { t } = useI18n();
 
 const isGeneratingSandbox = ref(false);
@@ -76,6 +74,7 @@ async function refetch() {
     .get()
     .json();
   const snapshots = data.value["snapshot-synopsis"];
+  console.log(data.value)
   if (snapshots !== undefined) {
     const root = snapshots["root-processor"];
     const firstClassChildren = root["derived-processors"];
@@ -180,8 +179,8 @@ async function generateSandbox(selection: object) {
       mimeMap[sandboxHome.value + "/" + file["path"]] = file["mime-type"];
     }
   }
-
   formFileMap.value = JSON.stringify(fileMap);
+  console.log(fileMap)
   formMimeMap.value = JSON.stringify(mimeMap);
   refetch();
 }
@@ -270,16 +269,13 @@ const breadcrumbCurrent = { label: sandbox };
           style="height: 6px"
         ></ProgressBar>
         <form
-          class="justify-self-center"
           v-show="isReady"
           id="larexForm"
+          class="justify-self-center"
           :action="larexURL"
           method="POST"
           target="_blank"
-        >
-          {{ formFileMap }}
-          {{ formMimeMap }}
-
+          >
           <input
             id="fileMap"
             v-model="formFileMap"
@@ -326,7 +322,7 @@ const breadcrumbCurrent = { label: sandbox };
   </Dialog>
   <div class="flex space-x-6">
     <transition
-      class="w-128 flex-1 rounded-md border bg-white p-5 dark:border-surface-700 dark:bg-surface-850"
+      class="w-128 flex-1 rounded-md border bg-white p-5 dark:border-surface-800 dark:bg-surface-900"
       enter-active-class="transition ease-in-out duration-200 transform"
       enter-from-class="-translate-x-full"
       enter-to-class="translate-x-0"
@@ -337,8 +333,8 @@ const breadcrumbCurrent = { label: sandbox };
       <div v-if="Object.entries(selection).length > 0">
         <div class="grid grid-cols-1 gap-y-2">
           <button
-            class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
             v-show="!hasLarexView(selection)"
+            class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
             @click="generateSandbox(selection)"
           >
             <span
@@ -380,7 +376,7 @@ const breadcrumbCurrent = { label: sandbox };
                     selectedSnapshotInformation,
                   )"
                   :key="key"
-                  class="border-b bg-white dark:border-surface-700 dark:bg-surface-850"
+                  class="border-b bg-white dark:border-surface-800 dark:bg-surface-900"
                 >
                   <th
                     scope="row"
@@ -399,7 +395,7 @@ const breadcrumbCurrent = { label: sandbox };
       </div>
     </transition>
     <div
-      class="flex-1 rounded-md border bg-white p-5 dark:border-surface-700 dark:bg-surface-850"
+      class="flex-1 rounded-md border bg-white p-5 dark:border-surface-800 dark:bg-surface-900"
     >
       <section>
         <h2
@@ -410,11 +406,11 @@ const breadcrumbCurrent = { label: sandbox };
         <div class="overflow-x-auto dark:[color-scheme:dark]">
           <OrganizationChart
             v-if="nodes"
-            @node-select="collectSnapshotInformation"
             v-model:selectionKeys="selection"
             :value="nodes"
             collapsible
-            selectionMode="single"
+            selection-mode="single"
+            @node-select="collectSnapshotInformation"
           >
             <template #default="slotProps">
               <div class="flex flex-col">

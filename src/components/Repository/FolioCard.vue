@@ -55,9 +55,30 @@ const actionMenuItems = ref([
           toggleDeleteDialog();
         },
       },
+      {
+        label: "Download",
+        icon: "pi pi-download",
+        command: () => {
+          downloadFolio();
+        }
+      }
     ],
   },
 ]);
+
+function downloadFolio(){
+  useCustomFetch(
+    `/repository/container/folio/download/${props.containerId}?id=${props.id}`,
+  ).blob()
+    .then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data.value]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${props.name}.${props.format}`);
+      document.body.appendChild(link);
+      link.click();
+    });
+}
 
 function updateSelection(event: Event) {
   emit("updateSelection", props.id, event);
@@ -110,7 +131,7 @@ defineExpose({
     </p>
     <button
       type="button"
-      class="mb-2 mr-2 rounded-md border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-850 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
+      class="mb-2 mr-2 rounded-md border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
       @click="toggleDeleteDialog"
     >
       Cancel

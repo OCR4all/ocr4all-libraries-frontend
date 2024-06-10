@@ -20,11 +20,11 @@ function toggleSidebarMobile() {
       <AppSidebar />
       <AppSidebarMobile ref="mobileSidebarRef" />
       <main
-        class="flex-1 justify-center bg-surface-100 shadow-sm dark:bg-surface-900 lg:m-1 lg:rounded-xl lg:border lg:bg-surface-0 dark:lg:border-surface-800 dark:lg:bg-surface-850"
+        class="flex-1 justify-center bg-surface-100 shadow-sm dark:bg-surface-900 lg:m-2 lg:rounded-xl lg:bg-surface-0"
       >
         <AppTopbar @toggle-sidebar-mobile="toggleSidebarMobile" />
         <div
-          class="h-[calc(100vh-4.7rem)] w-full overflow-y-auto rounded-b-2xl"
+          class="h-[calc(100vh-5.2rem)] w-full overflow-y-auto rounded-b-2xl"
           :class="{ 'p-8': padded }"
         >
           <slot />

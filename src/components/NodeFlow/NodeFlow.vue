@@ -1,6 +1,6 @@
 <script setup>
 import { EditorComponent, useBaklava } from "baklavajs";
-import "@/assets/nodeflow-theme.css";
+import "@/assets/css/nodeflow-theme.css";
 
 import Toast from "primevue/toast";
 import Dialog from "primevue/dialog";
@@ -59,6 +59,7 @@ Promise.resolve(importNodesFromAPI()).then(async (nodes) => {
 });
 
 const selectedWorkflow = ref({ id: store.graphId, label: store.graphLabel });
+console.log(selectedWorkflow.value)
 const availableWorkflows = ref();
 
 const labelEntered = ref(true);
@@ -236,11 +237,11 @@ function togglePalette() {
       <Dropdown
         v-model="selectedWorkflow"
         :options="availableWorkflows"
-        optionLabel="label"
+        option-label="label"
         filter
-        @change="console.log(selectedWorkflow)"
         placeholder="Select a Workflow"
         class="md:w-14rem w-full"
+        @change="console.log(selectedWorkflow)"
       >
         <template #value="slotProps">
           <div v-if="slotProps.value" class="align-items-center flex">
@@ -295,18 +296,18 @@ function togglePalette() {
         </div>
       </div>
       <button
-        type="button"
         v-if="!isLoadingSaveWorkflow"
-        @click="saveWorkflow"
+        type="button"
         class="mb-2 mr-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        @click="saveWorkflow"
       >
         Save
       </button>
       <button
-        type="button"
         v-if="isLoadingSaveWorkflow"
-        @click="saveWorkflow"
+        type="button"
         class="mb-2 mr-2 rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        @click="saveWorkflow"
       >
         <svg
           aria-hidden="true"
@@ -330,5 +331,3 @@ function togglePalette() {
     </div>
   </Dialog>
 </template>
-
-<style></style>

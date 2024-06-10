@@ -127,10 +127,6 @@ function replaceCategories(category: string) {
 }
 
 function constructNodes(nodeData: object[]) {
-  nodeData = nodeData.filter(
-    (node) => !["imp", "launcher"].includes(node.type),
-  );
-
   const nodesParameters: object[] = [];
   const nodes: object[] = [];
 
@@ -144,7 +140,6 @@ function constructNodes(nodeData: object[]) {
     nodesParameters.push(nodeParameters);
     /** Temporary opionated blacklist for alpha version, should be removed later on  **/
     const blacklist = [
-      "LAREX launcher",
       "ocrd-tesserocr-fontshape",
       "ocrd-tesserocr-segment-word",
       "ocrd-tesserocr-segment-line",
@@ -162,7 +157,7 @@ function constructNodes(nodeData: object[]) {
 export function importNodesFromAPI(): PromiseLike<
   [object[], object[]] | object[]
 > {
-  return useCustomFetch("/spi/list")
+  return useCustomFetch("/spi/list/workflow")
     .get()
     .json()
     .then((data) => constructNodes(data.data.value));

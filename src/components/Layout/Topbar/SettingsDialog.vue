@@ -27,12 +27,10 @@ function save() {
   t.locale.value = selectedCountry.value.code;
   useStorage("ocr4all/frontend/language", "en").value =
     selectedCountry.value.code;
-  uiStore.settingsDialogOpen = false;
 }
 </script>
 <template>
   <Dialog
-    v-model:visible="uiStore.settingsDialogOpen"
     modal
     header="Settings"
     :style="{ width: '50vw' }"
@@ -79,7 +77,6 @@ function save() {
         :label="$t('settings.buttons.close')"
         icon="pi pi-times"
         text
-        @click="uiStore.settingsDialogOpen = false"
       />
       <Button
         :label="$t('settings.buttons.save')"

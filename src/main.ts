@@ -1,25 +1,30 @@
 import { createPinia } from "pinia";
 import { createI18n } from "vue-i18n";
+import { plugin, defaultConfig } from '@formkit/vue'
+import formkitConfig from '@/formkit.config'
 
 import { createApp } from "vue";
 import App from "./App.vue";
 
-import "./assets/index.postcss";
+import "./assets/css/base.css";
 
 import router from "./router";
 
 import { VueQueryPlugin } from "@tanstack/vue-query";
 // PrimeVue imports
 import PrimeVue from "primevue/config";
-import CPreset from "./presets";
-import "primevue/resources/primevue.min.css";
-import "primeicons/primeicons.css";
-import "primevue/resources/themes/tailwind-light/theme.css";
 import Tooltip from "primevue/tooltip";
-
 import ToastService from "primevue/toastservice";
+import "primeicons/primeicons.css";
+import ocr4all from "./presets/ocr4all";
 
-import VueKonva from "vue-konva";
+import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
+import BadgeDirective from "primevue/badgedirective";
+import Ripple from "primevue/ripple";
+import StyleClass from "primevue/styleclass";
+import { FocusTrap } from "@headlessui/vue";
+import AnimateOnScroll from "primevue/animateonscroll";
+
 const app = createApp(App);
 
 const messages = Object.fromEntries(
@@ -42,13 +47,21 @@ const i18n = createI18n({
   messages,
 });
 
-app.use(VueKonva);
+app.use(PrimeVue, { ripple: true, unstyled: true, pt: ocr4all });
+app.directive('tooltip', Tooltip);
+app.directive('badge', BadgeDirective);
+app.directive('ripple', Ripple);
+app.directive('styleclass', StyleClass);
+app.directive('focustrap', FocusTrap);
+app.directive('animateonscroll', AnimateOnScroll);
+
 app.use(VueQueryPlugin);
 app.use(i18n);
 app.use(createPinia());
-app.use(PrimeVue, { unstyled: true, pt: CPreset });
 app.use(ToastService);
 app.use(router);
+app.use(plugin, defaultConfig(formkitConfig));
+app.use(autoAnimatePlugin)
 app.directive("tooltip", Tooltip);
 
 app.mount("#app");

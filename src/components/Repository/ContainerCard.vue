@@ -7,6 +7,7 @@ import Skeleton from "primevue/skeleton";
 import Dialog from "primevue/dialog";
 import InputText from "primevue/inputtext";
 import Toast from "primevue/toast";
+import ProgressSpinner from "primevue/progressspinner";
 
 import { useI18n } from "vue-i18n";
 import Chips from "primevue/chips";
@@ -74,9 +75,32 @@ const actionMenuItems = ref([
           toggleDeleteDialog();
         },
       },
+      {
+        label: "Download",
+        icon: "pi pi-download",
+        command: () => {
+          downloadContainer();
+        }
+      }
     ],
   },
 ]);
+
+function downloadContainer(){
+  toast.add({ severity: 'info', summary: 'Preparing download', group: 'download-toast' });
+  useCustomFetch(
+    `/repository/container/folio/zip/${props.id}`,
+  ).blob()
+    .then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data.value]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${props.title}.zip`);
+      document.body.appendChild(link);
+      link.click();
+      toast.removeGroup("download-toast");
+    });
+}
 
 function updateSelection(event: Event) {
   emit("updateSelection", props.id, event);
@@ -171,6 +195,20 @@ defineExpose({
 });
 </script>
 <template>
+  <Toast position="bottom-right" group="download-toast">
+    <template #message="slotProps">
+      <div class="flex flex-column align-items-start" style="flex: 1">
+        <div class="flex align-items-center gap-4">
+          <ProgressSpinner
+            :pt="{
+              root: {class: 'relative self-center mx-auto w-6 h-6 inline-block before:block before:pt-full'},
+            }"
+            animationDuration=".5s" aria-label="Custom ProgressSpinner" />
+          <div class="text-md text-surface-800 my-3">{{ slotProps.message.summary }}</div>
+        </div>
+      </div>
+    </template>
+  </Toast>
   <Toast />
   <Dialog
     v-model:visible="deleteDialogVisible"
@@ -183,7 +221,7 @@ defineExpose({
     </p>
     <button
       type="button"
-      class="mb-2 mr-2 rounded-md border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-850 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
+      class="mb-2 mr-2 rounded-md border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-800 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
       @click="toggleDeleteDialog"
     >
       {{ t("pages.repository.container.card.dialog.delete.button.cancel") }}
@@ -253,9 +291,9 @@ defineExpose({
       />
     </template>
   </Dialog>
-  <div class="grid grid-cols-1 justify-self-center">
+  <div class="grid grid-cols-1 justify-self-start">
     <div
-      class="shadow-xs group relative m-2 grid h-64 w-64 cursor-pointer rounded-md bg-clip-border text-surface-700 hover:bg-primary-100 hover:dark:bg-surface-900"
+      class="shadow-xs group relative m-2 grid h-64 w-64 cursor-pointer rounded-md bg-clip-border text-surface-700 hover:bg-primary-100 hover:dark:bg-surface-800"
       :class="[
         checked
           ? ['bg-primary-100', 'dark:bg-surface-700']
