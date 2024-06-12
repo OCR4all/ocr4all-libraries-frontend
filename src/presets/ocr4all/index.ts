@@ -89,12 +89,12 @@ import tag from './tag';
 import terminal from './terminal';
 
 export default {
-    global,
     directives: {
         tooltip,
         badge: badgedirective,
-        ripple: ripple
+        ripple
     },
+    global,
     autocomplete,
     calendar,
     cascadeselect,

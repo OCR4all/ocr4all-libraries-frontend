@@ -79,7 +79,7 @@ const toggle = (event) => {
       <button
         v-for="(item, index) in profileItems"
         :key="index"
-        class="flex transform items-center p-3 my-1 text-sm capitalize text-gray-600 transition-colors duration-300 rounded-md hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+        class="flex transform items-center px-3 py-2 my-1 text-sm capitalize text-gray-600 transition-colors duration-300 rounded-md hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
         @click="item.action"
       >
         <component :is="item.icon" class="h-6 w-6" />
@@ -90,7 +90,7 @@ const toggle = (event) => {
         v-for="(item, index) in adminItems"
         v-show="authStore.isAdmin"
         :key="index"
-        class="flex transform items-center p-3 my-1 text-sm capitalize text-gray-600 transition-colors duration-300 hover:bg-gray-100 rounded-md dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+        class="flex transform items-center px-3 py-2 my-1 text-sm capitalize text-gray-600 transition-colors duration-300 hover:bg-primary-700 hover:text-surface-50 rounded-md dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
         @click="item.action"
       >
         <component :is="item.icon" class="h-6 w-6" />
@@ -100,7 +100,7 @@ const toggle = (event) => {
       <a class="flex transform items-center px-3 py-2 my-1 text-sm capitalize text-gray-600 transition-colors duration-300 hover:bg-gray-100 rounded-md dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
          href="https://www.ocr4all.org" target="_blank">
         <QuestionMarkCircleIcon class="h-6 w-6" />
-        <span class="mx-1">Help</span>
+        <span class="mx-1">Documentation</span>
       </a>
       <button
         class="flex transform items-center px-3 py-2 my-1 text-sm capitalize text-gray-600 transition-colors duration-300 hover:bg-gray-100 rounded-md dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"

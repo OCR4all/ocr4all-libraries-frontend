@@ -5,10 +5,7 @@ import { AbstractNode, INodeTypeInformation } from "baklavajs";
 import PaletteEntry from "./CPaletteEntry.vue";
 import { useViewModel, useTransform } from "baklavajs";
 
-import Accordion from "primevue/accordion";
-import AccordionTab from "primevue/accordiontab";
 import Tree from "primevue/tree";
-import InputNode from "@/nodes/InputNode";
 
 type NodeTypeInformations = Record<string, INodeTypeInformation>;
 
@@ -37,9 +34,6 @@ const draggedNode = ref<IDraggedNode | null>(null);
 const categories = computed<
   Array<{ name: string; nodeTypes: NodeTypeInformations }>
 >(() => {
-/*  const nodeTypeEntries = Array.from(
-    viewModel.value.editor.nodeTypes.entries(),
-  );*/
   const nodeTypeEntries: any[] = []
   const categoryNames: Set<string> = new Set()
   for(const [key, value] of viewModel.value.editor.nodeTypes.entries()){

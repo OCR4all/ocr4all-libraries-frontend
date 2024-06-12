@@ -220,7 +220,7 @@ async function checkJob(startedJob) {
   return await new Promise((resolve) => {
     const jobInterval = setInterval(async () => {
       const { isFetching, error, data } = await useCustomFetch(
-        `/job/overview/administration`,
+        `/job/overview/domain`,
       )
         .get()
         .json();

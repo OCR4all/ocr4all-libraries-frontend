@@ -24,7 +24,7 @@ function toggleSidebarMobile() {
       >
         <AppTopbar @toggle-sidebar-mobile="toggleSidebarMobile" />
         <div
-          class="h-[calc(100vh-5.2rem)] w-full overflow-y-auto rounded-b-2xl"
+          class="h-[calc(100vh-5rem)] w-full overflow-y-auto rounded-b-2xl"
           :class="{ 'p-8': padded }"
         >
           <slot />

@@ -346,10 +346,10 @@
               "delete": "Delete"
             }
           },
-          "all-folios": "All folios",
+          "all-folios": "All images",
           "sort-by": "Sort by",
           "selected": "selected",
-          "fallback-cards": "Loading folios..."
+          "fallback-cards": "Loading images..."
         },
         "card": {
           "actions": {

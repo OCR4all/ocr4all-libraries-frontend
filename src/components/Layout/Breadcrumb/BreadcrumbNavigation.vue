@@ -15,11 +15,13 @@ const store = useUiStore();
         <RouterLink
           v-if="item.to"
           :to="item.to"
-          class="unstyled text-md font-semibold text-surface-700 hover:text-primary-600 dark:text-surface-100 dark:hover:text-white"
+          class="unstyled text-md font-medium text-surface-700 hover:text-primary-600 dark:text-surface-100 dark:hover:text-white"
+          :class="[index === store.breadcrumb.length - 1 ? 'font-semibold' : 'font-medium']"
         >{{ item.label }}</RouterLink>
         <p
           v-else
-          class="text-md font-semibold text-surface-700 dark:text-surface-100">
+          class="text-md text-surface-700 dark:text-surface-100"
+          :class="[index === store.breadcrumb.length - 1 ? 'font-semibold' : 'font-medium']">
           {{ item.label }}
         </p>
       </li>

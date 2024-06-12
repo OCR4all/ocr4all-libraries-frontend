@@ -122,19 +122,12 @@ function openProcessor(data){
 }
 
 const processorDialogVisible = ref(false);
-
-const value = ref('Off');
-const options = ref(['Off', 'On']);
-import SelectButton from "primevue/selectbutton";
 </script>
 <template>
-  <div class="card flex justify-center">
-    <SelectButton v-model="value" :options="options" aria-labelledby="basic" />
-  </div>
   <Dialog v-model:visible="processorDialogVisible" modal header="Run Processor">
     <div class="flex space-x-2">
       <h1 class="text-xl text-surface-900 dark:text-surface-0 font-semibold"> {{ selectedProcessor.name }} </h1>
-      <Tag v-for="category of selectedProcessor.categories" value="Primary" :key="category" :value="category"></Tag>
+      <Tag v-for="category of selectedProcessor.categories" :key="category" value="Primary" :value="category"></Tag>
     </div>
     <h3 class="text-md text-surface-900 dark:text-surface-0"> {{ selectedProcessor.description }} </h3>
     <div>
@@ -148,7 +141,7 @@ import SelectButton from "primevue/selectbutton";
     <Button type="button" icon="pi pi-plus" label="Expand All" @click="expandAll" />
     <Button type="button" icon="pi pi-minus" label="Collapse All" @click="collapseAll" />
   </div>
-  <Tree :value="nodes" v-model:expandedKeys="expandedKeys" :filter="true" filterMode="lenient" class="w-full">
+  <Tree v-model:expandedKeys="expandedKeys" :value="nodes" :filter="true" filter-mode="lenient" class="w-full">
     <template #category="slotProps">
       <button @click="toggleNode(slotProps.node)">{{ slotProps.node.label }}</button>
     </template>

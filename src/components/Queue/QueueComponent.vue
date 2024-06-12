@@ -61,7 +61,7 @@ const getColor = (entry) => {
 async function refetch() {
   isRefetching.value = true;
   const { isFetching, error, data } = await useCustomFetch(
-    `/job/overview/administration`,
+    `/job/overview/domain`,
   )
     .get()
     .json();

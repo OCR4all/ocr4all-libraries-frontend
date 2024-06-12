@@ -131,10 +131,10 @@
               "delete": "Löschen"
             }
           },
-          "all-folios": "Alle Folios",
+          "all-folios": "Alle Bilder",
           "sort-by": "Sortieren",
           "selected": "ausgewählt",
-          "fallback-cards": "Lade Folios..."
+          "fallback-cards": "Lade Bilder..."
         },
         "card": {
           "actions": {

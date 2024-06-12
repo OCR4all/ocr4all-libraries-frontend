@@ -13,10 +13,12 @@ import router from "./router";
 import { VueQueryPlugin } from "@tanstack/vue-query";
 // PrimeVue imports
 import PrimeVue from "primevue/config";
+import { usePrimeVue } from 'primevue/config';
 import Tooltip from "primevue/tooltip";
 import ToastService from "primevue/toastservice";
 import "primeicons/primeicons.css";
 import ocr4all from "./presets/ocr4all";
+
 
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
 import BadgeDirective from "primevue/badgedirective";

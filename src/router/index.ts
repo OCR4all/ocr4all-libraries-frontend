@@ -22,10 +22,10 @@ const WorkflowsPage = () => import("@/pages/WorkflowsPage.vue");
 const RepositoryOverview = () =>
   import("@/components/Repository/RepositoryOverview.vue");
 const RepositoryUpload = () =>
-  import("@/components/Repository/RepositoryUpload.vue");
+  import("@/components/Repository/Images/ImageUpload.vue");
 const RepositoryPage = () => import("@/pages/RepositoryPage.vue");
 
-const ContainerView = () => import("@/components/Repository/ContainerView.vue");
+const ContainerView = () => import("@/components/Repository/Images/Container/ContainerView.vue");
 const AdminPage = () => import("@/pages/AdminPage.vue");
 
 const TrainingPage = () => import("@/pages/TrainingPage.vue");

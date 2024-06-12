@@ -38,7 +38,7 @@ export default {
             'items-center inline-flex text-center align-bottom justify-center',
 
             // Spacing
-            'px-4 py-2',
+            'px-4 py-2 pt-1',
 
             // Shape
             'rounded-md',

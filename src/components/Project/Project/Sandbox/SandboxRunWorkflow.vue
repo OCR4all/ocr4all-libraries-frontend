@@ -45,7 +45,7 @@ async function checkImageJob(startedJob) {
   return await new Promise((resolve) => {
     const jobInterval = setInterval(async () => {
       const { isFetching, error, data } = await useCustomFetch(
-        `/job/overview/administration`,
+        `/job/overview/domain`,
       )
         .get()
         .json();
@@ -81,7 +81,7 @@ async function checkWorkflowJob(startedJob) {
   return await new Promise((resolve) => {
     const jobInterval = setInterval(async () => {
       const { isFetching, error, data } = await useCustomFetch(
-        `/job/overview/administration`,
+        `/job/overview/domain`,
       )
         .get()
         .json();

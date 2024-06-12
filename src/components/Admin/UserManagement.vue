@@ -9,6 +9,8 @@ import Toolbar from "primevue/toolbar";
 import InputText from "primevue/inputtext";
 import Password from "primevue/password";
 import Dialog from "primevue/dialog";
+import Tag from 'primevue/tag';
+import { useUiStore } from "@/stores/ui.store";
 
 const userDialog: Ref<boolean> = ref(false);
 const deleteUserDialog: Ref<boolean> = ref(false);
@@ -18,17 +20,27 @@ const users = ref();
 const user = ref({});
 const selectedUsers = ref();
 
-useCustomFetch(`/job/overview/administration`)
-  .get()
-  .json()
-  .then((response) => console.log(response.data.value));
-
 async function refetch() {
   useCustomFetch(`/administration/security/user/list`)
     .json()
     .then((response) => {
       users.value = response.data.value;
+      getUserGroups()
     });
+}
+
+useCustomFetch(`/instance/environment`).json().then((response) => {console.log(response.data.value)})
+
+async function getUserGroups() {
+  for(const user of users.value){
+    useCustomFetch(`/administration/security/user/entity?login=${user.login}`)
+      .json()
+      .then((response) => {
+        console.log(user.login)
+        console.log(response.data.value.login)
+        user["groups"] = response.data.value.groups
+      });
+  }
 }
 
 const filters = ref({
@@ -125,6 +137,13 @@ function hideNewUserDialog() {
 }
 
 refetch();
+
+const uiStore = useUiStore()
+uiStore.breadcrumb = [
+  {
+    label: "Administration",
+  },
+]
 </script>
 <template>
   <div>
@@ -152,81 +171,93 @@ refetch();
           </div>
         </template>
       </Toolbar>
-
-      <DataTable
-        ref="dt"
-        :value="users"
-        v-model:selection="selectedUsers"
-        dataKey="login"
-        :paginator="true"
-        :rows="10"
-        :filters="filters"
-        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        :rowsPerPageOptions="[5, 10, 25]"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
-      >
-        <template #header>
-          <div class="align-items-center flex flex-wrap justify-between gap-2">
-            <h4 class="m-0">
-              {{ $t("admin.user-management.table.header") }}
-            </h4>
-            <InputText
-              v-model="filters['global'].value"
-              :placeholder="
+      <div class="rounded-md border border-surface-200 dark:border-surface-700">
+        <DataTable
+          ref="dt"
+          scrollable
+          :value="users"
+          v-model:selection="selectedUsers"
+          dataKey="login"
+          :paginator="true"
+          :rows="10"
+          :filters="filters"
+          paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+          :rowsPerPageOptions="[5, 10, 25]"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
+        >
+          <template #header>
+            <div class="align-items-center flex flex-wrap justify-between gap-2">
+              <h4 class="m-0">
+                {{ $t("admin.user-management.table.header") }}
+              </h4>
+              <InputText
+                v-model="filters['global'].value"
+                :placeholder="
                 $t('admin.user-management.table.search-placeholder')
               "
-            />
-          </div>
-        </template>
-
-        <Column
-          selectionMode="multiple"
-          style="width: 3rem"
-          :exportable="false"
-        ></Column>
-        <Column
-          field="name"
-          :header="$t('admin.user-management.table.columns.name')"
-          sortable
-          style="min-width: 16rem"
-        ></Column>
-        <Column
-          field="login"
-          :header="$t('admin.user-management.table.columns.login')"
-          sortable
-          style="min-width: 12rem"
-        ></Column>
-        <Column
-          field="email"
-          :header="$t('admin.user-management.table.columns.mail')"
-          sortable
-          style="min-width: 12rem"
-        ></Column>
-        <Column
-          field="state"
-          :header="$t('admin.user-management.table.columns.state')"
-          sortable
-          style="min-width: 12rem"
-        ></Column>
-        <Column :exportable="false" style="min-width: 8rem">
-          <template #body="slotProps">
-            <Button
-              icon="pi pi-pencil"
-              outlined
-              rounded
-              class="mr-2"
-              @click="editUser(slotProps.data)"
-            />
-            <Button
-              icon="pi pi-trash"
-              outlined
-              rounded
-              severity="danger"
-              @click="confirmDeleteUser(slotProps.data)"
-            />
+              />
+            </div>
           </template>
-        </Column>
-      </DataTable>
+
+          <Column
+            selectionMode="multiple"
+            style="width: 3rem"
+            :exportable="false"
+          ></Column>
+          <Column
+            field="name"
+            :header="$t('admin.user-management.table.columns.name')"
+            sortable
+            style="min-width: 16rem"
+          ></Column>
+          <Column
+            field="login"
+            :header="$t('admin.user-management.table.columns.login')"
+            sortable
+            style="min-width: 12rem"
+          ></Column>
+          <Column
+            field="email"
+            :header="$t('admin.user-management.table.columns.mail')"
+            sortable
+            style="min-width: 12rem"
+          ></Column>
+          <Column
+            field="groups"
+            :header="$t('admin.user-management.table.columns.groups')"
+            sortable
+            style="min-width: 12rem"
+          >
+            <template #body="slotProps">
+              <Tag v-for="group in slotProps.data.groups" :key="group.label" :value="group.name" severity="info" />
+            </template>
+          </Column>
+          <Column
+            field="state"
+            :header="$t('admin.user-management.table.columns.state')"
+            sortable
+            style="min-width: 12rem"
+          ></Column>
+          <Column :exportable="false" style="min-width: 8rem">
+            <template #body="slotProps">
+              <Button
+                icon="pi pi-pencil"
+                outlined
+                rounded
+                class="mr-2"
+                @click="editUser(slotProps.data)"
+              />
+              <Button
+                icon="pi pi-trash"
+                outlined
+                rounded
+                severity="danger"
+                @click="confirmDeleteUser(slotProps.data)"
+              />
+            </template>
+          </Column>
+        </DataTable>
+      </div>
     </div>
 
     <Dialog
@@ -294,14 +325,8 @@ refetch();
       </div>
 
       <template #footer>
-        <ActionButton rounded size="large" @click="hideUserDialog">
-          <i class="pi pi-times"></i>
-          {{ $t("admin.user-management.dialog.edit.footer.button.cancel") }}
-        </ActionButton>
-        <ActionButton rounded type="primary" size="large" @click="updateUser">
-          <i class="pi pi-check"></i>
-          {{ $t("admin.user-management.dialog.edit.footer.button.save") }}
-        </ActionButton>
+        <Button type="button" icon="pi pi-ellipsis-v" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" />
+        <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
       </template>
     </Dialog>
 
@@ -440,6 +465,4 @@ refetch();
       </template>
     </Dialog>
   </div>
-  {{ users }}
-  <p>das</p>
 </template>
