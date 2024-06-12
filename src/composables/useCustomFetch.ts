@@ -16,11 +16,11 @@ export const useCustomFetch = createFetch({
       }
       return { options };
     },
-    async onFetchError({ response }) {
-      if (response!.status == 401) {
-        await auth.logout();
-      }
-    },
+    // async onFetchError({ response }) {
+    //   if (response!.status == 401) {
+    //     // await auth.logout();
+    //   }
+    // },
   },
   fetchOptions: {
     mode: "cors",

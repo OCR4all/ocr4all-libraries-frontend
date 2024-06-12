@@ -3,6 +3,8 @@ import AppTopbar from "@/layout/AppTopbar.vue";
 import AppSidebar from "@/layout/AppSidebar.vue";
 import AppSidebarMobile from "@/layout/AppSidebarMobile.vue";
 
+import DynamicDialog from "primevue/dynamicdialog";
+
 const props = defineProps<{
   padded?: boolean;
 }>();
@@ -15,6 +17,7 @@ function toggleSidebarMobile() {
 </script>
 
 <template>
+  <DynamicDialog />
   <div class="h-screen bg-surface-100 dark:bg-surface-950">
     <div class="flex h-screen flex-1 overflow-hidden">
       <AppSidebar />
