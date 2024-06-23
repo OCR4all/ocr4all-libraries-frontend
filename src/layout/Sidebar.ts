@@ -6,6 +6,10 @@ import {
   ServerIcon,
   Square3Stack3DIcon,
   Squares2X2Icon,
+  UsersIcon,
+  UserGroupIcon,
+  ViewfinderCircleIcon,
+  CpuChipIcon
 } from "@heroicons/vue/24/outline";
 import { FunctionalComponent, HTMLAttributes, VNodeProps } from "vue";
 
@@ -55,23 +59,28 @@ export const mainNavigation: navigationEntry[] = [
 
 export const adminNavigation: navigationEntry[] = [
   {
-    to: "/admin",
+    to: "/admin/dashboard",
     label: "nav.sidebar.links.admin.dashboard",
     icon: HomeIcon,
   },
   {
     to: "/admin/users",
     label: "nav.sidebar.links.admin.users",
-    icon: HomeIcon,
+    icon: UsersIcon,
   },
   {
     to: "/admin/groups",
     label: "nav.sidebar.links.admin.groups",
-    icon: HomeIcon,
+    icon: UserGroupIcon,
+  },
+  {
+    to: "/admin/providers",
+    label: "nav.sidebar.links.admin.providers",
+    icon: CpuChipIcon,
   },
   {
     to: "/admin/ocrdapi",
     label: "nav.sidebar.links.admin.ocrdapi",
-    icon: HomeIcon,
+    icon: ViewfinderCircleIcon,
   },
 ];

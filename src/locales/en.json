@@ -13,8 +13,9 @@
         },
         "admin": {
           "dashboard": "Dashboard",
-          "users": "User Management",
-          "groups": "Group Management",
+          "users": "Users",
+          "groups": "Groups",
+          "providers": "Providers",
           "ocrdapi": "OCRD API Viewer"
         },
         "settings": {

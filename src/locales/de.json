@@ -2,13 +2,22 @@
   "nav": {
     "sidebar": {
       "links": {
-        "dashboard": "Dashboard",
-        "repository": "Repositorium",
-        "projects": "Projekte",
-        "workflows": "Workflows",
-        "nodeflow": "NodeFlow",
-        "queue": "Warteschlange",
-        "training": "Training"
+        "main": {
+          "dashboard": "Dashboard",
+          "repository": "Repositorium",
+          "projects": "Projekte",
+          "workflows": "Workflows",
+          "nodeflow": "NodeFlow",
+          "queue": "Warteschlange",
+          "training": "Training"
+        },
+        "admin": {
+          "dashboard": "Dashboard",
+          "users": "Benutzer",
+          "groups": "Gruppen",
+          "providers": "Provider",
+          "ocrdapi": "OCRD API Viewer"
+        }
       },
       "cta": {
         "header": "Alpha",

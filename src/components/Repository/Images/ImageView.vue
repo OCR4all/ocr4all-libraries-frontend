@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Toolbar from "primevue/toolbar";
 import InputText from "primevue/inputtext";
-import OverlayPanel from "primevue/overlaypanel";
 import Skeleton from "primevue/skeleton";
 import SelectButton from "primevue/selectbutton";
 import Column from "primevue/column";
@@ -259,7 +258,7 @@ function openContainer(containerId: string, containerName: string) {
         >
           {{ $t("pages.repository.overview.toolbar.button.create") }}
         </ActionButton>
-        <OverlayPanel ref="createContainerPanel">
+        <Popover ref="createContainerPanel">
           <div class="flex space-x-1">
             <InputText v-model="newContainerName" />
             <Button
@@ -269,7 +268,7 @@ function openContainer(containerId: string, containerName: string) {
               @click="createContainer"
             />
           </div>
-        </OverlayPanel>
+        </Popover>
         <ActionButton
           rounded
           type="delete"

@@ -68,7 +68,7 @@ getProviders()
     <DataTable
       v-model:filters="filters"
       scrollable
-      scroll-height="60vh"
+      scroll-height="75vh"
       striped-rows
       :value="nodes"
       :global-filter-fields="['name', 'provider', 'description', 'categories', 'steps']"

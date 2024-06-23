@@ -195,14 +195,16 @@ uiStore.breadcrumb = [
       </Column>
       <Column :header="$t('pages.projects.overview.table.columns.keywords')">
         <template #body="slotProps">
-          <Tag
-            v-for="keyword in slotProps.data.keywords"
-            :key="keyword.name"
-            :value="keyword"
-            :pt="{
+          <div class="flex gap-1">
+            <Tag
+              v-for="keyword in slotProps.data.keywords"
+              :key="keyword.name"
+              :value="keyword"
+              :pt="{
               root: { class: 'text-xs font-bold bg-surface-200 inline-flex items-center justify-center px-2 py-1 rounded-md text-surface-800 dark:text-white bg-surface-200 dark:bg-surface-600'}
             }"
-          />
+            />
+          </div>
         </template>
       </Column>
       <Column

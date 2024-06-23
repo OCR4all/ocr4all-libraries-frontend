@@ -34,14 +34,6 @@ module.exports = {
       },
       colors: {
         primary: {
-          DEFAULT: "var(--primary-500)",
-          inverse: "var(--primary-inverse)",
-          hover: "var(--primary-hover)",
-          'active-color': "var(--primary-active-color)",
-          'highlight': 'var(--primary)/var(--primary-highlight-opacity)',
-          'highlight-inverse': 'var(--primary-highlight-inverse)',
-          'highlight-hover': 'var(--primary)/var(--primary-highlight-hover-opacity))',
-
           0: "var(--primary-0)",
           50: "var(--primary-50)",
           100: "var(--primary-100)",

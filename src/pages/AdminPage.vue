@@ -6,6 +6,6 @@ import AdminLayout from "@/layout/AdminLayout.vue";
 
 <template>
   <AdminLayout padded>
-    Admin Overview
+    <router-view />
   </AdminLayout>
 </template>

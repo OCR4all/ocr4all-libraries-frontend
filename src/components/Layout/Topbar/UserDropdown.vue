@@ -16,8 +16,6 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useAuthStore } from "@/stores/auth.store";
 import { RemovableRef } from "@vueuse/core";
 
-import OverlayPanel from "primevue/overlaypanel";
-
 const router = useRouter();
 
 const authStore = useAuthStore();
@@ -61,7 +59,7 @@ const toggle = (event) => {
   <button class="pt-1 pl-1" @click="toggle">
     <AvatarInitials :name="user.name" :admin="authStore.isAdmin" />
   </button>
-  <OverlayPanel ref="op" class="mr-1">
+  <Popover ref="op" class="mr-1">
     <div class="flex flex-col">
       <div
         class="-mt-2 flex transform items-center p-3 text-sm text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-white"
@@ -110,5 +108,5 @@ const toggle = (event) => {
         <span class="mx-1">Sign Out</span>
       </button>
     </div>
-  </OverlayPanel>
+  </Popover>
 </template>

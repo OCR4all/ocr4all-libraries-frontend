@@ -2,7 +2,6 @@
 import SelectButton from "primevue/selectbutton";
 import Button from "primevue/button";
 import Toolbar from "primevue/toolbar";
-import OverlayPanel from "primevue/overlaypanel";
 import InputText from "primevue/inputtext";
 import TabView from "primevue/tabview";
 import TabPanel from "primevue/tabpanel";
@@ -24,7 +23,7 @@ import TabPanel from "primevue/tabpanel";
             >
               {{ $t("pages.repository.overview.toolbar.button.create") }}
             </ActionButton>
-            <OverlayPanel ref="createCollectionPanel">
+            <Popover ref="createCollectionPanel">
               <div class="flex space-x-1">
                 <InputText v-model="newCollectioName" />
                 <Button
@@ -34,7 +33,7 @@ import TabPanel from "primevue/tabpanel";
                   @click="createCollection"
                 />
               </div>
-            </OverlayPanel>
+            </Popover>
             <ActionButton
               rounded
               type="delete"

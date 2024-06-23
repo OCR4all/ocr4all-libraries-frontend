@@ -54,7 +54,6 @@ import InputIcon from 'primevue/inputicon'
 import InputMask from 'primevue/inputmask'
 import InputNumber from 'primevue/inputnumber'
 import InputOtp from 'primevue/inputotp'
-import ToggleSwitch from 'primevue/toggleswitch'
 import InputText from 'primevue/inputtext'
 import Knob from 'primevue/knob'
 import Galleria from 'primevue/galleria'
@@ -92,8 +91,12 @@ import Textarea from 'primevue/textarea'
 import Timeline from 'primevue/timeline'
 import Toast from 'primevue/toast'
 import Toolbar from 'primevue/toolbar'
-import TabView from 'primevue/tabview'
-import TabPanel from 'primevue/tabpanel'
+import ToggleSwitch from 'primevue/toggleswitch'
+import Tabs from 'primevue/tabs';
+import TabList from 'primevue/tablist';
+import Tab from 'primevue/tab';
+import TabPanels from 'primevue/tabpanels';
+import TabPanel from 'primevue/tabpanel';
 import ToggleButton from 'primevue/togglebutton'
 import Tree from 'primevue/tree'
 import TreeTable from 'primevue/treetable'
@@ -115,6 +118,7 @@ import ConfirmationService from 'primevue/confirmationservice'
 import ToastService from 'primevue/toastservice'
 import DialogService from 'primevue/dialogservice';
 import { autoAnimatePlugin } from "@formkit/auto-animate/vue";
+import { definePreset } from "@primevue/themes";
 
 const app = createApp(App);
 
@@ -216,6 +220,10 @@ app.component('SplitButton', SplitButton)
 app.component('Splitter', Splitter)
 app.component('SplitterPanel', SplitterPanel)
 app.component('Steps', Steps)
+app.component('Tabs', Tabs)
+app.component('TabList', TabList)
+app.component('Tab', Tab)
+app.component('TabPanels', TabPanels)
 app.component('TabPanel', TabPanel)
 app.component('Tag', Tag)
 app.component('Textarea', Textarea)
@@ -224,14 +232,33 @@ app.component('Timeline', Timeline)
 app.component('Toast', Toast)
 app.component('Toolbar', Toolbar)
 app.component('ToggleButton', ToggleButton)
+app.component('ToggleSwitch', ToggleSwitch)
 app.component('Tree', Tree)
 app.component('TreeTable', TreeTable)
 app.component('VirtualScroller', VirtualScroller)
 
+const CustomPreset = definePreset(Aura, {
+  semantic: {
+    primary: {
+      50: '{indigo.50}',
+      100: '{indigo.100}',
+      200: '{indigo.200}',
+      300: '{indigo.300}',
+      400: '{indigo.400}',
+      500: '{indigo.500}',
+      600: '{indigo.600}',
+      700: '{indigo.700}',
+      800: '{indigo.800}',
+      900: '{indigo.900}',
+      950: '{indigo.950}'
+    }
+  }
+});
+
 app.use(PrimeVue, {
   ripple: true,
   theme: {
-    preset: Aura,
+    preset: CustomPreset,
     options: {
       prefix: 'p',
       darkModeSelector: '.dark',

@@ -124,7 +124,6 @@ refetch();
         </div>
       </template>
     </Toolbar>
-    <div class="rounded-md border border-surface-200 dark:border-surface-700">
       <DataTable
         ref="dt"
         scrollable
@@ -210,6 +209,5 @@ refetch();
           </template>
         </Column>
       </DataTable>
-    </div>
   </div>
 </template>

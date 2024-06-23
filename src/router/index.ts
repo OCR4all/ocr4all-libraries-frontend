@@ -31,6 +31,11 @@ const AdminPage = () => import("@/pages/AdminPage.vue");
 const TrainingPage = () => import("@/pages/TrainingPage.vue");
 const SettingsPage = () => import("@/pages/SettingsPage.vue");
 
+const UserManagement = () => import("@/components/Admin/UserManagement/UserManagementView.vue")
+const AdminDashboard = () => import("@/components/Admin/Dashboard.vue")
+const ProviderManagement = () => import("@/components/Admin/InstanceAdministration/ProviderManagement.vue")
+
+
 import { useAuthStore } from "@/stores/auth.store";
 import { useConfigStore } from "@/stores/config.store";
 import { useUiStore } from "@/stores/ui.store";
@@ -132,7 +137,25 @@ const routes = [
   {
     path: "/admin",
     name: "Admin",
+    redirect: "/admin/dashboard",
     component: AdminPage,
+    children: [
+      {
+        path: "dashboard",
+        name: "Admin Dashboard",
+        component: AdminDashboard,
+      },
+      {
+        path: "users",
+        name: "Users",
+        component: UserManagement,
+      },
+      {
+        path: "providers",
+        name: "Providers",
+        component: ProviderManagement,
+      },
+    ]
   },
   {
     path: "/settings",

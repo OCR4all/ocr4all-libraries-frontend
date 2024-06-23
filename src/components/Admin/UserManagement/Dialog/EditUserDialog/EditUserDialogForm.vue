@@ -59,37 +59,41 @@ function submitPasswordChange(values, { setErrors }){
 }
 </script>
 <template>
-  <TabView>
-    <TabPanel header="Profile">
-      <FormKit
-        id="form"
-        ref="profileForm"
-        v-model="profileData"
-        type="form"
-        :submit-attrs="{
+  <Tabs value="0">
+    <TabList>
+      <Tab value="profile">Profile</Tab>
+      <Tab value="password">Password</Tab>
+      <Tab disabled value="groups">Groups</Tab>
+    </TabList>
+    <TabPanels>
+      <TabPanel value="profile">
+        <FormKit
+          id="form"
+          ref="profileForm"
+          v-model="profileData"
+          type="form"
+          :submit-attrs="{
       inputClass: 'p-button p-component',
     }"
-        @submit="submitProfileChanges"
-      >
-        <FormKitSchema :schema="profileSchema" :data="profileData" />
-      </FormKit>
-    </TabPanel>
-    <TabPanel header="Password">
-      <FormKit
-        id="form"
-        ref="passwordForm"
-        v-model="passwordData"
-        type="form"
-        :submit-attrs="{
+          @submit="submitProfileChanges"
+        >
+          <FormKitSchema :schema="profileSchema" :data="profileData" />
+        </FormKit>
+      </TabPanel>
+      <TabPanel value="password">
+        <FormKit
+          id="form"
+          ref="passwordForm"
+          v-model="passwordData"
+          type="form"
+          :submit-attrs="{
       inputClass: 'p-button p-component',
     }"
-        @submit="submitPasswordChange"
-      >
-        <FormKitSchema :schema="passwordSchema" :data="passwordData" />
-      </FormKit>
-    </TabPanel>
-    <TabPanel :disabled="true" header="Groups">
-      <!-- TODO: Group management -->
-    </TabPanel>
-  </TabView>
+          @submit="submitPasswordChange"
+        >
+          <FormKitSchema :schema="passwordSchema" :data="passwordData" />
+        </FormKit>
+      </TabPanel>
+    </TabPanels>
+  </Tabs>
 </template>

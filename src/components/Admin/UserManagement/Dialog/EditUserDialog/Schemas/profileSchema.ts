@@ -26,7 +26,7 @@ export const profileSchema = ref([
     iconPosition: "left",
   },
   {
-    $formkit: "primeDropdown",
+    $formkit: "primeSelect",
     name: "state",
     label: "State",
     optionLabel: "label",

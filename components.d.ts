@@ -25,6 +25,7 @@ declare module 'vue' {
     CSidebarButton: typeof import('./src/components/NodeFlow/Custom/CSidebarButton.vue')['default']
     CToolbar: typeof import('./src/components/NodeFlow/Custom/CToolbar.vue')['default']
     DarkModeToggle: typeof import('./src/components/Layout/Topbar/DarkModeToggle.vue')['default']
+    Dashboard: typeof import('./src/components/Admin/Dashboard.vue')['default']
     DashboardView: typeof import('./src/components/Dashboard/DashboardView.vue')['default']
     DefaultSpinner: typeof import('./src/components/Layout/utils/DefaultSpinner.vue')['default']
     DeleteUserDialog: typeof import('./src/components/Admin/UserManagement/Dialog/DeleteUserDialog.vue')['default']
