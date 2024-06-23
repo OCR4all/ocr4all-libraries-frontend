@@ -1,17 +1,31 @@
 <script setup lang="ts">
 import { useUiStore } from "@/stores/ui.store";
-import { navigation } from "@/layout/Sidebar";
+import { mainNavigation, adminNavigation } from "@/layout/Sidebar";
+import { SidebarMode } from "@/layout/Layout"
+
+const props = defineProps<{
+  mode: SidebarMode
+}>()
 
 const uiStore = useUiStore();
 
 const router = useRouter();
+
+const navigation = computed(() => {
+  switch(props.mode){
+    case SidebarMode.Main:
+      return mainNavigation
+    case SidebarMode.Admin:
+      return adminNavigation
+  }
+})
 
 const maximized = computed(() => !uiStore.sidebarMinimized);
 </script>
 
 <template>
   <div
-    class="m-1 hidden lg:block"
+    class="m-1 flex-none hidden lg:block"
     :class="[maximized ? 'w-64' : 'w-22']"
   >
     <div

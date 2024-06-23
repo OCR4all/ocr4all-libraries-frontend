@@ -24,7 +24,7 @@ import InlineMessage from "primevue/inlinemessage";
 import Textarea from "primevue/textarea";
 import Menu from 'primevue/menu';
 
-import { FilterMatchMode } from "primevue/api";
+import { FilterMatchMode } from "@primevue/core/api";
 
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();

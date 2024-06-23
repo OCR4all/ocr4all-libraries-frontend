@@ -16,7 +16,7 @@ import Toast from "primevue/toast";
 import Button from "primevue/button";
 import Menu  from "primevue/menu";
 import ProgressBar from "primevue/progressbar";
-import { FilterMatchMode } from "primevue/api";
+import { FilterMatchMode } from "@primevue/core/api";
 
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();

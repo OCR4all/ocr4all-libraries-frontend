@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { FilterMatchMode } from "primevue/api";
+import { FilterMatchMode } from "@primevue/core/api";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Toolbar from "primevue/toolbar";

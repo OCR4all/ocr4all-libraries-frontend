@@ -6,16 +6,10 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import {
-  AcademicCapIcon,
-  CubeTransparentIcon,
-  HomeIcon,
-  QueueListIcon,
-  ServerIcon,
-  Square3Stack3DIcon,
-  Squares2X2Icon,
   XMarkIcon,
 } from "@heroicons/vue/24/outline";
-import { navigation } from "@/layout/Sidebar";
+
+import { mainNavigation } from "@/layout/Sidebar";
 import { useUiStore } from "@/stores/ui.store";
 
 const uiStore = useUiStore();
@@ -67,7 +61,7 @@ defineExpose({
           <div class="flex-1 overflow-y-auto">
             <div class="mx-2 mb-10">
               <router-link
-                v-for="(item, index) in navigation"
+                v-for="(item, index) in mainNavigation"
                 :key="index"
                 :to="item.to"
                 class="flex items-center rounded-md px-6 py-2.5 text-surface-900 hover:bg-surface-100 dark:text-white dark:hover:bg-surface-700"

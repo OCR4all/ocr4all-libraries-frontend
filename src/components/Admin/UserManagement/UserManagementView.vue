@@ -5,7 +5,7 @@ const createUserDialog = defineAsyncComponent(() => import('@/components/Admin/U
 const editUserDialog = defineAsyncComponent(() => import('@/components/Admin/UserManagement/Dialog/EditUserDialog/EditUserDialogForm.vue'));
 const deleteUserDialog = defineAsyncComponent(() => import('@/components/Admin/UserManagement/Dialog/DeleteUserDialog.vue'));
 
-import { FilterMatchMode } from "primevue/api";
+import { FilterMatchMode } from "@primevue/core/api";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Button from "primevue/button";

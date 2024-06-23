@@ -14,7 +14,7 @@ import Toolbar from "primevue/toolbar";
 import Dialog from "primevue/dialog";
 import Toast from "primevue/toast";
 import Tag from "primevue/tag";
-import { FilterMatchMode } from "primevue/api";
+import { FilterMatchMode } from "@primevue/core/api";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 

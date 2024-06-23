@@ -15,40 +15,63 @@ interface navigationEntry {
   icon: FunctionalComponent<HTMLAttributes & VNodeProps>;
 }
 
-export const navigation: navigationEntry[] = [
+export const mainNavigation: navigationEntry[] = [
   {
     to: "/",
-    label: "nav.sidebar.links.dashboard",
+    label: "nav.sidebar.links.main.dashboard",
     icon: HomeIcon,
   },
   {
     to: "/repository",
-    label: "nav.sidebar.links.repository",
+    label: "nav.sidebar.links.main.repository",
     icon: ServerIcon,
   },
   {
     to: "/project",
-    label: "nav.sidebar.links.projects",
+    label: "nav.sidebar.links.main.projects",
     icon: Squares2X2Icon,
   },
   {
     to: "/workflows",
-    label: "nav.sidebar.links.workflows",
+    label: "nav.sidebar.links.main.workflows",
     icon: Square3Stack3DIcon,
   },
   {
     to: "/nodeflow",
-    label: "nav.sidebar.links.nodeflow",
+    label: "nav.sidebar.links.main.nodeflow",
     icon: CubeTransparentIcon,
   },
   {
     to: "/queue",
-    label: "nav.sidebar.links.queue",
+    label: "nav.sidebar.links.main.queue",
     icon: QueueListIcon,
   },
   {
     to: "/training",
-    label: "nav.sidebar.links.training",
+    label: "nav.sidebar.links.main.training",
     icon: AcademicCapIcon,
+  },
+];
+
+export const adminNavigation: navigationEntry[] = [
+  {
+    to: "/admin",
+    label: "nav.sidebar.links.admin.dashboard",
+    icon: HomeIcon,
+  },
+  {
+    to: "/admin/users",
+    label: "nav.sidebar.links.admin.users",
+    icon: HomeIcon,
+  },
+  {
+    to: "/admin/groups",
+    label: "nav.sidebar.links.admin.groups",
+    icon: HomeIcon,
+  },
+  {
+    to: "/admin/ocrdapi",
+    label: "nav.sidebar.links.admin.ocrdapi",
+    icon: HomeIcon,
   },
 ];

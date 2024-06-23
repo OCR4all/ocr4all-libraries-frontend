@@ -17,7 +17,7 @@ const sandbox = router.currentRoute.value.params.sandbox;
 
 const toast = useToast();
 
-const larexLocation = import.meta.env.VITE_LAREX_LOCATION;
+const larexLocation = import.meta.env.VITE_PROJECT_LOCATION;
 const larexURL = import.meta.env.VITE_LAREX_URL;
 
 import { useI18n } from "vue-i18n";

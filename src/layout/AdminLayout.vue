@@ -3,8 +3,9 @@ import AppTopbar from "@/layout/AppTopbar.vue";
 import AppSidebar from "@/layout/AppSidebar.vue";
 import AppSidebarMobile from "@/layout/AppSidebarMobile.vue";
 
+import { SidebarMode } from "@/layout/Layout"
+
 import DynamicDialog from "primevue/dynamicdialog";
-import { SidebarMode } from "@/layout/Layout";
 
 const props = defineProps<{
   padded?: boolean;
@@ -21,7 +22,7 @@ function toggleSidebarMobile() {
   <DynamicDialog />
   <div class="h-screen bg-surface-100 dark:bg-surface-950">
     <div class="flex h-screen flex-1 overflow-hidden">
-      <AppSidebar :mode="SidebarMode.Main" />
+      <AppSidebar :mode="SidebarMode.Admin" />
       <AppSidebarMobile ref="mobileSidebarRef" />
       <main
         class="flex-1 overflow-x-scroll justify-center bg-surface-100 shadow-sm dark:bg-surface-900 lg:m-2 lg:rounded-xl lg:bg-surface-0"

@@ -15,7 +15,7 @@ const uiStore = useUiStore();
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
-import { FilterMatchMode } from "primevue/api";
+import { FilterMatchMode } from "@primevue/core/api";
 
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
