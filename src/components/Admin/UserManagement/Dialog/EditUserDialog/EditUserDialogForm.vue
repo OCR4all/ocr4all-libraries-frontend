@@ -59,7 +59,7 @@ function submitPasswordChange(values, { setErrors }){
 }
 </script>
 <template>
-  <Tabs value="0">
+  <Tabs value="profile">
     <TabList>
       <Tab value="profile">Profile</Tab>
       <Tab value="password">Password</Tab>

@@ -628,6 +628,7 @@
           "name": "Name",
           "login": "Login",
           "mail": "Mail",
+          "groups": "Groups",
           "state": "State"
         }
       },

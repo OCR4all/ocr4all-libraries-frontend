@@ -2,9 +2,20 @@
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useDialog } from 'primevue/usedialog';
 import { FilterMatchMode } from '@primevue/core/api';
+import { useUiStore } from "@/stores/ui.store";
 
 const dialog = useDialog();
 const journalDialog = defineAsyncComponent(() => import('@/components/Admin/InstanceAdministration/JournalDialog.vue'));
+
+const uiStore = useUiStore()
+uiStore.breadcrumb = [
+  {
+    label: "Administration",
+  },
+  {
+    label: "Providers"
+  }
+]
 
 const nodes = ref()
 
@@ -68,7 +79,7 @@ getProviders()
     <DataTable
       v-model:filters="filters"
       scrollable
-      scroll-height="75vh"
+      scroll-height="50vh"
       striped-rows
       :value="nodes"
       :global-filter-fields="['name', 'provider', 'description', 'categories', 'steps']"

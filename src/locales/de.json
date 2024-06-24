@@ -625,6 +625,7 @@
           "name": "Name",
           "login": "Login",
           "mail": "Email",
+          "groups": "Gruppen",
           "state": "Status"
         }
       },
