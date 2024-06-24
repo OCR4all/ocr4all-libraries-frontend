@@ -40,18 +40,7 @@ async function refetch() {
     .json()
     .then((response) => {
       users.value = response.data.value;
-      getUserGroups()
     });
-}
-
-async function getUserGroups() {
-  for(const user of users.value){
-    useCustomFetch(`/administration/security/user/entity?login=${user.login}`)
-      .json()
-      .then((response) => {
-        user["groups"] = response.data.value.groups
-      });
-  }
 }
 
 const filters = ref({

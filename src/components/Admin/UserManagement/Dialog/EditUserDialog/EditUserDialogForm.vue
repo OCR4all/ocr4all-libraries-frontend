@@ -3,18 +3,21 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 
 import { profileSchema } from "@/components/Admin/UserManagement/Dialog/EditUserDialog/Schemas/profileSchema"
 import { passwordSchema } from "@/components/Admin/UserManagement/Dialog/EditUserDialog/Schemas/passwordSchema"
+import { groupSchema } from "@/components/Admin/UserManagement/Dialog/EditUserDialog/Schemas/groupSchema"
 
 const dialogRef = inject('dialogRef');
 
 const profileForm = ref()
 const passwordForm = ref()
+const groupForm = ref()
 
-const profileData = ref();
+const profileData = ref()
 const passwordData = ref()
 const groupData = ref()
 
 onMounted(() => {
   profileData.value = dialogRef.value.data.data
+  groupData.value = dialogRef.value.data.data.groups
 })
 
 async function submitProfileChanges(values, { setErrors }){
@@ -57,18 +60,22 @@ function submitPasswordChange(values, { setErrors }){
       }
     });
 }
+
+function submitGroupChange(){
+
+}
 </script>
 <template>
   <Tabs value="profile">
     <TabList>
       <Tab value="profile">Profile</Tab>
       <Tab value="password">Password</Tab>
-      <Tab disabled value="groups">Groups</Tab>
+      <Tab value="groups">Groups</Tab>
     </TabList>
     <TabPanels>
       <TabPanel value="profile">
         <FormKit
-          id="form"
+          id="profileForm"
           ref="profileForm"
           v-model="profileData"
           type="form"
@@ -82,7 +89,7 @@ function submitPasswordChange(values, { setErrors }){
       </TabPanel>
       <TabPanel value="password">
         <FormKit
-          id="form"
+          id="passwordForm"
           ref="passwordForm"
           v-model="passwordData"
           type="form"
@@ -92,6 +99,20 @@ function submitPasswordChange(values, { setErrors }){
           @submit="submitPasswordChange"
         >
           <FormKitSchema :schema="passwordSchema" :data="passwordData" />
+        </FormKit>
+      </TabPanel>
+      <TabPanel value="groups">
+        <FormKit
+            id="groupsForm"
+            ref="groupForm"
+            v-model="groupData"
+            type="form"
+            :submit-attrs="{
+              inputClass: 'p-button p-component',
+            }"
+            @submit="submitGroupChange"
+        >
+          <FormKitSchema :schema="groupSchema" :data="groupData" />
         </FormKit>
       </TabPanel>
     </TabPanels>

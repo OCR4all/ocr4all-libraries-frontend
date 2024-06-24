@@ -19,6 +19,7 @@ export const useAuthStore = defineStore("auth", () => {
     undefined,
   );
   const returnUrl: undefined | string = undefined;
+
   const config = useConfigStore();
   async function login(username: string, password: string) {
     const { error, data } = await useFetch(`${config.baseUrl}/login`)
