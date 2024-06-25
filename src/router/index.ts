@@ -1,41 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-const DashboardPage = () => import("@/pages/DashboardPage.vue");
-const LoginPage = () => import("@/pages/LoginPage.vue");
-const NotFoundPage = () => import("@/pages/NotFoundPage.vue");
-const QueuePage = () => import("@/pages/QueuePage.vue");
-const ProjectPage = () => import("@/pages/ProjectPage.vue");
-const ProjectOverview = () =>
-  import("@/components/Project/ProjectsOverview.vue");
-const New = () => import("@/components/Project/NewProject.vue");
-const Sandbox = () =>
-  import("@/components/Project/Project/Sandbox/NewSandbox.vue");
-const ProjectView = () => import("@/components/Project/ProjectView.vue");
-
-const ProjectContainer = () =>
-  import("@/components/Project/ProjectContainer.vue");
-const ResultViewer = () =>
-  import("@/components/Project/Project/Sandbox/ResultViewer.vue");
-const NodeFlowPage = () => import("@/pages/NodeFlowPage.vue");
-const WorkflowsPage = () => import("@/pages/WorkflowsPage.vue");
-
-const RepositoryOverview = () =>
-  import("@/components/Repository/RepositoryOverview.vue");
-const RepositoryUpload = () =>
-  import("@/components/Repository/Images/ImageUpload.vue");
-const RepositoryPage = () => import("@/pages/RepositoryPage.vue");
-
-const ContainerView = () => import("@/components/Repository/Images/Container/ContainerView.vue");
-const AdminPage = () => import("@/pages/AdminPage.vue");
-
-const TrainingPage = () => import("@/pages/TrainingPage.vue");
-const SettingsPage = () => import("@/pages/SettingsPage.vue");
-
-const UserManagement = () => import("@/components/Admin/UserManagement/UserManagementView.vue")
-const AdminDashboard = () => import("@/components/Admin/Dashboard.vue")
-const ProviderManagement = () => import("@/components/Admin/InstanceAdministration/ProviderManagement.vue")
-const GroupManagement = () => import("@/components/Admin/GroupManagement/GroupManagement.vue")
-
 import { useAuthStore } from "@/stores/auth.store";
 import { useConfigStore } from "@/stores/config.store";
 import { useUiStore } from "@/stores/ui.store";
@@ -44,33 +8,35 @@ const routes = [
   {
     path: "/",
     name: "Dashboard",
-    component: DashboardPage,
+    component: () => import("@/pages/DashboardPage.vue"),
   },
   {
     path: "/queue",
     name: "Queue",
-    component: QueuePage,
+    component: () => import("@/pages/QueuePage.vue"),
   },
   {
     path: "/repository",
     name: "Repository",
     redirect: "/repository/overview",
-    component: RepositoryPage,
+    component: () => import("@/pages/RepositoryPage.vue"),
     children: [
       {
         path: "overview",
         name: "Repository Overview",
-        component: RepositoryOverview,
+        component: () =>
+            import("@/components/Repository/RepositoryOverview.vue"),
       },
       {
         path: "upload",
         name: "Upload",
-        component: RepositoryUpload,
+        component: () =>
+            import("@/components/Repository/Images/ImageUpload.vue"),
       },
       {
         path: "container",
         name: "Container",
-        component: ContainerView,
+        component: () => import("@/components/Repository/Images/Container/ContainerView.vue"),
       },
     ],
   },
@@ -78,37 +44,38 @@ const routes = [
     path: "/project",
     name: "Project",
     redirect: "/project/overview",
-    component: ProjectPage,
+    component: () => import("@/pages/ProjectPage.vue"),
     children: [
       {
         path: "overview",
         name: "Overview",
-        component: ProjectOverview,
+        component: () =>
+            import("@/components/Project/ProjectsOverview.vue"),
       },
       {
         path: "new",
         name: "New Project",
-        component: New,
+        component: () => import("@/components/Project/NewProject.vue"),
       },
       {
         path: ":project",
         name: "Project",
-        component: ProjectContainer,
+        component: () => import("@/components/Project/ProjectContainer.vue"),
         children: [
           {
             path: "view",
             name: "View Project",
-            component: ProjectView,
+            component: () => import("@/components/Project/ProjectView.vue"),
           },
           {
             path: "new-result",
             name: "New Sandbox",
-            component: Sandbox,
+            component: () => import("@/components/Project/Project/Sandbox/NewSandbox.vue"),
           },
           {
             path: "result/:sandbox",
             name: "Sandbox",
-            component: ResultViewer,
+            component: () => import("@/components/Project/Project/Sandbox/ResultViewer.vue"),
           },
         ],
       },
@@ -117,60 +84,60 @@ const routes = [
   {
     path: "/workflows",
     name: "Workflows",
-    component: WorkflowsPage,
+    component: () => import("@/pages/WorkflowsPage.vue"),
   },
   {
     path: "/nodeflow",
     name: "NodeFlow",
-    component: NodeFlowPage,
+    component: () => import("@/pages/NodeFlowPage.vue"),
   },
   {
     path: "/training",
     name: "Training",
-    component: TrainingPage,
+    component: () => import("@/pages/TrainingPage.vue"),
   },
   {
     path: "/login",
     name: "Login",
-    component: LoginPage,
+    component: () => import("@/pages/LoginPage.vue"),
   },
   {
     path: "/admin",
     name: "Admin",
     redirect: "/admin/dashboard",
-    component: AdminPage,
+    component: () => import("@/pages/AdminPage.vue"),
     children: [
       {
         path: "dashboard",
         name: "Admin Dashboard",
-        component: AdminDashboard,
+        component: () => import("@/components/Admin/Dashboard.vue"),
       },
       {
         path: "users",
         name: "Users",
-        component: UserManagement,
+        component: () => import("@/components/Admin/UserManagement/UserManagementView.vue"),
       },
       {
         path: "groups",
         name: "Groups",
-        component: GroupManagement,
+        component: () => import("@/components/Admin/GroupManagement/GroupManagement.vue"),
       },
       {
         path: "providers",
         name: "Providers",
-        component: ProviderManagement,
+        component: () => import("@/components/Admin/InstanceAdministration/ProviderManagement.vue"),
       },
     ]
   },
   {
     path: "/settings",
     name: "Settings",
-    component: SettingsPage,
+    component: () => import("@/pages/SettingsPage.vue"),
   },
   {
     path: "/404",
     name: "NotFound",
-    component: NotFoundPage,
+    component: () => import("@/pages/NotFoundPage.vue"),
   },
   {
     path: "/:catchAll(.*)",
