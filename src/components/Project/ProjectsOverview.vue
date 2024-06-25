@@ -24,8 +24,7 @@ async function refetch() {
   isRefetching.value = true;
   const { isFetching, error, data } = await useCustomFetch(`/project/list`)
     .get()
-  console.log(error)
-  console.log(data)
+    .json()
   projects.value = data.value;
   loading.value = isFetching.value;
   setTimeout(function () {

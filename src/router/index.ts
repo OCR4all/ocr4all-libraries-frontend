@@ -34,7 +34,7 @@ const SettingsPage = () => import("@/pages/SettingsPage.vue");
 const UserManagement = () => import("@/components/Admin/UserManagement/UserManagementView.vue")
 const AdminDashboard = () => import("@/components/Admin/Dashboard.vue")
 const ProviderManagement = () => import("@/components/Admin/InstanceAdministration/ProviderManagement.vue")
-const GroupManagement = () => import("@/components/Admin/GroupManagement.vue")
+const GroupManagement = () => import("@/components/Admin/GroupManagement/GroupManagement.vue")
 
 import { useAuthStore } from "@/stores/auth.store";
 import { useConfigStore } from "@/stores/config.store";

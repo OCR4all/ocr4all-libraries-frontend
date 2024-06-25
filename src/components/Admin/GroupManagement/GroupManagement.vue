@@ -8,6 +8,12 @@ import Column from "primevue/column";
 import Button from "primevue/button";
 import { FilterMatchMode } from "@primevue/core/api";
 
+const createGroupDialog = defineAsyncComponent(() => import("@/components/Admin/GroupManagement/Dialog/CreateGroupDialog/CreateGroupDialogForm.vue"));
+const editGroupDialog = defineAsyncComponent(() => import("@/components/Admin/GroupManagement/Dialog/EditGroupDialog/EditGroupDialogForm.vue"));
+const deleteGroupDialog = defineAsyncComponent(() => import("@/components/Admin/GroupManagement/Dialog/DeleteGroupDialog.vue"));
+
+const dialog = useDialog();
+
 const uiStore = useUiStore()
 uiStore.breadcrumb = [
   {
@@ -20,6 +26,7 @@ uiStore.breadcrumb = [
 
 import {useI18n} from "vue-i18n";
 import { useUiStore } from "@/stores/ui.store";
+import { useDialog } from "primevue/usedialog";
 const i18n = useI18n()
 
 const groups = ref();
@@ -38,11 +45,44 @@ async function refetch() {
 }
 
 function openNewGroupDialog(){
-
+  dialog.open(createGroupDialog, {
+    props: {
+      header: "Create Group",
+      modal: true
+    },
+    onClose: () => {
+      refetch()
+    }
+  });
 }
 
-function openDeleteGroupDialog(){
-
+function openEditGroupDialog(data){
+  dialog.open(editGroupDialog, {
+    props: {
+      header: i18n.t('admin.group-management.dialog.edit.header'),
+      modal: true
+    },
+    data: {
+      data
+    },
+    onClose: () => {
+      refetch()
+    }
+  });
+}
+function openDeleteGroupDialog(data: any){
+  dialog.open(deleteGroupDialog, {
+    props: {
+      header: i18n.t("admin.user-management.dialog.delete.single.header"),
+      modal: true
+    },
+    data: {
+      data
+    },
+    onClose: () => {
+      refetch()
+    }
+  })
 }
 refetch();
 </script>
@@ -135,14 +175,14 @@ refetch();
           outlined
           rounded
           class="mr-2"
-          @click="openEditUserDialog(slotProps.data)"
+          @click="openEditGroupDialog(slotProps.data)"
         />
         <Button
           icon="pi pi-trash"
           outlined
           rounded
           severity="danger"
-          @click="openDeleteDialog([slotProps.data])"
+          @click="openDeleteGroupDialog([slotProps.data])"
         />
       </template>
     </Column>

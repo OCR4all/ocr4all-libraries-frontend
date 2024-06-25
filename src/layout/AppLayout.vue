@@ -31,10 +31,23 @@ function toggleSidebarMobile() {
           class="h-[calc(100vh-5rem)] w-full overflow-y-auto rounded-b-2xl"
           :class="{ 'p-8': padded }"
         >
-          <slot />
+          <transition name="fade-enter-from">
+            <slot />
+          </transition>
         </div>
       </main>
     </div>
   </div>
   <CookieBanner />
 </template>
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

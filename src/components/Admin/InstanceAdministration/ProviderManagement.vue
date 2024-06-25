@@ -43,11 +43,15 @@ async function getProviders() {
     });
 }
 
-function showJournal(journal){
+function showJournal(data){
   dialog.open(journalDialog, {
     data: {
-      journal: journal
-    }
+      journal: data.journal
+    },
+    props: {
+      header: data.name,
+      modal: true
+    },
   });
 }
 
@@ -128,7 +132,7 @@ getProviders()
       <Column field="index" header="Index"></Column>
       <Column field="journal" header="Journal">
         <template #body="{ data }">
-          <Button @click="showJournal(data.journal)">Show</Button>
+          <Button @click="showJournal(data)">Show</Button>
         </template>
       </Column>
     </DataTable>

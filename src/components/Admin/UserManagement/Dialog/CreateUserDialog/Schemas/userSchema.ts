@@ -37,8 +37,8 @@ export const userSchema = ref([
         value: "active"
       },
       {
-        label: "Disabled",
-        value: "disabled"
+        label: "Blocked",
+        value: "blocked"
       },
     ],
     validation: "required",
