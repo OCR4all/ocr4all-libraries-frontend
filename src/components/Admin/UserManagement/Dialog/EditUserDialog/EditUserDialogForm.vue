@@ -103,7 +103,7 @@ function submitGroupChange(){
       </TabPanel>
       <TabPanel value="groups">
         <FormKit
-            id="groupsForm"
+            id="groupForm"
             ref="groupForm"
             v-model="groupData"
             type="form"

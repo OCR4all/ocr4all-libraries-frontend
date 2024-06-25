@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
-
 import { groupSchema } from "@/components/Admin/GroupManagement/Dialog/EditGroupDialog/Schemas/groupSchema"
 
 const dialogRef = inject('dialogRef');
 
-const groupForm = ref()
+const form = ref()
 const data = ref()
 
 const schema = groupSchema
@@ -39,7 +38,7 @@ async function submitGroupChanges(values, { setErrors }){
 <template>
     <FormKit
       id="groupForm"
-      ref="groupForm"
+      ref="form"
       v-model="data"
       type="form"
       :submit-attrs="{

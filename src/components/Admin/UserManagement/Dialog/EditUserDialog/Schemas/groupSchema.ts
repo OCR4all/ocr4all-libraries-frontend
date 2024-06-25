@@ -2,11 +2,12 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 
 const groups = ref()
 
-await useCustomFetch(`/administration/security/group/list`)
-  .json()
-  .then((response) => {
-    groups.value = response.data.value;
-})
+await useCustomFetch("/administration/security/group/list")
+    .get()
+    .json()
+    .then((response) => {
+        groups.value = response.data.value
+    });
 
 export const groupSchema = ref([
     {
@@ -18,6 +19,5 @@ export const groupSchema = ref([
         "optionLabel": "name",
         "optionValue": "label",
         "options": groups.value,
-        "validation": "required"
     }
 ])
