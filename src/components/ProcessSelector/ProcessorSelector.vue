@@ -90,14 +90,14 @@ const processorFormSchema = ref()
 const formData = ref()
 
 function runProcessor(values, { setErrors }){
-  const url = `/spi/${selectedProcessor.value.type}/schedule/${project.value}/${sandbox.value}`
+  const url = `/spi/${selectedProcessor.value.type}/schedule/${props.project}/${props.sandbox}`
   const payload = {
     id: selectedProcessor.value.id,
     label: selectedProcessor.value.label,
     description: "",
     "job-short-description": "string",
     "parent-snapshot": {
-      "track": track.value
+      "track": props.track
     }
   }
   console.log(selectedProcessor.value)

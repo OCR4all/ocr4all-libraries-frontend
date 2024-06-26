@@ -72,7 +72,7 @@ function toggleDeleteDialog(id) {
 const getColor = (entry) => {
   switch (entry) {
     case "secured":
-      return { background: "#1A56DB" };
+      return { background: "#1A56DB", color: "white" };
     default:
       return null;
   }

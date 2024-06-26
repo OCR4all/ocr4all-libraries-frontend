@@ -4,12 +4,11 @@ import { useFindNestedObject } from "@/composables/useFindNestedObject";
 import OrganizationChart from "primevue/organizationchart";
 import Button from "primevue/button";
 import Toast from "primevue/toast";
-import Dialog from "primevue/dialog";
-import Accordion from "primevue/accordion";
-import AccordionTab from "primevue/accordiontab";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useToast } from "primevue/usetoast";
+const processorDialog = defineAsyncComponent(() => import('@/components/Project/Project/Sandbox/Dialog/ProcessorDialog.vue'));
+
 
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
@@ -23,6 +22,7 @@ const larexURL = import.meta.env.VITE_LAREX_URL;
 import { useI18n } from "vue-i18n";
 import ProgressBar from "primevue/progressbar";
 import { useUiStore } from "@/stores/ui.store";
+import {useDialog} from "primevue/usedialog";
 const { t } = useI18n();
 
 const isGeneratingSandbox = ref(false);
@@ -46,11 +46,29 @@ const sandboxGenerationToastVisible = ref(false);
 
 const LAREX_LABEL = "ocr4all-LAREX-launcher v1.0";
 
-const isProcessorDialogOpen = ref(false);
-function openProcessorDialog() {
-  isProcessorDialogOpen.value = true;
+const dialog = useDialog();
+
+function openProcessorDialog(snapshot) {
+  const key = Object.keys(snapshot)[0]
+      .split(",")
+      .map(function (item) {
+        return parseInt(item, 10);
+      });
+  dialog.open(processorDialog, {
+    props: {
+      header: "Run processor",
+      modal: true
+    },
+    data: {
+      project: project,
+      sandbox: sandbox,
+      track: key
+    },
+    onClose: () => {
+      refetch()
+    }
+  });
 }
-async function runProcessor() {}
 
 const showSandboxGenerationToast = () => {
   if (!sandboxGenerationToastVisible.value) {
@@ -321,14 +339,6 @@ uiStore.breadcrumb = [
       </section>
     </template>
   </Toast>
-  <Dialog
-    v-model:visible="isProcessorDialogOpen"
-    modal
-    header="Run processor"
-    :style="{ width: '25rem' }"
-  >
-    <ProcessorSelector />
-  </Dialog>
   <div class="flex space-x-6">
     <transition
       class="w-128 flex-1 rounded-md border bg-white p-5 dark:border-surface-800 dark:bg-surface-900"
@@ -355,7 +365,7 @@ uiStore.breadcrumb = [
           </button>
           <button
             class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
-            @click="openProcessorDialog"
+            @click="openProcessorDialog(selection)"
           >
             Run processor
           </button>
@@ -367,29 +377,31 @@ uiStore.breadcrumb = [
           </button>
         </div>
         <Accordion>
-          <AccordionTab header="Processor Information">
-            <table
-              class="w-full text-left text-sm text-surface-500 dark:text-surface-400"
-            >
-              <thead
-                class="bg-surface-50 text-xs uppercase text-surface-700 dark:bg-zinc-700 dark:text-white"
+          <AccordionPanel value="information">
+            <AccordionHeader>Processor Information</AccordionHeader>
+            <AccordionContent>
+              <table
+                  class="w-full text-left text-sm text-surface-500 dark:text-surface-400"
               >
+                <thead
+                    class="bg-surface-50 text-xs uppercase text-surface-700 dark:bg-zinc-700 dark:text-white"
+                >
                 <tr>
                   <th scope="col" class="px-6 py-3">Parameter</th>
                   <th scope="col" class="px-6 py-3">Value</th>
                 </tr>
-              </thead>
-              <tbody>
+                </thead>
+                <tbody>
                 <tr
-                  v-for="(value, key) in Object.entries(
+                    v-for="(value, key) in Object.entries(
                     selectedSnapshotInformation,
                   )"
-                  :key="key"
-                  class="border-b bg-white dark:border-surface-800 dark:bg-surface-900"
+                    :key="key"
+                    class="border-b bg-white dark:border-surface-800 dark:bg-surface-900"
                 >
                   <th
-                    scope="row"
-                    class="whitespace-nowrap px-6 py-4 font-medium text-surface-900 dark:text-white"
+                      scope="row"
+                      class="whitespace-nowrap px-6 py-4 font-medium text-surface-900 dark:text-white"
                   >
                     {{ value[0] }}
                   </th>
@@ -397,9 +409,10 @@ uiStore.breadcrumb = [
                     {{ value[1] }}
                   </td>
                 </tr>
-              </tbody>
-            </table>
-          </AccordionTab>
+                </tbody>
+              </table>
+            </AccordionContent>
+          </AccordionPanel>
         </Accordion>
       </div>
     </transition>
