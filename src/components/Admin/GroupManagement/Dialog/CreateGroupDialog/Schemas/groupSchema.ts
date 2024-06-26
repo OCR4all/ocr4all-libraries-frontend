@@ -1,6 +1,12 @@
 import { useCustomFetch } from "@/composables/useCustomFetch";
+import { RemovableRef } from "@vueuse/core";
 
-const users = ref([])
+interface IUser{
+  login: string,
+  state: string
+}
+
+const users: RemovableRef<IUser[]> = ref([])
 
 await useCustomFetch(`/administration/security/user/list`)
   .get()

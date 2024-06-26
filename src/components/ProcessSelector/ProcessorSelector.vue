@@ -5,6 +5,14 @@ import Tag from "primevue/tag";
 import Dialog from "primevue/dialog";
 import Tree from "primevue/tree";
 
+import { buildProcessorSchema } from "@/components/ProcessSelector/utils";
+
+const props = defineProps<{
+  project: string
+  sandbox: string
+  track: number[]
+}>()
+
 const nodes = ref([])
 
 function structureData(data){
@@ -79,39 +87,25 @@ const toggleNode = (node) => {
 
 const selectedProcessor = ref();
 const processorFormSchema = ref()
-const formData = ref({})
+const formData = ref()
 
-function runProcessor(){
-  console.log(formData)
+function runProcessor(values, { setErrors }){
+  const url = `/spi/${selectedProcessor.value.type}/schedule/${project.value}/${sandbox.value}`
+  const payload = {
+    id: selectedProcessor.value.id,
+    label: selectedProcessor.value.label,
+    description: "",
+    "job-short-description": "string",
+    "parent-snapshot": {
+      "track": track.value
+    }
+  }
+  console.log(selectedProcessor.value)
+  console.log(values)
 }
 
 function buildProcessorFormSchema(data){
-  const schema = []
-  for(const entry of data.entries){
-    console.log(entry.value)
-    const formType = (function () {
-      switch(entry.type){
-        case "decimal":
-          return {
-            type: "number",
-            number: "float",
-          }
-        case "integer":
-          return {
-            type: "number",
-            number: "integer"
-
-          }
-        case "select":
-          return {
-            type: "select",
-          }
-      }
-    })
-    schema.push({
-
-    })
-  }
+  const schema = buildProcessorSchema(data)
   processorFormSchema.value = schema
 }
 
@@ -125,19 +119,29 @@ const processorDialogVisible = ref(false);
 </script>
 <template>
   <Dialog v-model:visible="processorDialogVisible" modal header="Run Processor">
-    <div class="flex space-x-2">
-      <h1 class="text-xl text-surface-900 dark:text-surface-0 font-semibold"> {{ selectedProcessor.name }} </h1>
-      <Tag v-for="category of selectedProcessor.categories" :key="category" value="Primary" :value="category"></Tag>
+    <div class="pb-6">
+      <div class="flex space-x-2">
+        <h1 class="text-xl text-surface-900 dark:text-surface-0 font-semibold"> {{ selectedProcessor.name }} </h1>
+        <Tag v-for="category of selectedProcessor.categories" :key="category" :value="category"></Tag>
+      </div>
+      <h3 class="text-md text-surface-900 dark:text-surface-0"> {{ selectedProcessor.description }} </h3>
     </div>
-    <h3 class="text-md text-surface-900 dark:text-surface-0"> {{ selectedProcessor.description }} </h3>
     <div>
-    <FormKit v-model="formData" type="form" :actions="false">
-      <FormKitSchema :schema="processorFormSchema"  />
-    </FormKit>
+      <FormKit
+        id="processorForm"
+        ref="processorForm"
+        v-model="formData"
+        type="form"
+        :submit-attrs="{
+              inputClass: 'p-button p-component',
+            }"
+        @submit="runProcessor"
+      >
+        <FormKitSchema :schema="processorFormSchema" :data="formData" />
+      </FormKit>
     </div>
   </Dialog>
   <div class="flex flex-wrap gap-2 mb-4">
-    <Button v-ripple label="Submit" />
     <Button type="button" icon="pi pi-plus" label="Expand All" @click="expandAll" />
     <Button type="button" icon="pi pi-minus" label="Collapse All" @click="collapseAll" />
   </div>

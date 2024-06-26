@@ -45,15 +45,15 @@ const jobs = ref();
 const getColor = (entry) => {
   switch (entry) {
     case "scheduled":
-      return { background: "#76A9FA" };
+      return { background: "#76A9FA", color: 'white' };
     case "running":
-      return { background: "#1A56DB" };
+      return { background: "#1A56DB", color: 'white' };
     case "interrupted":
-      return { background: "#4B5563" };
+      return { background: "#4B5563", color: 'white' };
     case "cancelled":
-      return { background: "#E02424" };
+      return { background: "#E02424", color: 'white' };
     case "completed":
-      return { background: "#046C4E" };
+      return { background: "#046C4E", color: 'white' };
     default:
       return null;
   }
