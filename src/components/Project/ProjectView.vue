@@ -11,16 +11,16 @@ import { useUiStore } from "@/stores/ui.store";
 const router = useRouter();
 const project: string[] = router.currentRoute.value.params.project;
 
-const uiStore = useUiStore()
+const uiStore = useUiStore();
 uiStore.breadcrumb = [
   {
     label: "Projects",
-    to: "/project/overview"
+    to: "/project/overview",
   },
   {
     label: project,
   },
-]
+];
 </script>
 
 <template>

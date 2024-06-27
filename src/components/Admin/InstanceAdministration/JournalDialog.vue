@@ -2,8 +2,8 @@
 import { FilterMatchMode } from "@primevue/core/api";
 import { UseTimeAgo } from "@vueuse/components";
 
-const dialogRef = inject('dialogRef');
-const journal = ref()
+const dialogRef = inject("dialogRef");
+const journal = ref();
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -13,8 +13,7 @@ const filters = ref({
 
 onMounted(() => {
   journal.value = dialogRef.value.data.journal;
-})
-
+});
 </script>
 <template>
   <DataTable
@@ -26,7 +25,8 @@ onMounted(() => {
     :global-filter-fields="['user', 'level', 'message']"
     paginator
     :rows="5"
-    :rows-per-page-options="[5, 10, 20, 50]">
+    :rows-per-page-options="[5, 10, 20, 50]"
+  >
     <template #header>
       <div class="flex flex-wrap items-center justify-between gap-2">
         <span class="text-xl font-bold">Journal</span>
@@ -42,10 +42,7 @@ onMounted(() => {
     </template>
     <Column sortable field="date" header="Date">
       <template #body="{ data }">
-        <UseTimeAgo
-          v-slot="{ timeAgo }"
-          :time="Date.parse(data.date)"
-        >
+        <UseTimeAgo v-slot="{ timeAgo }" :time="Date.parse(data.date)">
           {{ timeAgo }}
         </UseTimeAgo>
       </template>

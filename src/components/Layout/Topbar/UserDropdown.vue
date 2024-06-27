@@ -3,7 +3,7 @@ import {
   UserIcon,
   Cog8ToothIcon,
   QuestionMarkCircleIcon,
-  ArrowLeftStartOnRectangleIcon
+  ArrowLeftStartOnRectangleIcon,
 } from "@heroicons/vue/24/outline";
 
 interface IUserDropdownEntry {
@@ -25,12 +25,12 @@ const op = ref();
 const user: RemovableRef<object> = ref();
 
 const profileItems: IUserDropdownEntry[] = [
-  { action: openSettings, label: "Settings", icon: Cog8ToothIcon }
+  { action: openSettings, label: "Settings", icon: Cog8ToothIcon },
 ];
 
 const adminItems: IUserDropdownEntry[] = [
-  { action: openAdminDashboard, label: "Admin", icon: UserIcon}
-]
+  { action: openAdminDashboard, label: "Admin", icon: UserIcon },
+];
 
 function openSettings() {
   router.push("/settings");
@@ -56,7 +56,7 @@ const toggle = (event) => {
 </script>
 
 <template>
-  <button class="pt-1 pl-1" @click="toggle">
+  <button class="pl-1 pt-1" @click="toggle">
     <AvatarInitials :name="user.name" :admin="authStore.isAdmin" />
   </button>
   <Popover ref="op" class="mr-1">
@@ -77,31 +77,37 @@ const toggle = (event) => {
       <button
         v-for="(item, index) in profileItems"
         :key="index"
-        class="flex transform items-center px-3 py-2 my-1 text-sm capitalize text-gray-600 transition-colors duration-300 rounded-md hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+        class="my-1 flex transform items-center rounded-md px-3 py-2 text-sm capitalize text-gray-600 transition-colors duration-300 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
         @click="item.action"
       >
         <component :is="item.icon" class="h-6 w-6" />
         <span class="mx-1">{{ item.label }}</span>
       </button>
-      <hr v-show="authStore.isAdmin" class="border-gray-200 dark:border-gray-700" />
+      <hr
+        v-show="authStore.isAdmin"
+        class="border-gray-200 dark:border-gray-700"
+      />
       <button
         v-for="(item, index) in adminItems"
         v-show="authStore.isAdmin"
         :key="index"
-        class="flex transform items-center px-3 py-2 my-1 text-sm capitalize text-gray-600 transition-colors duration-300 hover:bg-primary-700 hover:text-surface-50 rounded-md dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+        class="my-1 flex transform items-center rounded-md px-3 py-2 text-sm capitalize text-gray-600 transition-colors duration-300 hover:bg-primary-700 hover:text-surface-50 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
         @click="item.action"
       >
         <component :is="item.icon" class="h-6 w-6" />
         <span class="mx-1">{{ item.label }}</span>
       </button>
       <hr class="border-gray-200 dark:border-gray-700" />
-      <a class="flex transform items-center px-3 py-2 my-1 text-sm capitalize text-gray-600 transition-colors duration-300 hover:bg-gray-100 rounded-md dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-         href="https://www.ocr4all.org" target="_blank">
+      <a
+        class="my-1 flex transform items-center rounded-md px-3 py-2 text-sm capitalize text-gray-600 transition-colors duration-300 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+        href="https://www.ocr4all.org"
+        target="_blank"
+      >
         <QuestionMarkCircleIcon class="h-6 w-6" />
         <span class="mx-1">Documentation</span>
       </a>
       <button
-        class="flex transform items-center px-3 py-2 my-1 text-sm capitalize text-gray-600 transition-colors duration-300 hover:bg-gray-100 rounded-md dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+        class="my-1 flex transform items-center rounded-md px-3 py-2 text-sm capitalize text-gray-600 transition-colors duration-300 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
         @click="logout"
       >
         <ArrowLeftStartOnRectangleIcon class="h-6 w-6" />

@@ -31,7 +31,7 @@ const containers = ref();
 const newContainerName = ref();
 const createContainerPanel = ref();
 
-const options = ref(['list', 'grid']);
+const options = ref(["list", "grid"]);
 
 const id: Ref<string | undefined> = ref();
 const name: Ref<string | undefined> = ref();
@@ -181,7 +181,7 @@ function openContainer(containerId: string, containerName: string) {
         <label
           for="text"
           class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-        >Label</label
+          >Label</label
         >
         <InputText v-model="name" type="text" />
       </div>
@@ -190,7 +190,7 @@ function openContainer(containerId: string, containerName: string) {
         <label
           for="description"
           class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
-        >{{
+          >{{
             $t("pages.projects.project.information.form.description")
           }}</label
         >
@@ -202,7 +202,7 @@ function openContainer(containerId: string, containerName: string) {
           <label
             for="keywords"
             class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
-          >{{ $t("pages.projects.project.information.form.keywords") }}</label
+            >{{ $t("pages.projects.project.information.form.keywords") }}</label
           >
           <Chips v-model="keywords" />
         </div>
@@ -288,9 +288,7 @@ function openContainer(containerId: string, containerName: string) {
       </SelectButton>
     </template>
   </Toolbar>
-  <div
-    class="rounded-md bg-surface-0 @container/content dark:bg-surface-800"
-  >
+  <div class="rounded-md bg-surface-0 @container/content dark:bg-surface-800">
     <DataView
       class="bg-surface-50 dark:bg-surface-700"
       :value="containers"
@@ -314,15 +312,15 @@ function openContainer(containerId: string, containerName: string) {
                 {{ $t("pages.repository.overview.dataview.list.header") }}
               </h4>
               <span class="relative justify-self-end">
-                    <i
-                      class="pi pi-search absolute left-3 top-2/4 -mt-2 text-surface-400 dark:text-surface-600"
-                    />
-                    <InputText
-                      v-model="filters['global'].value"
-                      class="pl-10"
-                      placeholder="Search..."
-                    />
-                  </span>
+                <i
+                  class="pi pi-search absolute left-3 top-2/4 -mt-2 text-surface-400 dark:text-surface-600"
+                />
+                <InputText
+                  v-model="filters['global'].value"
+                  class="pl-10"
+                  placeholder="Search..."
+                />
+              </span>
             </div>
           </template>
           <Column
@@ -332,19 +330,17 @@ function openContainer(containerId: string, containerName: string) {
           ></Column>
           <Column
             field="name"
-            :header="
-                  $t('pages.repository.overview.dataview.list.column.name')
-                "
+            :header="$t('pages.repository.overview.dataview.list.column.name')"
             sortable
           >
             <template #loading>
               <div
                 class="align-items-center flex"
                 :style="{
-                      height: '17px',
-                      'flex-grow': '1',
-                      overflow: 'hidden',
-                    }"
+                  height: '17px',
+                  'flex-grow': '1',
+                  overflow: 'hidden',
+                }"
               >
                 <Skeleton width="60%" height="1rem" />
               </div>
@@ -353,19 +349,17 @@ function openContainer(containerId: string, containerName: string) {
           <Column
             field="description"
             :header="
-                  $t(
-                    'pages.repository.overview.dataview.list.column.description',
-                  )
-                "
+              $t('pages.repository.overview.dataview.list.column.description')
+            "
           >
             <template #loading>
               <div
                 class="align-items-center flex"
                 :style="{
-                      height: '17px',
-                      'flex-grow': '1',
-                      overflow: 'hidden',
-                    }"
+                  height: '17px',
+                  'flex-grow': '1',
+                  overflow: 'hidden',
+                }"
               >
                 <Skeleton width="60%" height="1rem" />
               </div>
@@ -374,43 +368,41 @@ function openContainer(containerId: string, containerName: string) {
           <Column
             field="keywords"
             :header="
-                  $t('pages.repository.overview.dataview.list.column.keywords')
-                "
+              $t('pages.repository.overview.dataview.list.column.keywords')
+            "
           >
             <template #loading>
               <div
                 class="align-items-center flex"
                 :style="{
-                      height: '17px',
-                      'flex-grow': '1',
-                      overflow: 'hidden',
-                    }"
+                  height: '17px',
+                  'flex-grow': '1',
+                  overflow: 'hidden',
+                }"
               >
                 <Skeleton width="60%" height="1rem" />
               </div>
             </template>
             <template #body="slotProps">
-              <Chip
-                v-for="keyword of slotProps.data.keywords"
-                :key="keyword"
-              >{{ keyword }}</Chip
-              >
+              <Chip v-for="keyword of slotProps.data.keywords" :key="keyword">{{
+                keyword
+              }}</Chip>
             </template>
           </Column>
           <Column
             field="actions"
             :header="
-                  $t('pages.repository.overview.dataview.list.column.actions')
-                "
+              $t('pages.repository.overview.dataview.list.column.actions')
+            "
           >
             <template #loading>
               <div
                 class="align-items-center flex"
                 :style="{
-                      height: '17px',
-                      'flex-grow': '1',
-                      overflow: 'hidden',
-                    }"
+                  height: '17px',
+                  'flex-grow': '1',
+                  overflow: 'hidden',
+                }"
               >
                 <Skeleton width="60%" height="1rem" />
               </div>
@@ -421,14 +413,10 @@ function openContainer(containerId: string, containerName: string) {
                   type="primary"
                   size="small"
                   rounded
-                  @click="
-                        openContainer(slotProps.data.id, slotProps.data.name)
-                      "
+                  @click="openContainer(slotProps.data.id, slotProps.data.name)"
                 >
                   {{
-                    $t(
-                      "pages.repository.overview.dataview.list.action.open",
-                    )
+                    $t("pages.repository.overview.dataview.list.action.open")
                   }}
                 </ActionButton>
                 <ActionButton
@@ -438,9 +426,7 @@ function openContainer(containerId: string, containerName: string) {
                   @click="openEditDialog(slotProps.data)"
                 >
                   {{
-                    $t(
-                      "pages.repository.overview.dataview.list.action.edit",
-                    )
+                    $t("pages.repository.overview.dataview.list.action.edit")
                   }}
                 </ActionButton>
               </div>

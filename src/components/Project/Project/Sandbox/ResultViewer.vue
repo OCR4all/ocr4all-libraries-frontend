@@ -7,8 +7,10 @@ import Toast from "primevue/toast";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useToast } from "primevue/usetoast";
-const processorDialog = defineAsyncComponent(() => import('@/components/Project/Project/Sandbox/Dialog/ProcessorDialog.vue'));
-
+const processorDialog = defineAsyncComponent(
+  () =>
+    import("@/components/Project/Project/Sandbox/Dialog/ProcessorDialog.vue"),
+);
 
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
@@ -22,7 +24,7 @@ const larexURL = import.meta.env.VITE_LAREX_URL;
 import { useI18n } from "vue-i18n";
 import ProgressBar from "primevue/progressbar";
 import { useUiStore } from "@/stores/ui.store";
-import {useDialog} from "primevue/usedialog";
+import { useDialog } from "primevue/usedialog";
 const { t } = useI18n();
 
 const isGeneratingSandbox = ref(false);
@@ -50,23 +52,23 @@ const dialog = useDialog();
 
 function openProcessorDialog(snapshot) {
   const key = Object.keys(snapshot)[0]
-      .split(",")
-      .map(function (item) {
-        return parseInt(item, 10);
-      });
+    .split(",")
+    .map(function (item) {
+      return parseInt(item, 10);
+    });
   dialog.open(processorDialog, {
     props: {
       header: "Run processor",
-      modal: true
+      modal: true,
     },
     data: {
       project: project,
       sandbox: sandbox,
-      track: key
+      track: key,
     },
     onClose: () => {
-      refetch()
-    }
+      refetch();
+    },
   });
 }
 
@@ -198,7 +200,7 @@ async function generateSandbox(selection: object) {
     }
   }
   formFileMap.value = JSON.stringify(fileMap);
-  console.log(fileMap)
+  console.log(fileMap);
   formMimeMap.value = JSON.stringify(mimeMap);
   refetch();
 }
@@ -255,20 +257,20 @@ async function checkJob(startedJob) {
 }
 refetch();
 
-const uiStore = useUiStore()
+const uiStore = useUiStore();
 uiStore.breadcrumb = [
   {
     label: "Projects",
-    to: "/project/overview"
+    to: "/project/overview",
   },
   {
     label: project,
-    to: `/project/${project}/view`
+    to: `/project/${project}/view`,
   },
   {
-    label: sandbox
-  }
-]
+    label: sandbox,
+  },
+];
 </script>
 <template>
   <Toast />
@@ -304,7 +306,7 @@ uiStore.breadcrumb = [
           :action="larexURL"
           method="POST"
           target="_blank"
-          >
+        >
           <input
             id="fileMap"
             v-model="formFileMap"
@@ -324,7 +326,7 @@ uiStore.breadcrumb = [
           <button
             type="submit"
             name="action"
-            class="bg-primary-600 p-2 text-surface-50 hover:bg-primary-800 rounded-md"
+            class="rounded-md bg-primary-600 p-2 text-surface-50 hover:bg-primary-800"
             @click="closeCallback"
           >
             Open
@@ -381,34 +383,34 @@ uiStore.breadcrumb = [
             <AccordionHeader>Processor Information</AccordionHeader>
             <AccordionContent>
               <table
-                  class="w-full text-left text-sm text-surface-500 dark:text-surface-400"
+                class="w-full text-left text-sm text-surface-500 dark:text-surface-400"
               >
                 <thead
-                    class="bg-surface-50 text-xs uppercase text-surface-700 dark:bg-zinc-700 dark:text-white"
+                  class="bg-surface-50 text-xs uppercase text-surface-700 dark:bg-zinc-700 dark:text-white"
                 >
-                <tr>
-                  <th scope="col" class="px-6 py-3">Parameter</th>
-                  <th scope="col" class="px-6 py-3">Value</th>
-                </tr>
+                  <tr>
+                    <th scope="col" class="px-6 py-3">Parameter</th>
+                    <th scope="col" class="px-6 py-3">Value</th>
+                  </tr>
                 </thead>
                 <tbody>
-                <tr
+                  <tr
                     v-for="(value, key) in Object.entries(
-                    selectedSnapshotInformation,
-                  )"
+                      selectedSnapshotInformation,
+                    )"
                     :key="key"
                     class="border-b bg-white dark:border-surface-800 dark:bg-surface-900"
-                >
-                  <th
+                  >
+                    <th
                       scope="row"
                       class="whitespace-nowrap px-6 py-4 font-medium text-surface-900 dark:text-white"
-                  >
-                    {{ value[0] }}
-                  </th>
-                  <td class="px-6 py-4 dark:text-white">
-                    {{ value[1] }}
-                  </td>
-                </tr>
+                    >
+                      {{ value[0] }}
+                    </th>
+                    <td class="px-6 py-4 dark:text-white">
+                      {{ value[1] }}
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </AccordionContent>

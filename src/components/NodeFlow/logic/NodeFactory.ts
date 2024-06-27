@@ -127,7 +127,7 @@ function replaceCategories(category: string) {
 }
 
 function constructNodes(nodeData: object[]) {
-  console.log(nodeData)
+  console.log(nodeData);
   const nodesParameters: object[] = [];
   const nodes: object[] = [];
 

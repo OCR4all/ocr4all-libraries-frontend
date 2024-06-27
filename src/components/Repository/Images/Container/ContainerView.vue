@@ -230,20 +230,20 @@ function toggleDeleteDialog() {
 }
 
 const checked = ref();
-const uiStore = useUiStore()
+const uiStore = useUiStore();
 uiStore.breadcrumb = [
   {
     label: "Repository",
-    to: "/repository/overview"
+    to: "/repository/overview",
   },
   {
     label: "Images",
-    to: "/repository/overview"
+    to: "/repository/overview",
   },
   {
     label: containerName,
   },
-]
+];
 refresh();
 </script>
 <template>

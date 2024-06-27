@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { groupSchema } from "@/components/Admin/GroupManagement/Dialog/CreateGroupDialog/Schemas/groupSchema";
 
-const dialogRef = inject('dialogRef');
+const dialogRef = inject("dialogRef");
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
-const schema = groupSchema
-const data = ref()
+const schema = groupSchema;
+const data = ref();
 
-function createGroup(values, { setErrors }){
+function createGroup(values, { setErrors }) {
   const payload = {
     label: data.value.label,
     state: data.value.state,
@@ -17,12 +17,10 @@ function createGroup(values, { setErrors }){
   useCustomFetch(`/administration/security/group/create`)
     .post(payload)
     .then((response) => {
-      if(response.error.value){
-        setErrors(
-          ['Something went wrong.', 'Please try again later.']
-        )
-      }else{
-        dialogRef.value.close()
+      if (response.error.value) {
+        setErrors(["Something went wrong.", "Please try again later."]);
+      } else {
+        dialogRef.value.close();
       }
     });
 }

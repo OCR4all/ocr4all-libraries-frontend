@@ -48,7 +48,9 @@ import TabPanel from "primevue/tabpanel";
         <template #end>
           <SelectButton v-model="layout" :options="options" :allowEmpty="false">
             <template #option="{ option }">
-              <i :class="[option === 'list' ? 'pi pi-bars' : 'pi pi-th-large']" />
+              <i
+                :class="[option === 'list' ? 'pi pi-bars' : 'pi pi-th-large']"
+              />
             </template>
           </SelectButton>
         </template>

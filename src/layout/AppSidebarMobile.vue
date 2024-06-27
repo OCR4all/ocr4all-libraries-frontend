@@ -5,9 +5,7 @@ import {
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
-import {
-  XMarkIcon,
-} from "@heroicons/vue/24/outline";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
 
 import { mainNavigation } from "@/layout/Sidebar";
 import { useUiStore } from "@/stores/ui.store";

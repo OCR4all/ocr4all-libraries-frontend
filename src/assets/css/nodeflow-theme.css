@@ -618,7 +618,6 @@
   padding: 2rem;
   overflow-y: auto;
   background: var(--baklava-node-palette-background);
-
 }
 .baklava-node-palette h1 {
   margin-top: 2rem;

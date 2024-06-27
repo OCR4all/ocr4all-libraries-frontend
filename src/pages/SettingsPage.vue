@@ -17,7 +17,7 @@ const active = ref("appearance");
 
 const authStore = useAuthStore();
 const uiStore = useUiStore();
-console.log(uiStore)
+console.log(uiStore);
 
 const user = ref();
 await useCustomFetch(`/account`)
@@ -30,11 +30,16 @@ await useCustomFetch(`/account`)
 <template>
   <div class="h-screen bg-surface-100 dark:bg-surface-950">
     <div class="h-screen overflow-hidden">
-      <div class="m-4 flex cursor-pointer justify-start gap-x-4 group" @click="router.back()">
-        <ArrowLeftIcon
-          class="h-8 w-8 text-surface-950 dark:text-surface-100"
-        />
-        <p class="text-2xl link-underline text-surface-950 dark:text-surface-100">Back</p>
+      <div
+        class="group m-4 flex cursor-pointer justify-start gap-x-4"
+        @click="router.back()"
+      >
+        <ArrowLeftIcon class="h-8 w-8 text-surface-950 dark:text-surface-100" />
+        <p
+          class="link-underline text-2xl text-surface-950 dark:text-surface-100"
+        >
+          Back
+        </p>
       </div>
       <div class="flex justify-center">
         <div class="flex flex-1 items-start justify-center gap-4">
@@ -43,8 +48,8 @@ await useCustomFetch(`/account`)
           >
             <ul class="space-y-2">
               <li
-                class="flex cursor-pointer items-center space-x-2 rounded-xl p-2 hover:bg-surface-200/60"
-                :class="{'bg-surface-200/70' : active === 'profile'}"
+                class="hover:bg-surface-200/60 flex cursor-pointer items-center space-x-2 rounded-xl p-2"
+                :class="{ 'bg-surface-200/70': active === 'profile' }"
                 @click="active = 'profile'"
               >
                 <AvatarInitials :name="user.name" small />
@@ -53,8 +58,8 @@ await useCustomFetch(`/account`)
                 </p>
               </li>
               <li
-                class="flex cursor-pointer items-center space-x-2 rounded-xl p-2 hover:bg-surface-200/60"
-                :class="{'bg-surface-200/70' : active === 'appearance'}"
+                class="hover:bg-surface-200/60 flex cursor-pointer items-center space-x-2 rounded-xl p-2"
+                :class="{ 'bg-surface-200/70': active === 'appearance' }"
                 @click="active = 'appearance'"
               >
                 <SparklesIcon
@@ -65,8 +70,8 @@ await useCustomFetch(`/account`)
                 </p>
               </li>
               <li
-                class="flex cursor-pointer items-center space-x-2 rounded-xl p-2 hover:bg-surface-200/60"
-                :class="{'bg-surface-200/70' : active === 'password'}"
+                class="hover:bg-surface-200/60 flex cursor-pointer items-center space-x-2 rounded-xl p-2"
+                :class="{ 'bg-surface-200/70': active === 'password' }"
                 @click="active = 'password'"
               >
                 <LockClosedIcon
@@ -80,7 +85,7 @@ await useCustomFetch(`/account`)
             <hr class="my-6 h-px border-0 bg-surface-200 dark:bg-surface-700" />
             <ul>
               <li
-                class="flex cursor-pointer items-center space-x-2 rounded-xl p-2 hover:bg-surface-200/60"
+                class="hover:bg-surface-200/60 flex cursor-pointer items-center space-x-2 rounded-xl p-2"
                 @click="authStore.logout()"
               >
                 <ArrowLeftStartOnRectangleIcon
@@ -93,7 +98,7 @@ await useCustomFetch(`/account`)
             </ul>
           </div>
           <div
-            class="rounded-xl w-5/12 border bg-surface-0 p-8 dark:border-surface-700 dark:bg-surface-900"
+            class="w-5/12 rounded-xl border bg-surface-0 p-8 dark:border-surface-700 dark:bg-surface-900"
           >
             <div v-if="active === 'profile'" id="profile-settings">
               <h1
@@ -155,14 +160,26 @@ await useCustomFetch(`/account`)
               class="@container/appearance"
             >
               <h1
-                class="font-semibold text-xl text-surface-900 dark:text-surface-0"
+                class="text-xl font-semibold text-surface-900 dark:text-surface-0"
               >
                 Appearance
               </h1>
-              <h3 class="font-regular text-md text-surface-900 dark:text-surface-0">Manage the application's appearance</h3>
-              <hr class="my-6 h-px border-0 bg-surface-200 dark:bg-surface-700" />
-              <h3 class="font-semibold text-md text-surface-900 dark:text-surface-0">Theme</h3>
-              <div class="grid grid-cols-1 @md/appearance:grid-cols-3 py-4 gap-8">
+              <h3
+                class="font-regular text-md text-surface-900 dark:text-surface-0"
+              >
+                Manage the application's appearance
+              </h3>
+              <hr
+                class="my-6 h-px border-0 bg-surface-200 dark:bg-surface-700"
+              />
+              <h3
+                class="text-md font-semibold text-surface-900 dark:text-surface-0"
+              >
+                Theme
+              </h3>
+              <div
+                class="grid grid-cols-1 gap-8 py-4 @md/appearance:grid-cols-3"
+              >
                 <ThemeSkeleton theme="system" />
                 <ThemeSkeleton theme="light" />
                 <ThemeSkeleton theme="dark" />
@@ -175,17 +192,18 @@ await useCustomFetch(`/account`)
   </div>
 </template>
 <style scoped>
-  .link-underline {
-    border-bottom-width: 0;
-    background-image: linear-gradient(transparent, transparent), linear-gradient(#6366f1, #6366f1);
-    background-size: 0 3px;
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    transition: background-size .5s ease-in-out;
-  }
+.link-underline {
+  border-bottom-width: 0;
+  background-image: linear-gradient(transparent, transparent),
+    linear-gradient(#6366f1, #6366f1);
+  background-size: 0 3px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.5s ease-in-out;
+}
 
-  .link-underline:hover {
-    background-size: 100% 3px;
-    background-position: 0 100%
-  }
+.link-underline:hover {
+  background-size: 100% 3px;
+  background-position: 0 100%;
+}
 </style>

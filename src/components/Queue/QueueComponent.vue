@@ -14,7 +14,7 @@ import InputText from "primevue/inputtext";
 import Dropdown from "primevue/dropdown";
 import Toast from "primevue/toast";
 import Button from "primevue/button";
-import Menu  from "primevue/menu";
+import Menu from "primevue/menu";
 import ProgressBar from "primevue/progressbar";
 import { FilterMatchMode } from "@primevue/core/api";
 
@@ -45,15 +45,15 @@ const jobs = ref();
 const getColor = (entry) => {
   switch (entry) {
     case "scheduled":
-      return { background: "#76A9FA", color: 'white' };
+      return { background: "#76A9FA", color: "white" };
     case "running":
-      return { background: "#1A56DB", color: 'white' };
+      return { background: "#1A56DB", color: "white" };
     case "interrupted":
-      return { background: "#4B5563", color: 'white' };
+      return { background: "#4B5563", color: "white" };
     case "cancelled":
-      return { background: "#E02424", color: 'white' };
+      return { background: "#E02424", color: "white" };
     case "completed":
-      return { background: "#046C4E", color: 'white' };
+      return { background: "#046C4E", color: "white" };
     default:
       return null;
   }
@@ -68,7 +68,7 @@ async function refetch() {
   const _jobs = [];
   for (const entries of Object.values(data.value)) {
     for (const job of entries) {
-      console.log(job)
+      console.log(job);
       _jobs.push(job);
     }
   }
@@ -258,7 +258,7 @@ async function removeJob(job) {
         </UseTimeAgo>
       </template>
     </Column>
-<!--    <Column
+    <!--    <Column
     field="actions">
       <template #body="slotProps">
         <Button type="button" icon="pi pi-ellipsis-v" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" />

@@ -8,6 +8,4 @@ import AdminLayout from "@/layout/AdminLayout.vue";
   </AdminLayout>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

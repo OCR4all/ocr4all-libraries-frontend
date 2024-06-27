@@ -34,9 +34,9 @@ const draggedNode = ref<IDraggedNode | null>(null);
 const categories = computed<
   Array<{ name: string; nodeTypes: NodeTypeInformations }>
 >(() => {
-  const nodeTypeEntries: any[] = []
-  const categoryNames: Set<string> = new Set()
-  for(const [key, value] of viewModel.value.editor.nodeTypes.entries()){
+  const nodeTypeEntries: any[] = [];
+  const categoryNames: Set<string> = new Set();
+  for (const [key, value] of viewModel.value.editor.nodeTypes.entries()) {
     nodeTypeEntries.push({
       key: key,
       label: value.title,
@@ -44,20 +44,18 @@ const categories = computed<
       type: "node",
       nt: value.type,
       ni: value,
-    })
-    categoryNames.add(value.category)
+    });
+    categoryNames.add(value.category);
   }
 
   const categories: Array<{ name: string; nodeTypes: NodeTypeInformations }> =
     [];
   for (const category of categoryNames.values()) {
-    const nodeTypesInCategory = []
+    const nodeTypesInCategory = [];
     if (category !== "Subgraphs") {
-      for(const node of nodeTypeEntries){
-        if(node.category === category){
-          nodeTypesInCategory.push(
-            node
-          )
+      for (const node of nodeTypeEntries) {
+        if (node.category === category) {
+          nodeTypesInCategory.push(node);
         }
       }
 
@@ -66,8 +64,8 @@ const categories = computed<
           categories.push({
             key: category,
             label: category,
-            children: nodeTypesInCategory
-          })
+            children: nodeTypesInCategory,
+          });
         }
       }
     }
@@ -126,7 +124,7 @@ const onDragStart = (type: string, nodeInformation: INodeTypeInformation) => {
     // @ts-ignore
     instance.position.y = y;
 
-    console.log(x, y)
+    console.log(x, y);
 
     draggedNode.value = null;
     document.removeEventListener("pointerup", onDragEnd);
@@ -134,10 +132,10 @@ const onDragStart = (type: string, nodeInformation: INodeTypeInformation) => {
   document.addEventListener("pointerup", onDragEnd);
 };
 
-import { useMouseInElement } from '@vueuse/core'
-const palette = ref()
+import { useMouseInElement } from "@vueuse/core";
+const palette = ref();
 
-const { x, y, isOutside } = useMouseInElement(palette)
+const { x, y, isOutside } = useMouseInElement(palette);
 </script>
 
 <template>
@@ -153,18 +151,23 @@ const { x, y, isOutside } = useMouseInElement(palette)
       <div
         class="baklava-node-palette !w-96 !opacity-95 dark:!bg-zinc-800 dark:!opacity-95"
       >
-        <h1
-          class="pb-5 text-center text-xl font-bold text-surface-0"
-        >
+        <h1 class="pb-5 text-center text-xl font-bold text-surface-0">
           {{ $t("pages.nodeflow.palette.processors") }}
         </h1>
-        <Tree :value="categories" :filter="true" filterMode="lenient" class="w-full">
+        <Tree
+          :value="categories"
+          :filter="true"
+          filterMode="lenient"
+          class="w-full"
+        >
           <template #node="slotProps">
             <PaletteEntry
               :key="slotProps.node.key"
               :type="slotProps.node.nt"
               :title="slotProps.node.label"
-              @pointerdown="onDragStart(slotProps.node.label, slotProps.node.ni)"
+              @pointerdown="
+                onDragStart(slotProps.node.label, slotProps.node.ni)
+              "
             />
           </template>
         </Tree>

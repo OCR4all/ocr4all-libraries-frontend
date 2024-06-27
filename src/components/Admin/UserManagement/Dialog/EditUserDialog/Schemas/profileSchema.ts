@@ -1,21 +1,21 @@
 export const profileSchema = ref([
   {
-    $formkit: 'primeInputText',
-    name: 'login',
-    label: 'Login',
-    validation: 'required',
+    $formkit: "primeInputText",
+    name: "login",
+    label: "Login",
+    validation: "required",
     icon: "pi pi-user",
     iconPosition: "left",
-    help: "Name used for login."
+    help: "Name used for login.",
   },
   {
-    $formkit: 'primeInputText',
-    name: 'name',
-    label: 'Name',
-    validation: '',
+    $formkit: "primeInputText",
+    name: "name",
+    label: "Name",
+    validation: "",
     icon: "pi pi-id-card",
     iconPosition: "left",
-    help: "Display name."
+    help: "Display name.",
   },
   {
     $formkit: "primeInputText",
@@ -34,13 +34,13 @@ export const profileSchema = ref([
     options: [
       {
         label: "Active",
-        value: "active"
+        value: "active",
       },
       {
         label: "Disabled",
-        value: "disabled"
+        value: "disabled",
       },
     ],
-    help: "State of the account"
-  }
-])
+    help: "State of the account",
+  },
+]);

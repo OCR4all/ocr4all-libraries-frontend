@@ -80,17 +80,20 @@ const actionMenuItems = ref([
         icon: "pi pi-download",
         command: () => {
           downloadContainer();
-        }
-      }
+        },
+      },
     ],
   },
 ]);
 
-function downloadContainer(){
-  toast.add({ severity: 'info', summary: 'Preparing download', group: 'download-toast' });
-  useCustomFetch(
-    `/repository/container/folio/zip/${props.id}`,
-  ).blob()
+function downloadContainer() {
+  toast.add({
+    severity: "info",
+    summary: "Preparing download",
+    group: "download-toast",
+  });
+  useCustomFetch(`/repository/container/folio/zip/${props.id}`)
+    .blob()
     .then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data.value]));
       const link = document.createElement("a");
@@ -197,14 +200,21 @@ defineExpose({
 <template>
   <Toast position="bottom-right" group="download-toast">
     <template #message="slotProps">
-      <div class="flex flex-column align-items-start" style="flex: 1">
-        <div class="flex align-items-center gap-4">
+      <div class="flex-column align-items-start flex" style="flex: 1">
+        <div class="align-items-center flex gap-4">
           <ProgressSpinner
             :pt="{
-              root: {class: 'relative self-center mx-auto w-6 h-6 inline-block before:block before:pt-full'},
+              root: {
+                class:
+                  'relative self-center mx-auto w-6 h-6 inline-block before:block before:pt-full',
+              },
             }"
-            animationDuration=".5s" aria-label="Custom ProgressSpinner" />
-          <div class="text-md text-surface-800 my-3">{{ slotProps.message.summary }}</div>
+            animationDuration=".5s"
+            aria-label="Custom ProgressSpinner"
+          />
+          <div class="text-md my-3 text-surface-800">
+            {{ slotProps.message.summary }}
+          </div>
         </div>
       </div>
     </template>

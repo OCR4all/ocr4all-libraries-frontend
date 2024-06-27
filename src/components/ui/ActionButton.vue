@@ -19,7 +19,7 @@ defineProps<{
       'px-5 py-3 text-base font-medium': size === 'large',
       'p-2': size === 'small',
     }"
-    class="text-center focus:outline-none focus:ring-4 p-ripple"
+    class="p-ripple text-center focus:outline-none focus:ring-4"
   >
     <slot />
   </button>

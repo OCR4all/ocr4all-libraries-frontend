@@ -13,14 +13,13 @@ const { t } = useI18n();
 const router = useRouter();
 import { useUiStore } from "@/stores/ui.store";
 
-const uiStore = useUiStore()
+const uiStore = useUiStore();
 uiStore.breadcrumb = [
   {
     label: "Dashboard",
-    to: "/"
+    to: "/",
   },
-]
-
+];
 
 const projects: Ref<number | undefined> = ref();
 const workflows: Ref<number | undefined> = ref();
@@ -128,7 +127,7 @@ await useCustomFetch(`/account`)
     <div class="grid grid-cols-5 grid-rows-1 gap-8 lg:grid-rows-2">
       <div class="col-span-5 row-span-2 xl:col-span-4">
         <ComponentContainer>
-            <RecentProjectsOverview />
+          <RecentProjectsOverview />
         </ComponentContainer>
       </div>
       <div class="col-span-2 row-span-2 xl:col-span-1 xl:row-span-1">
@@ -200,12 +199,16 @@ await useCustomFetch(`/account`)
     </div>
     <div class="grid grid-cols-4 grid-rows-1 gap-8">
       <div class="col-span-4 row-span-1 2xl:col-span-2">
-        <div class="group m-0 h-full rounded-md border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900">
+        <div
+          class="group m-0 h-full rounded-md border border-surface-200 bg-white dark:border-surface-700 dark:bg-surface-900"
+        >
           <AvailableWorkflows />
         </div>
       </div>
       <div class="col-span-4 row-span-1 2xl:col-span-2">
-        <div class="group m-0 h-full rounded-md border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900">
+        <div
+          class="group m-0 h-full rounded-md border border-surface-200 bg-white dark:border-surface-700 dark:bg-surface-900"
+        >
           <SmallJobQueue />
         </div>
       </div>

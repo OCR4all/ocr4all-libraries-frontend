@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  font-family: 'Inter var', sans-serif;
-  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  font-family: "Inter var", sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   font-variation-settings: normal;
-  --font-family: 'Inter var', sans-serif;
-  --font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  --font-family: "Inter var", sans-serif;
+  --font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 
   --primary-0: #fff;
   --primary-50: #eef2ff;
@@ -45,7 +45,7 @@
   --primary-highlight-hover-opacity: 0.2;
 }
 
-.dark{
+.dark {
   --primary: var(--primary-400);
   --primary-inverse: var(--surface-900);
   --primary-hover: var(--primary-300);
@@ -79,8 +79,9 @@
   0% {
     opacity: 0;
     transform: scaleY(0.8);
-    transition: transform 0.12s cubic-bezier(0, 0, 0.2, 1),
-    opacity 0.12s cubic-bezier(0, 0, 0.2, 1);
+    transition:
+      transform 0.12s cubic-bezier(0, 0, 0.2, 1),
+      opacity 0.12s cubic-bezier(0, 0, 0.2, 1);
   }
   100% {
     opacity: 1;
@@ -126,7 +127,7 @@
   animation: slideup 0.45s cubic-bezier(0, 1, 0, 1);
 }
 
-.layout-ripple-disabled [data-pc-name='ripple'] {
+.layout-ripple-disabled [data-pc-name="ripple"] {
   display: none !important;
 }
 

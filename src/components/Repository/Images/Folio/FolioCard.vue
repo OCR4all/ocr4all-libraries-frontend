@@ -60,16 +60,17 @@ const actionMenuItems = ref([
         icon: "pi pi-download",
         command: () => {
           downloadFolio();
-        }
-      }
+        },
+      },
     ],
   },
 ]);
 
-function downloadFolio(){
+function downloadFolio() {
   useCustomFetch(
     `/repository/container/folio/download/${props.containerId}?id=${props.id}`,
-  ).blob()
+  )
+    .blob()
     .then((response) => {
       const url = window.URL.createObjectURL(new Blob([response.data.value]));
       const link = document.createElement("a");

@@ -2,13 +2,13 @@
 import AppLayout from "@/layout/AppLayout.vue";
 import { useUiStore } from "@/stores/ui.store";
 
-const uiStore = useUiStore()
+const uiStore = useUiStore();
 uiStore.breadcrumb = [
   {
     label: "Repository",
-    to: "/repository"
+    to: "/repository",
   },
-]
+];
 </script>
 
 <template>

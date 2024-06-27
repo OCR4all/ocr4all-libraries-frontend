@@ -30,11 +30,7 @@ function save() {
 }
 </script>
 <template>
-  <Dialog
-    modal
-    header="Settings"
-    :style="{ width: '50vw' }"
-  >
+  <Dialog modal header="Settings" :style="{ width: '50vw' }">
     <div class="grid grid-cols-2 grid-rows-2 gap-2">
       <div class="dark:!text-surface-200">Username</div>
       <p class="dark:!text-surface-200">{{ authStore.user }}</p>
@@ -73,11 +69,7 @@ function save() {
       </Dropdown>
     </div>
     <template #footer>
-      <Button
-        :label="$t('settings.buttons.close')"
-        icon="pi pi-times"
-        text
-      />
+      <Button :label="$t('settings.buttons.close')" icon="pi pi-times" text />
       <Button
         :label="$t('settings.buttons.save')"
         severity="info"

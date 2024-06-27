@@ -3,11 +3,7 @@ import AdminLayout from "@/layout/AdminLayout.vue";
 </script>
 
 <template>
-  <AdminLayout padded>
-
-  </AdminLayout>
+  <AdminLayout padded> </AdminLayout>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

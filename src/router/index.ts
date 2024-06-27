@@ -25,18 +25,19 @@ const routes = [
         path: "overview",
         name: "Repository Overview",
         component: () =>
-            import("@/components/Repository/RepositoryOverview.vue"),
+          import("@/components/Repository/RepositoryOverview.vue"),
       },
       {
         path: "upload",
         name: "Upload",
         component: () =>
-            import("@/components/Repository/Images/ImageUpload.vue"),
+          import("@/components/Repository/Images/ImageUpload.vue"),
       },
       {
         path: "container",
         name: "Container",
-        component: () => import("@/components/Repository/Images/Container/ContainerView.vue"),
+        component: () =>
+          import("@/components/Repository/Images/Container/ContainerView.vue"),
       },
     ],
   },
@@ -49,8 +50,7 @@ const routes = [
       {
         path: "overview",
         name: "Overview",
-        component: () =>
-            import("@/components/Project/ProjectsOverview.vue"),
+        component: () => import("@/components/Project/ProjectsOverview.vue"),
       },
       {
         path: "new",
@@ -70,12 +70,14 @@ const routes = [
           {
             path: "new-result",
             name: "New Sandbox",
-            component: () => import("@/components/Project/Project/Sandbox/NewSandbox.vue"),
+            component: () =>
+              import("@/components/Project/Project/Sandbox/NewSandbox.vue"),
           },
           {
             path: "result/:sandbox",
             name: "Sandbox",
-            component: () => import("@/components/Project/Project/Sandbox/ResultViewer.vue"),
+            component: () =>
+              import("@/components/Project/Project/Sandbox/ResultViewer.vue"),
           },
         ],
       },
@@ -115,19 +117,24 @@ const routes = [
       {
         path: "users",
         name: "Users",
-        component: () => import("@/components/Admin/UserManagement/UserManagementView.vue"),
+        component: () =>
+          import("@/components/Admin/UserManagement/UserManagementView.vue"),
       },
       {
         path: "groups",
         name: "Groups",
-        component: () => import("@/components/Admin/GroupManagement/GroupManagement.vue"),
+        component: () =>
+          import("@/components/Admin/GroupManagement/GroupManagement.vue"),
       },
       {
         path: "providers",
         name: "Providers",
-        component: () => import("@/components/Admin/InstanceAdministration/ProviderManagement.vue"),
+        component: () =>
+          import(
+            "@/components/Admin/InstanceAdministration/ProviderManagement.vue"
+          ),
       },
-    ]
+    ],
   },
   {
     path: "/settings",

@@ -9,7 +9,7 @@ import {
   UsersIcon,
   UserGroupIcon,
   ViewfinderCircleIcon,
-  CpuChipIcon
+  CpuChipIcon,
 } from "@heroicons/vue/24/outline";
 import { FunctionalComponent, HTMLAttributes, VNodeProps } from "vue";
 

@@ -1,40 +1,40 @@
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { RemovableRef } from "@vueuse/core";
 
-interface IUser{
-  login: string,
-  state: string
+interface IUser {
+  login: string;
+  state: string;
 }
 
-const users: RemovableRef<IUser[]> = ref([])
+const users: RemovableRef<IUser[]> = ref([]);
 
 await useCustomFetch(`/administration/security/user/list`)
   .get()
   .json()
   .then((response) => {
-    for(const user of response.data.value){
-      users.value.push({login: user.login, state: user.state})
+    for (const user of response.data.value) {
+      users.value.push({ login: user.login, state: user.state });
     }
   });
 
 export const groupSchema = ref([
   {
-    $formkit: 'primeInputText',
-    name: 'label',
-    label: 'Label',
-    validation: 'required',
+    $formkit: "primeInputText",
+    name: "label",
+    label: "Label",
+    validation: "required",
     icon: "pi pi-user",
     iconPosition: "left",
-    help: "Group label."
+    help: "Group label.",
   },
   {
-    $formkit: 'primeInputText',
-    name: 'name',
-    label: 'Name',
-    validation: 'required',
+    $formkit: "primeInputText",
+    name: "name",
+    label: "Name",
+    validation: "required",
     icon: "pi pi-id-card",
     iconPosition: "left",
-    help: "Group display name."
+    help: "Group display name.",
   },
   {
     $formkit: "primeSelect",
@@ -45,24 +45,24 @@ export const groupSchema = ref([
     options: [
       {
         label: "Active",
-        value: "active"
+        value: "active",
       },
       {
         label: "Blocked",
-        value: "blocked"
+        value: "blocked",
       },
     ],
     validation: "required",
-    help: "State of the group"
+    help: "State of the group",
   },
   {
-    "$formkit": "primeMultiSelect",
-    "name": "users",
-    "label": "Users",
-    "filter": true,
-    "placeholder": "Please select",
-    "optionLabel": "login",
-    "optionValue": "login",
-    "options": users.value,
-  }
-])
+    $formkit: "primeMultiSelect",
+    name: "users",
+    label: "Users",
+    filter: true,
+    placeholder: "Please select",
+    optionLabel: "login",
+    optionValue: "login",
+    options: users.value,
+  },
+]);

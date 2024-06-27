@@ -1,21 +1,21 @@
 export const userSchema = ref([
   {
-    $formkit: 'primeInputText',
-    name: 'login',
-    label: 'Login',
-    validation: 'required',
+    $formkit: "primeInputText",
+    name: "login",
+    label: "Login",
+    validation: "required",
     icon: "pi pi-user",
     iconPosition: "left",
-    help: "Name used for login."
+    help: "Name used for login.",
   },
   {
-    $formkit: 'primeInputText',
-    name: 'name',
-    label: 'Name',
-    validation: 'required',
+    $formkit: "primeInputText",
+    name: "name",
+    label: "Name",
+    validation: "required",
     icon: "pi pi-id-card",
     iconPosition: "left",
-    help: "Display name."
+    help: "Display name.",
   },
   {
     $formkit: "primeInputText",
@@ -34,22 +34,22 @@ export const userSchema = ref([
     options: [
       {
         label: "Active",
-        value: "active"
+        value: "active",
       },
       {
         label: "Blocked",
-        value: "blocked"
+        value: "blocked",
       },
     ],
     validation: "required",
-    help: "State of the account"
+    help: "State of the account",
   },
   {
     $formkit: "primePassword",
     name: "password",
     label: "Password",
     help: "Enter a password",
-    feedback: true
+    feedback: true,
   },
   {
     $formkit: "primePassword",
@@ -57,6 +57,6 @@ export const userSchema = ref([
     label: "Confirm password",
     help: "Enter the password again.",
     validation: "required|confirm",
-    validationLabel: "password confirmation"
-  }
-])
+    validationLabel: "password confirmation",
+  },
+]);

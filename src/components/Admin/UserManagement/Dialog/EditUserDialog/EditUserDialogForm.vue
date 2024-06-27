@@ -1,26 +1,26 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
-import { profileSchema } from "@/components/Admin/UserManagement/Dialog/EditUserDialog/Schemas/profileSchema"
-import { passwordSchema } from "@/components/Admin/UserManagement/Dialog/EditUserDialog/Schemas/passwordSchema"
-import { groupSchema } from "@/components/Admin/UserManagement/Dialog/EditUserDialog/Schemas/groupSchema"
+import { profileSchema } from "@/components/Admin/UserManagement/Dialog/EditUserDialog/Schemas/profileSchema";
+import { passwordSchema } from "@/components/Admin/UserManagement/Dialog/EditUserDialog/Schemas/passwordSchema";
+import { groupSchema } from "@/components/Admin/UserManagement/Dialog/EditUserDialog/Schemas/groupSchema";
 
-const dialogRef = inject('dialogRef');
+const dialogRef = inject("dialogRef");
 
-const profileForm = ref()
-const passwordForm = ref()
-const groupForm = ref()
+const profileForm = ref();
+const passwordForm = ref();
+const groupForm = ref();
 
-const profileData = ref()
-const passwordData = ref()
-const groupData = ref()
+const profileData = ref();
+const passwordData = ref();
+const groupData = ref();
 
 onMounted(() => {
-  profileData.value = dialogRef.value.data.data
-  groupData.value = dialogRef.value.data.data.groups
-})
+  profileData.value = dialogRef.value.data.data;
+  groupData.value = dialogRef.value.data.data.groups;
+});
 
-async function submitProfileChanges(values, { setErrors }){
+async function submitProfileChanges(values, { setErrors }) {
   const payload = {
     login: profileData.value.login,
     state: profileData.value.state,
@@ -30,17 +30,15 @@ async function submitProfileChanges(values, { setErrors }){
   useCustomFetch(`/administration/security/user/update`)
     .post(payload)
     .then((response) => {
-      if(response.error.value){
-        setErrors(
-          ['Something went wrong.', 'Please try again later.']
-        )
-      }else{
-        dialogRef.value.close()
+      if (response.error.value) {
+        setErrors(["Something went wrong.", "Please try again later."]);
+      } else {
+        dialogRef.value.close();
       }
     });
 }
 
-function submitPasswordChange(values, { setErrors }){
+function submitPasswordChange(values, { setErrors }) {
   const payload = {
     login: profileData.value.login,
     state: profileData.value.state,
@@ -51,19 +49,15 @@ function submitPasswordChange(values, { setErrors }){
   useCustomFetch(`/administration/security/user/update`)
     .post(payload)
     .then((response) => {
-      if(response.error.value){
-        setErrors(
-          ['Something went wrong.', 'Please try again later.']
-        )
-      }else{
-        dialogRef.value.close()
+      if (response.error.value) {
+        setErrors(["Something went wrong.", "Please try again later."]);
+      } else {
+        dialogRef.value.close();
       }
     });
 }
 
-function submitGroupChange(){
-
-}
+function submitGroupChange() {}
 </script>
 <template>
   <Tabs value="profile">
@@ -80,8 +74,8 @@ function submitGroupChange(){
           v-model="profileData"
           type="form"
           :submit-attrs="{
-      inputClass: 'p-button p-component',
-    }"
+            inputClass: 'p-button p-component',
+          }"
           @submit="submitProfileChanges"
         >
           <FormKitSchema :schema="profileSchema" :data="profileData" />
@@ -94,8 +88,8 @@ function submitGroupChange(){
           v-model="passwordData"
           type="form"
           :submit-attrs="{
-      inputClass: 'p-button p-component',
-    }"
+            inputClass: 'p-button p-component',
+          }"
           @submit="submitPasswordChange"
         >
           <FormKitSchema :schema="passwordSchema" :data="passwordData" />
@@ -103,14 +97,14 @@ function submitGroupChange(){
       </TabPanel>
       <TabPanel value="groups">
         <FormKit
-            id="groupForm"
-            ref="groupForm"
-            v-model="groupData"
-            type="form"
-            :submit-attrs="{
-              inputClass: 'p-button p-component',
-            }"
-            @submit="submitGroupChange"
+          id="groupForm"
+          ref="groupForm"
+          v-model="groupData"
+          type="form"
+          :submit-attrs="{
+            inputClass: 'p-button p-component',
+          }"
+          @submit="submitGroupChange"
         >
           <FormKitSchema :schema="groupSchema" :data="groupData" />
         </FormKit>

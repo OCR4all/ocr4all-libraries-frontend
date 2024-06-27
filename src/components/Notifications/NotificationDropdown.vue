@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { BellIcon } from "@heroicons/vue/24/solid";
-import Popover from "primevue/popover"
+import Popover from "primevue/popover";
 
 const notificationPanel: Ref<typeof Popover | undefined> = ref();
 

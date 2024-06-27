@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { userSchema } from "@/components/Admin/UserManagement/Dialog/CreateUserDialog/Schemas/userSchema";
 
-const dialogRef = inject('dialogRef');
+const dialogRef = inject("dialogRef");
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
-const schema = userSchema
-const data = ref()
+const schema = userSchema;
+const data = ref();
 
-function createUser(values, { setErrors }){
+function createUser(values, { setErrors }) {
   const payload = {
     login: data.value.login,
     state: data.value.state,
@@ -18,12 +18,10 @@ function createUser(values, { setErrors }){
   useCustomFetch(`/administration/security/user/create`)
     .post(payload)
     .then((response) => {
-      if(response.error.value){
-        setErrors(
-          ['Something went wrong.', 'Please try again later.']
-        )
-      }else{
-        dialogRef.value.close()
+      if (response.error.value) {
+        setErrors(["Something went wrong.", "Please try again later."]);
+      } else {
+        dialogRef.value.close();
       }
     });
 }

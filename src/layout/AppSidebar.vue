@@ -1,36 +1,37 @@
 <script setup lang="ts">
 import { useUiStore } from "@/stores/ui.store";
 import { mainNavigation, adminNavigation } from "@/layout/Sidebar";
-import { SidebarMode } from "@/layout/Layout"
+import { SidebarMode } from "@/layout/Layout";
 
 const props = defineProps<{
-  mode: SidebarMode
-}>()
+  mode: SidebarMode;
+}>();
 
 const uiStore = useUiStore();
 
 const router = useRouter();
 
 const navigation = computed(() => {
-  switch(props.mode){
+  switch (props.mode) {
     case SidebarMode.Main:
-      return mainNavigation
+      return mainNavigation;
     case SidebarMode.Admin:
-      return adminNavigation
+      return adminNavigation;
   }
-})
+});
 
 const maximized = computed(() => !uiStore.sidebarMinimized);
 </script>
 
 <template>
   <div
-    class="m-1 flex-none hidden lg:block"
+    class="m-1 hidden flex-none lg:block"
     :class="[maximized ? 'w-64' : 'w-22']"
   >
     <div
       class="mx-6 my-4 flex justify-between"
-      :class="{'flex-col space-y-6': !maximized }">
+      :class="{ 'flex-col space-y-6': !maximized }"
+    >
       <img
         src="/img/logo.svg"
         class="h-12 w-12 cursor-pointer"
@@ -42,7 +43,12 @@ const maximized = computed(() => !uiStore.sidebarMinimized);
     <div class="space-x 2 mb-10 space-y-2 px-4 py-4">
       <router-link
         v-for="(item, index) in navigation"
-        v-tooltip="{ value: $t(item.label), showDelay: 250, hideDelay: 250, disabled: maximized }"
+        v-tooltip="{
+          value: $t(item.label),
+          showDelay: 250,
+          hideDelay: 250,
+          disabled: maximized,
+        }"
         :key="index"
         :to="item.to"
         class="group flex items-center space-x-4 rounded-md px-4 py-2.5 text-surface-900 hover:bg-surface-200 dark:text-white dark:hover:bg-surface-800"

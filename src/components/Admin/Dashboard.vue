@@ -1,53 +1,46 @@
 <script setup lang="ts">
-import {useCustomFetch} from "@/composables/useCustomFetch";
-import {useDialog} from "primevue/usedialog";
-import {useUiStore} from "@/stores/ui.store";
+import { useCustomFetch } from "@/composables/useCustomFetch";
+import { useDialog } from "primevue/usedialog";
+import { useUiStore } from "@/stores/ui.store";
 
 const dialog = useDialog();
 
-const uiStore = useUiStore()
+const uiStore = useUiStore();
 uiStore.breadcrumb = [
   {
     label: "Administration",
   },
   {
-    label: "Dashboard"
-  }
-]
+    label: "Dashboard",
+  },
+];
 
-const users = ref(0)
-const groups = ref(0)
-const providers = ref(0)
+const users = ref(0);
+const groups = ref(0);
+const providers = ref(0);
 
-await useCustomFetch(
-    "/administration/security/user/list",
-)
-    .get()
-    .json()
-    .then((response) => {
-      users.value += response.data.value.length;
-    });
+await useCustomFetch("/administration/security/user/list")
+  .get()
+  .json()
+  .then((response) => {
+    users.value += response.data.value.length;
+  });
 
-await useCustomFetch(
-    "/administration/security/group/list",
-)
-    .get()
-    .json()
-    .then((response) => {
-      groups.value += response.data.value.length;
-    });
+await useCustomFetch("/administration/security/group/list")
+  .get()
+  .json()
+  .then((response) => {
+    groups.value += response.data.value.length;
+  });
 
-await useCustomFetch(
-    "/administration/provider/overview",
-)
-    .get()
-    .json()
-    .then((response) => {
-      for(const provider of Object.values(response.data.value)){
-        providers.value += provider.length;
-      }
-    });
-
+await useCustomFetch("/administration/provider/overview")
+  .get()
+  .json()
+  .then((response) => {
+    for (const provider of Object.values(response.data.value)) {
+      providers.value += provider.length;
+    }
+  });
 </script>
 <template>
   <div class="grid grid-cols-1 grid-rows-1 gap-8 xl:grid-cols-3">

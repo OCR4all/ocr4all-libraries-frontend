@@ -24,7 +24,7 @@ async function refetch() {
   isRefetching.value = true;
   const { isFetching, error, data } = await useCustomFetch(`/project/list`)
     .get()
-    .json()
+    .json();
   projects.value = data.value;
   loading.value = isFetching.value;
   setTimeout(function () {
@@ -58,13 +58,13 @@ const getSeverity = (entry) => {
 };
 const states = ref(["active", "closed", "blocked"]);
 
-const uiStore = useUiStore()
+const uiStore = useUiStore();
 uiStore.breadcrumb = [
   {
     label: "Projects",
-    to: "/project/overview"
+    to: "/project/overview",
   },
-]
+];
 </script>
 <template>
   <div class="card">
@@ -114,7 +114,8 @@ uiStore.breadcrumb = [
       filter-display="row"
       :globalFilterFields="['name', 'state', 'keywords']"
       sortField="tracking.updated"
-      :sortOrder="-1"ack
+      :sortOrder="-1"
+      ack
       :row-hover="true"
       paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :rows-per-page-options="[10, 25, 50]"
@@ -201,8 +202,11 @@ uiStore.breadcrumb = [
               :key="keyword.name"
               :value="keyword"
               :pt="{
-              root: { class: 'text-xs font-bold bg-surface-200 inline-flex items-center justify-center px-2 py-1 rounded-md text-surface-800 dark:text-white bg-surface-200 dark:bg-surface-600'}
-            }"
+                root: {
+                  class:
+                    'text-xs font-bold bg-surface-200 inline-flex items-center justify-center px-2 py-1 rounded-md text-surface-800 dark:text-white bg-surface-200 dark:bg-surface-600',
+                },
+              }"
             />
           </div>
         </template>
@@ -238,4 +242,3 @@ uiStore.breadcrumb = [
     </DataTable>
   </div>
 </template>
-

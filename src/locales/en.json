@@ -18,9 +18,7 @@
           "providers": "Providers",
           "ocrdapi": "OCRD API Viewer"
         },
-        "settings": {
-
-        }
+        "settings": {}
       },
       "cta": {
         "header": "Alpha",

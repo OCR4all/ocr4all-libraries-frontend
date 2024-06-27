@@ -22,7 +22,7 @@ import Dialog from "primevue/dialog";
 import Toast from "primevue/toast";
 import InlineMessage from "primevue/inlinemessage";
 import Textarea from "primevue/textarea";
-import Menu from 'primevue/menu';
+import Menu from "primevue/menu";
 
 import { FilterMatchMode } from "@primevue/core/api";
 
@@ -267,15 +267,18 @@ async function deleteWorkflow() {
         </UseTimeAgo>
       </template>
     </Column>
-    <Column
-      :exportable="false"
-      style="min-width: 8rem"
-    >
+    <Column :exportable="false" style="min-width: 8rem">
       <template #body="slotProps">
         <div class="space-y-2">
-          <Button type="button" icon="pi pi-ellipsis-v" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" />
+          <Button
+            type="button"
+            icon="pi pi-ellipsis-v"
+            @click="toggle"
+            aria-haspopup="true"
+            aria-controls="overlay_menu"
+          />
           <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
-<!--          <button
+          <!--          <button
             type="button"
             class="mr-2 inline-flex items-center rounded-md bg-green-600 p-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-100 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
             @click="editWorkflow(slotProps.data.id)"

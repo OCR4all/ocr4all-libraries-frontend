@@ -8,32 +8,30 @@ import Tree from "primevue/tree";
 import { buildProcessorSchema } from "@/components/ProcessSelector/utils";
 
 const props = defineProps<{
-  project: string
-  sandbox: string
-  track: number[]
-}>()
+  project: string;
+  sandbox: string;
+  track: number[];
+}>();
 
-const nodes = ref([])
+const nodes = ref([]);
 
-function structureData(data){
+function structureData(data) {
   let categories = Object.groupBy(data, ({ type }) => type);
-  for(const [key, value] of Object.entries(categories)){
+  for (const [key, value] of Object.entries(categories)) {
     const node = {
-      "key": key,
-      "label": key,
-      "type": "category",
-      "children": [
-
-      ]
-    }
-    for(const child of value){
+      key: key,
+      label: key,
+      type: "category",
+      children: [],
+    };
+    for (const child of value) {
       node.children.push({
         key: child.id,
         label: child.name,
-        ...child
-      })
+        ...child,
+      });
     }
-    nodes.value.push(node)
+    nodes.value.push(node);
   }
 }
 
@@ -86,33 +84,33 @@ const toggleNode = (node) => {
 };
 
 const selectedProcessor = ref();
-const processorFormSchema = ref()
-const formData = ref()
+const processorFormSchema = ref();
+const formData = ref();
 
-function runProcessor(values, { setErrors }){
-  const url = `/spi/${selectedProcessor.value.type}/schedule/${props.project}/${props.sandbox}`
+function runProcessor(values, { setErrors }) {
+  const url = `/spi/${selectedProcessor.value.type}/schedule/${props.project}/${props.sandbox}`;
   const payload = {
     id: selectedProcessor.value.id,
     label: selectedProcessor.value.label,
     description: "",
     "job-short-description": "string",
     "parent-snapshot": {
-      "track": props.track
-    }
-  }
-  console.log(selectedProcessor.value)
-  console.log(values)
+      track: props.track,
+    },
+  };
+  console.log(selectedProcessor.value);
+  console.log(values);
 }
 
-function buildProcessorFormSchema(data){
-  const schema = buildProcessorSchema(data)
-  processorFormSchema.value = schema
+function buildProcessorFormSchema(data) {
+  const schema = buildProcessorSchema(data);
+  processorFormSchema.value = schema;
 }
 
-function openProcessor(data){
-  selectedProcessor.value = data
-  buildProcessorFormSchema(data)
-  processorDialogVisible.value = true
+function openProcessor(data) {
+  selectedProcessor.value = data;
+  buildProcessorFormSchema(data);
+  processorDialogVisible.value = true;
 }
 
 const processorDialogVisible = ref(false);
@@ -121,10 +119,18 @@ const processorDialogVisible = ref(false);
   <Dialog v-model:visible="processorDialogVisible" modal header="Run Processor">
     <div class="pb-6">
       <div class="flex space-x-2">
-        <h1 class="text-xl text-surface-900 dark:text-surface-0 font-semibold"> {{ selectedProcessor.name }} </h1>
-        <Tag v-for="category of selectedProcessor.categories" :key="category" :value="category"></Tag>
+        <h1 class="text-xl font-semibold text-surface-900 dark:text-surface-0">
+          {{ selectedProcessor.name }}
+        </h1>
+        <Tag
+          v-for="category of selectedProcessor.categories"
+          :key="category"
+          :value="category"
+        ></Tag>
       </div>
-      <h3 class="text-md text-surface-900 dark:text-surface-0"> {{ selectedProcessor.description }} </h3>
+      <h3 class="text-md text-surface-900 dark:text-surface-0">
+        {{ selectedProcessor.description }}
+      </h3>
     </div>
     <div>
       <FormKit
@@ -133,24 +139,44 @@ const processorDialogVisible = ref(false);
         v-model="formData"
         type="form"
         :submit-attrs="{
-              inputClass: 'p-button p-component',
-            }"
+          inputClass: 'p-button p-component',
+        }"
         @submit="runProcessor"
       >
         <FormKitSchema :schema="processorFormSchema" :data="formData" />
       </FormKit>
     </div>
   </Dialog>
-  <div class="flex flex-wrap gap-2 mb-4">
-    <Button type="button" icon="pi pi-plus" label="Expand All" @click="expandAll" />
-    <Button type="button" icon="pi pi-minus" label="Collapse All" @click="collapseAll" />
+  <div class="mb-4 flex flex-wrap gap-2">
+    <Button
+      type="button"
+      icon="pi pi-plus"
+      label="Expand All"
+      @click="expandAll"
+    />
+    <Button
+      type="button"
+      icon="pi pi-minus"
+      label="Collapse All"
+      @click="collapseAll"
+    />
   </div>
-  <Tree v-model:expandedKeys="expandedKeys" :value="nodes" :filter="true" filter-mode="lenient" class="w-full">
+  <Tree
+    v-model:expandedKeys="expandedKeys"
+    :value="nodes"
+    :filter="true"
+    filter-mode="lenient"
+    class="w-full"
+  >
     <template #category="slotProps">
-      <button @click="toggleNode(slotProps.node)">{{ slotProps.node.label }}</button>
+      <button @click="toggleNode(slotProps.node)">
+        {{ slotProps.node.label }}
+      </button>
     </template>
     <template #default="slotProps">
-      <button @click="openProcessor(slotProps.node)">{{ slotProps.node.label }}</button>
+      <button @click="openProcessor(slotProps.node)">
+        {{ slotProps.node.label }}
+      </button>
     </template>
   </Tree>
 </template>

@@ -8,27 +8,40 @@ import Column from "primevue/column";
 import Button from "primevue/button";
 import { FilterMatchMode } from "@primevue/core/api";
 
-const createGroupDialog = defineAsyncComponent(() => import("@/components/Admin/GroupManagement/Dialog/CreateGroupDialog/CreateGroupDialogForm.vue"));
-const editGroupDialog = defineAsyncComponent(() => import("@/components/Admin/GroupManagement/Dialog/EditGroupDialog/EditGroupDialogForm.vue"));
-const deleteGroupDialog = defineAsyncComponent(() => import("@/components/Admin/GroupManagement/Dialog/DeleteGroupDialog.vue"));
+const createGroupDialog = defineAsyncComponent(
+  () =>
+    import(
+      "@/components/Admin/GroupManagement/Dialog/CreateGroupDialog/CreateGroupDialogForm.vue"
+    ),
+);
+const editGroupDialog = defineAsyncComponent(
+  () =>
+    import(
+      "@/components/Admin/GroupManagement/Dialog/EditGroupDialog/EditGroupDialogForm.vue"
+    ),
+);
+const deleteGroupDialog = defineAsyncComponent(
+  () =>
+    import("@/components/Admin/GroupManagement/Dialog/DeleteGroupDialog.vue"),
+);
 
 const dialog = useDialog();
 
-const uiStore = useUiStore()
+const uiStore = useUiStore();
 uiStore.breadcrumb = [
   {
     label: "Administration",
-    to: "/admin/dashboard"
+    to: "/admin/dashboard",
   },
   {
-    label: "Group Management"
-  }
-]
+    label: "Group Management",
+  },
+];
 
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
 import { useUiStore } from "@/stores/ui.store";
 import { useDialog } from "primevue/usedialog";
-const i18n = useI18n()
+const i18n = useI18n();
 
 const groups = ref();
 const selectedGroups = ref();
@@ -45,45 +58,45 @@ async function refetch() {
     });
 }
 
-function openNewGroupDialog(){
+function openNewGroupDialog() {
   dialog.open(createGroupDialog, {
     props: {
       header: "Create Group",
-      modal: true
+      modal: true,
     },
     onClose: () => {
-      refetch()
-    }
+      refetch();
+    },
   });
 }
 
-function openEditGroupDialog(data){
+function openEditGroupDialog(data) {
   dialog.open(editGroupDialog, {
     props: {
-      header: i18n.t('admin.group-management.dialog.edit.header'),
-      modal: true
+      header: i18n.t("admin.group-management.dialog.edit.header"),
+      modal: true,
     },
     data: {
-      data
+      data,
     },
     onClose: () => {
-      refetch()
-    }
+      refetch();
+    },
   });
 }
-function openDeleteGroupDialog(data: any){
+function openDeleteGroupDialog(data: any) {
   dialog.open(deleteGroupDialog, {
     props: {
       header: i18n.t("admin.user-management.dialog.delete.single.header"),
-      modal: true
+      modal: true,
     },
     data: {
-      data
+      data,
     },
     onClose: () => {
-      refetch()
-    }
-  })
+      refetch();
+    },
+  });
 }
 refetch();
 </script>
@@ -126,14 +139,10 @@ refetch();
   >
     <template #header>
       <div class="align-items-center flex flex-wrap justify-between gap-2">
-           <span class="text-xl font-bold">
-            Group management
-          </span>
+        <span class="text-xl font-bold"> Group management </span>
         <InputText
           v-model="filters['global'].value"
-          :placeholder="
-            $t('admin.user-management.table.search-placeholder')
-          "
+          :placeholder="$t('admin.user-management.table.search-placeholder')"
         />
       </div>
     </template>
@@ -142,31 +151,16 @@ refetch();
       style="width: 3rem"
       :exportable="false"
     ></Column>
-    <Column
-      field="label"
-      header="Label"
-      sortable
-    ></Column>
-    <Column
-      field="name"
-      header="Name"
-      sortable
-    ></Column>
-    <Column
-      field="state"
-      header="State"
-      sortable
-    ></Column>
-    <Column
-      field="users"
-      header="Users"
-      sortable
-    >
+    <Column field="label" header="Label" sortable></Column>
+    <Column field="name" header="Name" sortable></Column>
+    <Column field="state" header="State" sortable></Column>
+    <Column field="users" header="Users" sortable>
       <template #body="{ data }">
         <Tag
           v-for="user in data.users"
           :key="user.login"
-          :value="user.login"></Tag>
+          :value="user.login"
+        ></Tag>
       </template>
     </Column>
     <Column :exportable="false" style="min-width: 8rem">

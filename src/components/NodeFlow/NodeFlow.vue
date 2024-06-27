@@ -99,12 +99,11 @@ function newGraph() {
   originalWorkflowName.value = null;
   workflowDescription.value = null;
 
-
   uiStore.breadcrumb = [
     {
       label: "NodeFlow",
     },
-  ]
+  ];
 }
 
 async function openSaveDialog() {
@@ -181,9 +180,9 @@ async function loadWorkflow() {
         label: "NodeFlow",
       },
       {
-        label: selectedWorkflow.value.label
-      }
-    ]
+        label: selectedWorkflow.value.label,
+      },
+    ];
     toast.add({
       severity: "success",
       summary: t("pages.nodeflow.toasts.load.success.summary"),
