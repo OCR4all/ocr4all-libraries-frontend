@@ -129,26 +129,27 @@ async function removeJob(job) {
 
 <template>
   <Toast />
-  <DataTable
-    v-model:filters="filters"
-    :value="jobs"
-    paginator
-    filter-display="row"
-    :global-filter-fields="['id', 'description', 'state']"
-    :loading="loading"
-    :rows="5"
-    :rows-per-page-options="[5, 10, 20, 50]"
-    table-style="min-width: 50rem"
-  >
-    <template #empty>
+  <ComponentContainer>
+    <DataTable
+      v-model:filters="filters"
+      :value="jobs"
+      paginator
+      filter-display="row"
+      :global-filter-fields="['id', 'description', 'state']"
+      :loading="loading"
+      :rows="5"
+      :rows-per-page-options="[5, 10, 20, 50]"
+      table-style="min-width: 50rem"
+    >
+      <template #empty>
       <span class="text-primary-950 dark:text-primary-50">{{
-        $t("pages.queue.table.empty")
-      }}</span>
-    </template>
-    <template #header>
-      <div class="flex justify-between">
-        <h2 class="my-4 text-xl">{{ $t("pages.queue.table.header") }}</h2>
-        <span class="p-input-icon-left ml-10 space-x-4">
+          $t("pages.queue.table.empty")
+        }}</span>
+      </template>
+      <template #header>
+        <div class="flex justify-between">
+          <h2 class="my-4 text-xl">{{ $t("pages.queue.table.header") }}</h2>
+          <span class="p-input-icon-left ml-10 space-x-4">
           <button
             v-tooltip="'Refresh'"
             :disabled="isRefetching === true"
@@ -169,10 +170,10 @@ async function removeJob(job) {
             :placeholder="$t('pages.queue.table.search.placeholder')"
           />
         </span>
-      </div>
-    </template>
-    <Column :header="$t('pages.queue.table.columns.actions')">
-      <template #body="slotProps">
+        </div>
+      </template>
+      <Column :header="$t('pages.queue.table.columns.actions')">
+        <template #body="slotProps">
         <span class="space-y-2">
           <button
             :disabled="!['running', 'scheduled'].includes(slotProps.data.state)"
@@ -191,79 +192,80 @@ async function removeJob(job) {
             <XMarkIcon class="h-6 w-6 text-white" />
           </button>
         </span>
-      </template>
-    </Column>
-    <Column
-      field="id"
-      :sortable="true"
-      :header="$t('pages.queue.table.columns.id')"
-    ></Column>
-    <Column
-      field="description"
-      :header="$t('pages.queue.table.columns.description')"
-    ></Column>
-    <Column
-      field="state"
-      :sortable="true"
-      header="State"
-      :show-filter-menu="false"
-    >
-      <template #body="{ data }">
-        <Tag :value="data.state" :style="getColor(data.state)" />
-      </template>
-      <template #filter="{ filterModel, filterCallback }">
-        <Dropdown
-          v-model="filterModel.value"
-          placeholder="Select State"
-          :options="states"
-          class="p-column-filter"
-          :show-clear="true"
-          @change="filterCallback()"
-        >
-          <template #option="slotProps">
-            <Tag
-              :value="slotProps.option"
-              :style="getColor(slotProps.option)"
-            />
-          </template>
-        </Dropdown>
-      </template>
-    </Column>
-    <Column
-      field="journal.progress"
-      :header="$t('pages.queue.table.columns.progress')"
-      sortable
-      :show-filter-match-modes="false"
-      style="min-width: 12rem"
-    >
-      <template #body="slotProps">
-        <ProgressBar
-          :value="slotProps.data.journal.progress * 100"
-          :show-value="false"
-          style="height: 6px"
-        ></ProgressBar>
-      </template>
-    </Column>
-    <Column
-      :sortable="true"
-      field="created"
-      :header="$t('pages.queue.table.columns.created')"
-    >
-      <template #body="slotProps">
-        <UseTimeAgo
-          v-slot="{ timeAgo }"
-          :time="Date.parse(slotProps.data.created)"
-        >
-          {{ timeAgo }}
-        </UseTimeAgo>
-      </template>
-    </Column>
-    <!--    <Column
-    field="actions">
-      <template #body="slotProps">
-        <Button type="button" icon="pi pi-ellipsis-v" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" />
-        <Menu ref="menu" id="overlay_menu" :popup="true" />
-      </template>
-    </Column>-->
-  </DataTable>
+        </template>
+      </Column>
+      <Column
+        field="id"
+        :sortable="true"
+        :header="$t('pages.queue.table.columns.id')"
+      ></Column>
+      <Column
+        field="description"
+        :header="$t('pages.queue.table.columns.description')"
+      ></Column>
+      <Column
+        field="state"
+        :sortable="true"
+        header="State"
+        :show-filter-menu="false"
+      >
+        <template #body="{ data }">
+          <Tag :value="data.state" :style="getColor(data.state)" />
+        </template>
+        <template #filter="{ filterModel, filterCallback }">
+          <Dropdown
+            v-model="filterModel.value"
+            placeholder="Select State"
+            :options="states"
+            class="p-column-filter"
+            :show-clear="true"
+            @change="filterCallback()"
+          >
+            <template #option="slotProps">
+              <Tag
+                :value="slotProps.option"
+                :style="getColor(slotProps.option)"
+              />
+            </template>
+          </Dropdown>
+        </template>
+      </Column>
+      <Column
+        field="journal.progress"
+        :header="$t('pages.queue.table.columns.progress')"
+        sortable
+        :show-filter-match-modes="false"
+        style="min-width: 12rem"
+      >
+        <template #body="slotProps">
+          <ProgressBar
+            :value="slotProps.data.journal.progress * 100"
+            :show-value="false"
+            style="height: 6px"
+          ></ProgressBar>
+        </template>
+      </Column>
+      <Column
+        :sortable="true"
+        field="created"
+        :header="$t('pages.queue.table.columns.created')"
+      >
+        <template #body="slotProps">
+          <UseTimeAgo
+            v-slot="{ timeAgo }"
+            :time="Date.parse(slotProps.data.created)"
+          >
+            {{ timeAgo }}
+          </UseTimeAgo>
+        </template>
+      </Column>
+      <!--    <Column
+      field="actions">
+        <template #body="slotProps">
+          <Button type="button" icon="pi pi-ellipsis-v" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" />
+          <Menu ref="menu" id="overlay_menu" :popup="true" />
+        </template>
+      </Column>-->
+    </DataTable>
+  </ComponentContainer>
 </template>

@@ -41,6 +41,13 @@ uiStore.breadcrumb = [
   },
 ];
 
+useHead({
+  title: 'User Management',
+  titleTemplate: '%s %separator %siteName',
+  templateParams: { separator: '|', siteName: 'OCR4all' },
+  bodyAttrs: { class: { overflow: true } },
+})
+
 import { useI18n } from "vue-i18n";
 const i18n = useI18n();
 

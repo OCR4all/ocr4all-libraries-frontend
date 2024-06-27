@@ -244,6 +244,14 @@ uiStore.breadcrumb = [
     label: containerName,
   },
 ];
+
+useHead({
+  title: containerName,
+  titleTemplate: '%s %separator %siteName',
+  templateParams: { separator: '|', siteName: 'OCR4all' },
+  bodyAttrs: { class: { overflow: true } },
+})
+
 refresh();
 </script>
 <template>

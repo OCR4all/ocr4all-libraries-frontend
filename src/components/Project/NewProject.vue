@@ -1,7 +1,18 @@
 <script setup lang="ts">
-import BreadcrumbNavigation from "@/components/Layout/Breadcrumb/BreadcrumbNavigation.vue";
 import { useI18n } from "vue-i18n";
+import { useUiStore } from "@/stores/ui.store";
 const { t } = useI18n();
+
+const uiStore = useUiStore();
+uiStore.breadcrumb = [
+  {
+    label: "Projects",
+    to: "/project/overview"
+  },
+  {
+    label: "New",
+  },
+];
 
 const steps = [
   { label: t("pages.projects.new.stepper.name") },
@@ -16,15 +27,17 @@ function next() {
   step.value += 1;
 }
 
-const breadcrumbHome = { to: "/project/overview", label: "Projects" };
-const breadcrumbCurrent = { label: "New" };
+useHead({
+  title: 'Create Project',
+  titleTemplate: '%s %separator %siteName',
+  templateParams: { separator: '|', siteName: 'OCR4all' },
+  bodyAttrs: { class: { overflow: true } },
+})
 </script>
 
 <template>
-  <div
-    class="rounded-md border bg-white dark:border-surface-800 dark:bg-surface-900"
-  >
-    <section id="stepper" class="p-20">
+  <ComponentContainer>
+    <section id="stepper">
       <div
         class="relative after:absolute after:inset-x-0 after:top-1/2 after:block after:h-0.5 after:-translate-y-1/2 after:rounded-md after:bg-surface-200 dark:after:bg-surface-500"
       >
@@ -66,5 +79,5 @@ const breadcrumbCurrent = { label: "New" };
     <section v-if="step === 2">
       <ProjectCreationImageSelection />
     </section>
-  </div>
+  </ComponentContainer>
 </template>

@@ -27,6 +27,12 @@ export const useUiStore = defineStore({
   actions: {
     flush() {
       this.breadcrumb = undefined;
+      useHead({
+        title: '',
+        titleTemplate: '%s %separator %siteName',
+        templateParams: { separator: '|', siteName: 'OCR4all' },
+        bodyAttrs: { class: { overflow: true } },
+      })
     },
   },
 });

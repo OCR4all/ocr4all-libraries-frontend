@@ -134,6 +134,14 @@ const routes = [
             "@/components/Admin/InstanceAdministration/ProviderManagement.vue"
           ),
       },
+      {
+        path: "ocrdapi",
+        name: "OCRD API Viewer",
+        component: () =>
+          import(
+            "@/components/Admin/OCRAPIViewer.vue"
+            ),
+      }
     ],
   },
   {

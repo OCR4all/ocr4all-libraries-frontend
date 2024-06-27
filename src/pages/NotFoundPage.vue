@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import AppLayout from "@/layout/AppLayout.vue";
+
+useHead({
+  title: 'Page Not Found',
+  titleTemplate: '%s %separator %siteName',
+  templateParams: { separator: '|', siteName: 'OCR4all' },
+  bodyAttrs: { class: { overflow: true } },
+})
 </script>
 
 <template>

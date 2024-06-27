@@ -304,6 +304,12 @@
     "ExtractPropTypes": true,
     "ExtractPublicPropTypes": true,
     "WritableComputedRef": true,
-    "useClipboardItems": true
+    "useClipboardItems": true,
+    "getActiveHead": true,
+    "injectHead": true,
+    "useHeadSafe": true,
+    "useServerHead": true,
+    "useServerHeadSafe": true,
+    "useServerSeoMeta": true
   }
 }

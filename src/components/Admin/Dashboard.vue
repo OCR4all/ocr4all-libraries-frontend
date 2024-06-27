@@ -15,6 +15,13 @@ uiStore.breadcrumb = [
   },
 ];
 
+useHead({
+  title: 'Administration',
+  titleTemplate: '%s %separator %siteName',
+  templateParams: { separator: '|', siteName: 'OCR4all' },
+  bodyAttrs: { class: { overflow: true } },
+})
+
 const users = ref(0);
 const groups = ref(0);
 const providers = ref(0);

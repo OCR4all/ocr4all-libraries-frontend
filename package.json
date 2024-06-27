@@ -27,6 +27,7 @@
     "@primevue/core": "4.0.0-beta.5",
     "@primevue/themes": "4.0.0-rc.2",
     "@tanstack/vue-query": "^5.45.0",
+    "@unhead/vue": "^1.9.14",
     "@vee-validate/i18n": "^4.13.1",
     "@vueuse/components": "^10.11.0",
     "axios": "^1.7.2",

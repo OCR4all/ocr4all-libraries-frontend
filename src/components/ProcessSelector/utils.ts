@@ -2,7 +2,6 @@ export function buildProcessorSchema(data) {
   const processorSchema = [];
 
   for (const entry of data.entries) {
-    console.log(entry);
     switch (entry.type) {
       case "decimal":
         processorSchema.push({
@@ -63,9 +62,6 @@ export function buildProcessorSchema(data) {
         break;
     }
   }
-
-  console.log(data);
-
   return [
     {
       $el: "div",

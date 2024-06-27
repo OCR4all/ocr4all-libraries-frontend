@@ -126,7 +126,7 @@ await useCustomFetch(`/account`)
     </div>
     <div class="grid grid-cols-5 grid-rows-1 gap-8 lg:grid-rows-2">
       <div class="col-span-5 row-span-2 xl:col-span-4">
-        <ComponentContainer>
+        <ComponentContainer border>
           <RecentProjectsOverview />
         </ComponentContainer>
       </div>
@@ -199,12 +199,12 @@ await useCustomFetch(`/account`)
     </div>
     <div class="grid grid-cols-4 grid-rows-1 gap-8">
       <div class="col-span-4 row-span-1 2xl:col-span-2">
-        <ComponentContainer>
+        <ComponentContainer :border="true">
           <AvailableWorkflows />
         </ComponentContainer>
       </div>
       <div class="col-span-4 row-span-1 2xl:col-span-2">
-        <ComponentContainer>
+        <ComponentContainer :border="true">
           <SmallJobQueue />
         </ComponentContainer>
       </div>

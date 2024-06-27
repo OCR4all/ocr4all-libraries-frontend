@@ -27,6 +27,13 @@ uiStore.breadcrumb = [
   },
 ];
 
+useHead({
+  title: 'Providers',
+  titleTemplate: '%s %separator %siteName',
+  templateParams: { separator: '|', siteName: 'OCR4all' },
+  bodyAttrs: { class: { overflow: true } },
+})
+
 const nodes = ref();
 
 const filters = ref({

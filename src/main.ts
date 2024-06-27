@@ -10,6 +10,9 @@ import "./assets/css/base.css";
 
 import router from "./router";
 
+import { createHead } from '@unhead/vue'
+const head = createHead()
+
 import { VueQueryPlugin } from "@tanstack/vue-query";
 // PrimeVue imports
 import Aura from "@primevue/themes/aura";
@@ -78,13 +81,18 @@ import Select from "primevue/select";
 import SelectButton from "primevue/selectbutton";
 import ScrollPanel from "primevue/scrollpanel";
 import ScrollTop from "primevue/scrolltop";
+import Stepper from 'primevue/stepper';
+import StepList from 'primevue/steplist';
+import StepPanels from 'primevue/steppanels';
+import StepItem from 'primevue/stepitem';
+import Step from 'primevue/step';
+import StepPanel from 'primevue/steppanel';
 import Slider from "primevue/slider";
 import Drawer from "primevue/drawer";
 import Skeleton from "primevue/skeleton";
 import SplitButton from "primevue/splitbutton";
 import Splitter from "primevue/splitter";
 import SplitterPanel from "primevue/splitterpanel";
-import Steps from "primevue/steps";
 import Tag from "primevue/tag";
 import TieredMenu from "primevue/tieredmenu";
 import Textarea from "primevue/textarea";
@@ -219,7 +227,12 @@ app.component("Skeleton", Skeleton);
 app.component("SplitButton", SplitButton);
 app.component("Splitter", Splitter);
 app.component("SplitterPanel", SplitterPanel);
-app.component("Steps", Steps);
+app.component("Stepper", Stepper);
+app.component("StepList", StepList);
+app.component("StepPanels", StepPanels);
+app.component("StepItem", StepItem);
+app.component("Step", Step);
+app.component("StepPanel", StepPanel);
 app.component("Tabs", Tabs);
 app.component("TabList", TabList);
 app.component("Tab", Tab);
@@ -274,6 +287,7 @@ app.use(DialogService);
 app.use(VueQueryPlugin);
 app.use(i18n);
 app.use(createPinia());
+app.use(head);
 app.use(ToastService);
 app.use(router);
 app.use(plugin, defaultConfig(formkitConfig));

@@ -9,6 +9,13 @@ uiStore.breadcrumb = [
     label: "NodeFlow",
   },
 ];
+
+useHead({
+  title: 'NodeFlow',
+  titleTemplate: '%s %separator %siteName',
+  templateParams: { separator: '|', siteName: 'OCR4all' },
+  bodyAttrs: { class: { overflow: true } },
+})
 </script>
 
 <template>

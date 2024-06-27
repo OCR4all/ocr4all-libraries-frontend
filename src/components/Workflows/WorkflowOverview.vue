@@ -8,38 +8,43 @@ interface IWorkflowMetadata {
 
 import { useNodeFlowStore } from "@/stores/nodeflow.store";
 import { useCustomFetch } from "@/composables/useCustomFetch";
-
-import { ArrowPathIcon, PencilIcon } from "@heroicons/vue/24/outline";
-
+import { useDialog } from "primevue/usedialog";
 import { UseTimeAgo } from "@vueuse/components";
-
-import DataTable from "primevue/datatable";
-import Column from "primevue/column";
-import Button from "primevue/button";
-import Toolbar from "primevue/toolbar";
-import InputText from "primevue/inputtext";
-import Dialog from "primevue/dialog";
-import Toast from "primevue/toast";
-import InlineMessage from "primevue/inlinemessage";
-import Textarea from "primevue/textarea";
-import Menu from "primevue/menu";
 
 import { FilterMatchMode } from "@primevue/core/api";
 
-import { useI18n } from "vue-i18n";
-const { t } = useI18n();
+import { ArrowPathIcon } from "@heroicons/vue/24/outline";
 
 import { Router } from "vue-router";
 
 import { useToast } from "primevue/usetoast";
+
+const editWorkflowDialog = defineAsyncComponent(
+  () =>
+    import(
+      "@/components/Workflows/Dialog/EditDialog.vue"
+      ),
+);
+const deleteWorkflowDialog = defineAsyncComponent(
+  () =>
+    import(
+      "@/components/Workflows/Dialog/DeleteDialog.vue"
+      ),
+);
+
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+
 const toast = useToast();
+const dialog = useDialog();
 
 const store = useNodeFlowStore();
 
 const router: Router = useRouter();
 
-const editDialogVisible: Ref<boolean> = ref(false);
-const deleteDialogVisible: Ref<boolean> = ref(false);
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+});
 
 const labelTaken: Ref<boolean> = ref(false);
 const originalWorkflowName: Ref<string | undefined> = ref();
@@ -47,14 +52,37 @@ const workflowMetadata: Ref<IWorkflowMetadata> = ref();
 const workflowView = ref();
 
 const menu = ref();
+const items = ref();
 
-const toggle = (event) => {
+const toggle = (event, data) => {
+  items.value = [
+    {
+      label: 'Actions',
+      items: [
+        {
+          label: "Edit",
+          icon: "pi pi-pencil",
+          command: ()  => {
+
+          }
+        },
+        {
+          label: "Delete",
+          icon: "pi pi-trash",
+          command: ()  => {
+
+          }
+        }
+      ]
+    }
+  ]
   menu.value.toggle(event);
 };
 
 const loading = ref(true);
 const isRefetching = ref(false);
 const workflows = ref([]);
+
 async function refetch() {
   isRefetching.value = true;
   useCustomFetch(`/workflow/list`)
@@ -69,37 +97,34 @@ async function refetch() {
     });
 }
 
-refetch();
-
-const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-});
-
-function toggleEditDialog() {
-  editDialogVisible.value = !editDialogVisible.value;
+function openDeleteDialog() {
+  dialog.open(deleteWorkflowDialog, {
+    props: {
+      header: "Delete Workflow",
+      modal: true,
+    },
+    data: {
+      data,
+    },
+    onClose: () => {
+      refetch();
+    },
+  });
 }
 
-async function editWorkflow(id) {
-  const { error, data } = await useCustomFetch(`/workflow/pull/${id}`)
-    .get()
-    .json();
-  if (error.value) {
-    toast.add({
-      severity: "error",
-      summary: t("pages.workflows.toasts.update.error.summary"),
-      detail: t("pages.workflows.toasts.update.error.detail"),
-      life: 3000,
-    });
-  } else {
-    originalWorkflowName.value = data.value.metadata.label;
-    workflowMetadata.value = data.value.metadata;
-    workflowView.value = data.value.view;
-    toggleEditDialog();
-  }
-}
-
-function toggleDeleteDialog() {
-  deleteDialogVisible.value = !deleteDialogVisible.value;
+function openEditDialog() {
+  dialog.open(editWorkflowDialog, {
+    props: {
+      header: "Edit Workflow",
+      modal: true,
+    },
+    data: {
+      data,
+    },
+    onClose: () => {
+      refetch();
+    },
+  });
 }
 
 async function updateWorkflow() {
@@ -151,25 +176,22 @@ function loadWorkflow(data) {
   router.push("/nodeflow");
 }
 
-async function deleteWorkflow() {
-  const { data } = await useCustomFetch(
-    `/workflow/remove/${workflowMetadata.value.id}`,
-  )
-    .get()
-    .json();
-  toggleDeleteDialog();
-  toggleEditDialog();
-  toast.add({
-    severity: "success",
-    summary: t("pages.workflows.toasts.remove.success.summary"),
-    detail: t("pages.workflows.toasts.remove.success.detail"),
-    life: 3000,
-  });
-  refetch();
-}
+refetch();
 </script>
 <template>
   <Toast />
+  <Menu ref="menu" :model="items" :popup="true" >
+    <template #item="{ item, props }">
+      <a
+        v-ripple
+        class="flex items-center"
+        :class="{ 'hover:bg-red-500 hover:text-white rounded-md': item.label === 'Delete' }"
+        v-bind="props.action">
+        <span :class="item.icon" />
+        <span>{{ item.label }}</span>
+      </a>
+    </template>
+  </Menu>
   <Toolbar class="mb-4">
     <template #start>
       <div class="my-2 space-x-2">
@@ -269,112 +291,17 @@ async function deleteWorkflow() {
         </template>
       </Column>
       <Column :exportable="false" style="min-width: 8rem">
-        <template #body="slotProps">
+        <template #body="{ data }">
           <div class="space-y-2">
             <Button
               type="button"
               icon="pi pi-ellipsis-v"
-              @click="toggle"
-              aria-haspopup="true"
-              aria-controls="overlay_menu"
+              text
+              @click="toggle($event, data)"
             />
-            <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
-            <!--          <button
-              type="button"
-              class="mr-2 inline-flex items-center rounded-md bg-green-600 p-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-100 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-              @click="editWorkflow(slotProps.data.id)"
-            >
-              <PencilIcon class="h-6 w-6 text-white" />
-            </button>-->
           </div>
         </template>
       </Column>
     </DataTable>
   </ComponentContainer>
-  <Dialog
-    v-model:visible="editDialogVisible"
-    modal
-    :header="t('pages.workflows.dialog.edit.header')"
-    :style="{ width: '50vw' }"
-  >
-    <div class="mx-auto grid grid-cols-6 gap-4">
-      <div class="col-span-3 flex flex-col">
-        <label
-          for="text"
-          class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-          >{{ $t("pages.workflows.dialog.edit.form.label.label") }}</label
-        >
-        <InputText v-model="workflowMetadata.label" type="text" />
-        <InlineMessage v-show="labelTaken">{{
-          $t("pages.workflows.dialog.edit.form.label.label-taken")
-        }}</InlineMessage>
-      </div>
-
-      <div class="col-span-3 flex flex-col">
-        <label
-          for="last-name"
-          class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-          >{{ $t("pages.workflows.dialog.edit.form.id.label") }}</label
-        >
-        <InputText disabled v-model="workflowMetadata.id" type="text" />
-      </div>
-
-      <div class="col-span-6 flex flex-col">
-        <label
-          for="message"
-          class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-          >{{ $t("pages.workflows.dialog.edit.form.description.label") }}</label
-        >
-        <Textarea v-model="workflowMetadata.description" rows="5" cols="30" />
-      </div>
-
-      <div class="col-span-3 flex flex-col">
-        <label
-          for="last-name"
-          class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-          >{{ $t("pages.workflows.dialog.edit.form.updated.label") }}</label
-        >
-        <InputText disabled v-model="workflowMetadata.date" type="text" />
-      </div>
-
-      <div class="flex items-center justify-between sm:col-span-6">
-        <button
-          class="inline-block rounded-md bg-red-400 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 md:text-base"
-          @click="toggleDeleteDialog"
-        >
-          {{ $t("pages.workflows.dialog.edit.button.toggle-delete-dialog") }}
-        </button>
-      </div>
-    </div>
-    <template #footer>
-      <Button
-        :label="t('pages.workflows.dialog.edit.button.toggle-edit-dialog')"
-        icon="pi pi-times"
-        @click="toggleEditDialog"
-        text
-      />
-      <Button
-        :label="t('pages.workflows.dialog.edit.button.update-workflow')"
-        icon="pi pi-check"
-        @click="updateWorkflow"
-        autofocus
-      />
-    </template>
-  </Dialog>
-  <Dialog
-    v-model:visible="deleteDialogVisible"
-    modal
-    :header="t('pages.workflows.dialog.delete.header')"
-    :style="{ width: '50vw' }"
-  >
-    <p class="pb-5 dark:text-surface-200">
-      {{ $t("pages.workflows.dialog.delete.content") }}
-    </p>
-    <ActionButton size="large" rounded @click="toggleDeleteDialog">
-      {{ $t("pages.workflows.dialog.delete.button.cancel") }}
-    </ActionButton>
-    <ActionButton type="delete" size="large" rounded @click="deleteWorkflow">
-      {{ $t("pages.workflows.dialog.delete.button.delete") }}
-    </ActionButton>
-  </Dialog>
 </template>
