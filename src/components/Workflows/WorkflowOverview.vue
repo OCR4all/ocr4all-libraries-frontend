@@ -192,103 +192,105 @@ async function deleteWorkflow() {
       </button>
     </template>
   </Toolbar>
-  <DataTable
-    :value="workflows"
-    :paginator="true"
-    :rows="10"
-    :loading="loading"
-    :filters="filters"
-    :globalFilterFields="['label', 'description']"
-    sortField="date"
-    :sortOrder="-1"
-    :row-hover="true"
-    paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-    :rows-per-page-options="[10, 25, 50]"
-    responsive-layout="scroll"
-  >
-    <template #header>
-      <div class="flex justify-between">
-        <h2 class="my-4 text-xl">
-          {{ $t("pages.workflows.table.heading") }}
-        </h2>
-        <span class="p-input-icon-left ml-10">
+  <ComponentContainer>
+    <DataTable
+      :value="workflows"
+      :paginator="true"
+      :rows="10"
+      :loading="loading"
+      :filters="filters"
+      :globalFilterFields="['label', 'description']"
+      sortField="date"
+      :sortOrder="-1"
+      :row-hover="true"
+      paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+      :rows-per-page-options="[10, 25, 50]"
+      responsive-layout="scroll"
+    >
+      <template #header>
+        <div class="flex justify-between">
+          <h2 class="my-4 text-xl">
+            {{ $t("pages.workflows.table.heading") }}
+          </h2>
+          <span class="p-input-icon-left ml-10">
           <InputText
             v-model="filters['global'].value"
             :placeholder="$t('pages.workflows.table.search.placeholder')"
           />
         </span>
-      </div>
-    </template>
-    <template #empty>
+        </div>
+      </template>
+      <template #empty>
       <span class="text-primary-950 dark:text-primary-50">{{
-        $t("pages.workflows.table.empty")
-      }}</span>
-    </template>
-    <template #loading>
-      <DefaultSpinner />
-    </template>
-    <Column :exportable="false" style="min-width: 8rem">
-      <template #body="slotProps">
-        <div class="space-y-2">
-          <button
-            type="button"
-            class="mr-2 inline-flex items-center rounded-md bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            @click="loadWorkflow(slotProps.data)"
+          $t("pages.workflows.table.empty")
+        }}</span>
+      </template>
+      <template #loading>
+        <DefaultSpinner />
+      </template>
+      <Column :exportable="false" style="min-width: 8rem">
+        <template #body="slotProps">
+          <div class="space-y-2">
+            <button
+              type="button"
+              class="mr-2 inline-flex items-center rounded-md bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              @click="loadWorkflow(slotProps.data)"
+            >
+              {{ $t("pages.workflows.table.columns.open") }}
+            </button>
+          </div>
+        </template>
+      </Column>
+      <Column
+        field="label"
+        :header="$t('pages.workflows.table.columns.name')"
+        :sortable="true"
+      ></Column>
+      <Column
+        field="description"
+        :header="$t('pages.workflows.table.columns.description')"
+      >
+        <template #body="slotProps">
+          <p class="max-w-xs truncate">{{ slotProps.data.description }}</p>
+        </template>
+      </Column>
+      <Column
+        field="date"
+        :header="$t('pages.workflows.table.columns.updated')"
+        :sortable="true"
+      >
+        <template #body="slotProps">
+          <UseTimeAgo
+            v-slot="{ timeAgo }"
+            :time="Date.parse(slotProps.data.date)"
           >
-            {{ $t("pages.workflows.table.columns.open") }}
-          </button>
-        </div>
-      </template>
-    </Column>
-    <Column
-      field="label"
-      :header="$t('pages.workflows.table.columns.name')"
-      :sortable="true"
-    ></Column>
-    <Column
-      field="description"
-      :header="$t('pages.workflows.table.columns.description')"
-    >
-      <template #body="slotProps">
-        <p class="max-w-xs truncate">{{ slotProps.data.description }}</p>
-      </template>
-    </Column>
-    <Column
-      field="date"
-      :header="$t('pages.workflows.table.columns.updated')"
-      :sortable="true"
-    >
-      <template #body="slotProps">
-        <UseTimeAgo
-          v-slot="{ timeAgo }"
-          :time="Date.parse(slotProps.data.date)"
-        >
-          {{ timeAgo }}
-        </UseTimeAgo>
-      </template>
-    </Column>
-    <Column :exportable="false" style="min-width: 8rem">
-      <template #body="slotProps">
-        <div class="space-y-2">
-          <Button
-            type="button"
-            icon="pi pi-ellipsis-v"
-            @click="toggle"
-            aria-haspopup="true"
-            aria-controls="overlay_menu"
-          />
-          <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
-          <!--          <button
-            type="button"
-            class="mr-2 inline-flex items-center rounded-md bg-green-600 p-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-100 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-            @click="editWorkflow(slotProps.data.id)"
-          >
-            <PencilIcon class="h-6 w-6 text-white" />
-          </button>-->
-        </div>
-      </template>
-    </Column>
-  </DataTable>
+            {{ timeAgo }}
+          </UseTimeAgo>
+        </template>
+      </Column>
+      <Column :exportable="false" style="min-width: 8rem">
+        <template #body="slotProps">
+          <div class="space-y-2">
+            <Button
+              type="button"
+              icon="pi pi-ellipsis-v"
+              @click="toggle"
+              aria-haspopup="true"
+              aria-controls="overlay_menu"
+            />
+            <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
+            <!--          <button
+              type="button"
+              class="mr-2 inline-flex items-center rounded-md bg-green-600 p-2.5 text-center text-sm font-medium text-white hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-100 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+              @click="editWorkflow(slotProps.data.id)"
+            >
+              <PencilIcon class="h-6 w-6 text-white" />
+            </button>-->
+          </div>
+        </template>
+      </Column>
+    </DataTable>
+  </ComponentContainer>
   <Dialog
     v-model:visible="editDialogVisible"
     modal

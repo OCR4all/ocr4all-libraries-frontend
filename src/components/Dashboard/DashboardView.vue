@@ -199,18 +199,14 @@ await useCustomFetch(`/account`)
     </div>
     <div class="grid grid-cols-4 grid-rows-1 gap-8">
       <div class="col-span-4 row-span-1 2xl:col-span-2">
-        <div
-          class="group m-0 h-full rounded-md border border-surface-200 bg-white dark:border-surface-700 dark:bg-surface-900"
-        >
+        <ComponentContainer>
           <AvailableWorkflows />
-        </div>
+        </ComponentContainer>
       </div>
       <div class="col-span-4 row-span-1 2xl:col-span-2">
-        <div
-          class="group m-0 h-full rounded-md border border-surface-200 bg-white dark:border-surface-700 dark:bg-surface-900"
-        >
+        <ComponentContainer>
           <SmallJobQueue />
-        </div>
+        </ComponentContainer>
       </div>
     </div>
   </div>

@@ -4,6 +4,6 @@ import AppLayout from "@/layout/AppLayout.vue";
 
 <template>
   <AppLayout padded>
-    <ProcessorSelector />
+
   </AppLayout>
 </template>

@@ -104,28 +104,29 @@ uiStore.breadcrumb = [
         </button>
       </template>
     </Toolbar>
-    <DataTable
-      :value="projects"
-      :paginator="true"
-      :rows="10"
-      :loading="loading"
-      scrollable
-      v-model:filters="filters"
-      filter-display="row"
-      :globalFilterFields="['name', 'state', 'keywords']"
-      sortField="tracking.updated"
-      :sortOrder="-1"
-      ack
-      :row-hover="true"
-      paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-      :rows-per-page-options="[10, 25, 50]"
-    >
-      <template #header>
-        <div class="flex justify-between">
-          <h2 class="my-4 text-xl">
-            {{ $t("pages.projects.overview.table.header") }}
-          </h2>
-          <span class="p-input-icon-left ml-10">
+    <ComponentContainer>
+      <DataTable
+        :value="projects"
+        :paginator="true"
+        :rows="10"
+        :loading="loading"
+        scrollable
+        v-model:filters="filters"
+        filter-display="row"
+        :globalFilterFields="['name', 'state', 'keywords']"
+        sortField="tracking.updated"
+        :sortOrder="-1"
+        ack
+        :row-hover="true"
+        paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+        :rows-per-page-options="[10, 25, 50]"
+      >
+        <template #header>
+          <div class="flex justify-between">
+            <h2 class="my-4 text-xl">
+              {{ $t("pages.projects.overview.table.header") }}
+            </h2>
+            <span class="p-input-icon-left ml-10">
             <InputText
               v-model="filters['global'].value"
               :placeholder="
@@ -133,112 +134,113 @@ uiStore.breadcrumb = [
               "
             />
           </span>
-        </div>
-      </template>
-      <template #empty>
+          </div>
+        </template>
+        <template #empty>
         <span class="text-primary-950 dark:text-primary-50">{{
-          $t("pages.projects.overview.table.empty")
-        }}</span>
-      </template>
-      <template #loading>
-        <DefaultSpinner />
-      </template>
-      <Column :exportable="false">
-        <template #body="slotProps">
-          <button
-            type="button"
-            class="mr-2 inline-flex items-center rounded-md bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            @click="router.push(`/project/${slotProps.data.id}/view`)"
-          >
-            {{ $t("pages.projects.overview.table.columns.open") }}
-          </button>
+            $t("pages.projects.overview.table.empty")
+          }}</span>
         </template>
-      </Column>
-      <Column
-        field="name"
-        :header="$t('pages.projects.overview.table.columns.project')"
-        :sortable="true"
-      ></Column>
-      <Column
-        field="description"
-        :header="$t('pages.projects.overview.table.columns.description')"
-      >
-        <template #body="slotProps">
-          <p class="max-w-[10rem] truncate">{{ slotProps.data.description }}</p>
+        <template #loading>
+          <DefaultSpinner />
         </template>
-      </Column>
-      <Column
-        field="state"
-        :header="$t('pages.projects.overview.table.columns.state')"
-        :filterMenuStyle="{ width: '14rem' }"
-      >
-        <template #body="{ data }">
-          <Tag :value="data.state" :severity="getSeverity(data.state)" />
-        </template>
-        <template #filter="{ filterModel, filterCallback }">
-          <Dropdown
-            v-model="filterModel.value"
-            @change="filterCallback()"
-            :options="states"
-            placeholder="Select State"
-            class="p-column-filter"
-            style="min-width: 5rem; max-width: 12rem"
-            :showClear="true"
-          >
-            <template #option="slotProps">
+        <Column :exportable="false">
+          <template #body="slotProps">
+            <button
+              type="button"
+              class="mr-2 inline-flex items-center rounded-md bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              @click="router.push(`/project/${slotProps.data.id}/view`)"
+            >
+              {{ $t("pages.projects.overview.table.columns.open") }}
+            </button>
+          </template>
+        </Column>
+        <Column
+          field="name"
+          :header="$t('pages.projects.overview.table.columns.project')"
+          :sortable="true"
+        ></Column>
+        <Column
+          field="description"
+          :header="$t('pages.projects.overview.table.columns.description')"
+        >
+          <template #body="slotProps">
+            <p class="max-w-[10rem] truncate">{{ slotProps.data.description }}</p>
+          </template>
+        </Column>
+        <Column
+          field="state"
+          :header="$t('pages.projects.overview.table.columns.state')"
+          :filterMenuStyle="{ width: '14rem' }"
+        >
+          <template #body="{ data }">
+            <Tag :value="data.state" :severity="getSeverity(data.state)" />
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <Dropdown
+              v-model="filterModel.value"
+              @change="filterCallback()"
+              :options="states"
+              placeholder="Select State"
+              class="p-column-filter"
+              style="min-width: 5rem; max-width: 12rem"
+              :showClear="true"
+            >
+              <template #option="slotProps">
+                <Tag
+                  :value="slotProps.option"
+                  :severity="getSeverity(slotProps.option)"
+                />
+              </template>
+            </Dropdown>
+          </template>
+        </Column>
+        <Column :header="$t('pages.projects.overview.table.columns.keywords')">
+          <template #body="slotProps">
+            <div class="flex gap-1">
               <Tag
-                :value="slotProps.option"
-                :severity="getSeverity(slotProps.option)"
-              />
-            </template>
-          </Dropdown>
-        </template>
-      </Column>
-      <Column :header="$t('pages.projects.overview.table.columns.keywords')">
-        <template #body="slotProps">
-          <div class="flex gap-1">
-            <Tag
-              v-for="keyword in slotProps.data.keywords"
-              :key="keyword.name"
-              :value="keyword"
-              :pt="{
+                v-for="keyword in slotProps.data.keywords"
+                :key="keyword.name"
+                :value="keyword"
+                :pt="{
                 root: {
                   class:
                     'text-xs font-bold bg-surface-200 inline-flex items-center justify-center px-2 py-1 rounded-md text-surface-800 dark:text-white bg-surface-200 dark:bg-surface-600',
                 },
               }"
-            />
-          </div>
-        </template>
-      </Column>
-      <Column
-        field="tracking.created"
-        :header="$t('pages.projects.overview.table.columns.created')"
-        :sortable="true"
-      >
-        <template #body="slotProps">
-          <UseTimeAgo
-            v-slot="{ timeAgo }"
-            :time="Date.parse(slotProps.data.tracking.created)"
-          >
-            {{ timeAgo }}
-          </UseTimeAgo>
-        </template>
-      </Column>
-      <Column
-        field="tracking.updated"
-        :header="$t('pages.projects.overview.table.columns.last-updated')"
-        :sortable="true"
-      >
-        <template #body="slotProps">
-          <UseTimeAgo
-            v-slot="{ timeAgo }"
-            :time="Date.parse(slotProps.data.tracking.updated)"
-          >
-            {{ timeAgo }}
-          </UseTimeAgo>
-        </template>
-      </Column>
-    </DataTable>
+              />
+            </div>
+          </template>
+        </Column>
+        <Column
+          field="tracking.created"
+          :header="$t('pages.projects.overview.table.columns.created')"
+          :sortable="true"
+        >
+          <template #body="slotProps">
+            <UseTimeAgo
+              v-slot="{ timeAgo }"
+              :time="Date.parse(slotProps.data.tracking.created)"
+            >
+              {{ timeAgo }}
+            </UseTimeAgo>
+          </template>
+        </Column>
+        <Column
+          field="tracking.updated"
+          :header="$t('pages.projects.overview.table.columns.last-updated')"
+          :sortable="true"
+        >
+          <template #body="slotProps">
+            <UseTimeAgo
+              v-slot="{ timeAgo }"
+              :time="Date.parse(slotProps.data.tracking.updated)"
+            >
+              {{ timeAgo }}
+            </UseTimeAgo>
+          </template>
+        </Column>
+      </DataTable>
+    </ComponentContainer>
   </div>
 </template>

@@ -202,6 +202,7 @@ refetch();
           icon="pi pi-pencil"
           outlined
           rounded
+          text
           class="mr-2"
           @click="openEditUserDialog(slotProps.data)"
         />
@@ -209,6 +210,7 @@ refetch();
           icon="pi pi-trash"
           outlined
           rounded
+          text
           severity="danger"
           @click="openDeleteDialog([slotProps.data])"
         />
