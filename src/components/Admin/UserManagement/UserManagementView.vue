@@ -22,6 +22,7 @@ const uiStore = useUiStore()
 uiStore.breadcrumb = [
   {
     label: "Administration",
+    to: "/admin/dashboard"
   },
   {
     label: "User Management"

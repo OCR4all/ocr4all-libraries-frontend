@@ -11,7 +11,7 @@ defineEmits(["toggle-sidebar-mobile"]);
 
 <template>
   <nav
-    class="z-20 flex h-16 justify-between bg-surface-100 px-4 py-3 dark:bg-surface-900 lg:space-x-6 md:border-solid md:border-surface-200 dark:md:border-surface-800 lg:rounded-t-2xl lg:border-b lg:bg-white"
+    class="z-20 flex h-16 justify-between bg-surface-100 px-10 lg:px-4 py-3 dark:bg-surface-950 lg:dark:bg-surface-900 lg:space-x-6 md:border-solid md:border-surface-200 dark:md:border-surface-800 lg:rounded-t-2xl lg:border-b lg:bg-white"
   >
     <div class="flex space-x-6 lg:hidden">
       <img

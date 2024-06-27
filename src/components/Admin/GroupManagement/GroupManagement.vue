@@ -18,6 +18,7 @@ const uiStore = useUiStore()
 uiStore.breadcrumb = [
   {
     label: "Administration",
+    to: "/admin/dashboard"
   },
   {
     label: "Group Management"
@@ -172,14 +173,14 @@ refetch();
       <template #body="slotProps">
         <Button
           icon="pi pi-pencil"
-          outlined
+          text
           rounded
           class="mr-2"
           @click="openEditGroupDialog(slotProps.data)"
         />
         <Button
           icon="pi pi-trash"
-          outlined
+          text
           rounded
           severity="danger"
           @click="openDeleteGroupDialog([slotProps.data])"

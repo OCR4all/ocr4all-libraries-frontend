@@ -13,6 +13,7 @@ declare module 'vue' {
     BreadcrumbNavigation: typeof import('./src/components/Layout/Breadcrumb/BreadcrumbNavigation.vue')['default']
     CNode: typeof import('./src/components/NodeFlow/Custom/Node/CNode.vue')['default']
     CNodeInterface: typeof import('./src/components/NodeFlow/Custom/Node/connection/CNodeInterface.vue')['default']
+    ComponentContainer: typeof import('./src/components/Layout/ComponentContainer.vue')['default']
     ContainerCard: typeof import('./src/components/Repository/Images/Container/ContainerCard.vue')['default']
     ContainerView: typeof import('./src/components/Repository/Images/Container/ContainerView.vue')['default']
     CookieBanner: typeof import('./src/components/Layout/CookieBanner.vue')['default']

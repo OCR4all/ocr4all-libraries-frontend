@@ -127,11 +127,9 @@ await useCustomFetch(`/account`)
     </div>
     <div class="grid grid-cols-5 grid-rows-1 gap-8 lg:grid-rows-2">
       <div class="col-span-5 row-span-2 xl:col-span-4">
-        <div
-          class="group h-full rounded-md bg-white border border-surface-200 dark:border-surface-800 dark:bg-surface-900"
-        >
-          <RecentProjectsOverview />
-        </div>
+        <ComponentContainer>
+            <RecentProjectsOverview />
+        </ComponentContainer>
       </div>
       <div class="col-span-2 row-span-2 xl:col-span-1 xl:row-span-1">
         <a href="https://www.ocr4all.org" target="_blank">
