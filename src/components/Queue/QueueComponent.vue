@@ -142,7 +142,7 @@ async function removeJob(job) {
       table-style="min-width: 50rem"
     >
       <template #empty>
-      <span class="text-primary-950 dark:text-primary-50">{{
+        <span class="text-primary-950 dark:text-primary-50">{{
           $t("pages.queue.table.empty")
         }}</span>
       </template>
@@ -150,48 +150,52 @@ async function removeJob(job) {
         <div class="flex justify-between">
           <h2 class="my-4 text-xl">{{ $t("pages.queue.table.header") }}</h2>
           <span class="p-input-icon-left ml-10 space-x-4">
-          <button
-            v-tooltip="'Refresh'"
-            :disabled="isRefetching === true"
-            @click="refetch"
-          >
-            <ArrowPathIcon
-              :class="{ 'animate-spin': isRefetching }"
-              class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
+            <button
+              v-tooltip="'Refresh'"
+              :disabled="isRefetching === true"
+              @click="refetch"
+            >
+              <ArrowPathIcon
+                :class="{ 'animate-spin': isRefetching }"
+                class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
+              />
+            </button>
+            <button v-tooltip="'Expunge queue'" @click="expungeJobs">
+              <ArchiveBoxXMarkIcon
+                class="mr-2 inline h-6 w-6 text-surface-800 hover:text-red-600 dark:text-surface-200 dark:hover:text-red-600"
+              />
+            </button>
+            <InputText
+              v-model="filters['global'].value"
+              :placeholder="$t('pages.queue.table.search.placeholder')"
             />
-          </button>
-          <button v-tooltip="'Expunge queue'" @click="expungeJobs">
-            <ArchiveBoxXMarkIcon
-              class="mr-2 inline h-6 w-6 text-surface-800 hover:text-red-600 dark:text-surface-200 dark:hover:text-red-600"
-            />
-          </button>
-          <InputText
-            v-model="filters['global'].value"
-            :placeholder="$t('pages.queue.table.search.placeholder')"
-          />
-        </span>
+          </span>
         </div>
       </template>
       <Column :header="$t('pages.queue.table.columns.actions')">
         <template #body="slotProps">
-        <span class="space-y-2">
-          <button
-            :disabled="!['running', 'scheduled'].includes(slotProps.data.state)"
-            type="button"
-            class="mr-2 inline-flex items-center rounded-md bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
-            @click="cancelJob(slotProps.data.id)"
-          >
-            <StopIcon class="h-6 w-6 text-white" />
-          </button>
-          <button
-            :disabled="['running', 'scheduled'].includes(slotProps.data.state)"
-            type="button"
-            class="mr-2 inline-flex items-center rounded-md bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
-            @click="removeJob(slotProps.data.id)"
-          >
-            <XMarkIcon class="h-6 w-6 text-white" />
-          </button>
-        </span>
+          <span class="space-y-2">
+            <button
+              :disabled="
+                !['running', 'scheduled'].includes(slotProps.data.state)
+              "
+              type="button"
+              class="mr-2 inline-flex items-center rounded-md bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
+              @click="cancelJob(slotProps.data.id)"
+            >
+              <StopIcon class="h-6 w-6 text-white" />
+            </button>
+            <button
+              :disabled="
+                ['running', 'scheduled'].includes(slotProps.data.state)
+              "
+              type="button"
+              class="mr-2 inline-flex items-center rounded-md bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
+              @click="removeJob(slotProps.data.id)"
+            >
+              <XMarkIcon class="h-6 w-6 text-white" />
+            </button>
+          </span>
         </template>
       </Column>
       <Column

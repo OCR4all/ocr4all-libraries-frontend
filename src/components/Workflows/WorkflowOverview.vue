@@ -20,16 +20,10 @@ import { Router } from "vue-router";
 import { useToast } from "primevue/usetoast";
 
 const editWorkflowDialog = defineAsyncComponent(
-  () =>
-    import(
-      "@/components/Workflows/Dialog/EditDialog.vue"
-      ),
+  () => import("@/components/Workflows/Dialog/EditDialog.vue"),
 );
 const deleteWorkflowDialog = defineAsyncComponent(
-  () =>
-    import(
-      "@/components/Workflows/Dialog/DeleteDialog.vue"
-      ),
+  () => import("@/components/Workflows/Dialog/DeleteDialog.vue"),
 );
 
 import { useI18n } from "vue-i18n";
@@ -57,25 +51,21 @@ const items = ref();
 const toggle = (event, data) => {
   items.value = [
     {
-      label: 'Actions',
+      label: "Actions",
       items: [
         {
           label: "Edit",
           icon: "pi pi-pencil",
-          command: ()  => {
-
-          }
+          command: () => {},
         },
         {
           label: "Delete",
           icon: "pi pi-trash",
-          command: ()  => {
-
-          }
-        }
-      ]
-    }
-  ]
+          command: () => {},
+        },
+      ],
+    },
+  ];
   menu.value.toggle(event);
 };
 
@@ -180,13 +170,17 @@ refetch();
 </script>
 <template>
   <Toast />
-  <Menu ref="menu" :model="items" :popup="true" >
+  <Menu ref="menu" :model="items" :popup="true">
     <template #item="{ item, props }">
       <a
         v-ripple
         class="flex items-center"
-        :class="{ 'hover:bg-red-500 hover:text-white rounded-md': item.label === 'Delete' }"
-        v-bind="props.action">
+        :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+        v-bind="props.action"
+      >
         <span :class="item.icon" />
         <span>{{ item.label }}</span>
       </a>
@@ -235,15 +229,15 @@ refetch();
             {{ $t("pages.workflows.table.heading") }}
           </h2>
           <span class="p-input-icon-left ml-10">
-          <InputText
-            v-model="filters['global'].value"
-            :placeholder="$t('pages.workflows.table.search.placeholder')"
-          />
-        </span>
+            <InputText
+              v-model="filters['global'].value"
+              :placeholder="$t('pages.workflows.table.search.placeholder')"
+            />
+          </span>
         </div>
       </template>
       <template #empty>
-      <span class="text-primary-950 dark:text-primary-50">{{
+        <span class="text-primary-950 dark:text-primary-50">{{
           $t("pages.workflows.table.empty")
         }}</span>
       </template>

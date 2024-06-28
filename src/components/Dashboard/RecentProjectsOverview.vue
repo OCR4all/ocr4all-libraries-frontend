@@ -29,6 +29,10 @@ async function refetch() {
     });
 }
 
+const rowClass = (data) => {
+  return ["cursor-pointer"];
+};
+
 refetch();
 </script>
 
@@ -38,8 +42,10 @@ refetch();
       :value="projects"
       :paginator="true"
       :rows="5"
-      :row-hover="true"
       :loading="initialLoading"
+      @row-click="router.push(`/project/${$event.data.id}/view`)"
+      :rowClass="rowClass"
+      :row-hover="true"
       paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
     >
       <template #empty

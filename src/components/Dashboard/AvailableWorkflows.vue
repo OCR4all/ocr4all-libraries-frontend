@@ -39,12 +39,12 @@ refetch();
   <div>
     <DataTable
       :value="workflows"
-      stripedRows
-      sortField="date"
-      :sortOrder="-1"
+      striped-rows
+      sort-field="date"
+      :sort-order="-1"
       :loading="loading"
       paginator
-      paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+      paginator-template="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
       :rows="3"
     >
       <template #header>

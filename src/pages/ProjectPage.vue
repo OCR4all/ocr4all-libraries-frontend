@@ -15,11 +15,11 @@ uiStore.breadcrumb = [
 ];
 
 useHead({
-  title: 'Projects',
-  titleTemplate: '%s %separator %siteName',
-  templateParams: { separator: '|', siteName: 'OCR4all' },
+  title: "Projects",
+  titleTemplate: "%s %separator %siteName",
+  templateParams: { separator: "|", siteName: "OCR4all" },
   bodyAttrs: { class: { overflow: true } },
-})
+});
 </script>
 
 <template>

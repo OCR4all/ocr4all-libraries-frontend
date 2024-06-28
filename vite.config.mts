@@ -7,7 +7,7 @@ import { defineConfig } from "vite";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import VueDevTools from "vite-plugin-vue-devtools";
 import { visualizer } from "rollup-plugin-visualizer";
-import { unheadVueComposablesImports } from '@unhead/vue'
+import { unheadVueComposablesImports } from "@unhead/vue";
 import { version as pkgVersion } from "./package.json";
 
 process.env.VITE_APP_VERSION = pkgVersion;

@@ -273,10 +273,10 @@ uiStore.breadcrumb = [
 ];
 useHead({
   title: sandbox,
-  titleTemplate: '%s %separator %siteName',
-  templateParams: { separator: '|', siteName: 'OCR4all' },
+  titleTemplate: "%s %separator %siteName",
+  templateParams: { separator: "|", siteName: "OCR4all" },
   bodyAttrs: { class: { overflow: true } },
-})
+});
 </script>
 <template>
   <Toast />

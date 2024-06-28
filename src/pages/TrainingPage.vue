@@ -2,15 +2,13 @@
 import AppLayout from "@/layout/AppLayout.vue";
 
 useHead({
-  title: 'Training',
-  titleTemplate: '%s %separator %siteName',
-  templateParams: { separator: '|', siteName: 'OCR4all' },
+  title: "Training",
+  titleTemplate: "%s %separator %siteName",
+  templateParams: { separator: "|", siteName: "OCR4all" },
   bodyAttrs: { class: { overflow: true } },
-})
+});
 </script>
 
 <template>
-  <AppLayout padded>
-
-  </AppLayout>
+  <AppLayout padded> </AppLayout>
 </template>

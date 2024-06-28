@@ -10,11 +10,11 @@ uiStore.breadcrumb = [
 ];
 
 useHead({
-  title: 'Queue',
-  titleTemplate: '%s %separator %siteName',
-  templateParams: { separator: '|', siteName: 'OCR4all' },
+  title: "Queue",
+  titleTemplate: "%s %separator %siteName",
+  templateParams: { separator: "|", siteName: "OCR4all" },
   bodyAttrs: { class: { overflow: true } },
-})
+});
 </script>
 
 <template>

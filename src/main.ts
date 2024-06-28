@@ -10,8 +10,8 @@ import "./assets/css/base.css";
 
 import router from "./router";
 
-import { createHead } from '@unhead/vue'
-const head = createHead()
+import { createHead } from "@unhead/vue";
+const head = createHead();
 
 import { VueQueryPlugin } from "@tanstack/vue-query";
 // PrimeVue imports
@@ -81,12 +81,12 @@ import Select from "primevue/select";
 import SelectButton from "primevue/selectbutton";
 import ScrollPanel from "primevue/scrollpanel";
 import ScrollTop from "primevue/scrolltop";
-import Stepper from 'primevue/stepper';
-import StepList from 'primevue/steplist';
-import StepPanels from 'primevue/steppanels';
-import StepItem from 'primevue/stepitem';
-import Step from 'primevue/step';
-import StepPanel from 'primevue/steppanel';
+import Stepper from "primevue/stepper";
+import StepList from "primevue/steplist";
+import StepPanels from "primevue/steppanels";
+import StepItem from "primevue/stepitem";
+import Step from "primevue/step";
+import StepPanel from "primevue/steppanel";
 import Slider from "primevue/slider";
 import Drawer from "primevue/drawer";
 import Skeleton from "primevue/skeleton";

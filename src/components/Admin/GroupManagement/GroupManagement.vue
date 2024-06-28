@@ -39,11 +39,11 @@ uiStore.breadcrumb = [
 ];
 
 useHead({
-  title: 'Group Management',
-  titleTemplate: '%s %separator %siteName',
-  templateParams: { separator: '|', siteName: 'OCR4all' },
+  title: "Group Management",
+  titleTemplate: "%s %separator %siteName",
+  templateParams: { separator: "|", siteName: "OCR4all" },
   bodyAttrs: { class: { overflow: true } },
-})
+});
 
 import { useI18n } from "vue-i18n";
 import { useUiStore } from "@/stores/ui.store";

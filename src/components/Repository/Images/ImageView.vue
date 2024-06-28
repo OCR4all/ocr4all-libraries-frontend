@@ -61,6 +61,30 @@ async function listContainers() {
 
 await listContainers();
 
+const items = ref();
+const menu = ref();
+
+const toggle = (event, data) => {
+  items.value = [
+    {
+      label: "Actions",
+      items: [
+        {
+          label: "Edit",
+          icon: "pi pi-pencil",
+          command: () => {},
+        },
+        {
+          label: "Delete",
+          icon: "pi pi-trash",
+          command: () => {},
+        },
+      ],
+    },
+  ];
+  menu.value.toggle(event);
+};
+
 async function createContainer() {
   const payload = {
     name: newContainerName.value,
@@ -167,9 +191,28 @@ function openContainer(containerId: string, containerName: string) {
     query: { id: containerId, name: containerName },
   });
 }
+const rowClass = (data) => {
+  return ["cursor-pointer"];
+};
 </script>
 <template>
   <Toast />
+  <Menu ref="menu" :model="items" :popup="true">
+    <template #item="{ item, props }">
+      <a
+        v-ripple
+        class="flex items-center"
+        :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+        v-bind="props.action"
+      >
+        <span :class="item.icon" />
+        <span>{{ item.label }}</span>
+      </a>
+    </template>
+  </Menu>
   <Dialog
     v-model:visible="editDialogVisible"
     modal
@@ -281,7 +324,7 @@ function openContainer(containerId: string, containerName: string) {
       </div>
     </template>
     <template #end>
-      <SelectButton v-model="layout" :options="options" :allowEmpty="false">
+      <SelectButton v-model="layout" :options="options" :allow-empty="false">
         <template #option="{ option }">
           <i :class="[option === 'list' ? 'pi pi-bars' : 'pi pi-th-large']" />
         </template>
@@ -304,23 +347,24 @@ function openContainer(containerId: string, containerName: string) {
           :paginator="true"
           :rows="5"
           :rows-per-page-options="[5, 10, 20, 50]"
+          :row-class="rowClass"
+          :row-hover="true"
           table-style="min-width: 50rem"
+          @row-click="openContainer($event.data.id, $event.data.name)"
         >
           <template #header>
             <div class="grid grid-cols-2 justify-between gap-2">
               <h4 class="m-0">
                 {{ $t("pages.repository.overview.dataview.list.header") }}
               </h4>
-              <span class="relative justify-self-end">
-                <i
-                  class="pi pi-search absolute left-3 top-2/4 -mt-2 text-surface-400 dark:text-surface-600"
-                />
-                <InputText
-                  v-model="filters['global'].value"
-                  class="pl-10"
-                  placeholder="Search..."
-                />
-              </span>
+              <div class="flex justify-end">
+                <IconField>
+                  <InputIcon>
+                    <i class="pi pi-search" />
+                  </InputIcon>
+                  <InputText v-model="filters['global'].value" placeholder="Search" />
+                </IconField>
+              </div>
             </div>
           </template>
           <Column
@@ -413,22 +457,24 @@ function openContainer(containerId: string, containerName: string) {
                   type="primary"
                   size="small"
                   rounded
-                  @click="openContainer(slotProps.data.id, slotProps.data.name)"
-                >
-                  {{
-                    $t("pages.repository.overview.dataview.list.action.open")
-                  }}
-                </ActionButton>
-                <ActionButton
-                  type="primary"
-                  size="small"
-                  rounded
                   @click="openEditDialog(slotProps.data)"
                 >
                   {{
                     $t("pages.repository.overview.dataview.list.action.edit")
                   }}
                 </ActionButton>
+              </div>
+            </template>
+          </Column>
+          <Column :exportable="false" style="min-width: 8rem">
+            <template #body="{ data }">
+              <div class="space-y-2">
+                <Button
+                  type="button"
+                  icon="pi pi-ellipsis-v"
+                  text
+                  @click="toggle($event, data)"
+                />
               </div>
             </template>
           </Column>

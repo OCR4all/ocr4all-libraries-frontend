@@ -29,19 +29,19 @@ async function editWorkflow(id) {
       <label
         for="text"
         class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-      >{{ $t("pages.workflows.dialog.edit.form.label.label") }}</label
+        >{{ $t("pages.workflows.dialog.edit.form.label.label") }}</label
       >
       <InputText v-model="workflowMetadata.label" type="text" />
       <Message v-show="labelTaken">{{
-          $t("pages.workflows.dialog.edit.form.label.label-taken")
-        }}</Message>
+        $t("pages.workflows.dialog.edit.form.label.label-taken")
+      }}</Message>
     </div>
 
     <div class="col-span-3 flex flex-col">
       <label
         for="last-name"
         class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-      >{{ $t("pages.workflows.dialog.edit.form.id.label") }}</label
+        >{{ $t("pages.workflows.dialog.edit.form.id.label") }}</label
       >
       <InputText disabled v-model="workflowMetadata.id" type="text" />
     </div>
@@ -50,7 +50,7 @@ async function editWorkflow(id) {
       <label
         for="message"
         class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-      >{{ $t("pages.workflows.dialog.edit.form.description.label") }}</label
+        >{{ $t("pages.workflows.dialog.edit.form.description.label") }}</label
       >
       <Textarea v-model="workflowMetadata.description" rows="5" cols="30" />
     </div>
@@ -59,7 +59,7 @@ async function editWorkflow(id) {
       <label
         for="last-name"
         class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-      >{{ $t("pages.workflows.dialog.edit.form.updated.label") }}</label
+        >{{ $t("pages.workflows.dialog.edit.form.updated.label") }}</label
       >
       <InputText disabled v-model="workflowMetadata.date" type="text" />
     </div>

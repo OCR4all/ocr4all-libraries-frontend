@@ -342,10 +342,6 @@ defineExpose({
               rounded
               aria-haspopup="true"
               aria-label="overlay_menu"
-              :pt="{
-                root: { class: 'z-50 bg-surface-50/80 dark:bg-surface-50 p-1' },
-                icon: { class: 'align-center pl-1' },
-              }"
               @click="toggle"
             />
             <Menu

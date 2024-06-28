@@ -7,12 +7,11 @@ import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
 import Dropdown from "primevue/dropdown";
 
-import { ArrowPathIcon, EyeIcon } from "@heroicons/vue/24/outline";
+import { ArrowPathIcon } from "@heroicons/vue/24/outline";
 
 import { UseTimeAgo } from "@vueuse/components";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
-import RefreshIconButton from "@/components/ui/RefreshIconButton.vue";
 import { useUiStore } from "@/stores/ui.store";
 
 const router = useRouter();
@@ -34,9 +33,9 @@ async function refetch() {
 
 const projects = ref();
 
-refetch();
-
-const selectedProjects = ref(null);
+const rowClass = (data) => {
+  return ["cursor-pointer"];
+};
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -65,6 +64,8 @@ uiStore.breadcrumb = [
     to: "/project/overview",
   },
 ];
+
+refetch();
 </script>
 <template>
   <div class="card">
@@ -116,7 +117,8 @@ uiStore.breadcrumb = [
         :globalFilterFields="['name', 'state', 'keywords']"
         sortField="tracking.updated"
         :sortOrder="-1"
-        ack
+        @row-click="router.push(`/project/${$event.data.id}/view`)"
+        :rowClass="rowClass"
         :row-hover="true"
         paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
         :rows-per-page-options="[10, 25, 50]"
@@ -127,34 +129,23 @@ uiStore.breadcrumb = [
               {{ $t("pages.projects.overview.table.header") }}
             </h2>
             <span class="p-input-icon-left ml-10">
-            <InputText
-              v-model="filters['global'].value"
-              :placeholder="
-                $t('pages.projects.overview.table.search.placeholder')
-              "
-            />
-          </span>
+              <InputText
+                v-model="filters['global'].value"
+                :placeholder="
+                  $t('pages.projects.overview.table.search.placeholder')
+                "
+              />
+            </span>
           </div>
         </template>
         <template #empty>
-        <span class="text-primary-950 dark:text-primary-50">{{
+          <span class="text-primary-950 dark:text-primary-50">{{
             $t("pages.projects.overview.table.empty")
           }}</span>
         </template>
         <template #loading>
           <DefaultSpinner />
         </template>
-        <Column :exportable="false">
-          <template #body="slotProps">
-            <button
-              type="button"
-              class="mr-2 inline-flex items-center rounded-md bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              @click="router.push(`/project/${slotProps.data.id}/view`)"
-            >
-              {{ $t("pages.projects.overview.table.columns.open") }}
-            </button>
-          </template>
-        </Column>
         <Column
           field="name"
           :header="$t('pages.projects.overview.table.columns.project')"
@@ -165,7 +156,9 @@ uiStore.breadcrumb = [
           :header="$t('pages.projects.overview.table.columns.description')"
         >
           <template #body="slotProps">
-            <p class="max-w-[10rem] truncate">{{ slotProps.data.description }}</p>
+            <p class="max-w-[10rem] truncate">
+              {{ slotProps.data.description }}
+            </p>
           </template>
         </Column>
         <Column
@@ -203,11 +196,11 @@ uiStore.breadcrumb = [
                 :key="keyword.name"
                 :value="keyword"
                 :pt="{
-                root: {
-                  class:
-                    'text-xs font-bold bg-surface-200 inline-flex items-center justify-center px-2 py-1 rounded-md text-surface-800 dark:text-white bg-surface-200 dark:bg-surface-600',
-                },
-              }"
+                  root: {
+                    class:
+                      'text-xs font-bold bg-surface-200 inline-flex items-center justify-center px-2 py-1 rounded-md text-surface-800 dark:text-white bg-surface-200 dark:bg-surface-600',
+                  },
+                }"
               />
             </div>
           </template>

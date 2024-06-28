@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {
   ArrowPathIcon,
-  EyeIcon,
   XMarkIcon,
   ArchiveBoxArrowDownIcon,
 } from "@heroicons/vue/24/outline";
@@ -16,6 +15,10 @@ import Toast from "primevue/toast";
 import Tag from "primevue/tag";
 import { FilterMatchMode } from "@primevue/core/api";
 
+import { useSandboxCreationStore } from "@/stores/sandboxCreation.store";
+import Button from "primevue/button";
+import ProgressBar from "primevue/progressbar";
+
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
 import { useToast } from "primevue/usetoast";
@@ -23,10 +26,6 @@ const toast = useToast();
 
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
-
-import { useSandboxCreationStore } from "@/stores/sandboxCreation.store";
-import Button from "primevue/button";
-import ProgressBar from "primevue/progressbar";
 
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
@@ -110,6 +109,9 @@ async function downloadSandbox(sandbox) {
       link.click();
     });
 }
+const rowClass = (data) => {
+  return ["cursor-pointer"];
+};
 </script>
 <template>
   <Toast />
@@ -165,10 +167,13 @@ async function downloadSandbox(sandbox) {
   </Toolbar>
   <DataTable
     :value="sandboxes"
-    sortField="tracking.updated"
-    :sortOrder="-1"
+    sort-field="tracking.updated"
+    :sort-order="-1"
     :filters="filters"
-    :globalFilterFields="['name', 'description', 'state']"
+    @row-click="router.push(`/project/${project}/result/${$event.data.id}`)"
+    :rowClass="rowClass"
+    :row-hover="true"
+    :global-filter-fields="['name', 'description', 'state']"
   >
     <template #header>
       <div class="flex justify-between">
@@ -199,19 +204,6 @@ async function downloadSandbox(sandbox) {
         $t("pages.projects.sandbox.results.table.empty")
       }}</span>
     </template>
-    <Column :exportable="false" style="min-width: 8rem">
-      <template #body="slotProps">
-        <button
-          type="button"
-          class="mr-2 inline-flex items-center rounded-md bg-primary-600 p-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          @click="
-            router.push(`/project/${project}/result/${slotProps.data.id}`)
-          "
-        >
-          {{ $t("pages.projects.sandbox.results.table.columns.open") }}
-        </button>
-      </template>
-    </Column>
     <Column
       field="name"
       :header="$t('pages.projects.sandbox.results.table.columns.name')"

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Skeleton from "primevue/skeleton";
+import { useUiStore } from "@/stores/ui.store";
 const router = useRouter();
 
 const steps = [{ label: "Images" }, { label: "Workflow" }];
@@ -14,9 +15,20 @@ function next() {
 
 const project = router.currentRoute.value.params.project;
 
-const breadcrumbHome = { to: "/project/overview", label: "Projects" };
-const breadcrumbPath = [{ to: `/project/${project}/view`, label: project }];
-const breadcrumbCurrent = { label: "New Result" };
+const uiStore = useUiStore();
+uiStore.breadcrumb = [
+  {
+    label: "Projects",
+    to: "/project/overview",
+  },
+  {
+    label: project,
+    to: `/project/${project}/view`
+  },
+  {
+    label: "New Result"
+  }
+];
 </script>
 
 <template>

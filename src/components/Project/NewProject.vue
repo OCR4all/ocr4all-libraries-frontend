@@ -7,7 +7,7 @@ const uiStore = useUiStore();
 uiStore.breadcrumb = [
   {
     label: "Projects",
-    to: "/project/overview"
+    to: "/project/overview",
   },
   {
     label: "New",
@@ -28,11 +28,11 @@ function next() {
 }
 
 useHead({
-  title: 'Create Project',
-  titleTemplate: '%s %separator %siteName',
-  templateParams: { separator: '|', siteName: 'OCR4all' },
+  title: "Create Project",
+  titleTemplate: "%s %separator %siteName",
+  templateParams: { separator: "|", siteName: "OCR4all" },
   bodyAttrs: { class: { overflow: true } },
-})
+});
 </script>
 
 <template>
