@@ -1,9 +1,9 @@
 <template>
   <div
-    class="group rounded-md border bg-white p-5 hover:bg-primary-600 dark:border-surface-800 dark:bg-surface-900 hover:dark:bg-primary-600"
+    class="group rounded-md bg-white p-5 border border-surface-200 hover:bg-primary-600 dark:border-surface-800 dark:bg-surface-900 hover:dark:bg-primary-600"
   >
     <div
-      class="text-base text-surface-400 group-hover:text-white dark:text-surface-300"
+      class="text-base text-surface-800 group-hover:text-white dark:text-surface-200"
     >
       <slot name="title"></slot>
     </div>

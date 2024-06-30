@@ -88,6 +88,7 @@ declare module 'vue' {
     UserDropdown: typeof import('./src/components/Layout/Topbar/UserDropdown.vue')['default']
     UserManagement: (typeof import("./src/components/Admin/UserManagement/UserManagement.vue"))["default"]
     UserManagementView: typeof import('./src/components/Admin/UserManagement/UserManagementView.vue')['default']
+    UserSettings: typeof import('./src/components/Settings/UserSettings.vue')['default']
     WideCard: typeof import('./src/components/Dashboard/WideCard.vue')['default']
     WorkflowOverview: typeof import('./src/components/Workflows/WorkflowOverview.vue')['default']
   }

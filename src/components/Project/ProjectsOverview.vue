@@ -107,19 +107,19 @@ refetch();
     </Toolbar>
     <ComponentContainer>
       <DataTable
+        v-model:filters="filters"
         :value="projects"
         :paginator="true"
         :rows="10"
         :loading="loading"
         scrollable
-        v-model:filters="filters"
         filter-display="row"
-        :globalFilterFields="['name', 'state', 'keywords']"
-        sortField="tracking.updated"
-        :sortOrder="-1"
-        @row-click="router.push(`/project/${$event.data.id}/view`)"
-        :rowClass="rowClass"
+        :global-filter-fields="['name', 'state', 'keywords']"
+        sort-field="tracking.updated"
+        :sort-order="-1"
+        :row-class="rowClass"
         :row-hover="true"
+        @row-click="router.push(`/project/${$event.data.id}/view`)"
         paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
         :rows-per-page-options="[10, 25, 50]"
       >
@@ -164,7 +164,7 @@ refetch();
         <Column
           field="state"
           :header="$t('pages.projects.overview.table.columns.state')"
-          :filterMenuStyle="{ width: '14rem' }"
+          :filter-menu-style="{ width: '14rem' }"
         >
           <template #body="{ data }">
             <Tag :value="data.state" :severity="getSeverity(data.state)" />
@@ -172,12 +172,12 @@ refetch();
           <template #filter="{ filterModel, filterCallback }">
             <Dropdown
               v-model="filterModel.value"
-              @change="filterCallback()"
               :options="states"
               placeholder="Select State"
               class="p-column-filter"
               style="min-width: 5rem; max-width: 12rem"
-              :showClear="true"
+              :show-clear="true"
+              @change="filterCallback()"
             >
               <template #option="slotProps">
                 <Tag

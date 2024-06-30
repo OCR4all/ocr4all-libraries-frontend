@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import DataTable from "primevue/datatable";
+
 interface IWorkflowMetadata {
   label: string;
   description: string;
@@ -18,6 +20,8 @@ import { ArrowPathIcon } from "@heroicons/vue/24/outline";
 import { Router } from "vue-router";
 
 import { useToast } from "primevue/usetoast";
+
+const selectedWorkflow = ref()
 
 const editWorkflowDialog = defineAsyncComponent(
   () => import("@/components/Workflows/Dialog/EditDialog.vue"),
@@ -43,10 +47,20 @@ const filters = ref({
 const labelTaken: Ref<boolean> = ref(false);
 const originalWorkflowName: Ref<string | undefined> = ref();
 const workflowMetadata: Ref<IWorkflowMetadata> = ref();
-const workflowView = ref();
 
 const menu = ref();
-const items = ref();
+const items = ref([
+  {
+    label: "Edit",
+    icon: "pi pi-pencil",
+    command: () => {},
+  },
+  {
+    label: "Delete",
+    icon: "pi pi-trash",
+    command: () => {},
+  },
+]);
 
 const toggle = (event, data) => {
   items.value = [
@@ -166,9 +180,21 @@ function loadWorkflow(data) {
   router.push("/nodeflow");
 }
 
+const rowClass = (data) => {
+  return ["cursor-pointer"];
+};
+
 refetch();
 </script>
 <template>
+  <Dock v-show="selectedWorkflow" :model="items" position="bottom">
+    <template #item="{ item }">
+      <a v-tooltip.top="item.label" href="#" class="p-dock-item-link hover:cursor-pointer hover:scale-125" @click="onDockItemClick($event, item)">
+        <i class :alt="item.label" :class="item.icon" style="width: 100%" />
+      </a>
+    </template>
+  </Dock>
+
   <Toast />
   <Menu ref="menu" :model="items" :popup="true">
     <template #item="{ item, props }">
@@ -198,15 +224,6 @@ refetch();
         </button>
       </div>
     </template>
-
-    <template #end>
-      <button :disabled="isRefetching === true" @click="refetch">
-        <ArrowPathIcon
-          :class="{ 'animate-spin': isRefetching }"
-          class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
-        />
-      </button>
-    </template>
   </Toolbar>
   <ComponentContainer>
     <DataTable
@@ -218,6 +235,8 @@ refetch();
       :globalFilterFields="['label', 'description']"
       sortField="date"
       :sortOrder="-1"
+      v-model:selection="selectedWorkflow"
+      selectionMode="single"
       :row-hover="true"
       paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :rows-per-page-options="[10, 25, 50]"
@@ -229,6 +248,12 @@ refetch();
             {{ $t("pages.workflows.table.heading") }}
           </h2>
           <span class="p-input-icon-left ml-10">
+                  <button :disabled="isRefetching === true" @click="refetch">
+        <ArrowPathIcon
+            :class="{ 'animate-spin': isRefetching }"
+            class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
+        />
+      </button>
             <InputText
               v-model="filters['global'].value"
               :placeholder="$t('pages.workflows.table.search.placeholder')"
@@ -244,19 +269,6 @@ refetch();
       <template #loading>
         <DefaultSpinner />
       </template>
-      <Column :exportable="false" style="min-width: 8rem">
-        <template #body="slotProps">
-          <div class="space-y-2">
-            <button
-              type="button"
-              class="mr-2 inline-flex items-center rounded-md bg-blue-600 p-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              @click="loadWorkflow(slotProps.data)"
-            >
-              {{ $t("pages.workflows.table.columns.open") }}
-            </button>
-          </div>
-        </template>
-      </Column>
       <Column
         field="label"
         :header="$t('pages.workflows.table.columns.name')"
