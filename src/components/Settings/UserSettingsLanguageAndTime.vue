@@ -1,17 +1,26 @@
 <script setup lang="ts">
+import { useToast } from "primevue/usetoast";
 import { languageAndTime } from "@/components/Settings/Schema/languageAndTime";
-import { useUiStore } from "@/stores/ui.store";
+import {useI18n} from "vue-i18n";
 
-const uiStore = useUiStore()
+const i18n = useI18n()
+const toast = useToast();
 
 const schema = languageAndTime
 const data = ref(
   {
-    language: uiStore.language
+    language: i18n.locale.value
   }
 )
 
 function updateLanguageAndTime(values, { setErrors }) {
+  try{
+    localStorage.setItem("ocr4all/frontend/language", values.language)
+    i18n.locale.value = values.language
+    toast.add({ severity: 'success', summary: 'Success', detail: 'Language and Time updated', life: 3000 });
+  }catch(error){
+    toast.add({ severity: 'error', summary: 'Error', detail: error, life: 3000 });
+  }
 
 }
 </script>
@@ -24,9 +33,10 @@ function updateLanguageAndTime(values, { setErrors }) {
       id="form"
       v-model="data"
       type="form"
+      submit-label="Save all"
       :submit-attrs="{
-      inputClass: 'p-button p-component',
-    }"
+        inputClass: '',
+      }"
       @submit="updateLanguageAndTime"
     >
       <FormKitSchema :schema="schema" :data="data" />

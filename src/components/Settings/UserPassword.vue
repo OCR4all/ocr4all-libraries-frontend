@@ -7,10 +7,6 @@ const data  = ref()
 
 function submitPasswordChange(values, { setErrors }) {
   const payload = {
-    login: data.value.login,
-    state: data.value.state,
-    email: data.value.email,
-    name: data.value.name,
     password: data.value.password,
   };
   useCustomFetch(`/administration/security/user/update`)
@@ -35,11 +31,11 @@ function submitPasswordChange(values, { setErrors }) {
       v-model="data"
       type="form"
       :submit-attrs="{
-              inputClass: 'p-button p-component',
-            }"
+          inputClass: 'p-button p-component',
+        }"
       @submit="submitPasswordChange"
     >
-      <FormKitSchema :schema="passwordSchema" :data="data" />
+      <FormKitSchema :schema="schema" :data="data" />
     </FormKit>
   </div>
 </template>

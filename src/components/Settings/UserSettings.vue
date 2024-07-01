@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import GeneralInformation from "@/components/Settings/GeneralInformation.vue";
-import UserInfoCard from "@/components/Settings/UserInfoCard.vue";
+import UserInfoCard from "@/components/Settings/UserInfo.vue";
 
 const user = ref();
 await useCustomFetch(`/account`)
@@ -20,6 +20,7 @@ await useCustomFetch(`/account`)
       <div class="col-span-3 lg:col-span-1 space-y-4">
         <UserInfoCard />
         <UserSettingsLanguageAndTime />
+        <AppearanceSettings />
       </div>
       <div class="col-span-3 lg:col-span-2 space-y-4">
         <GeneralInformation />

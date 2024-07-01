@@ -88,6 +88,7 @@ declare module 'vue' {
     Test: (typeof import("./src/components/Admin/Test.vue"))["default"]
     ThemeSkeleton: typeof import('./src/components/Settings/ThemeSkeleton.vue')['default']
     UserDropdown: typeof import('./src/components/Layout/Topbar/UserDropdown.vue')['default']
+    UserInfo: typeof import('./src/components/Settings/UserInfo.vue')['default']
     UserInfoCard: typeof import('./src/components/Settings/UserInfoCard.vue')['default']
     UserManagement: (typeof import("./src/components/Admin/UserManagement/UserManagement.vue"))["default"]
     UserManagementView: typeof import('./src/components/Admin/UserManagement/UserManagementView.vue')['default']

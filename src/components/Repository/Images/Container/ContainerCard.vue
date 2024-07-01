@@ -209,7 +209,7 @@ defineExpose({
                   'relative self-center mx-auto w-6 h-6 inline-block before:block before:pt-full',
               },
             }"
-            animationDuration=".5s"
+            animation-duration=".5s"
             aria-label="Custom ProgressSpinner"
           />
           <div class="text-md my-3 text-surface-800">
@@ -355,11 +355,12 @@ defineExpose({
         </div>
       </div>
       <div
-        @click="openContainer"
         class="mx-4 mt-4 h-fit w-fit self-center justify-self-center text-surface-700"
+        @click="openContainer"
       >
         <i
-          class="pi pi-folder text-7xl text-surface-700 dark:text-surface-0"
+          class="pi pi-folder text-surface-700 dark:text-surface-0"
+          style="font-size: 2.5rem"
         ></i>
       </div>
     </div>

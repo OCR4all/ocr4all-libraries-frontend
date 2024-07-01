@@ -1,17 +1,23 @@
 <script setup lang="ts">
 import { generalInformation } from "@/components/Settings/Schema/generalInformation";
 import { useCustomFetch } from "@/composables/useCustomFetch";
-import { useAuthStore } from "@/stores/auth.store";
+import {useToast} from "primevue/usetoast";
 
 const schema = generalInformation
 const data = ref()
 
-const authStore = useAuthStore()
+const toast = useToast();
+
+await useCustomFetch(`/account`)
+    .get()
+    .json()
+    .then((response) => {
+      data.value = response.data.value;
+    });
 
 async function updateGeneralInformation(values, { setErrors }) {
   const payload = {
     login: data.value.login,
-    state: data.value.state,
     email: data.value.email,
     name: data.value.name,
   };
@@ -21,7 +27,7 @@ async function updateGeneralInformation(values, { setErrors }) {
       if (response.error.value) {
         setErrors(["Something went wrong.", "Please try again later."]);
       } else {
-        // Toast
+        toast.add({ severity: 'success', summary: 'Success', detail: 'General information updated', life: 3000 });
       }
     });
 }
