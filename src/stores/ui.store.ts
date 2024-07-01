@@ -9,19 +9,21 @@ interface IUiStore {
   tourSpeedDialVisible: boolean;
   repositoryDataViewLayout: RemovableRef<string>;
   breadcrumb: RemovableRef<IBreadCrumbEntry[]> | undefined;
+  language: RemovableRef<string>;
 }
 
 export const useUiStore = defineStore({
   id: "ui",
   state: (): IUiStore => ({
-    sidebarCtaVisible: useStorage("pinia/ui/sidebarCtaVisible", true),
-    sidebarMinimized: useStorage("pinia/ui/sidebarMinimized", false),
-    cookieBannerVisible: useStorage("pinia/ui/cookieBannerVisible", true),
+    sidebarCtaVisible: useStorage("ocr4all/store/ui/sidebar-cta-visible", true),
+    sidebarMinimized: useStorage("ocr4all/store/ui/sidebar-minimized", false),
+    cookieBannerVisible: useStorage("ocr4all/store/ui/cookie-banner-visible", true),
     tourSpeedDialVisible: false,
     repositoryDataViewLayout: useStorage(
-      "pinia/ui/repositoryDataViewLayout",
+      "ocr4all/store/ui/repository-dataview-layout",
       "grid",
     ),
+    language: useStorage("ocr4all/store/ui/language", "en"),
     breadcrumb: undefined,
   }),
   actions: {

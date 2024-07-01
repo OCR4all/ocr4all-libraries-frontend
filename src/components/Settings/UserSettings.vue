@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
-import {useAuthStore} from "@/stores/auth.store";
-
-const authStore = useAuthStore()
+import GeneralInformation from "@/components/Settings/GeneralInformation.vue";
+import UserInfoCard from "@/components/Settings/UserInfoCard.vue";
 
 const user = ref();
 await useCustomFetch(`/account`)
@@ -13,28 +12,19 @@ await useCustomFetch(`/account`)
     });
 </script>
 <template>
-  <h1 class="text-2xl font-bold text-black dark:text-white">
-    User Settings
-  </h1>
-  <div class="grid grid-cols-3">
-    <div class="col-1">
-        <div
-            class="group flex h-full flex-1 flex-col justify-center rounded-md border bg-white p-5 dark:border-surface-800 dark:bg-surface-900"
-        >
-          <div class="flex flex-col">
-            <div class="self-center">
-              <AvatarInitials :name="user.name" :admin="false" />
-            </div>
-            <div
-                class="truncate pt-8 text-center text-lg font-bold text-surface-900 group-hover:text-white dark:text-surface-100"
-            >
-              {{ user.name }}
-            </div>
-          </div>
-        </div>
-    </div>
-    <div class="col-2">
-
+  <div class="flex flex-col space-y-8">
+    <h1 class="text-2xl font-bold text-black dark:text-white">
+      User Settings
+    </h1>
+    <div class="grid grid-cols-3 gap-4 items-start">
+      <div class="col-span-3 lg:col-span-1 space-y-4">
+        <UserInfoCard />
+        <UserSettingsLanguageAndTime />
+      </div>
+      <div class="col-span-3 lg:col-span-2 space-y-4">
+        <GeneralInformation />
+        <UserPassword />
+      </div>
     </div>
   </div>
 </template>

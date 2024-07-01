@@ -20,7 +20,7 @@ const emit = defineEmits([
 
 <template>
   <div
-    class="baklava-toolbar !z-10 !rounded-none !border-b-2 !border-solid !border-surface-200 !bg-surface-50 dark:!border-zinc-950 dark:!bg-zinc-900"
+    class="baklava-toolbar overflow-x-auto !z-10 !rounded-none !border-b-2 !border-solid !border-surface-200 !bg-surface-50 dark:!border-zinc-950 dark:!bg-zinc-900"
   >
     <div class="flex justify-between">
       <div class="flex space-x-4">

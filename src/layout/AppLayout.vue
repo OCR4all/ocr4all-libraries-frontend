@@ -28,7 +28,7 @@ function toggleSidebarMobile() {
       >
         <AppTopbar @toggle-sidebar-mobile="toggleSidebarMobile" />
         <div
-          class="lg:h-[calc(100vh-5rem)] w-full overflow-y-auto rounded-b-2xl"
+          class="h-full lg:h-[calc(100vh-5rem)] w-full overflow-y-auto rounded-b-2xl"
           :class="{ 'p-8': padded }"
         >
           <transition name="fade-enter-from">

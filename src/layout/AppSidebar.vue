@@ -104,7 +104,6 @@ const maximized = computed(() => !uiStore.sidebarMinimized);
         >
         </div>
     </div>
-
       <div class="flex justify-center">
         <router-link
             v-tooltip="{

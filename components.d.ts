@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ActionButton: typeof import('./src/components/ui/ActionButton.vue')['default']
+    AppearanceSettings: typeof import('./src/components/Settings/AppearanceSettings.vue')['default']
     AvailableWorkflows: typeof import('./src/components/Dashboard/AvailableWorkflows.vue')['default']
     AvatarInitials: typeof import('./src/components/ui/AvatarInitials.vue')['default']
     BreadcrumbNavigation: typeof import('./src/components/Layout/Breadcrumb/BreadcrumbNavigation.vue')['default']
@@ -40,6 +41,7 @@ declare module 'vue' {
     EditUserDialog: (typeof import("./src/components/Admin/UserManagement/Dialog/EditUserDialog/EditUserDialog.vue"))["default"]
     EditUserDialogForm: typeof import('./src/components/Admin/UserManagement/Dialog/EditUserDialog/EditUserDialogForm.vue')['default']
     FolioCard: typeof import('./src/components/Repository/Images/Folio/FolioCard.vue')['default']
+    GeneralInformation: typeof import('./src/components/Settings/GeneralInformation.vue')['default']
     GroupManagement: typeof import('./src/components/Admin/GroupManagement/GroupManagement.vue')['default']
     IconCard: typeof import('./src/components/Dashboard/IconCard.vue')['default']
     ImageCard: typeof import('./src/components/Project/Project/ImageCard.vue')['default']
@@ -86,9 +88,13 @@ declare module 'vue' {
     Test: (typeof import("./src/components/Admin/Test.vue"))["default"]
     ThemeSkeleton: typeof import('./src/components/Settings/ThemeSkeleton.vue')['default']
     UserDropdown: typeof import('./src/components/Layout/Topbar/UserDropdown.vue')['default']
+    UserInfoCard: typeof import('./src/components/Settings/UserInfoCard.vue')['default']
     UserManagement: (typeof import("./src/components/Admin/UserManagement/UserManagement.vue"))["default"]
     UserManagementView: typeof import('./src/components/Admin/UserManagement/UserManagementView.vue')['default']
+    UserPassword: typeof import('./src/components/Settings/UserPassword.vue')['default']
     UserSettings: typeof import('./src/components/Settings/UserSettings.vue')['default']
+    UserSettingsLanguage: typeof import('./src/components/Settings/UserSettingsLanguage.vue')['default']
+    UserSettingsLanguageAndTime: typeof import('./src/components/Settings/UserSettingsLanguageAndTime.vue')['default']
     WideCard: typeof import('./src/components/Dashboard/WideCard.vue')['default']
     WorkflowOverview: typeof import('./src/components/Workflows/WorkflowOverview.vue')['default']
   }
