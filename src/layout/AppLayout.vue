@@ -32,7 +32,6 @@ function toggleSidebarMobile() {
           class="h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)] w-full overflow-y-auto rounded-b-2xl"
           :class="{ 'p-8': padded }"
         >
-          <BreadcrumbNavigation />
           <slot />
         </div>
       </main>

@@ -49,18 +49,7 @@ const originalWorkflowName: Ref<string | undefined> = ref();
 const workflowMetadata: Ref<IWorkflowMetadata> = ref();
 
 const menu = ref();
-const items = ref([
-  {
-    label: "Edit",
-    icon: "pi pi-pencil",
-    command: () => {},
-  },
-  {
-    label: "Delete",
-    icon: "pi pi-trash",
-    command: () => {},
-  },
-]);
+const items = ref();
 
 const toggle = (event, data) => {
   items.value = [
@@ -70,12 +59,16 @@ const toggle = (event, data) => {
         {
           label: "Edit",
           icon: "pi pi-pencil",
-          command: () => {},
+          command: () => {
+            openEditDialog(data)
+          },
         },
         {
           label: "Delete",
           icon: "pi pi-trash",
-          command: () => {},
+          command: () => {
+            openDeleteDialog(data)
+          },
         },
       ],
     },
@@ -101,7 +94,7 @@ async function refetch() {
     });
 }
 
-function openDeleteDialog() {
+function openDeleteDialog(data) {
   dialog.open(deleteWorkflowDialog, {
     props: {
       header: "Delete Workflow",
@@ -116,7 +109,7 @@ function openDeleteDialog() {
   });
 }
 
-function openEditDialog() {
+function openEditDialog(data) {
   dialog.open(editWorkflowDialog, {
     props: {
       header: "Edit Workflow",
@@ -187,28 +180,26 @@ const rowClass = (data) => {
 refetch();
 </script>
 <template>
-  <Dock v-show="selectedWorkflow" :model="items" position="bottom">
-    <template #item="{ item }">
-      <a v-tooltip.top="item.label" href="#" class="p-dock-item-link hover:cursor-pointer hover:scale-125" @click="onDockItemClick($event, item)">
-        <i class :alt="item.label" :class="item.icon" style="width: 100%" />
-      </a>
-    </template>
-  </Dock>
-
   <Toast />
   <Menu ref="menu" :model="items" :popup="true">
     <template #item="{ item, props }">
       <a
-        v-ripple
-        class="flex items-center"
-        :class="{
+          v-ripple
+          class="flex items-center group"
+          :class="{
           'rounded-md hover:bg-red-500 hover:text-white':
             item.label === 'Delete',
         }"
-        v-bind="props.action"
+          v-bind="props.action"
       >
-        <span :class="item.icon" />
-        <span>{{ item.label }}</span>
+        <span
+            :class="[item.icon, { 'text-red-500 group-hover:text-white':
+            item.label === 'Delete'}]" />
+        <span
+            :class="{
+          'text-red-500 group-hover:text-white':
+            item.label === 'Delete',
+        }">{{ item.label }}</span>
       </a>
     </template>
   </Menu>
@@ -235,9 +226,9 @@ refetch();
       :globalFilterFields="['label', 'description']"
       sortField="date"
       :sortOrder="-1"
-      v-model:selection="selectedWorkflow"
-      selectionMode="single"
+      :row-class="rowClass"
       :row-hover="true"
+      @row-click="loadWorkflow($event.data)"
       paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :rows-per-page-options="[10, 25, 50]"
       responsive-layout="scroll"
