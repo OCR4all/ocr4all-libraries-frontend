@@ -41,9 +41,7 @@ async function updateGeneralInformation(values, { setErrors }) {
       id="form"
       v-model="data"
       type="form"
-      :submit-attrs="{
-      inputClass: 'p-button p-component',
-    }"
+      submit-label="Save all"
       @submit="updateGeneralInformation"
     >
       <FormKitSchema :schema="schema" :data="data" />

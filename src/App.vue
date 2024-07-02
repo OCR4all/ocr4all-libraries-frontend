@@ -6,6 +6,10 @@ const uiStore = useUiStore();
 
 <template>
   <Suspense>
-    <router-view />
+    <router-view v-slot="{ Component }">
+      <transition>
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </Suspense>
 </template>

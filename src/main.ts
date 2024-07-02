@@ -34,6 +34,7 @@ import CascadeSelect from "primevue/cascadeselect";
 import Chart from "primevue/chart";
 import Checkbox from "primevue/checkbox";
 import Chip from "primevue/chip";
+import Chips from "primevue/chips";
 import ColorPicker from "primevue/colorpicker";
 import Column from "primevue/column";
 import ColumnGroup from "primevue/columngroup";
@@ -175,6 +176,7 @@ app.component("CascadeSelect", CascadeSelect);
 app.component("Chart", Chart);
 app.component("Checkbox", Checkbox);
 app.component("Chip", Chip);
+app.component("Chips", Chips);
 app.component("ColorPicker", ColorPicker);
 app.component("Column", Column);
 app.component("ColumnGroup", ColumnGroup);
@@ -255,18 +257,52 @@ app.component("VirtualScroller", VirtualScroller);
 const CustomPreset = definePreset(Aura, {
   semantic: {
       primary: {
-        50: "{indigo.50}",
-        100: "{indigo.100}",
-        200: "{indigo.200}",
-        300: "{indigo.300}",
-        400: "{indigo.400}",
-        500: "{indigo.500}",
-        600: "{indigo.600}",
-        700: "{indigo.700}",
-        800: "{indigo.800}",
-        900: "{indigo.900}",
-        950: "{indigo.950}",
+        50: "{main.50}",
+        100: "{main.100}",
+        200: "{main.200}",
+        300: "{main.300}",
+        400: "{main.400}",
+        500: "{main.500}",
+        600: "{main.600}",
+        700: "{main.700}",
+        800: "{main.800}",
+        900: "{main.900}",
+        950: "{main.950}",
       },
+      colorScheme: {
+        light: {
+          surface: {
+            0: '#ffffff',
+            50: '{bg.50}',
+            100: '{bg.100}',
+            200: '{bg.200}',
+            300: '{bg.300}',
+            400: '{bg.400}',
+            500: '{bg.500}',
+            600: '{bg.600}',
+            700: '{bg.700}',
+            800: '{bg.800}',
+            900: '{bg.900}',
+            950: '{bg.950}'
+          }
+        },
+        dark: {
+          surface: {
+            0: '#ffffff',
+            50: '{bg.50}',
+            100: '{bg.100}',
+            200: '{bg.200}',
+            300: '{bg.300}',
+            400: '{bg.400}',
+            500: '{bg.500}',
+            600: '{bg.600}',
+            700: '{bg.700}',
+            800: '{bg.800}',
+            900: '{bg.900}',
+            950: '{bg.950}'
+          }
+        }
+      }
   },
 });
 

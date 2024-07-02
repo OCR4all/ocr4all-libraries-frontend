@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import TabView from "primevue/tabview";
-import TabPanel from "primevue/tabpanel";
 import Toast from "primevue/toast";
 
 import Images from "@/components/Project/Project/ProjectImages.vue";
 import Information from "@/components/Project/Project/ProjectInformation.vue";
 import Results from "@/components/Project/Project/ProjectSandboxes.vue";
 import { useUiStore } from "@/stores/ui.store";
+import SelectButton from "primevue/selectbutton";
+
+const category = ref("Results")
+const options = ref(["Results", "Images", "Information"])
 
 const router = useRouter();
 const project: string[] = router.currentRoute.value.params.project;
@@ -32,15 +34,20 @@ useHead({
 
 <template>
   <Toast />
-  <TabView>
-    <TabPanel header="Results">
-      <Results />
-    </TabPanel>
-    <TabPanel header="Images">
-      <Images />
-    </TabPanel>
-    <TabPanel header="Information">
-      <Information />
-    </TabPanel>
-  </TabView>
+  <div class="flex flex-col gap-y-6">
+    <div class="flex justify-center">
+      <SelectButton
+        v-model="category"
+        :options="options"
+        aria-labelledby="basic"
+      />
+    </div>
+    <div v-auto-animate>
+      <ComponentContainer>
+        <Results v-if="category === 'Results'" />
+        <Images v-else-if="category === 'Images'" />
+        <Information v-else-if="category === 'Information'" />
+      </ComponentContainer>
+    </div>
+  </div>
 </template>

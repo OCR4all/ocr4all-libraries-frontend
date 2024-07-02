@@ -2,7 +2,7 @@
 import SelectButton from "primevue/selectbutton";
 import DatasetView from "@/components/Repository/Datasets/DatasetView.vue";
 
-const category = ref("Images");
+const category = useLocalStorage("ocr4all/frontend/repository/category", "Images");
 const options = ref(["Images", "Datasets", "Models", "Workflows"]);
 </script>
 <template>

@@ -28,16 +28,16 @@ const routes = [
           import("@/components/Repository/RepositoryOverview.vue"),
       },
       {
-        path: "upload",
-        name: "Upload",
-        component: () =>
-          import("@/components/Repository/Images/ImageUpload.vue"),
-      },
-      {
         path: "container",
         name: "Container",
         component: () =>
           import("@/components/Repository/Images/Container/ContainerView.vue"),
+      },
+      {
+        path: "dataset",
+        name: "Dataset",
+        component: () =>
+          import("@/components/Repository/Datasets/CollectionSet.vue"),
       },
     ],
   },

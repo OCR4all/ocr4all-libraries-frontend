@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useToast } from "primevue/usetoast";
+import { getColor, getPalette } from "@/utils/palette";
 import { appearance } from "@/components/Settings/Schema/appearance";
+import { updatePrimaryPalette } from '@primevue/themes';
 
 const toast = useToast();
 
@@ -8,13 +10,27 @@ const schema = appearance
 const data = ref()
 
 function updateAppearance(values, { setErrors }) {
+  const primary = getColor([values.primary.r, values.primary.g, values.primary.b])
+  const palette = getPalette(primary)
   try{
-    console.log()
+    updatePrimaryPalette({
+      50: palette[0],
+      100: palette[1],
+      200: palette[2],
+      300: palette[3],
+      400: palette[4],
+      500: palette[5],
+      600: palette[6],
+      700: palette[7],
+      800: palette[8],
+      900: palette[9],
+      950: palette[10]
+    });
   }catch(error){
     toast.add({ severity: 'error', summary: 'Error', detail: error, life: 3000 });
   }
-
 }
+
 </script>
 <template>
   <div

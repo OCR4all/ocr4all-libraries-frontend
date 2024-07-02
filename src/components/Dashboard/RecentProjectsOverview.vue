@@ -25,7 +25,7 @@ async function refetch() {
       setTimeout(function () {
         isRefetching.value = response.isFetching.value;
       }, 500);
-      projects.value = response.data.value;
+      projects.value = response.data.value.splice(0, 5);
     });
 }
 
@@ -40,7 +40,6 @@ refetch();
   <div>
     <DataTable
       :value="projects"
-      :paginator="true"
       :rows="5"
       :loading="initialLoading"
       @row-click="router.push(`/project/${$event.data.id}/view`)"
@@ -63,23 +62,12 @@ refetch();
           </div>
           <div class="flex justify-end">
             <button
-              v-tooltip="'Refresh'"
-              :disabled="isRefetching === true"
-              @click="refetch"
-            >
-              <ArrowPathIcon
-                :class="{ 'animate-spin': isRefetching }"
-                class="mr-2 h-6 w-6 text-surface-500 hover:text-black dark:text-surface-200 dark:hover:text-white"
-              />
-            </button>
-            <button
-              v-tooltip="'Open project overview'"
               @click="router.push('/project/overview')"
             >
-              <ArrowUpOnSquareIcon
-                data-tooltip-target="tooltip-project-overview"
-                class="h-6 w-6 text-surface-500 hover:cursor-pointer hover:text-black dark:text-surface-200 dark:hover:text-white"
-              />
+              <div class="flex text-surface-600 hover:text-surface-800 dark:text-surface-400 hover:dark:text-surface-100">
+                <p>View all</p>
+                <i class="pi pi-chevron-right pt-1"></i>
+              </div>
             </button>
           </div>
         </div>
@@ -89,7 +77,6 @@ refetch();
         :header="
           $t('pages.dashboard.components.recent-projects.columns.project')
         "
-        :sortable="true"
         >></Column
       >
       <Column
@@ -97,7 +84,6 @@ refetch();
         :header="
           $t('pages.dashboard.components.recent-projects.columns.last-updated')
         "
-        :sortable="true"
       >
         <template #body="slotProps">
           <UseTimeAgo

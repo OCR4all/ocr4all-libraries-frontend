@@ -163,11 +163,13 @@ refetch();
     <Column field="state" header="State" sortable></Column>
     <Column field="users" header="Users" sortable>
       <template #body="{ data }">
-        <Tag
-          v-for="user in data.users"
-          :key="user.login"
-          :value="user.login"
-        ></Tag>
+        <div class="flex space-x-1">
+          <Tag
+            v-for="user in data.users"
+            :key="user.login"
+            :value="user.login"
+          ></Tag>
+        </div>
       </template>
     </Column>
     <Column :exportable="false" style="min-width: 8rem">

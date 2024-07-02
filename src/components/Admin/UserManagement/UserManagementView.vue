@@ -189,12 +189,14 @@ refetch();
       style="min-width: 12rem"
     >
       <template #body="slotProps">
-        <Tag
-          v-for="group in slotProps.data.groups"
-          :key="group.label"
-          :value="group.name"
-          severity="info"
-        />
+        <div class="flex space-x-1">
+          <Tag
+            v-for="group in slotProps.data.groups"
+            :key="group.label"
+            :value="group.name"
+            severity="info"
+          />
+        </div>
       </template>
     </Column>
     <Column

@@ -59,7 +59,7 @@
       },
       "components": {
         "recent-projects": {
-          "header": "Your Projects",
+          "header": "Recent Projects",
           "empty": "No projects found.",
           "columns": {
             "project": "Project",

@@ -29,12 +29,11 @@ function toggleSidebarMobile() {
       >
         <AppTopbar @toggle-sidebar-mobile="toggleSidebarMobile" />
         <div
-          class="h-full lg:h-[calc(100vh-5rem)] w-full overflow-y-auto rounded-b-2xl"
+          class="h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)] w-full overflow-y-auto rounded-b-2xl"
           :class="{ 'p-8': padded }"
         >
-          <transition name="fade-enter-from">
-            <slot />
-          </transition>
+          <BreadcrumbNavigation />
+          <slot />
         </div>
       </main>
     </div>
@@ -42,13 +41,5 @@ function toggleSidebarMobile() {
   <CookieBanner />
 </template>
 <style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
-}
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
 </style>
