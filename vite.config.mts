@@ -29,6 +29,14 @@ export default defineConfig({
     strictPort: true,
     port: 3334,
   },
+  optimizeDeps: {
+    esbuildOptions: {
+      target: 'esnext'
+    }
+  },
+  build: {
+    target: 'esnext'
+  },
   plugins: [
     VueDevTools(),
     vue(),
