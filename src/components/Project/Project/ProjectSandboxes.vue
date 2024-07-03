@@ -176,11 +176,11 @@ const rowClass = (data) => {
     :global-filter-fields="['name', 'description', 'state']"
   >
     <template #header>
-      <div class="flex justify-between">
-        <h2 class="my-4 text-xl">
+      <div class="grid grid-cols-1 sm:grid-cols-2 items-center justify-items-start sm:justify-items-between gap-2">
+        <h4 class="m-0 font-bold">
           {{ $t("pages.projects.sandbox.results.table.header") }}
-        </h2>
-        <div class="space-x-2">
+        </h4>
+        <div class="flex space-x-1 justify-self-start sm:justify-self-end">
           <button v-tooltip="'Refresh'" @click="refetch">
             <ArrowPathIcon
               :disabled="isRefetching"

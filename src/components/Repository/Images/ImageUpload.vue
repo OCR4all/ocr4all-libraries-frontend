@@ -4,6 +4,7 @@ import { useConfigStore } from "@/stores/config.store";
 
 import FileUpload, { FileUploadUploaderEvent } from "primevue/fileupload";
 import { useToast } from "primevue/usetoast";
+import { RemovableRef } from "@vueuse/core";
 const toast = useToast();
 
 import axios from "axios";
@@ -11,7 +12,7 @@ import axios from "axios";
 const auth = useAuthStore();
 const config = useConfigStore();
 
-const fileUpload: Ref<FileUpload | undefined> = ref();
+const fileUpload: RemovableRef<FileUpload> = ref();
 const progress: Ref<number> = ref(0);
 
 const uploader = async function customUploader(event: FileUploadUploaderEvent) {

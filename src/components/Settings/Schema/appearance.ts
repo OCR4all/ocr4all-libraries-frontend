@@ -1,21 +1,23 @@
+const isDark = useDark()
+
 export const appearance = ref([
     {
         "$formkit": "primeSelectButton",
         "label": "Theme",
-        "name": "selectButton",
+        "name": "darkMode",
         "options": [
             {
                 "label": "Light",
-                "value": "light"
+                "value": false
             },
             {
                 "label": "Dark",
-                "value": "dark"
+                "value": true
             },
         ],
         "optionLabel": "label",
         "optionValue": "value",
-        "value": "light",
+        "value": isDark,
         "unselectable": false
     },
     {

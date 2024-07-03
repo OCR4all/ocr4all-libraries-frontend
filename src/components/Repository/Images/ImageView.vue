@@ -356,11 +356,11 @@ const rowClass = (data) => {
             @row-click="openContainer($event.data.id, $event.data.name)"
           >
             <template #header>
-              <div class="grid grid-cols-2 justify-between gap-2">
-                <h4 class="m-0">
+              <div class="grid grid-cols-1 sm:grid-cols-2 items-center justify-items-start sm:justify-items-between gap-2">
+                <h4 class="m-0 font-bold">
                   {{ $t("pages.repository.overview.dataview.list.header") }}
                 </h4>
-                <div class="flex justify-end">
+                <div class="flex justify-self-start sm:justify-self-end">
                   <IconField>
                     <InputIcon>
                       <i class="pi pi-search" />
@@ -443,6 +443,7 @@ const rowClass = (data) => {
                     type="button"
                     icon="pi pi-ellipsis-v"
                     text
+                    severity="secondary"
                     @click="toggle($event, data)"
                   />
                 </div>

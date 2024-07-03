@@ -124,18 +124,18 @@ refetch();
         :rows-per-page-options="[10, 25, 50]"
       >
         <template #header>
-          <div class="flex justify-between">
-            <h2 class="my-4 text-xl">
+          <div class="grid grid-cols-1 sm:grid-cols-2 items-center justify-items-start sm:justify-items-between gap-2">
+            <h4 class="m-0 font-bold">
               {{ $t("pages.projects.overview.table.header") }}
-            </h2>
-            <span class="p-input-icon-left ml-10">
-              <InputText
-                v-model="filters['global'].value"
-                :placeholder="
-                  $t('pages.projects.overview.table.search.placeholder')
-                "
-              />
-            </span>
+            </h4>
+            <div class="flex justify-self-start sm:justify-self-end">
+              <IconField>
+                <InputIcon>
+                  <i class="pi pi-search" />
+                </InputIcon>
+                <InputText v-model="filters['global'].value" :placeholder="$t('pages.projects.overview.table.search.placeholder')" />
+              </IconField>
+            </div>
           </div>
         </template>
         <template #empty>

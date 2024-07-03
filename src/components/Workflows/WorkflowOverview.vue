@@ -294,6 +294,7 @@ refetch();
               type="button"
               icon="pi pi-ellipsis-v"
               text
+              severity="secondary"
               @click="toggle($event, data)"
             />
           </div>

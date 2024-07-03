@@ -14,7 +14,7 @@ const options = ref(["Images", "Datasets", "Models", "Workflows"]);
         aria-labelledby="basic"
       />
     </div>
-    <div v-auto-animate>
+    <div>
       <ImageView v-if="category === 'Images'" />
       <DatasetView v-else-if="category === 'Datasets'" />
     </div>

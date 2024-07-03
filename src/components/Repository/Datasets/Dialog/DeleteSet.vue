@@ -3,13 +3,16 @@ const dialogRef = inject("dialogRef");
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
 const data = ref();
+const collection = ref()
 
 onMounted(() => {
-  data.value = dialogRef.value.data;
+  data.value = dialogRef.value.data.set
+  collection.value = dialogRef.value.data.collection
 });
 
 function deleteDataset() {
-  useCustomFetch(`/data/collection/remove?id=${data.value.id}`)
+  console.log(`/data/collection/remove/entity/${collection.value}?id=${data.value.id}`)
+  useCustomFetch(`/data/collection/set/remove/entity/${collection.value}?id=${data.value.id}`)
     .get()
     .then((response) => {
       if (response.error.value) {
@@ -23,7 +26,7 @@ function deleteDataset() {
 <template>
   <div class="m-4">
     <p class="text-lg text-surface-950 dark:text-surface-0">
-      Do you really want to delete this dataset?
+      Do you really want to delete this set?
     </p>
   </div>
   <ActionButton rounded size="large" @click="dialogRef.close()">

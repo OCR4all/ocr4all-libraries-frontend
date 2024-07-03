@@ -135,6 +135,7 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
       console.log(error);
     });
 };
+
 const selection: Ref<string[]> = ref([]);
 function updateSelection(folio: string, add: boolean) {
   if (!add && selection.value.indexOf(folio) != -1) {

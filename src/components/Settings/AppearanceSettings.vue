@@ -5,9 +5,12 @@ import { appearance } from "@/components/Settings/Schema/appearance";
 import { updatePrimaryPalette } from '@primevue/themes';
 
 const toast = useToast();
+const isDark = useDark()
 
 const schema = appearance
-const data = ref()
+const data = ref({
+  darkMode: useDark()
+})
 
 function updateAppearance(values, { setErrors }) {
   const primary = getColor([values.primary.r, values.primary.g, values.primary.b])
@@ -26,6 +29,7 @@ function updateAppearance(values, { setErrors }) {
       900: palette[9],
       950: palette[10]
     });
+    isDark.value = values.darkMode
   }catch(error){
     toast.add({ severity: 'error', summary: 'Error', detail: error, life: 3000 });
   }
