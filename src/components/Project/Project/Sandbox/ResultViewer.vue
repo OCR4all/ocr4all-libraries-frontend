@@ -384,7 +384,7 @@ useHead({
             Export
           </button>
         </div>
-        <Accordion>
+        <Accordion expandIcon="pi pi-plus" collapseIcon="pi pi-minus">
           <AccordionPanel value="information">
             <AccordionHeader>Processor Information</AccordionHeader>
             <AccordionContent>
