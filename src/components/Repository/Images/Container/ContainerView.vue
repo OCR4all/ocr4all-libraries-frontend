@@ -87,7 +87,7 @@ async function refresh() {
 
   for (const folio of folios.value) {
     useCustomFetch(
-      `/repository/container/folio/derivative/best/${container}?id=${folio.id}`,
+      `/repository/container/folio/derivative/thumbnail/${container}?id=${folio.id}`,
     )
       .get()
       .blob()

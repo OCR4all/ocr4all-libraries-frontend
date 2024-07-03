@@ -5,13 +5,8 @@ import Button from "primevue/button";
 import Menu from "primevue/menu";
 import Checkbox from "primevue/checkbox";
 import Image from "primevue/image";
-import Textarea from "primevue/textarea";
-import InlineMessage from "primevue/inlinemessage";
-import InputText from "primevue/inputtext";
 import Dialog from "primevue/dialog";
-import Chips from "primevue/chips";
 import Toast from "primevue/toast";
-import Konva from "konva";
 
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
@@ -65,6 +60,10 @@ const actionMenuItems = ref([
     ],
   },
 ]);
+
+async function loadImage(){
+
+}
 
 function downloadFolio() {
   useCustomFetch(
@@ -198,7 +197,10 @@ defineExpose({
       <div
         class="mx-4 mt-4 h-fit w-fit self-center justify-self-center text-surface-700"
       >
-        <Image v-if="src" alt="Image" preview>
+        <Image
+          v-if="src"
+          @show="loadImage"
+          alt="Image" preview>
           <template #indicatoricon>
             <i class="pi pi-search"></i>
           </template>
