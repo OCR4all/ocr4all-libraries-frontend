@@ -106,13 +106,13 @@ const routes = [
   {
     path: "/admin",
     name: "Admin",
-    redirect: "/admin/dashboard",
+    redirect: "/admin/overview",
     component: () => import("@/pages/AdminPage.vue"),
     children: [
       {
-        path: "dashboard",
-        name: "Admin Dashboard",
-        component: () => import("@/components/Admin/Dashboard.vue"),
+        path: "overview",
+        name: "Admin Overview",
+        component: () => import("@/components/Admin/Overview.vue"),
       },
       {
         path: "users",

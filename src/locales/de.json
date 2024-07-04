@@ -12,7 +12,7 @@
           "training": "Training"
         },
         "admin": {
-          "dashboard": "Administration",
+          "overview": "Übersicht",
           "users": "Benutzer",
           "groups": "Gruppen",
           "providers": "Provider",

@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
-import { useDialog } from "primevue/usedialog";
 import { useUiStore } from "@/stores/ui.store";
-
-const dialog = useDialog();
 
 const uiStore = useUiStore();
 uiStore.breadcrumb = [
@@ -11,7 +8,7 @@ uiStore.breadcrumb = [
     label: "Administration",
   },
   {
-    label: "Dashboard",
+    label: "Overview",
   },
 ];
 
@@ -50,33 +47,40 @@ await useCustomFetch("/administration/provider/overview")
   });
 </script>
 <template>
-  <div class="grid grid-cols-1 grid-rows-1 gap-8 xl:grid-cols-3">
-    <StatsCard>
-      <template #title> Users </template>
-      <template #value>
-        <div v-if="users">
-          {{ users }}
-        </div>
-        <div v-else>
-          <Skeleton width="1rem" height="1rem" />
-        </div>
-      </template>
-    </StatsCard>
-    <StatsCard>
-      <template #title> Groups </template>
-      <template #value>
-        <div v-if="groups">
-          {{ groups }}
-        </div>
-      </template>
-    </StatsCard>
-    <StatsCard>
-      <template #title> Providers </template>
-      <template #value>
-        <div>
-          {{ providers }}
-        </div>
-      </template>
-    </StatsCard>
+  <div class="flex flex-col gap-y-2 mb-4">
+    <h1 class="text-2xl text-surface-900 dark:text-surface-0 font-bold">Stats</h1>
+    <div class="grid grid-cols-1 grid-rows-1 gap-8 sm:grid-cols-3">
+      <StatsCard>
+        <template #title> Users </template>
+        <template #value>
+          <div v-if="users">
+            {{ users }}
+          </div>
+          <div v-else>
+            <Skeleton width="1rem" height="1rem" />
+          </div>
+        </template>
+      </StatsCard>
+      <StatsCard>
+        <template #title> Groups </template>
+        <template #value>
+          <div v-if="groups">
+            {{ groups }}
+          </div>
+        </template>
+      </StatsCard>
+      <StatsCard>
+        <template #title> Providers </template>
+        <template #value>
+          <div>
+            {{ providers }}
+          </div>
+        </template>
+      </StatsCard>
+    </div>
+  </div>
+  <div class="flex flex-col gap-y-2">
+    <h1 class="text-2xl text-surface-900 dark:text-surface-0 font-bold">Information</h1>
+    <InstanceOverview />
   </div>
 </template>

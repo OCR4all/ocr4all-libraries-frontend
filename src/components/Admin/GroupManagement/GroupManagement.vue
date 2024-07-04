@@ -131,64 +131,66 @@ refetch();
       </div>
     </template>
   </Toolbar>
-  <DataTable
-    ref="dt"
-    scrollable
-    :value="groups"
-    v-model:selection="selectedGroups"
-    dataKey="label"
-    :paginator="true"
-    :rows="10"
-    :filters="filters"
-    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-    :rowsPerPageOptions="[5, 10, 25]"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
-  >
-    <template #header>
-      <div class="align-items-center flex flex-wrap justify-between gap-2">
-        <span class="text-xl font-bold"> Group management </span>
-        <InputText
-          v-model="filters['global'].value"
-          :placeholder="$t('admin.user-management.table.search-placeholder')"
-        />
-      </div>
-    </template>
-    <Column
-      selectionMode="multiple"
-      style="width: 3rem"
-      :exportable="false"
-    ></Column>
-    <Column field="label" header="Label" sortable></Column>
-    <Column field="name" header="Name" sortable></Column>
-    <Column field="state" header="State" sortable></Column>
-    <Column field="users" header="Users" sortable>
-      <template #body="{ data }">
-        <div class="flex space-x-1">
-          <Tag
-            v-for="user in data.users"
-            :key="user.login"
-            :value="user.login"
-          ></Tag>
+  <ComponentContainer>
+    <DataTable
+      ref="dt"
+      scrollable
+      :value="groups"
+      v-model:selection="selectedGroups"
+      dataKey="label"
+      :paginator="true"
+      :rows="10"
+      :filters="filters"
+      paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+      :rowsPerPageOptions="[5, 10, 25]"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
+    >
+      <template #header>
+        <div class="align-items-center flex flex-wrap justify-between gap-2">
+          <span class="text-xl font-bold"> Group management </span>
+          <InputText
+            v-model="filters['global'].value"
+            :placeholder="$t('admin.user-management.table.search-placeholder')"
+          />
         </div>
       </template>
-    </Column>
-    <Column :exportable="false" style="min-width: 8rem">
-      <template #body="slotProps">
-        <Button
-          icon="pi pi-pencil"
-          text
-          rounded
-          class="mr-2"
-          @click="openEditGroupDialog(slotProps.data)"
-        />
-        <Button
-          icon="pi pi-trash"
-          text
-          rounded
-          severity="danger"
-          @click="openDeleteGroupDialog([slotProps.data])"
-        />
-      </template>
-    </Column>
-  </DataTable>
+      <Column
+        selectionMode="multiple"
+        style="width: 3rem"
+        :exportable="false"
+      ></Column>
+      <Column field="label" header="Label" sortable></Column>
+      <Column field="name" header="Name" sortable></Column>
+      <Column field="state" header="State" sortable></Column>
+      <Column field="users" header="Users" sortable>
+        <template #body="{ data }">
+          <div class="flex space-x-1">
+            <Tag
+              v-for="user in data.users"
+              :key="user.login"
+              :value="user.login"
+            ></Tag>
+          </div>
+        </template>
+      </Column>
+      <Column :exportable="false" style="min-width: 8rem">
+        <template #body="slotProps">
+          <Button
+            icon="pi pi-pencil"
+            text
+            rounded
+            class="mr-2"
+            @click="openEditGroupDialog(slotProps.data)"
+          />
+          <Button
+            icon="pi pi-trash"
+            text
+            rounded
+            severity="danger"
+            @click="openDeleteGroupDialog([slotProps.data])"
+          />
+        </template>
+      </Column>
+    </DataTable>
+  </ComponentContainer>
 </template>

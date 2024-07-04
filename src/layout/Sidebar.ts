@@ -9,6 +9,7 @@ import {
   UsersIcon,
   UserGroupIcon,
   ViewfinderCircleIcon,
+  InformationCircleIcon,
   CpuChipIcon,
 } from "@heroicons/vue/24/outline";
 import { FunctionalComponent, HTMLAttributes, VNodeProps } from "vue";
@@ -59,9 +60,9 @@ export const mainNavigation: navigationEntry[] = [
 
 export const adminNavigation: navigationEntry[] = [
   {
-    to: "/admin/dashboard",
-    label: "nav.sidebar.links.admin.dashboard",
-    icon: HomeIcon,
+    to: "/admin/overview",
+    label: "nav.sidebar.links.admin.overview",
+    icon: InformationCircleIcon,
   },
   {
     to: "/admin/users",
