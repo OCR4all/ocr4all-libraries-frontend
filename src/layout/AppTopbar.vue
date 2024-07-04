@@ -33,11 +33,11 @@ defineEmits(["toggle-sidebar-mobile"]);
     <div class="flex">
       <BreadcrumbNavigation />
     </div>
-    <div class="flex">
+    <div class="flex gap-x-0.5">
       <InstanceTag />
       <NotificationDropdown />
       <DarkModeToggle />
-      <div v-show="authStore.user">
+      <div class="self-center" v-show="authStore.user">
         <UserDropdown />
       </div>
     </div>

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-
-import { useAuthStore } from "@/stores/auth.store";
 import {useCustomFetch} from "@/composables/useCustomFetch";
 
 const user = ref()
@@ -10,16 +8,17 @@ await useCustomFetch(`/account`)
     .then((response) => {
       user.value = response.data.value;
     });
-
 </script>
 <template>
   <div
     class="flex flex-col h-full rounded-md border bg-white p-5 dark:border-surface-800 dark:bg-surface-900"
   >
-    <AvatarInitials :name="user.name" :admin="true" />
-    <div>
-      <p>{{ user.login }}</p>
-      <p class="font-bold">{{ user.name }}</p>
+    <div class="flex items-center gap-4">
+      <AvatarInitials :name="user.name" :admin="true" size="xl" />
+      <div class="font-medium dark:text-white">
+        <div class="font-bold">{{ user.login }}</div>
+        <div class="text-sm text-gray-500 dark:text-gray-400">{{ user.name }}</div>
+      </div>
     </div>
   </div>
 </template>

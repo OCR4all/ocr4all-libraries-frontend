@@ -9,11 +9,11 @@ const toggle = (event: Event) => {
 };
 </script>
 <template>
-  <div class="dark-toggle-container mx-2 flex text-sm">
+  <div class="flex group px-2 text-sm self-align-middle hover:bg-surface-200/50 dark:hover:bg-surface-800/50 hover:rounded-md">
     <button class="text-center" @click="toggle">
       <BellIcon
         aria-hidden="true"
-        class="h-6 w-6 flex-shrink-0 text-surface-500 transition duration-75 group-hover:text-surface-900 dark:text-surface-400 dark:group-hover:text-white"
+        class="h-6 w-6 flex-shrink-0 text-surface-500 transition duration-75 group-hover:text-surface-700 dark:text-surface-400 dark:group-hover:text-white"
       />
     </button>
     <Popover ref="notificationPanel">

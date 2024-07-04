@@ -2,66 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  font-family: "Inter var", sans-serif;
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  font-variation-settings: normal;
-  --font-family: "Inter var", sans-serif;
-  --font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+@layer base{
+  :root {
+    font-family: "Inter var", sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    font-variation-settings: normal;
+    --font-family: "Inter var", sans-serif;
+    --font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 
-  --main-0: 255 255 255;
-  --main-50: 238 242 255;
-  --main-100: 225 232 254;
-  --main-200: 200 212 253;
-  --main-300: 167 183 250;
-  --main-400: 131 145 246;
-  --main-500: 102 108 238;
-  --main-600: 78 73 226;
-  --main-700: 53 49 157;
-  --main-800: 36 33 107;
-  --main-900: 30 28 74;
-  --main-950: 23 21 55;
+    --main-0: 255 255 255;
+    --main-50: 238 242 255;
+    --main-100: 225 232 254;
+    --main-200: 200 212 253;
+    --main-300: 167 183 250;
+    --main-400: 131 145 246;
+    --main-500: 102 108 238;
+    --main-600: 78 73 226;
+    --main-700: 53 49 157;
+    --main-800: 36 33 107;
+    --main-900: 30 28 74;
+    --main-950: 23 21 55;
 
-  --p-main-0: rgb(var(--main-0));
-  --p-main-50: rgb(var(--main-50));
-  --p-main-100: rgb(var(--main-100));
-  --p-main-200: rgb(var(--main-200));
-  --p-main-300: rgb(var(--main-300));
-  --p-main-400: rgb(var(--main-400));
-  --p-main-500: rgb(var(--main-500));
-  --p-main-600: rgb(var(--main-600));
-  --p-main-700: rgb(var(--main-700));
-  --p-main-800: rgb(var(--main-800));
-  --p-main-900: rgb(var(--main-900));
-  --p-main-950: rgb(var(--main-950));
+    --p-main-0: rgb(var(--main-0));
+    --p-main-50: rgb(var(--main-50));
+    --p-main-100: rgb(var(--main-100));
+    --p-main-200: rgb(var(--main-200));
+    --p-main-300: rgb(var(--main-300));
+    --p-main-400: rgb(var(--main-400));
+    --p-main-500: rgb(var(--main-500));
+    --p-main-600: rgb(var(--main-600));
+    --p-main-700: rgb(var(--main-700));
+    --p-main-800: rgb(var(--main-800));
+    --p-main-900: rgb(var(--main-900));
+    --p-main-950: rgb(var(--main-950));
 
-  --bg-0: 255 255 255;
-  --bg-50: 247 245 246;
-  --bg-100: 240 238 239;
-  --bg-200: 228 226 227;
-  --bg-300: 218 217 220;
-  --bg-400: 198 198 202;
-  --bg-500: 140 142 145;
-  --bg-600: 105 107 110;
-  --bg-700: 77 79 81;
-  --bg-800: 50 51 53;
-  --bg-900: 22 23 24;
-  --bg-950: 8 8 8;
+    --bg-0: 255 255 255;
+    --bg-50: 247 245 246;
+    --bg-100: 240 238 239;
+    --bg-200: 228 226 227;
+    --bg-300: 218 217 220;
+    --bg-400: 198 198 202;
+    --bg-500: 140 142 145;
+    --bg-600: 105 107 110;
+    --bg-700: 77 79 81;
+    --bg-800: 50 51 53;
+    --bg-900: 22 23 24;
+    --bg-950: 8 8 8;
 
-  --p-bg-0: rgb(var(--bg-0));
-  --p-bg-50: rgb(var(--bg-50));
-  --p-bg-100: rgb(var(--bg-100));
-  --p-bg-200: rgb(var(--bg-200));
-  --p-bg-300: rgb(var(--bg-300));
-  --p-bg-400: rgb(var(--bg-400));
-  --p-bg-500: rgb(var(--bg-500));
-  --p-bg-600: rgb(var(--bg-600));
-  --p-bg-700: rgb(var(--bg-700));
-  --p-bg-800: rgb(var(--bg-800));
-  --p-bg-900: rgb(var(--bg-900));
-  --p-bg-950: rgb(var(--bg-950));
+    --p-bg-0: rgb(var(--bg-0));
+    --p-bg-50: rgb(var(--bg-50));
+    --p-bg-100: rgb(var(--bg-100));
+    --p-bg-200: rgb(var(--bg-200));
+    --p-bg-300: rgb(var(--bg-300));
+    --p-bg-400: rgb(var(--bg-400));
+    --p-bg-500: rgb(var(--bg-500));
+    --p-bg-600: rgb(var(--bg-600));
+    --p-bg-700: rgb(var(--bg-700));
+    --p-bg-800: rgb(var(--bg-800));
+    --p-bg-900: rgb(var(--bg-900));
+    --p-bg-950: rgb(var(--bg-950));
+  }
 }
-
 
 /** Keyframes **/
 @keyframes fadein {
