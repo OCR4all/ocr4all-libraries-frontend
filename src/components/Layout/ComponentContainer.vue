@@ -6,7 +6,7 @@ const props = defineProps<{
 <template>
   <div
     class="rounded-md border border-surface-200 bg-surface-0 p-2 dark:border-surface-800 dark:bg-surface-900"
-    :class="[border ? 'lg:border' : 'lg:border-none']"
+    :class="[props.border ? 'lg:border' : 'lg:border-none']"
   >
     <slot />
   </div>

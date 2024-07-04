@@ -31,6 +31,7 @@ export const userSchema = ref([
     label: "State",
     optionLabel: "label",
     optionValue: "value",
+    value: "active",
     options: [
       {
         label: "Active",
