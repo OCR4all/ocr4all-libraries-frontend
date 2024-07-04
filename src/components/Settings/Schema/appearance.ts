@@ -18,7 +18,7 @@ export const appearance = ref([
         "optionLabel": "label",
         "optionValue": "value",
         "value": isDark,
-        "unselectable": false
+        "allowEmpty": false
     },
     {
         "$formkit": "primeColorPicker",
