@@ -455,5 +455,4 @@ refresh()
   </DataView>
   </ComponentContainer>
   </div>
-  {{sets }}
 </template>
