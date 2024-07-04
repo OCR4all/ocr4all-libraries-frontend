@@ -200,9 +200,26 @@ async function generateSandbox(selection: object) {
     }
   }
   formFileMap.value = JSON.stringify(fileMap);
-  console.log(fileMap);
   formMimeMap.value = JSON.stringify(mimeMap);
   refetch();
+}
+
+async function addToDataset(selection){
+  const key = Object.keys(selection)[0]
+      .split(",")
+      .map(function (item) {
+        return parseInt(item, 10);
+      });
+  const payload = {
+    track: key,
+    "collection-id": "string",
+    "keywords": true
+  }
+  useCustomFetch(`/snapshot/collection/all/${project}/${sandbox}`)
+      .post(payload)
+      .then((response) => {
+
+      });
 }
 
 function hasLarexView(selection) {
@@ -376,6 +393,13 @@ useHead({
             @click="openProcessorDialog(selection)"
           >
             Run processor
+          </button>
+          <button
+              v-show="!hasLarexView(selection)"
+              class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
+              @click="pushToDataset(selection)"
+          >
+            Add to dataset
           </button>
           <button
             class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
