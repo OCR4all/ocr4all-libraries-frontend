@@ -2,8 +2,8 @@
 import { passwordSchema } from "@/components/Settings/Schema/passwordSchema";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
-const schema = passwordSchema
-const data  = ref()
+const schema = passwordSchema;
+const data = ref();
 
 function submitPasswordChange(values, { setErrors }) {
   const payload = {
@@ -22,7 +22,7 @@ function submitPasswordChange(values, { setErrors }) {
 </script>
 <template>
   <div
-    class="flex h-full flex-1 flex-col rounded-md border bg-white p-5 dark:border-surface-800 dark:bg-surface-900 space-y-4"
+    class="flex h-full flex-1 flex-col space-y-4 rounded-md border bg-white p-5 dark:border-surface-800 dark:bg-surface-900"
   >
     <h1 class="text-xl font-bold text-black dark:text-white">Password</h1>
     <FormKit

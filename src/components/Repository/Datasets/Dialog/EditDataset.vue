@@ -3,12 +3,12 @@ import { datasetSchema } from "@/components/Repository/Datasets/Dialog/Schema/da
 
 const dialogRef = inject("dialogRef");
 
-const data = ref()
+const data = ref();
 
 onMounted(() => {
-  data.value = dialogRef.value.data.data
-  console.log(data.value)
-})
+  data.value = dialogRef.value.data.data;
+  console.log(data.value);
+});
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
@@ -19,7 +19,7 @@ function editDataset(values, { setErrors }) {
     name: data.value.name,
     description: data.value.description,
     keywords: data.value.keywords,
-  }
+  };
   useCustomFetch(`/data/collection/update?id=${data.value.id}`)
     .post(payload)
     .then((response) => {

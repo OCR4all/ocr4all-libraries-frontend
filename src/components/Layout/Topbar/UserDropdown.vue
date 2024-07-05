@@ -56,8 +56,13 @@ const toggle = (event) => {
 </script>
 
 <template>
-  <button class="flex px-1 items-center" @click="toggle">
-    <AvatarInitials :name="user.name" :admin="authStore.isAdmin" size="md" selectable />
+  <button class="flex items-center px-1" @click="toggle">
+    <AvatarInitials
+      :name="user.name"
+      :admin="authStore.isAdmin"
+      size="md"
+      selectable
+    />
   </button>
   <Popover ref="op" class="mr-1">
     <div class="flex flex-col">

@@ -23,9 +23,7 @@ export const languageAndTime = ref([
     label: "Time Zone",
     optionLabel: "label",
     optionValue: "value",
-    options: [
-
-    ],
-    "disabled": true
+    options: [],
+    disabled: true,
   },
 ]);

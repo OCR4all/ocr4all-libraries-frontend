@@ -29,7 +29,7 @@ function toggleSidebarMobile() {
       >
         <AppTopbar @toggle-sidebar-mobile="toggleSidebarMobile" />
         <div
-          class="h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)] w-full overflow-y-auto rounded-b-2xl"
+          class="h-[calc(100vh-4rem)] w-full overflow-y-auto rounded-b-2xl lg:h-[calc(100vh-5rem)]"
           :class="{ 'p-8': props.padded }"
         >
           <slot />
@@ -39,6 +39,4 @@ function toggleSidebarMobile() {
   </div>
   <CookieBanner />
 </template>
-<style>
-
-</style>
+<style></style>

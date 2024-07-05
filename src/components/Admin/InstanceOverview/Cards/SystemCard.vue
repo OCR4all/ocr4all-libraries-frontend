@@ -2,7 +2,7 @@
 import { ISystem } from "@/components/Admin/InstanceOverview/types";
 
 const props = defineProps<{
-  system: ISystem
+  system: ISystem;
 }>();
 </script>
 <template>
@@ -26,7 +26,10 @@ const props = defineProps<{
       <InformationCardEntry header="Commands">
         <template #content>
           <ul class="list-disc">
-            <li v-for="command of props.system['commands']" :key="command.command">
+            <li
+              v-for="command of props.system['commands']"
+              :key="command.command"
+            >
               {{ command.type }}, {{ command.command }}, {{ command.available }}
             </li>
           </ul>

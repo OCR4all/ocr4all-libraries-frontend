@@ -1,6 +1,6 @@
 import { RemovableRef } from "@vueuse/core";
 
-const list: RemovableRef<string[]> = ref([])
+const list: RemovableRef<string[]> = ref([]);
 
 export const setSchema = ref([
   {
@@ -15,8 +15,13 @@ export const setSchema = ref([
     multiple: true,
     typeahead: false,
     complete: function search(query: string) {
-      return [...list.value.filter((i) => i.toLowerCase().includes(query.toLowerCase())), query];
+      return [
+        ...list.value.filter((i) =>
+          i.toLowerCase().includes(query.toLowerCase()),
+        ),
+        query,
+      ];
     },
-    label: "Keywords"
-  }
+    label: "Keywords",
+  },
 ]);

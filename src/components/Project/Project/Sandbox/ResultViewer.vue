@@ -204,22 +204,20 @@ async function generateSandbox(selection: object) {
   refetch();
 }
 
-async function addToDataset(selection){
+async function addToDataset(selection) {
   const key = Object.keys(selection)[0]
-      .split(",")
-      .map(function (item) {
-        return parseInt(item, 10);
-      });
+    .split(",")
+    .map(function (item) {
+      return parseInt(item, 10);
+    });
   const payload = {
     track: key,
     "collection-id": "string",
-    "keywords": true
-  }
+    keywords: true,
+  };
   useCustomFetch(`/snapshot/collection/all/${project}/${sandbox}`)
-      .post(payload)
-      .then((response) => {
-
-      });
+    .post(payload)
+    .then((response) => {});
 }
 
 function hasLarexView(selection) {
@@ -304,7 +302,7 @@ useHead({
   >
     <template #container="{ message, closeCallback }">
       <section
-        class="grid w-full justify-center gap-3 p-3 bg-surface-0/40 backdrop-blur-sm"
+        class="grid w-full justify-center gap-3 bg-surface-0/40 p-3 backdrop-blur-sm"
         style="border-radius: 10px"
       >
         <div class="flex w-full gap-3 justify-self-center">
@@ -395,9 +393,9 @@ useHead({
             Run processor
           </button>
           <button
-              v-show="!hasLarexView(selection)"
-              class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
-              @click="pushToDataset(selection)"
+            v-show="!hasLarexView(selection)"
+            class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
+            @click="pushToDataset(selection)"
           >
             Add to dataset
           </button>

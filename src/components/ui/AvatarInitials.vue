@@ -6,14 +6,14 @@ enum Size {
   sm = "sm",
   md = "md",
   lg = "lg",
-  xl= "xl"
+  xl = "xl",
 }
 
 const props = defineProps<{
   name: string;
   admin: boolean;
-  size?: Size
-  selectable?: boolean
+  size?: Size;
+  selectable?: boolean;
 }>();
 
 const initials = computed(() => {
@@ -22,46 +22,46 @@ const initials = computed(() => {
 });
 
 const getSize = computed(() => {
-  switch(props.size){
+  switch (props.size) {
     case Size.xs:
-      return "h-4 w-4"
+      return "h-4 w-4";
     case Size.sm:
-      return "h-6 w-6"
+      return "h-6 w-6";
     case Size.md:
-      return "h-8 w-8"
+      return "h-8 w-8";
     case Size.lg:
-      return "h-10 w-10"
+      return "h-10 w-10";
     case Size.xl:
-      return "h-12 w-12"
+      return "h-12 w-12";
     default:
-      return "h-8 w-8"
+      return "h-8 w-8";
   }
-})
+});
 
 const getTextSize = computed(() => {
-  switch(props.size){
+  switch (props.size) {
     case Size.xs:
-      return "text-[0.4rem]"
+      return "text-[0.4rem]";
     case Size.sm:
-      return "text-[0.6rem]"
+      return "text-[0.6rem]";
     case Size.md:
-      return "text-[1rem]"
+      return "text-[1rem]";
     case Size.lg:
-      return "text-[1.2rem]"
+      return "text-[1.2rem]";
     case Size.xl:
-      return "text-[1.4rem]"
+      return "text-[1.4rem]";
     default:
-      return "text-[1rem]"
+      return "text-[1rem]";
   }
-})
+});
 
 const isSelectable = computed(() => {
-  if(props.selectable) return "hover:ring-2"
-})
+  if (props.selectable) return "hover:ring-2";
+});
 </script>
 <template>
   <div
-    class="px-2 flex items-center justify-center rounded-full bg-primary-100 dark:bg-primary-200"
+    class="flex items-center justify-center rounded-full bg-primary-100 px-2 dark:bg-primary-200"
     :class="[getSize, isSelectable]"
   >
     <span

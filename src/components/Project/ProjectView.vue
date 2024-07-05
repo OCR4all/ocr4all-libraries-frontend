@@ -7,8 +7,8 @@ import Results from "@/components/Project/Project/ProjectSandboxes.vue";
 import { useUiStore } from "@/stores/ui.store";
 import SelectButton from "primevue/selectbutton";
 
-const category = ref("Results")
-const options = ref(["Results", "Images", "Information"])
+const category = ref("Results");
+const options = ref(["Results", "Images", "Information"]);
 
 const router = useRouter();
 const project: string[] = router.currentRoute.value.params.project;
@@ -43,11 +43,9 @@ useHead({
       />
     </div>
     <div v-auto-animate>
-      <ComponentContainer>
-        <Results v-if="category === 'Results'" />
-        <Images v-else-if="category === 'Images'" />
-        <Information v-else-if="category === 'Information'" />
-      </ComponentContainer>
+      <Results v-if="category === 'Results'" />
+      <Images v-else-if="category === 'Images'" />
+      <Information v-else-if="category === 'Information'" />
     </div>
   </div>
 </template>

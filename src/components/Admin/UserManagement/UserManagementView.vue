@@ -150,9 +150,9 @@ refetch();
     >
       <template #header>
         <div class="align-items-center flex flex-wrap justify-between gap-2">
-        <span class="text-xl font-bold">
-          {{ $t("admin.user-management.table.header") }}
-        </span>
+          <span class="text-xl font-bold">
+            {{ $t("admin.user-management.table.header") }}
+          </span>
           <InputText
             v-model="filters['global'].value"
             :placeholder="$t('admin.user-management.table.search-placeholder')"

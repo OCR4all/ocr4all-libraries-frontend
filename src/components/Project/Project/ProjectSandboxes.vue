@@ -39,6 +39,42 @@ const isDeleteDialogVisible = ref(false);
 
 const store = useSandboxCreationStore();
 
+const items = ref();
+const menu = ref();
+const contextMenu = ref();
+
+const toggle = (event, data) => {
+  items.value = [
+    {
+      label: "Actions",
+      items: [
+        {
+          label: "Open",
+          icon: "pi pi-eye",
+          command: () => {
+            router.push(`/project/${project}/result/${data.id}`);
+          },
+        },
+        {
+          label: "Download",
+          icon: "pi pi-pencil",
+          command: () => {
+            downloadSandbox(data.id);
+          },
+        },
+        {
+          label: "Delete",
+          icon: "pi pi-trash",
+          command: () => {
+            toggleDeleteDialog(data.id);
+          },
+        },
+      ],
+    },
+  ];
+  menu.value.toggle(event);
+};
+
 async function refetch() {
   isRefetching.value = true;
   useCustomFetch(`/sandbox/list/${project}`)
@@ -109,8 +145,31 @@ async function downloadSandbox(sandbox) {
       link.click();
     });
 }
-const rowClass = (data) => {
-  return ["cursor-pointer"];
+const onRowContextMenu = (event) => {
+  items.value = [
+    {
+      label: "Open",
+      icon: "pi pi-eye",
+      command: () => {
+        router.push(`/project/${project}/result/${event.data.id}`);
+      },
+    },
+    {
+      label: "Download",
+      icon: "pi pi-pencil",
+      command: () => {
+        downloadSandbox(event.data.id);
+      },
+    },
+    {
+      label: "Delete",
+      icon: "pi pi-trash",
+      command: () => {
+        toggleDeleteDialog(event.data.id);
+      },
+    },
+  ];
+  contextMenu.value.show(event.originalEvent);
 };
 </script>
 <template>
@@ -152,114 +211,6 @@ const rowClass = (data) => {
       </section>
     </template>
   </Toast>
-  <Toolbar class="mb-4">
-    <template #start>
-      <div class="my-2 space-x-2">
-        <button
-          type="button"
-          class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-          @click="createSandbox()"
-        >
-          {{ $t("pages.projects.sandbox.results.toolbar.new") }}
-        </button>
-      </div>
-    </template>
-  </Toolbar>
-  <DataTable
-    :value="sandboxes"
-    sort-field="tracking.updated"
-    :sort-order="-1"
-    :filters="filters"
-    @row-click="router.push(`/project/${project}/result/${$event.data.id}`)"
-    :rowClass="rowClass"
-    :row-hover="true"
-    :global-filter-fields="['name', 'description', 'state']"
-  >
-    <template #header>
-      <div class="grid grid-cols-1 sm:grid-cols-2 items-center justify-items-start sm:justify-items-between gap-2">
-        <h4 class="m-0 font-bold">
-          {{ $t("pages.projects.sandbox.results.table.header") }}
-        </h4>
-        <div class="flex space-x-1 justify-self-start sm:justify-self-end">
-          <button v-tooltip="'Refresh'" @click="refetch">
-            <ArrowPathIcon
-              :disabled="isRefetching"
-              :class="{ 'animate-spin': isRefetching }"
-              class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-300 dark:hover:text-white"
-            />
-          </button>
-          <span class="p-input-icon-left ml-10">
-            <InputText
-              v-model="filters['global'].value"
-              :placeholder="
-                $t('pages.projects.sandbox.results.table.search.placeholder')
-              "
-            />
-          </span>
-        </div>
-      </div>
-    </template>
-    <template #empty>
-      <span class="text-primary-950 dark:text-primary-50">{{
-        $t("pages.projects.sandbox.results.table.empty")
-      }}</span>
-    </template>
-    <Column
-      field="name"
-      :header="$t('pages.projects.sandbox.results.table.columns.name')"
-    ></Column>
-    <Column
-      field="description"
-      :header="$t('pages.projects.sandbox.results.table.columns.description')"
-    ></Column>
-    <Column
-      field="state"
-      :sortable="true"
-      :header="$t('pages.projects.sandbox.results.table.columns.state')"
-      :show-filter-menu="false"
-      :filter-menu-style="{ width: '14rem' }"
-    >
-      <template #body="{ data }">
-        <Tag :value="data.state" :style="getColor(data.state)" />
-      </template>
-    </Column>
-    <Column
-      field="tracking.updated"
-      :header="$t('pages.projects.sandbox.results.table.columns.updated')"
-      :sortable="true"
-    >
-      <template #body="slotProps">
-        <UseTimeAgo
-          v-slot="{ timeAgo }"
-          :time="Date.parse(slotProps.data.tracking.updated)"
-        >
-          {{ timeAgo }}
-        </UseTimeAgo>
-      </template>
-    </Column>
-    <Column
-      :header="$t('pages.projects.sandbox.results.table.columns.actions')"
-      :exportable="false"
-      style="min-width: 8rem"
-    >
-      <template #body="slotProps">
-        <button
-          type="button"
-          class="mr-2 inline-flex items-center rounded-md bg-red-600 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-          @click="toggleDeleteDialog(slotProps.data.id)"
-        >
-          <XMarkIcon class="h-6 w-6 text-white" />
-        </button>
-        <button
-          type="button"
-          class="mr-2 inline-flex items-center rounded-md bg-primary-600 p-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-          @click="downloadSandbox(slotProps.data.id)"
-        >
-          <ArchiveBoxArrowDownIcon class="h-6 w-6 text-white" />
-        </button>
-      </template>
-    </Column>
-  </DataTable>
   <Dialog
     v-model:visible="isDeleteDialogVisible"
     modal
@@ -294,4 +245,173 @@ const rowClass = (data) => {
       }}
     </button>
   </Dialog>
+  <ContextMenu ref="contextMenu" :model="items">
+    <template #item="{ item, props }">
+      <a
+        v-ripple
+        class="group flex items-center"
+        :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+        v-bind="props.action"
+      >
+        <span
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+          :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+          >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </ContextMenu>
+  <Menu ref="menu" :model="items" :popup="true">
+    <template #item="{ item, props }">
+      <a
+        v-ripple
+        class="group flex items-center"
+        :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+        v-bind="props.action"
+      >
+        <span
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+          :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+          >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </Menu>
+  <Toolbar class="mb-4">
+    <template #start>
+      <div class="my-2 space-x-2">
+        <button
+          type="button"
+          class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          @click="createSandbox()"
+        >
+          {{ $t("pages.projects.sandbox.results.toolbar.new") }}
+        </button>
+      </div>
+    </template>
+  </Toolbar>
+  <ComponentContainer>
+    <DataTable
+      :value="sandboxes"
+      sort-field="tracking.updated"
+      :sort-order="-1"
+      :filters="filters"
+      lazy
+      contextMenu
+      @rowContextmenu="onRowContextMenu"
+      :row-hover="true"
+      :global-filter-fields="['name', 'description', 'state']"
+    >
+      <template #header>
+        <div
+          class="sm:justify-items-between grid grid-cols-1 items-center justify-items-start gap-2 sm:grid-cols-2"
+        >
+          <h4 class="m-0 font-bold">
+            {{ $t("pages.projects.sandbox.results.table.header") }}
+          </h4>
+          <div class="flex space-x-1 justify-self-start sm:justify-self-end">
+            <button v-tooltip="'Refresh'" @click="refetch">
+              <ArrowPathIcon
+                :disabled="isRefetching"
+                :class="{ 'animate-spin': isRefetching }"
+                class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-300 dark:hover:text-white"
+              />
+            </button>
+            <span class="p-input-icon-left ml-10">
+              <InputText
+                v-model="filters['global'].value"
+                :placeholder="
+                  $t('pages.projects.sandbox.results.table.search.placeholder')
+                "
+              />
+            </span>
+          </div>
+        </div>
+      </template>
+      <template #empty>
+        <span class="text-primary-950 dark:text-primary-50">{{
+          $t("pages.projects.sandbox.results.table.empty")
+        }}</span>
+      </template>
+      <Column
+        field="name"
+        :header="$t('pages.projects.sandbox.results.table.columns.name')"
+      >
+        <template #body="{ data }">
+          <p
+            class="cursor-pointer hover:underline"
+            @click="router.push(`/project/${project}/result/${data.id}`)"
+          >
+            {{ data.name }}
+          </p>
+        </template>
+      </Column>
+      <Column
+        field="description"
+        :header="$t('pages.projects.sandbox.results.table.columns.description')"
+      ></Column>
+      <Column
+        field="state"
+        :sortable="true"
+        :header="$t('pages.projects.sandbox.results.table.columns.state')"
+        :show-filter-menu="false"
+        :filter-menu-style="{ width: '14rem' }"
+      >
+        <template #body="{ data }">
+          <Tag :value="data.state" :style="getColor(data.state)" />
+        </template>
+      </Column>
+      <Column
+        field="tracking.updated"
+        :header="$t('pages.projects.sandbox.results.table.columns.updated')"
+        :sortable="true"
+      >
+        <template #body="slotProps">
+          <UseTimeAgo
+            v-slot="{ timeAgo }"
+            :time="Date.parse(slotProps.data.tracking.updated)"
+          >
+            {{ timeAgo }}
+          </UseTimeAgo>
+        </template>
+      </Column>
+      <Column
+        :header="$t('pages.projects.sandbox.results.table.columns.actions')"
+        :exportable="false"
+        style="min-width: 8rem"
+      >
+        <template #body="{ data }">
+          <div class="space-y-2">
+            <Button
+              type="button"
+              icon="pi pi-ellipsis-v"
+              text
+              severity="secondary"
+              @click="toggle($event, data)"
+            />
+          </div>
+        </template>
+      </Column>
+    </DataTable>
+  </ComponentContainer>
 </template>

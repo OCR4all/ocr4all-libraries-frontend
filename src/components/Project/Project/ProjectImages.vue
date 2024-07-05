@@ -120,25 +120,27 @@ const imageImportDialogVisible = ref(false);
         </div>
       </template>
     </Toolbar>
-    <div
-      v-if="folios.length"
-      class="grid grid-cols-1 justify-between gap-x-2 gap-y-3 @[550px]/section:grid-cols-2 @[800px]/section:grid-cols-3 @[1050px]/section:grid-cols-4"
-    >
-      <ImageCard
-        v-for="folio in folios"
-        :key="folio.id"
-        :name="folio.name"
-        :thumb="folio.thumbnail"
-        :img="folio.img"
-        :size="folio.size"
-        :format="folio.format"
-      />
-    </div>
-    <div
-      v-else
-      class="flex flex-col items-center justify-center dark:text-surface-100"
-    >
-      {{ $t("pages.projects.project.images.no-images") }}
-    </div>
+    <ComponentContainer>
+      <div
+        v-if="folios.length"
+        class="grid grid-cols-1 justify-between gap-x-2 gap-y-3 @[550px]/section:grid-cols-2 @[800px]/section:grid-cols-3 @[1050px]/section:grid-cols-4"
+      >
+        <ImageCard
+          v-for="folio in folios"
+          :key="folio.id"
+          :name="folio.name"
+          :thumb="folio.thumbnail"
+          :img="folio.img"
+          :size="folio.size"
+          :format="folio.format"
+        />
+      </div>
+      <div
+        v-else
+        class="flex flex-col items-center justify-center dark:text-surface-100"
+      >
+        {{ $t("pages.projects.project.images.no-images") }}
+      </div>
+    </ComponentContainer>
   </div>
 </template>

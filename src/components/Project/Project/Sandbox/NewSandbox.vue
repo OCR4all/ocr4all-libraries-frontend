@@ -23,11 +23,11 @@ uiStore.breadcrumb = [
   },
   {
     label: project,
-    to: `/project/${project}/view`
+    to: `/project/${project}/view`,
   },
   {
-    label: "New Result"
-  }
+    label: "New Result",
+  },
 ];
 </script>
 

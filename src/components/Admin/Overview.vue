@@ -47,8 +47,10 @@ await useCustomFetch("/administration/provider/overview")
   });
 </script>
 <template>
-  <div class="flex flex-col gap-y-2 mb-4">
-    <h1 class="text-2xl text-surface-900 dark:text-surface-0 font-bold">Stats</h1>
+  <div class="mb-4 flex flex-col gap-y-2">
+    <h1 class="text-2xl font-bold text-surface-900 dark:text-surface-0">
+      Stats
+    </h1>
     <div class="grid grid-cols-1 grid-rows-1 gap-8 sm:grid-cols-3">
       <StatsCard>
         <template #title> Users </template>
@@ -80,7 +82,9 @@ await useCustomFetch("/administration/provider/overview")
     </div>
   </div>
   <div class="flex flex-col gap-y-2">
-    <h1 class="text-2xl text-surface-900 dark:text-surface-0 font-bold">Information</h1>
+    <h1 class="text-2xl font-bold text-surface-900 dark:text-surface-0">
+      Information
+    </h1>
     <InstanceOverview />
   </div>
 </template>

@@ -74,11 +74,16 @@ const onMouseMove = (event: MouseEvent) => {
           {{ $t("pages.nodeflow.sidebar.parameters") }}
         </h3>
         <div class="flex flex-col space-y-2">
-          <Accordion multiple expandIcon="pi pi-plus" collapseIcon="pi pi-minus">
+          <Accordion
+            multiple
+            expandIcon="pi pi-plus"
+            collapseIcon="pi pi-minus"
+          >
             <AccordionPanel
               v-for="parameter in store.sidebarDescriptions.parameters"
               :key="parameter.title"
-              :value="parameter.title">
+              :value="parameter.title"
+            >
               <AccordionHeader>{{ parameter.title }}</AccordionHeader>
               <AccordionContent>
                 <p class="p-4">{{ parameter.description }}</p>

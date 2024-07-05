@@ -1,10 +1,15 @@
 <script setup lang="ts">
-import { IExchange, IOpt, ITemporary, IWorkspace } from "@/components/Admin/InstanceOverview/types";
+import {
+  IExchange,
+  IOpt,
+  ITemporary,
+  IWorkspace,
+} from "@/components/Admin/InstanceOverview/types";
 
 const props = defineProps<{
-  exchange: IExchange,
-  opt: IOpt,
-  temporary: ITemporary,
+  exchange: IExchange;
+  opt: IOpt;
+  temporary: ITemporary;
 }>();
 </script>
 <template>

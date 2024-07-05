@@ -2,7 +2,7 @@
 import { IServiceProviderProperties } from "@/components/Admin/InstanceOverview/types";
 
 const props = defineProps<{
-  providers: IServiceProviderProperties[],
+  providers: IServiceProviderProperties[];
 }>();
 </script>
 <template>
@@ -11,7 +11,8 @@ const props = defineProps<{
       <InformationCardEntry
         v-for="provider of props.providers"
         :header="provider.key"
-        @key="provider.key">
+        @key="provider.key"
+      >
         <template #content>
           <Tag severity="info" :value="provider.collection"></Tag>
           {{ provider.value }}

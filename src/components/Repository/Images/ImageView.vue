@@ -36,7 +36,10 @@ const description: Ref<string | undefined> = ref();
 const keywords: RemovableRef<string[] | undefined> = ref();
 
 const editDialogVisible = ref(false);
-const layout: RemovableRef<string> = useLocalStorage("ocr4all/frontend/repository/images/layout", "grid")
+const layout: RemovableRef<string> = useLocalStorage(
+  "ocr4all/frontend/repository/images/layout",
+  "grid",
+);
 
 const containerCardRefs: Ref<HTMLElement[]> = ref([]);
 
@@ -65,9 +68,18 @@ const toggle = (event, data) => {
       label: "Actions",
       items: [
         {
+          label: "Open",
+          icon: "pi pi-eye",
+          command: () => {
+            openContainer(data.id, data.name);
+          },
+        },
+        {
           label: "Edit",
           icon: "pi pi-pencil",
-          command: () => {openEditDialog(data)},
+          command: () => {
+            openEditDialog(data);
+          },
         },
         {
           label: "Delete",
@@ -187,17 +199,39 @@ function openContainer(containerId: string, containerName: string) {
   });
 }
 
-const rowClass = (data) => {
-  return ["cursor-pointer"];
+const contextMenu = ref();
+const onRowContextMenu = (event) => {
+  items.value = [
+    {
+      label: "Open",
+      icon: "pi pi-eye",
+      command: () => {
+        openContainer(event.data.id, event.data.name);
+      },
+    },
+    {
+      label: "Edit",
+      icon: "pi pi-pencil",
+      command: () => {
+        openEditDialog(event.data);
+      },
+    },
+    {
+      label: "Delete",
+      icon: "pi pi-trash",
+      command: () => {},
+    },
+  ];
+  contextMenu.value.show(event.originalEvent);
 };
 </script>
 <template>
   <Toast />
-  <Menu ref="menu" :model="items" :popup="true">
+  <ContextMenu ref="contextMenu" :model="items">
     <template #item="{ item, props }">
       <a
         v-ripple
-        class="flex items-center group"
+        class="group flex items-center"
         :class="{
           'rounded-md hover:bg-red-500 hover:text-white':
             item.label === 'Delete',
@@ -205,13 +239,43 @@ const rowClass = (data) => {
         v-bind="props.action"
       >
         <span
-          :class="[item.icon, { 'text-red-500 group-hover:text-white':
-            item.label === 'Delete'}]" />
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
         <span
           :class="{
-          'text-red-500 group-hover:text-white':
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+          >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </ContextMenu>
+  <Menu ref="menu" :model="items" :popup="true">
+    <template #item="{ item, props }">
+      <a
+        v-ripple
+        class="group flex items-center"
+        :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
             item.label === 'Delete',
-        }">{{ item.label }}</span>
+        }"
+        v-bind="props.action"
+      >
+        <span
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+          :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+          >{{ item.label }}</span
+        >
       </a>
     </template>
   </Menu>
@@ -346,17 +410,19 @@ const rowClass = (data) => {
             v-model:selection="selectedContainers"
             :value="slotProps.items"
             :filters="filters"
+            contextMenu
+            @rowContextmenu="onRowContextMenu"
             lazy
             :paginator="true"
             :rows="5"
             :rows-per-page-options="[5, 10, 20, 50]"
-            :row-class="rowClass"
             :row-hover="true"
             table-style="min-width: 50rem"
-            @row-click="openContainer($event.data.id, $event.data.name)"
           >
             <template #header>
-              <div class="grid grid-cols-1 sm:grid-cols-2 items-center justify-items-start sm:justify-items-between gap-2">
+              <div
+                class="sm:justify-items-between grid grid-cols-1 items-center justify-items-start gap-2 sm:grid-cols-2"
+              >
                 <h4 class="m-0 font-bold">
                   {{ $t("pages.repository.overview.dataview.list.header") }}
                 </h4>
@@ -365,7 +431,10 @@ const rowClass = (data) => {
                     <InputIcon>
                       <i class="pi pi-search" />
                     </InputIcon>
-                    <InputText v-model="filters['global'].value" placeholder="Search" />
+                    <InputText
+                      v-model="filters['global'].value"
+                      placeholder="Search"
+                    />
                   </IconField>
                 </div>
               </div>
@@ -377,36 +446,46 @@ const rowClass = (data) => {
             ></Column>
             <Column
               field="name"
-              :header="$t('pages.repository.overview.dataview.list.column.name')"
+              :header="
+                $t('pages.repository.overview.dataview.list.column.name')
+              "
               sortable
             >
               <template #loading>
                 <div
                   class="align-items-center flex"
                   :style="{
-                  height: '17px',
-                  'flex-grow': '1',
-                  overflow: 'hidden',
-                }"
+                    height: '17px',
+                    'flex-grow': '1',
+                    overflow: 'hidden',
+                  }"
                 >
                   <Skeleton width="60%" height="1rem" />
                 </div>
+              </template>
+              <template #body="{ data }">
+                <p
+                  class="cursor-pointer hover:underline"
+                  @click="openContainer(data.id, data.name)"
+                >
+                  {{ data.name }}
+                </p>
               </template>
             </Column>
             <Column
               field="description"
               :header="
-              $t('pages.repository.overview.dataview.list.column.description')
-            "
+                $t('pages.repository.overview.dataview.list.column.description')
+              "
             >
               <template #loading>
                 <div
                   class="align-items-center flex"
                   :style="{
-                  height: '17px',
-                  'flex-grow': '1',
-                  overflow: 'hidden',
-                }"
+                    height: '17px',
+                    'flex-grow': '1',
+                    overflow: 'hidden',
+                  }"
                 >
                   <Skeleton width="60%" height="1rem" />
                 </div>
@@ -415,25 +494,27 @@ const rowClass = (data) => {
             <Column
               field="keywords"
               :header="
-              $t('pages.repository.overview.dataview.list.column.keywords')
-            "
+                $t('pages.repository.overview.dataview.list.column.keywords')
+              "
             >
               <template #loading>
                 <div
                   class="align-items-center flex"
                   :style="{
-                  height: '17px',
-                  'flex-grow': '1',
-                  overflow: 'hidden',
-                }"
+                    height: '17px',
+                    'flex-grow': '1',
+                    overflow: 'hidden',
+                  }"
                 >
                   <Skeleton width="60%" height="1rem" />
                 </div>
               </template>
               <template #body="slotProps">
-                <Chip v-for="keyword of slotProps.data.keywords" :key="keyword">{{
-                    keyword
-                  }}</Chip>
+                <Chip
+                  v-for="keyword of slotProps.data.keywords"
+                  :key="keyword"
+                  >{{ keyword }}</Chip
+                >
               </template>
             </Column>
             <Column :exportable="false" style="min-width: 8rem">

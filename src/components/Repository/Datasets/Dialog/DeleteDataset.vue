@@ -13,7 +13,7 @@ function deleteDataset() {
     .get()
     .then((response) => {
       if (response.error.value) {
-        console.log(response.error.value)
+        console.log(response.error.value);
       } else {
         dialogRef.value.close();
       }

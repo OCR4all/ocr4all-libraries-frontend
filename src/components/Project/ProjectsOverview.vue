@@ -13,6 +13,7 @@ import { UseTimeAgo } from "@vueuse/components";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useUiStore } from "@/stores/ui.store";
+import Button from "primevue/button";
 
 const router = useRouter();
 
@@ -32,10 +33,6 @@ async function refetch() {
 }
 
 const projects = ref();
-
-const rowClass = (data) => {
-  return ["cursor-pointer"];
-};
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -65,9 +62,116 @@ uiStore.breadcrumb = [
   },
 ];
 
+const items = ref();
+const menu = ref();
+
+const toggle = (event, data) => {
+  items.value = [
+    {
+      label: "Actions",
+      items: [
+        {
+          label: "Open",
+          icon: "pi pi-eye",
+          command: () => {
+            router.push(`/project/${data.id}/view`);
+          },
+        },
+        {
+          label: "Edit",
+          icon: "pi pi-pencil",
+          command: () => {},
+        },
+        {
+          label: "Delete",
+          icon: "pi pi-trash",
+          command: () => {},
+        },
+      ],
+    },
+  ];
+  menu.value.toggle(event);
+};
+
+const contextMenu = ref();
+const onRowContextMenu = (event) => {
+  items.value = [
+    {
+      label: "Open",
+      icon: "pi pi-eye",
+      command: () => {
+        router.push(`/project/${event.data.id}/view`);
+      },
+    },
+    {
+      label: "Edit",
+      icon: "pi pi-pencil",
+      command: () => {},
+    },
+    {
+      label: "Delete",
+      icon: "pi pi-trash",
+      command: () => {},
+    },
+  ];
+  contextMenu.value.show(event.originalEvent);
+};
+
 refetch();
 </script>
 <template>
+  <ContextMenu ref="contextMenu" :model="items">
+    <template #item="{ item, props }">
+      <a
+        v-ripple
+        class="group flex items-center"
+        :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+        v-bind="props.action"
+      >
+        <span
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+          :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+          >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </ContextMenu>
+  <Menu ref="menu" :model="items" :popup="true">
+    <template #item="{ item, props }">
+      <a
+        v-ripple
+        class="group flex items-center"
+        :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+        v-bind="props.action"
+      >
+        <span
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+          :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+          >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </Menu>
   <div class="card">
     <Toolbar class="mb-4">
       <template #start>
@@ -113,18 +217,20 @@ refetch();
         :rows="10"
         :loading="loading"
         scrollable
+        contextMenu
+        @rowContextmenu="onRowContextMenu"
         filter-display="row"
         :global-filter-fields="['name', 'state', 'keywords']"
         sort-field="tracking.updated"
         :sort-order="-1"
-        :row-class="rowClass"
         :row-hover="true"
-        @row-click="router.push(`/project/${$event.data.id}/view`)"
         paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
         :rows-per-page-options="[10, 25, 50]"
       >
         <template #header>
-          <div class="grid grid-cols-1 sm:grid-cols-2 items-center justify-items-start sm:justify-items-between gap-2">
+          <div
+            class="sm:justify-items-between grid grid-cols-1 items-center justify-items-start gap-2 sm:grid-cols-2"
+          >
             <h4 class="m-0 font-bold">
               {{ $t("pages.projects.overview.table.header") }}
             </h4>
@@ -133,7 +239,12 @@ refetch();
                 <InputIcon>
                   <i class="pi pi-search" />
                 </InputIcon>
-                <InputText v-model="filters['global'].value" :placeholder="$t('pages.projects.overview.table.search.placeholder')" />
+                <InputText
+                  v-model="filters['global'].value"
+                  :placeholder="
+                    $t('pages.projects.overview.table.search.placeholder')
+                  "
+                />
               </IconField>
             </div>
           </div>
@@ -150,7 +261,16 @@ refetch();
           field="name"
           :header="$t('pages.projects.overview.table.columns.project')"
           :sortable="true"
-        ></Column>
+        >
+          <template #body="{ data }">
+            <p
+              class="cursor-pointer hover:underline"
+              @click="router.push(`/project/${data.id}/view`)"
+            >
+              {{ data.name }}
+            </p>
+          </template>
+        </Column>
         <Column
           field="description"
           :header="$t('pages.projects.overview.table.columns.description')"
@@ -170,7 +290,7 @@ refetch();
             <Tag :value="data.state" :severity="getSeverity(data.state)" />
           </template>
           <template #filter="{ filterModel, filterCallback }">
-            <Dropdown
+            <Select
               v-model="filterModel.value"
               :options="states"
               placeholder="Select State"
@@ -185,7 +305,7 @@ refetch();
                   :severity="getSeverity(slotProps.option)"
                 />
               </template>
-            </Dropdown>
+            </Select>
           </template>
         </Column>
         <Column :header="$t('pages.projects.overview.table.columns.keywords')">
@@ -231,6 +351,19 @@ refetch();
             >
               {{ timeAgo }}
             </UseTimeAgo>
+          </template>
+        </Column>
+        <Column :exportable="false" style="min-width: 8rem">
+          <template #body="{ data }">
+            <div class="space-y-2">
+              <Button
+                type="button"
+                icon="pi pi-ellipsis-v"
+                text
+                severity="secondary"
+                @click="toggle($event, data)"
+              />
+            </div>
           </template>
         </Column>
       </DataTable>

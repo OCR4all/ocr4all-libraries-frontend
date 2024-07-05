@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {setPrimaryColorsFromStorage} from "@/utils/colors";
+import { setPrimaryColorsFromStorage } from "@/utils/colors";
 
-setPrimaryColorsFromStorage()
+setPrimaryColorsFromStorage();
 </script>
 
 <template>

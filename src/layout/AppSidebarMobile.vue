@@ -6,7 +6,7 @@ import { useUiStore } from "@/stores/ui.store";
 
 const uiStore = useUiStore();
 
-const router = useRouter()
+const router = useRouter();
 
 const sidebarMobileOpen = ref(false);
 
@@ -21,8 +21,8 @@ defineExpose({
 <template>
   <Drawer v-model:visible="sidebarMobileOpen">
     <template #container="{ closeCallback }">
-      <div class="flex flex-col h-full ">
-        <div class="flex items-center justify-between px-6 pt-4 shrink-0">
+      <div class="flex h-full flex-col">
+        <div class="flex shrink-0 items-center justify-between px-6 pt-4">
           <img
             src="/img/logo.svg"
             class="h-12 w-12 cursor-pointer"
@@ -36,19 +36,20 @@ defineExpose({
               icon="pi pi-times"
               rounded
               severity="contrast"
-              text></Button>
+              text
+            ></Button>
           </span>
         </div>
-        <div class="grid content-between h-full overflow-y-auto">
-          <ul class="list-none p-4 m-0">
+        <div class="grid h-full content-between overflow-y-auto">
+          <ul class="m-0 list-none p-4">
             <router-link
               v-for="(item, index) in mainNavigation"
               :key="index"
               v-tooltip="{
-          value: $t(item.label),
-          showDelay: 250,
-          hideDelay: 250,
-        }"
+                value: $t(item.label),
+                showDelay: 250,
+                hideDelay: 250,
+              }"
               :to="item.to"
               class="group flex items-center space-x-4 rounded-md px-4 py-2.5 text-surface-900 hover:bg-surface-200 dark:text-white dark:hover:bg-surface-800"
             >
@@ -59,15 +60,14 @@ defineExpose({
           <div class="flex justify-center pb-12">
             <router-link
               v-tooltip="{
-            value: 'Settings',
-            showDelay: 250,
-            hideDelay: 250,
-        }"
+                value: 'Settings',
+                showDelay: 250,
+                hideDelay: 250,
+              }"
               to="/settings"
-              class="group flex items-center space-x-4 justify-center rounded-md px-4 py-2.5 text-surface-900 hover:bg-surface-200 dark:text-white dark:hover:bg-surface-800"
+              class="group flex items-center justify-center space-x-4 rounded-md px-4 py-2.5 text-surface-900 hover:bg-surface-200 dark:text-white dark:hover:bg-surface-800"
             >
-              <Cog6ToothIcon
-                class="h-6 w-6" />
+              <Cog6ToothIcon class="h-6 w-6" />
             </router-link>
           </div>
         </div>
@@ -109,10 +109,10 @@ defineExpose({
             role="alert"
           >
             <div class="mb-3 flex items-center">
-                  <span
-                    class="mr-2 bg-orange-100 px-2.5 py-0.5 text-sm font-semibold text-orange-800 dark:bg-orange-200 dark:text-orange-900"
-                  >{{ $t("nav.sidebar.cta.header") }}</span
-                  >
+              <span
+                class="mr-2 bg-orange-100 px-2.5 py-0.5 text-sm font-semibold text-orange-800 dark:bg-orange-200 dark:text-orange-900"
+                >{{ $t("nav.sidebar.cta.header") }}</span
+              >
               <button
                 type="button"
                 class="-mx-1.5 -my-1.5 ml-auto inline-flex h-6 w-6 bg-primary-50 p-1 text-primary-900 hover:bg-primary-200 focus:ring-2 focus:ring-primary-400 dark:bg-primary-900 dark:text-primary-200 dark:hover:bg-primary-800"

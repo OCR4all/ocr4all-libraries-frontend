@@ -12,30 +12,17 @@ import { useToast } from "primevue/usetoast";
 import ProgressSpinner from "primevue/progressspinner";
 import Toast from "primevue/toast";
 
-const router = useRouter()
+const router = useRouter();
 
 const createDatasetDialog = defineAsyncComponent(
-  () =>
-    import(
-      "@/components/Repository/Datasets/Dialog/CreateDataset.vue"
-      ),
+  () => import("@/components/Repository/Datasets/Dialog/CreateDataset.vue"),
 );
 const editDatasetDialog = defineAsyncComponent(
-  () =>
-    import(
-      "@/components/Repository/Datasets/Dialog/EditDataset.vue"
-      ),
+  () => import("@/components/Repository/Datasets/Dialog/EditDataset.vue"),
 );
 const deleteDatasetDialog = defineAsyncComponent(
-  () =>
-    import(
-      "@/components/Repository/Datasets/Dialog/DeleteDataset.vue"
-      ),
+  () => import("@/components/Repository/Datasets/Dialog/DeleteDataset.vue"),
 );
-
-const rowClass = (data) => {
-  return ["cursor-pointer"];
-};
 
 const filters: Ref = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -49,7 +36,7 @@ const selectedDatasets = ref();
 
 const toast: ToastServiceMethods = useToast();
 
-async function downloadDataset(data){
+async function downloadDataset(data) {
   toast.add({
     severity: "info",
     summary: "Preparing download",
@@ -70,7 +57,9 @@ async function downloadDataset(data){
 
 async function refetch() {
   isRefetching.value = true;
-  const { isFetching, error, data } = await useCustomFetch(`/data/collection/list`)
+  const { isFetching, error, data } = await useCustomFetch(
+    `/data/collection/list`,
+  )
     .get()
     .json();
   datasets.value = data.value;
@@ -79,9 +68,9 @@ async function refetch() {
   }, 500);
 }
 
-await refetch()
+await refetch();
 
-const items = ref()
+const items = ref();
 const menu = ref();
 
 const toggle = (event, data) => {
@@ -93,21 +82,21 @@ const toggle = (event, data) => {
           label: "Edit",
           icon: "pi pi-pencil",
           command: () => {
-            openEditDialog(data)
+            openEditDialog(data);
           },
         },
         {
           label: "Download",
           icon: "pi pi-download",
           command: () => {
-            downloadDataset(data)
+            downloadDataset(data);
           },
         },
         {
           label: "Delete",
           icon: "pi pi-trash",
           command: () => {
-            openDeleteDialog(data)
+            openDeleteDialog(data);
           },
         },
       ],
@@ -115,8 +104,34 @@ const toggle = (event, data) => {
   ];
   menu.value.toggle(event);
 };
+const onRowContextMenu = (event) => {
+  items.value = [
+    {
+      label: "Edit",
+      icon: "pi pi-pencil",
+      command: () => {
+        openEditDialog(event.data);
+      },
+    },
+    {
+      label: "Download",
+      icon: "pi pi-download",
+      command: () => {
+        downloadDataset(event.data);
+      },
+    },
+    {
+      label: "Delete",
+      icon: "pi pi-trash",
+      command: () => {
+        openDeleteDialog(event.data);
+      },
+    },
+  ];
+  contextMenu.value.toggle(event.originalEvent);
+};
 
-function openDataset(id, name){
+function openDataset(id, name) {
   router.push({
     name: "Dataset",
     query: { id: id, name: name },
@@ -131,7 +146,7 @@ function openDeleteDialog(data) {
     },
     data: data,
     onClose: () => {
-      refetch()
+      refetch();
     },
   });
 }
@@ -143,7 +158,7 @@ function openCreateDialog() {
       modal: true,
     },
     onClose: () => {
-      refetch()
+      refetch();
     },
   });
 }
@@ -158,18 +173,25 @@ function openEditDialog(data) {
       data,
     },
     onClose: () => {
-      refetch()
+      refetch();
     },
   });
 }
+
+const contextMenu = ref();
 </script>
 <template>
   <Toast position="bottom-right" group="download-toast">
     <template #message="slotProps">
       <div class="flex-column align-items-start flex" style="flex: 1">
         <div class="align-items-center flex gap-4">
-          <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="transparent"
-                           animationDuration=".5s" aria-label="Custom ProgressSpinner" />
+          <ProgressSpinner
+            style="width: 50px; height: 50px"
+            stroke-width="8"
+            fill="transparent"
+            animation-duration=".5s"
+            aria-label="Custom ProgressSpinner"
+          />
           <div class="text-md my-3 text-surface-800">
             {{ slotProps.message.summary }}
           </div>
@@ -178,11 +200,11 @@ function openEditDialog(data) {
     </template>
   </Toast>
   <Toast />
-  <Menu ref="menu" :model="items" :popup="true">
+  <ContextMenu ref="contextMenu" :model="items">
     <template #item="{ item, props }">
       <a
         v-ripple
-        class="flex items-center group"
+        class="group flex items-center"
         :class="{
           'rounded-md hover:bg-red-500 hover:text-white':
             item.label === 'Delete',
@@ -190,13 +212,43 @@ function openEditDialog(data) {
         v-bind="props.action"
       >
         <span
-          :class="[item.icon, { 'text-red-500 group-hover:text-white':
-            item.label === 'Delete'}]" />
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
         <span
           :class="{
-          'text-red-500 group-hover:text-white':
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+          >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </ContextMenu>
+  <Menu ref="menu" :model="items" :popup="true">
+    <template #item="{ item, props }">
+      <a
+        v-ripple
+        class="group flex items-center"
+        :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
             item.label === 'Delete',
-        }">{{ item.label }}</span>
+        }"
+        v-bind="props.action"
+      >
+        <span
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+          :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+          >{{ item.label }}</span
+        >
       </a>
     </template>
   </Menu>
@@ -222,9 +274,7 @@ function openEditDialog(data) {
         </ActionButton>
       </div>
     </template>
-    <template #end>
-
-    </template>
+    <template #end> </template>
   </Toolbar>
   <ComponentContainer>
     <DataTable
@@ -233,25 +283,28 @@ function openEditDialog(data) {
       :value="datasets"
       :filters="filters"
       lazy
+      context-menu
       :paginator="true"
       :rows="5"
       :rows-per-page-options="[5, 10, 20, 50]"
-      :row-class="rowClass"
       :row-hover="true"
       table-style="min-width: 50rem"
-      @row-click="openDataset($event.data.id, $event.data.name)"
+      @row-contextmenu="onRowContextMenu"
     >
       <template #header>
-        <div class="grid grid-cols-1 sm:grid-cols-2 items-center justify-items-start sm:justify-items-between gap-2">
-          <h4 class="m-0 font-bold">
-            Manage datasets
-          </h4>
+        <div
+          class="sm:justify-items-between grid grid-cols-1 items-center justify-items-start gap-2 sm:grid-cols-2"
+        >
+          <h4 class="m-0 font-bold">Manage datasets</h4>
           <div class="flex justify-self-start sm:justify-self-end">
             <IconField>
               <InputIcon>
                 <i class="pi pi-search" />
               </InputIcon>
-              <InputText v-model="filters['global'].value" placeholder="Search" />
+              <InputText
+                v-model="filters['global'].value"
+                placeholder="Search"
+              />
             </IconField>
           </div>
         </div>
@@ -270,29 +323,37 @@ function openEditDialog(data) {
           <div
             class="align-items-center flex"
             :style="{
-                  height: '17px',
-                  'flex-grow': '1',
-                  overflow: 'hidden',
-                }"
+              height: '17px',
+              'flex-grow': '1',
+              overflow: 'hidden',
+            }"
           >
             <Skeleton width="60%" height="1rem" />
           </div>
+        </template>
+        <template #body="{ data }">
+          <p
+            class="cursor-pointer hover:underline"
+            @click="openDataset(data.id, data.name)"
+          >
+            {{ data.name }}
+          </p>
         </template>
       </Column>
       <Column
         field="description"
         :header="
-              $t('pages.repository.overview.dataview.list.column.description')
-            "
+          $t('pages.repository.overview.dataview.list.column.description')
+        "
       >
         <template #loading>
           <div
             class="align-items-center flex"
             :style="{
-                  height: '17px',
-                  'flex-grow': '1',
-                  overflow: 'hidden',
-                }"
+              height: '17px',
+              'flex-grow': '1',
+              overflow: 'hidden',
+            }"
           >
             <Skeleton width="60%" height="1rem" />
           </div>
@@ -300,18 +361,16 @@ function openEditDialog(data) {
       </Column>
       <Column
         field="keywords"
-        :header="
-              $t('pages.repository.overview.dataview.list.column.keywords')
-            "
+        :header="$t('pages.repository.overview.dataview.list.column.keywords')"
       >
         <template #loading>
           <div
             class="align-items-center flex"
             :style="{
-                  height: '17px',
-                  'flex-grow': '1',
-                  overflow: 'hidden',
-                }"
+              height: '17px',
+              'flex-grow': '1',
+              overflow: 'hidden',
+            }"
           >
             <Skeleton width="60%" height="1rem" />
           </div>
@@ -319,8 +378,8 @@ function openEditDialog(data) {
         <template #body="slotProps">
           <div class="flex space-x-1">
             <Tag v-for="keyword of slotProps.data.keywords" :key="keyword">{{
-                keyword
-              }}</Tag>
+              keyword
+            }}</Tag>
           </div>
         </template>
       </Column>

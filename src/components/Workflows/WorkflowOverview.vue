@@ -21,7 +21,7 @@ import { Router } from "vue-router";
 
 import { useToast } from "primevue/usetoast";
 
-const selectedWorkflow = ref()
+const selectedWorkflow = ref();
 
 const editWorkflowDialog = defineAsyncComponent(
   () => import("@/components/Workflows/Dialog/EditDialog.vue"),
@@ -60,14 +60,14 @@ const toggle = (event, data) => {
           label: "Edit",
           icon: "pi pi-pencil",
           command: () => {
-            openEditDialog(data)
+            openEditDialog(data);
           },
         },
         {
           label: "Delete",
           icon: "pi pi-trash",
           command: () => {
-            openDeleteDialog(data)
+            openDeleteDialog(data);
           },
         },
       ],
@@ -184,22 +184,26 @@ refetch();
   <Menu ref="menu" :model="items" :popup="true">
     <template #item="{ item, props }">
       <a
-          v-ripple
-          class="flex items-center group"
-          :class="{
+        v-ripple
+        class="group flex items-center"
+        :class="{
           'rounded-md hover:bg-red-500 hover:text-white':
             item.label === 'Delete',
         }"
-          v-bind="props.action"
+        v-bind="props.action"
       >
         <span
-            :class="[item.icon, { 'text-red-500 group-hover:text-white':
-            item.label === 'Delete'}]" />
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
         <span
-            :class="{
-          'text-red-500 group-hover:text-white':
-            item.label === 'Delete',
-        }">{{ item.label }}</span>
+          :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+          >{{ item.label }}</span
+        >
       </a>
     </template>
   </Menu>
@@ -239,12 +243,12 @@ refetch();
             {{ $t("pages.workflows.table.heading") }}
           </h2>
           <span class="p-input-icon-left ml-10">
-                  <button :disabled="isRefetching === true" @click="refetch">
-        <ArrowPathIcon
-            :class="{ 'animate-spin': isRefetching }"
-            class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
-        />
-      </button>
+            <button :disabled="isRefetching === true" @click="refetch">
+              <ArrowPathIcon
+                :class="{ 'animate-spin': isRefetching }"
+                class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
+              />
+            </button>
             <InputText
               v-model="filters['global'].value"
               :placeholder="$t('pages.workflows.table.search.placeholder')"

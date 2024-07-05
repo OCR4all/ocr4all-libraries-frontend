@@ -61,9 +61,7 @@ const actionMenuItems = ref([
   },
 ]);
 
-async function loadImage(){
-
-}
+async function loadImage() {}
 
 function downloadFolio() {
   useCustomFetch(
@@ -197,10 +195,7 @@ defineExpose({
       <div
         class="mx-4 mt-4 h-fit w-fit self-center justify-self-center text-surface-700"
       >
-        <Image
-          v-if="src"
-          @show="loadImage"
-          alt="Image" preview>
+        <Image v-if="src" @show="loadImage" alt="Image" preview>
           <template #indicatoricon>
             <i class="pi pi-search"></i>
           </template>

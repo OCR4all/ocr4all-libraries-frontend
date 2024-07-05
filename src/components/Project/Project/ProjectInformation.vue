@@ -66,97 +66,105 @@ async function deleteProject() {
 
 <template>
   <Toast />
-  <div class="grid grid-cols-4 gap-4">
-    <div class="col-span-4 flex flex-col">
-      <label
-        for="text"
-        class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
-        >{{ $t("pages.projects.project.information.form.name") }}</label
-      >
-      <InputText v-model="name" type="text" />
-    </div>
+  <ComponentContainer>
+    <div class="grid grid-cols-4 gap-4">
+      <div class="col-span-4 flex flex-col">
+        <label
+          for="text"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
+          >{{ $t("pages.projects.project.information.form.name") }}</label
+        >
+        <InputText v-model="name" type="text" />
+      </div>
 
-    <div class="col-span-4 flex flex-col">
-      <label
-        for="id"
-        class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
-        >{{ $t("pages.projects.project.information.form.id") }}</label
-      >
-      <InputText v-model="id" disabled type="id" />
-    </div>
+      <div class="col-span-4 flex flex-col">
+        <label
+          for="id"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
+          >{{ $t("pages.projects.project.information.form.id") }}</label
+        >
+        <InputText v-model="id" disabled type="id" />
+      </div>
 
-    <div class="col-span-4 flex flex-col">
-      <label
-        for="keywords"
-        class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
-        >{{ $t("pages.projects.project.information.form.keywords") }}</label
-      >
-      <Chips v-model="keywords" />
-    </div>
+      <div class="col-span-4 flex flex-col">
+        <label
+          for="keywords"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
+          >{{ $t("pages.projects.project.information.form.keywords") }}</label
+        >
+        <Chips v-model="keywords" />
+      </div>
 
-    <div class="col-span-4 flex flex-col">
-      <label
-        for="state"
-        class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
-        >{{ $t("pages.projects.project.information.form.state") }}</label
-      >
-      <Dropdown
-        v-model="state"
-        :options="states"
-        option-label="name"
-        placeholder="Select a City"
-        class="md:w-14rem w-full"
-      />
-    </div>
+      <div class="col-span-4 flex flex-col">
+        <label
+          for="state"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
+          >{{ $t("pages.projects.project.information.form.state") }}</label
+        >
+        <Dropdown
+          v-model="state"
+          :options="states"
+          option-label="name"
+          placeholder="Select a City"
+          class="md:w-14rem w-full"
+        />
+      </div>
 
-    <div class="col-span-4 flex flex-col">
-      <label
-        for="description"
-        class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
-        >{{ $t("pages.projects.project.information.form.description") }}</label
-      >
-      <Textarea v-model="description" rows="5" cols="30" />
-    </div>
-    <button
-      class="col-span-4 inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
-      @click="update"
-    >
-      {{ $t("pages.projects.project.information.buttons.update") }}
-    </button>
-    <button
-      type="button"
-      class="col-span-4 inline-block rounded-md bg-red-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 md:col-span-1 md:text-base"
-      @click="deleteDialogVisible = true"
-    >
-      {{ $t("pages.projects.project.information.buttons.delete") }}
-    </button>
-    <Dialog
-      v-model:visible="deleteDialogVisible"
-      modal
-      :header="$t('pages.projects.project.information.modals.delete.header')"
-      :style="{ width: '50vw' }"
-    >
-      <p class="pb-5 dark:text-surface-200">
-        {{ $t("pages.projects.project.information.modals.delete.content") }}
-      </p>
+      <div class="col-span-4 flex flex-col">
+        <label
+          for="description"
+          class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
+          >{{
+            $t("pages.projects.project.information.form.description")
+          }}</label
+        >
+        <Textarea v-model="description" rows="5" cols="30" />
+      </div>
       <button
-        type="button"
-        class="mb-2 mr-2 rounded-md border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-500 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
-        @click="deleteDialogVisible = false"
+        class="col-span-4 inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
+        @click="update"
       >
-        {{
-          $t("pages.projects.project.information.modals.delete.buttons.cancel")
-        }}
+        {{ $t("pages.projects.project.information.buttons.update") }}
       </button>
       <button
         type="button"
-        class="mb-2 mr-2 rounded-md bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-        @click="deleteProject"
+        class="col-span-4 inline-block rounded-md bg-red-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-red-300 transition duration-100 hover:bg-red-600 focus-visible:ring active:bg-red-700 md:col-span-1 md:text-base"
+        @click="deleteDialogVisible = true"
       >
-        {{
-          $t("pages.projects.project.information.modals.delete.buttons.delete")
-        }}
+        {{ $t("pages.projects.project.information.buttons.delete") }}
       </button>
-    </Dialog>
-  </div>
+      <Dialog
+        v-model:visible="deleteDialogVisible"
+        modal
+        :header="$t('pages.projects.project.information.modals.delete.header')"
+        :style="{ width: '50vw' }"
+      >
+        <p class="pb-5 dark:text-surface-200">
+          {{ $t("pages.projects.project.information.modals.delete.content") }}
+        </p>
+        <button
+          type="button"
+          class="mb-2 mr-2 rounded-md border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-500 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
+          @click="deleteDialogVisible = false"
+        >
+          {{
+            $t(
+              "pages.projects.project.information.modals.delete.buttons.cancel",
+            )
+          }}
+        </button>
+        <button
+          type="button"
+          class="mb-2 mr-2 rounded-md bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+          @click="deleteProject"
+        >
+          {{
+            $t(
+              "pages.projects.project.information.modals.delete.buttons.delete",
+            )
+          }}
+        </button>
+      </Dialog>
+    </div>
+  </ComponentContainer>
 </template>

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useToast } from "primevue/usetoast";
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
 
 const i18n = useI18n();
 
 const dialogRef = inject("dialogRef");
-const toast = useToast()
+const toast = useToast();
 
 const data = ref();
 
@@ -15,11 +15,7 @@ onMounted(() => {
 });
 
 async function deleteWorkflow() {
-  await useCustomFetch(
-    `/workflow/remove/${data.value.id}`,
-  )
-    .get()
-    .json();
+  await useCustomFetch(`/workflow/remove/${data.value.id}`).get().json();
   toast.add({
     severity: "success",
     summary: i18n.t("pages.workflows.toasts.remove.success.summary"),

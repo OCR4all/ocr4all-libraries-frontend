@@ -2,12 +2,12 @@
 import { IApplication } from "@/components/Admin/InstanceOverview/types";
 
 const props = defineProps<{
-  data: IApplication
+  data: IApplication;
 }>();
 
 const getDate = computed(() => {
-  return new Date(Date.parse(props.data["start"]))
-})
+  return new Date(Date.parse(props.data["start"]));
+});
 </script>
 <template>
   <InformationCard header="Application">
@@ -50,15 +50,22 @@ const getDate = computed(() => {
       <InformationCardEntry header="Active Profiles">
         <template #content>
           <ul class="list-disc">
-            <li v-for="profile of props.data['active-profiles']" :key="profile">{{profile}}</li>
+            <li v-for="profile of props.data['active-profiles']" :key="profile">
+              {{ profile }}
+            </li>
           </ul>
         </template>
       </InformationCardEntry>
       <InformationCardEntry header="Thread Pool Size">
         <template #content>
           <ul class="list-disc">
-            <li v-for="[name, size] of Object.entries(props.data['thread-pool-size'])" :key="name">
-              <span class="font-semibold">{{name}}:</span> {{size}}
+            <li
+              v-for="[name, size] of Object.entries(
+                props.data['thread-pool-size'],
+              )"
+              :key="name"
+            >
+              <span class="font-semibold">{{ name }}:</span> {{ size }}
             </li>
           </ul>
         </template>

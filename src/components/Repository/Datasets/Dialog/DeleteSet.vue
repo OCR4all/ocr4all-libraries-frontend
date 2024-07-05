@@ -3,20 +3,24 @@ const dialogRef = inject("dialogRef");
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
 const data = ref();
-const collection = ref()
+const collection = ref();
 
 onMounted(() => {
-  data.value = dialogRef.value.data.set
-  collection.value = dialogRef.value.data.collection
+  data.value = dialogRef.value.data.set;
+  collection.value = dialogRef.value.data.collection;
 });
 
 function deleteDataset() {
-  console.log(`/data/collection/remove/entity/${collection.value}?id=${data.value.id}`)
-  useCustomFetch(`/data/collection/set/remove/entity/${collection.value}?id=${data.value.id}`)
+  console.log(
+    `/data/collection/remove/entity/${collection.value}?id=${data.value.id}`,
+  );
+  useCustomFetch(
+    `/data/collection/set/remove/entity/${collection.value}?id=${data.value.id}`,
+  )
     .get()
     .then((response) => {
       if (response.error.value) {
-        console.log(response.error.value)
+        console.log(response.error.value);
       } else {
         dialogRef.value.close();
       }

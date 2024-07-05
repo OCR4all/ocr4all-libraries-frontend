@@ -2,7 +2,7 @@
 import { IWorkspace } from "@/components/Admin/InstanceOverview/types";
 
 const props = defineProps<{
-  workspace: IWorkspace
+  workspace: IWorkspace;
 }>();
 </script>
 <template>
@@ -46,8 +46,12 @@ const props = defineProps<{
       <InformationCardEntry header="Thread Pools">
         <template #content>
           <ul class="list-disc">
-            <li v-for="pool of props.workspace['thread-pools']" :key="pool.name">
-              <span class="font-semibold">{{pool.name}}:</span> {{pool.size}}
+            <li
+              v-for="pool of props.workspace['thread-pools']"
+              :key="pool.name"
+            >
+              <span class="font-semibold">{{ pool.name }}:</span>
+              {{ pool.size }}
             </li>
           </ul>
         </template>

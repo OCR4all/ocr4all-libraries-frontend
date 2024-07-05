@@ -61,10 +61,10 @@ refetch();
             <p>{{ $t("pages.dashboard.components.recent-projects.header") }}</p>
           </div>
           <div class="flex justify-end">
-            <button
-              @click="router.push('/project/overview')"
-            >
-              <div class="flex text-surface-600 hover:text-surface-800 dark:text-surface-400 hover:dark:text-surface-100">
+            <button @click="router.push('/project/overview')">
+              <div
+                class="flex text-surface-600 hover:text-surface-800 dark:text-surface-400 hover:dark:text-surface-100"
+              >
                 <p>View all</p>
                 <i class="pi pi-chevron-right pt-1"></i>
               </div>

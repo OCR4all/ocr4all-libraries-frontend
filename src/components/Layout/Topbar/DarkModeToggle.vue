@@ -6,7 +6,9 @@ const toggleDark = useToggle(isDark);
 </script>
 
 <template>
-  <div class="flex group px-2 text-sm self-align-middle hover:bg-surface-200/50 dark:hover:bg-surface-800/50 hover:rounded-md">
+  <div
+    class="self-align-middle group flex px-2 text-sm hover:rounded-md hover:bg-surface-200/50 dark:hover:bg-surface-800/50"
+  >
     <button @click="toggleDark()">
       <MoonIcon
         v-if="isDark"
