@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useToast } from "primevue/usetoast";
-import { getColor, getPalette, setPrimaryColors } from "@/utils/colors";
+import { getColor, generatePalette, setPrimaryColors } from "@/utils/colors";
 import { appearance } from "@/components/Settings/Schema/appearance";
 
 const toast = useToast();
@@ -17,7 +17,7 @@ function updateAppearance(values, { setErrors }) {
     values.primary.g,
     values.primary.b,
   ]);
-  const palette = getPalette(primary);
+  const palette = generatePalette(primary);
   try {
     setPrimaryColors(palette);
     isDark.value = values.darkMode;

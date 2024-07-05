@@ -3,7 +3,7 @@ import { updatePrimaryPalette } from "@primevue/themes";
 
 export const getColor = (color) => chroma(color);
 
-export const getPalette = (color) => {
+export const generatePalette = (color) => {
   const colors = chroma.scale(["white", color, "black"]);
   const palette = [];
 
@@ -175,18 +175,3 @@ export const setPrimaryColorsFromStorage = () => {
     );
   }
 };
-
-// {
-//     0: chroma("rgb(255,255,255)"),
-//     50: chroma("rgb(238,242,255)"),
-//     100: chroma("rgb(225,232,254)"),
-//     200: chroma("rgb(200,212,253)"),
-//     300: chroma("rgb(167,183,250)"),
-//     400: chroma("rgb(131,145,246)"),
-//     500: chroma("rgb(102,108,238)"),
-//     600: chroma("rgb(78,73,226)"),
-//     700: chroma("rgb(53,49,157)"),
-//     800: chroma("rgb(36,33,107)"),
-//     900: chroma("rgb(30,28,74)"),
-//     950: chroma("rgb(23,21,55)")
-// }
