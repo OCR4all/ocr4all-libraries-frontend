@@ -21,13 +21,11 @@ import { Router } from "vue-router";
 
 import { useToast } from "primevue/usetoast";
 
-const selectedWorkflow = ref();
-
 const editWorkflowDialog = defineAsyncComponent(
-  () => import("@/components/Workflows/Dialog/EditDialog.vue"),
+  () => import("@/components/Repository/Workflows/Dialog/EditDialog.vue"),
 );
 const deleteWorkflowDialog = defineAsyncComponent(
-  () => import("@/components/Workflows/Dialog/DeleteDialog.vue"),
+  () => import("@/components/Repository/Workflows/Dialog/DeleteDialog.vue"),
 );
 
 import { useI18n } from "vue-i18n";
@@ -57,6 +55,13 @@ const toggle = (event, data) => {
       label: "Actions",
       items: [
         {
+          label: "Open",
+          icon: "pi pi-eye",
+          command: () => {
+            loadWorkflow(data)
+          }
+        },
+        {
           label: "Edit",
           icon: "pi pi-pencil",
           command: () => {
@@ -74,6 +79,33 @@ const toggle = (event, data) => {
     },
   ];
   menu.value.toggle(event);
+};
+const contextMenu = ref();
+const onRowContextMenu = (event) => {
+  items.value = [
+    {
+      label: "Open",
+      icon: "pi pi-eye",
+      command: () => {
+        loadWorkflow(event.data)
+      }
+    },
+    {
+      label: "Edit",
+      icon: "pi pi-pencil",
+      command: () => {
+        openEditDialog(event.data);
+      },
+    },
+    {
+      label: "Delete",
+      icon: "pi pi-trash",
+      command: () => {
+        openDeleteDialog(event.data);
+      },
+    },
+  ];
+  contextMenu.value.toggle(event.originalEvent);
 };
 
 const loading = ref(true);
@@ -162,7 +194,6 @@ async function updateWorkflow() {
         life: 3000,
       });
     }
-    editDialogVisible.value = false;
     refetch();
   }
 }
@@ -173,14 +204,36 @@ function loadWorkflow(data) {
   router.push("/nodeflow");
 }
 
-const rowClass = (data) => {
-  return ["cursor-pointer"];
-};
-
 refetch();
 </script>
 <template>
   <Toast />
+  <ContextMenu ref="contextMenu" :model="items">
+    <template #item="{ item, props }">
+      <a
+        v-ripple
+        class="group flex items-center"
+        :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+        v-bind="props.action"
+      >
+        <span
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+          :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+        >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </ContextMenu>
   <Menu ref="menu" :model="items" :popup="true">
     <template #item="{ item, props }">
       <a
@@ -227,15 +280,15 @@ refetch();
       :rows="10"
       :loading="loading"
       :filters="filters"
+      context-menu
       :globalFilterFields="['label', 'description']"
       sortField="date"
       :sortOrder="-1"
-      :row-class="rowClass"
       :row-hover="true"
-      @row-click="loadWorkflow($event.data)"
       paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :rows-per-page-options="[10, 25, 50]"
       responsive-layout="scroll"
+      @row-contextmenu="onRowContextMenu"
     >
       <template #header>
         <div class="flex justify-between">
@@ -268,7 +321,16 @@ refetch();
         field="label"
         :header="$t('pages.workflows.table.columns.name')"
         :sortable="true"
-      ></Column>
+      >
+        <template #body="{ data }">
+          <p
+            class="cursor-pointer hover:underline"
+            @click="loadWorkflow(data)"
+          >
+            {{ data.label }}
+          </p>
+        </template>
+      </Column>
       <Column
         field="description"
         :header="$t('pages.workflows.table.columns.description')"

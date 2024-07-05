@@ -84,11 +84,6 @@ const routes = [
     ],
   },
   {
-    path: "/workflows",
-    name: "Workflows",
-    component: () => import("@/pages/WorkflowsPage.vue"),
-  },
-  {
     path: "/nodeflow",
     name: "NodeFlow",
     component: () => import("@/pages/NodeFlowPage.vue"),

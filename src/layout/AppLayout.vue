@@ -23,11 +23,12 @@ function toggleSidebarMobile() {
   <div class="h-screen bg-surface-100 dark:bg-surface-950">
     <div class="flex h-screen flex-1 overflow-hidden">
       <AppSidebar :mode="SidebarMode.Main" />
-      <AppSidebarMobile ref="mobileSidebarRef" />
+      <AppSidebarMobile :mode="SidebarMode.Main" ref="mobileSidebarRef" />
       <main
         class="flex-1 justify-center overflow-x-auto bg-surface-100 shadow-sm dark:bg-surface-950 lg:m-2 lg:rounded-xl lg:bg-surface-0 lg:dark:bg-surface-900"
       >
-        <AppTopbar @toggle-sidebar-mobile="toggleSidebarMobile" />
+        <AppTopbar
+          @toggle-sidebar-mobile="toggleSidebarMobile" />
         <div
           class="h-[calc(100vh-4rem)] w-full overflow-y-auto rounded-b-2xl lg:h-[calc(100vh-5rem)]"
           :class="{ 'p-8': props.padded }"

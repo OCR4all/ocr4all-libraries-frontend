@@ -1,12 +1,26 @@
 <script setup lang="ts">
 import { Cog6ToothIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 
-import { mainNavigation } from "@/layout/Sidebar";
+import { adminNavigation, mainNavigation } from "@/layout/Sidebar";
 import { useUiStore } from "@/stores/ui.store";
+import { SidebarMode } from "@/layout/Layout";
+
+const props = defineProps<{
+  mode: SidebarMode;
+}>();
 
 const uiStore = useUiStore();
 
 const router = useRouter();
+
+const navigation = computed(() => {
+  switch (props.mode) {
+    case SidebarMode.Main:
+      return mainNavigation;
+    case SidebarMode.Admin:
+      return adminNavigation;
+  }
+});
 
 const sidebarMobileOpen = ref(false);
 
@@ -43,7 +57,7 @@ defineExpose({
         <div class="grid h-full content-between overflow-y-auto">
           <ul class="m-0 list-none p-4">
             <router-link
-              v-for="(item, index) in mainNavigation"
+              v-for="(item, index) in navigation"
               :key="index"
               v-tooltip="{
                 value: $t(item.label),
@@ -91,7 +105,7 @@ defineExpose({
       <div class="flex-1 overflow-y-auto">
         <div class="mx-2 mb-10">
           <router-link
-            v-for="(item, index) in mainNavigation"
+            v-for="(item, index) in navigation"
             :key="index"
             :to="item.to"
             class="flex items-center rounded-md px-6 py-2.5 text-surface-900 hover:bg-surface-100 dark:text-white dark:hover:bg-surface-700"

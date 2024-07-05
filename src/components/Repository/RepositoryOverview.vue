@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import SelectButton from "primevue/selectbutton";
-import DatasetView from "@/components/Repository/Datasets/DatasetView.vue";
 
 const category = useLocalStorage(
   "ocr4all/frontend/repository/category",
@@ -20,6 +19,7 @@ const options = ref(["Images", "Datasets", "Models", "Workflows"]);
     <div>
       <ImageView v-if="category === 'Images'" />
       <DatasetView v-else-if="category === 'Datasets'" />
+      <WorkflowView v-else-if="category === 'Workflows'" />
     </div>
   </div>
 </template>
