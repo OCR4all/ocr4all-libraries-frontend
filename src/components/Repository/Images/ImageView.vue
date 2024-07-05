@@ -397,141 +397,139 @@ const onRowContextMenu = (event) => {
       </SelectButton>
     </template>
   </Toolbar>
-  <div class="rounded-md bg-surface-0 @container/content dark:bg-surface-800">
+  <ComponentContainer>
     <DataView
       class="bg-surface-50 dark:bg-surface-700"
       :value="containers"
       :layout="layout"
     >
       <template #list="slotProps">
-        <ComponentContainer>
-          <DataTable
-            ref="containerDataTable"
-            v-model:selection="selectedContainers"
-            :value="slotProps.items"
-            :filters="filters"
-            contextMenu
-            @rowContextmenu="onRowContextMenu"
-            lazy
-            :paginator="true"
-            :rows="5"
-            :rows-per-page-options="[5, 10, 20, 50]"
-            :row-hover="true"
-            table-style="min-width: 50rem"
+        <DataTable
+          ref="containerDataTable"
+          v-model:selection="selectedContainers"
+          :value="slotProps.items"
+          :filters="filters"
+          contextMenu
+          @rowContextmenu="onRowContextMenu"
+          lazy
+          :paginator="true"
+          :rows="5"
+          :rows-per-page-options="[5, 10, 20, 50]"
+          :row-hover="true"
+          table-style="min-width: 50rem"
+        >
+          <template #header>
+            <div
+              class="sm:justify-items-between grid grid-cols-1 items-center justify-items-start gap-2 sm:grid-cols-2"
+            >
+              <h4 class="m-0 font-bold">
+                {{ $t("pages.repository.overview.dataview.list.header") }}
+              </h4>
+              <div class="flex justify-self-start sm:justify-self-end">
+                <IconField>
+                  <InputIcon>
+                    <i class="pi pi-search" />
+                  </InputIcon>
+                  <InputText
+                    v-model="filters['global'].value"
+                    placeholder="Search"
+                  />
+                </IconField>
+              </div>
+            </div>
+          </template>
+          <Column
+            selection-mode="multiple"
+            style="width: 3rem"
+            :exportable="false"
+          ></Column>
+          <Column
+            field="name"
+            :header="
+              $t('pages.repository.overview.dataview.list.column.name')
+            "
+            sortable
           >
-            <template #header>
+            <template #loading>
               <div
-                class="sm:justify-items-between grid grid-cols-1 items-center justify-items-start gap-2 sm:grid-cols-2"
+                class="align-items-center flex"
+                :style="{
+                  height: '17px',
+                  'flex-grow': '1',
+                  overflow: 'hidden',
+                }"
               >
-                <h4 class="m-0 font-bold">
-                  {{ $t("pages.repository.overview.dataview.list.header") }}
-                </h4>
-                <div class="flex justify-self-start sm:justify-self-end">
-                  <IconField>
-                    <InputIcon>
-                      <i class="pi pi-search" />
-                    </InputIcon>
-                    <InputText
-                      v-model="filters['global'].value"
-                      placeholder="Search"
-                    />
-                  </IconField>
-                </div>
+                <Skeleton width="60%" height="1rem" />
               </div>
             </template>
-            <Column
-              selection-mode="multiple"
-              style="width: 3rem"
-              :exportable="false"
-            ></Column>
-            <Column
-              field="name"
-              :header="
-                $t('pages.repository.overview.dataview.list.column.name')
-              "
-              sortable
-            >
-              <template #loading>
-                <div
-                  class="align-items-center flex"
-                  :style="{
-                    height: '17px',
-                    'flex-grow': '1',
-                    overflow: 'hidden',
-                  }"
-                >
-                  <Skeleton width="60%" height="1rem" />
-                </div>
-              </template>
-              <template #body="{ data }">
-                <p
-                  class="cursor-pointer hover:underline"
-                  @click="openContainer(data.id, data.name)"
-                >
-                  {{ data.name }}
-                </p>
-              </template>
-            </Column>
-            <Column
-              field="description"
-              :header="
-                $t('pages.repository.overview.dataview.list.column.description')
-              "
-            >
-              <template #loading>
-                <div
-                  class="align-items-center flex"
-                  :style="{
-                    height: '17px',
-                    'flex-grow': '1',
-                    overflow: 'hidden',
-                  }"
-                >
-                  <Skeleton width="60%" height="1rem" />
-                </div>
-              </template>
-            </Column>
-            <Column
-              field="keywords"
-              :header="
-                $t('pages.repository.overview.dataview.list.column.keywords')
-              "
-            >
-              <template #loading>
-                <div
-                  class="align-items-center flex"
-                  :style="{
-                    height: '17px',
-                    'flex-grow': '1',
-                    overflow: 'hidden',
-                  }"
-                >
-                  <Skeleton width="60%" height="1rem" />
-                </div>
-              </template>
-              <template #body="slotProps">
-                <Chip
-                  v-for="keyword of slotProps.data.keywords"
-                  :key="keyword"
-                  >{{ keyword }}</Chip
-                >
-              </template>
-            </Column>
-            <Column :exportable="false" style="min-width: 8rem">
-              <template #body="{ data }">
-                <div class="space-y-2">
-                  <Button
-                    type="button"
-                    icon="pi pi-ellipsis-v"
-                    text
-                    severity="secondary"
-                    @click="toggle($event, data)"
-                  />
-                </div>
-              </template>
-            </Column>
-          </DataTable>
-        </ComponentContainer>
+            <template #body="{ data }">
+              <p
+                class="cursor-pointer hover:underline"
+                @click="openContainer(data.id, data.name)"
+              >
+                {{ data.name }}
+              </p>
+            </template>
+          </Column>
+          <Column
+            field="description"
+            :header="
+              $t('pages.repository.overview.dataview.list.column.description')
+            "
+          >
+            <template #loading>
+              <div
+                class="align-items-center flex"
+                :style="{
+                  height: '17px',
+                  'flex-grow': '1',
+                  overflow: 'hidden',
+                }"
+              >
+                <Skeleton width="60%" height="1rem" />
+              </div>
+            </template>
+          </Column>
+          <Column
+            field="keywords"
+            :header="
+              $t('pages.repository.overview.dataview.list.column.keywords')
+            "
+          >
+            <template #loading>
+              <div
+                class="align-items-center flex"
+                :style="{
+                  height: '17px',
+                  'flex-grow': '1',
+                  overflow: 'hidden',
+                }"
+              >
+                <Skeleton width="60%" height="1rem" />
+              </div>
+            </template>
+            <template #body="slotProps">
+              <Chip
+                v-for="keyword of slotProps.data.keywords"
+                :key="keyword"
+              >{{ keyword }}</Chip
+              >
+            </template>
+          </Column>
+          <Column :exportable="false" style="min-width: 8rem">
+            <template #body="{ data }">
+              <div class="space-y-2">
+                <Button
+                  type="button"
+                  icon="pi pi-ellipsis-v"
+                  text
+                  severity="secondary"
+                  @click="toggle($event, data)"
+                />
+              </div>
+            </template>
+          </Column>
+        </DataTable>
       </template>
 
       <template #grid="slotProps">
@@ -553,5 +551,5 @@ const onRowContextMenu = (event) => {
         </div>
       </template>
     </DataView>
-  </div>
+  </ComponentContainer>
 </template>

@@ -226,6 +226,7 @@ getProviders();
             <Button icon="pi pi-refresh" text rounded @click="getProviders" />
             <Button
               icon="pi pi-ellipsis-v"
+              severity="contrast"
               :disabled="selectedProviders.length === 0"
               text
               rounded
@@ -292,6 +293,7 @@ getProviders();
         <template #body="{ data }">
           <Button
             icon="pi pi-ellipsis-v"
+            severity="contrast"
             text
             rounded
             aria-label="Filter"

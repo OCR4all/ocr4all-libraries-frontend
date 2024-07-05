@@ -240,10 +240,6 @@ const hideUploadToast = () => {
 
 const selectedSets = ref();
 
-const rowClass = (data) => {
-  return ["cursor-pointer"];
-};
-
 const filters: RemovableRef<any> = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
@@ -358,7 +354,6 @@ refresh();
       </a>
     </template>
   </Menu>
-  <div class="@container/content">
     <Toolbar class="mb-4">
       <template #start>
         <FileUpload
@@ -390,7 +385,7 @@ refresh();
             <SelectButton
               v-model="layout"
               :options="options"
-              :allowEmpty="false"
+              :allow-empty="false"
             >
               <template #option="{ option }">
                 <i
@@ -407,15 +402,13 @@ refresh();
             v-model:selection="selectedSets"
             :value="slotProps.items"
             :filters="filters"
-            lazy
-            contextMenu
-            @rowContextmenu="onRowContextMenu"
+            context-menu
             :paginator="true"
             :rows="5"
             :rows-per-page-options="[5, 10, 20, 50]"
-            :row-class="rowClass"
             :row-hover="true"
             table-style="min-width: 50rem"
+            @row-contextmenu="onRowContextMenu"
           >
             <template #header>
               <div
@@ -518,5 +511,4 @@ refresh();
         <template #grid="slotProps"> </template>
       </DataView>
     </ComponentContainer>
-  </div>
 </template>

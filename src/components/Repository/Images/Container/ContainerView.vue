@@ -339,9 +339,7 @@ refresh();
       </section>
     </template>
   </Toast>
-  <div
-    class="rounded-xl bg-surface-0 p-4 @container/content dark:bg-surface-900"
-  >
+  <ComponentContainer>
     <div class="m-4 flex space-x-4">
       <FileUpload
         ref="fileUpload"
@@ -450,5 +448,5 @@ refresh();
         {{ t("pages.repository.container.overview.fallback-cards") }}
       </template>
     </Suspense>
-  </div>
+  </ComponentContainer>
 </template>
