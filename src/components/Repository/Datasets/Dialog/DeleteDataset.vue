@@ -8,16 +8,18 @@ onMounted(() => {
   data.value = dialogRef.value.data;
 });
 
-function deleteDataset() {
-  useCustomFetch(`/data/collection/remove?id=${data.value.id}`)
-    .get()
-    .then((response) => {
-      if (response.error.value) {
-        console.log(response.error.value);
-      } else {
-        dialogRef.value.close();
-      }
-    });
+async function deleteDataset() {
+  for(const dataset of data.value){
+   await useCustomFetch(`/data/collection/remove?id=${dataset.id}`)
+     .get()
+     .then((response) => {
+       if (response.error.value) {
+         console.log(response.error.value);
+       } else {
+         dialogRef.value.close();
+       }
+     });
+  }
 }
 </script>
 <template>

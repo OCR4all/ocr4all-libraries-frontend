@@ -411,7 +411,6 @@ const onRowContextMenu = (event) => {
           :filters="filters"
           contextMenu
           @rowContextmenu="onRowContextMenu"
-          lazy
           :paginator="true"
           :rows="5"
           :rows-per-page-options="[5, 10, 20, 50]"

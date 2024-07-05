@@ -96,7 +96,7 @@ const toggle = (event, data) => {
           label: "Delete",
           icon: "pi pi-trash",
           command: () => {
-            openDeleteDialog(data);
+            openDeleteDialog([data]);
           },
         },
       ],
@@ -268,7 +268,7 @@ const contextMenu = ref();
           type="delete"
           size="large"
           :disabled="!selectedDatasets || !selectedDatasets.length"
-          @click="openDeleteDialog"
+          @click="openDeleteDialog(selectedDatasets)"
         >
           {{ $t("pages.repository.overview.toolbar.button.delete") }}
         </ActionButton>
