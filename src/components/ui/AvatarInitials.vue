@@ -45,13 +45,13 @@ const getTextSize = computed(() => {
     case Size.sm:
       return "text-[0.6rem]";
     case Size.md:
-      return "text-[1rem]";
+      return "text-[0.8rem]";
     case Size.lg:
-      return "text-[1.2rem]";
-    case Size.xl:
-      return "text-[1.4rem]";
-    default:
       return "text-[1rem]";
+    case Size.xl:
+      return "text-[1.2rem]";
+    default:
+      return "text-[0.8rem]";
   }
 });
 

@@ -10,5 +10,7 @@ useHead({
 </script>
 
 <template>
-  <AppLayout padded> </AppLayout>
+  <AppLayout padded>
+    <router-view />
+  </AppLayout>
 </template>

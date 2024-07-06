@@ -318,21 +318,21 @@
           "toast": {
             "upload": {
               "headless": {
-                "summary": "Folios are uploaded"
+                "summary": "Uploading your folios."
               },
               "success": {
                 "summary": "Success",
-                "detail": "Folios were uploaded"
+                "detail": "Folios were uploaded."
               },
               "error": {
                 "summary": "Error",
-                "detail": "Folios couldn't get deleted"
+                "detail": "Folios couldn't get deleted."
               }
             },
             "delete-selected": {
               "success": {
                 "summary": "Success",
-                "detail": "Folios were deleted"
+                "detail": "Folios were deleted."
               }
             }
           },

@@ -2,7 +2,6 @@
 import FileUpload, { FileUploadUploaderEvent } from "primevue/fileupload";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useToast } from "primevue/usetoast";
-import Dropdown from "primevue/dropdown";
 
 const toast: ToastServiceMethods = useToast();
 import Toast from "primevue/toast";
@@ -61,7 +60,6 @@ const showUploadToast = () => {
 };
 
 const hideUploadToast = () => {
-  //code before the pause
   setTimeout(function () {
     toast.removeGroup("headless");
     uploadToastVisible.value = false;
@@ -297,16 +295,13 @@ refresh();
     @close="uploadToastVisible = false"
   >
     <template #container="{ message, closeCallback }">
-      <section
-        class="grid w-full justify-center gap-3 p-3"
-        style="border-radius: 10px"
-      >
+      <section class="flex flex-col p-4 gap-4 w-full bg-surface-950/50 dark:bg-surface-200/50 backdrop-blur-sm rounded-xl">
         <div class="flex w-full gap-3 justify-self-center">
           <i
-            class="pi pi-cloud-upload text-2xl text-primary-950 dark:text-primary-0"
+            class="pi pi-cloud-upload text-2xl text-surface-0 dark:text-primary-0"
           ></i>
           <p
-            class="m-0 text-base font-semibold text-primary-950 dark:text-primary-0"
+            class="m-0 text-base font-semibold text-surface-0 dark:text-primary-0"
           >
             {{ message.summary }}
           </p>
@@ -314,7 +309,7 @@ refresh();
             {{ message.detail }}
           </p>
         </div>
-        <div v-if="progress < 100">
+        <div v-if="progress < 100" class="w-full">
           <ProgressBar :value="progress"></ProgressBar>
         </div>
         <div
@@ -323,18 +318,15 @@ refresh();
         >
           <ProgressBar mode="indeterminate"></ProgressBar>
           <p
-            class="self-center font-semibold text-surface-950 dark:text-surface-50"
+            class="self-center font-semibold text-surface-50"
           >
             Finalizing upload
           </p>
         </div>
-        <div class="mb-3 flex gap-3 justify-self-center">
-          <Button
-            label="Close"
-            text
-            class="px-2 py-1"
-            @click="closeCallback"
-          ></Button>
+        <div class="flex gap-4 mb-4 justify-end">
+          <Button label="Cancel" size="small" @click="closeCallback">
+            <p class="text-white font-semibold">Cancel</p>
+          </Button>
         </div>
       </section>
     </template>
@@ -352,12 +344,6 @@ refresh();
         :custom-upload="true"
         :multiple="true"
         accept="image/*"
-        :pt="{
-          chooseButton: {
-            class:
-              'rounded-md flex bg-primary-600 p-4 text-white cursor-pointer',
-          },
-        }"
         :max-file-size="1000000000"
         @uploader="uploader"
       >
@@ -381,7 +367,7 @@ refresh();
           >
             {{ t("pages.repository.container.overview.sort-by") }}
           </p>
-          <Dropdown
+          <Select
             v-model="selectedSortMode"
             :options="sortModes"
             option-label="name"
