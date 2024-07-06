@@ -23,7 +23,7 @@ const routes = [
     children: [
       {
         path: "overview",
-        name: "Repository Overview",
+        name: "repository-overview",
         component: () =>
           import("@/components/Repository/RepositoryOverview.vue"),
       },

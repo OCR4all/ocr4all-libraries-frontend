@@ -65,7 +65,7 @@ refetch();
             </button>
             <button
               v-tooltip="'Open workflow overview'"
-              @click="router.push('/workflows')"
+              @click="router.push({ name: 'repository-overview', query: { section: 'Workflows' }})"
             >
               <ArrowUpOnSquareIcon
                 data-tooltip-target="tooltip-project-overview"
