@@ -90,8 +90,21 @@ const routes = [
   },
   {
     path: "/training",
-    name: "Training",
+    name: "training",
+    redirect: "/training/overview",
     component: () => import("@/pages/TrainingPage.vue"),
+    children: [
+      {
+        path: "overview",
+        name: "training_overview",
+        component: () => import("@/components/Training/TrainingOverview.vue"),
+      },
+      {
+        path: "calamari",
+        name: "training_calamari",
+        component: () => import("@/components/Training/Calamari/CalamariView.vue"),
+      },
+    ]
   },
   {
     path: "/login",

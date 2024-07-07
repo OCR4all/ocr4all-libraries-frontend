@@ -20,6 +20,11 @@ function toggleSidebarMobile() {
 <template>
   <DynamicDialog />
   <Toast />
+  <Toast position="top-center" group="jobs">
+    <template #container="{ message, closeCallback }">
+      <p>Global</p>
+    </template>
+  </Toast>
   <div class="h-screen bg-surface-100 dark:bg-surface-950">
     <div class="flex h-screen flex-1 overflow-hidden">
       <AppSidebar :mode="SidebarMode.Main" />

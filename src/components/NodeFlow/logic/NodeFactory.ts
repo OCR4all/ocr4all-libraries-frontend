@@ -6,6 +6,7 @@ import {
   NumberInterface,
   SelectInterface,
   TextInputInterface,
+  displayInSidebar
 } from "baklavajs";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
@@ -66,7 +67,7 @@ function createNodeType(nodeData: any) {
     switch (entry.type) {
       case "string":
         inputs[entry.argument] = () =>
-          new TextInputInterface(entry.argument, entry.value).setPort(false);
+          new TextInputInterface(entry.argument, entry.value).setHidden(true).use(displayInSidebar, true).setPort(false);
         break;
       case "select":
         inputs[entry.argument] = () =>
@@ -74,11 +75,11 @@ function createNodeType(nodeData: any) {
             entry.argument,
             untangleItems(entry.items, "default"),
             untangleItems(entry.items, "entries"),
-          ).setPort(false);
+          ).use(displayInSidebar, true).setHidden(true).setPort(false);
         break;
       case "integer":
         inputs[entry.argument] = () =>
-          new IntegerInterface(entry.argument, entry.value).setPort(false);
+          new IntegerInterface(entry.argument, entry.value).setHidden(true).use(displayInSidebar, true).setPort(false);
         break;
       case "decimal":
         inputs[entry.argument] = () =>
@@ -87,17 +88,17 @@ function createNodeType(nodeData: any) {
             entry.value,
             entry.min,
             entry.max,
-          ).setPort(false);
+          ).use(displayInSidebar, true).setHidden(true).setPort(false);
         break;
       case "boolean":
         inputs[entry.argument] = () =>
-          new CheckboxInterface(entry.argument, entry.value).setPort(false);
+          new CheckboxInterface(entry.argument, entry.value).setHidden(true).use(displayInSidebar, true).setPort(false);
         break;
     }
   }
   inputs["Input"] = () => new NodeInterface("Input", 0);
-  inputs["Description"] = () =>
-    new NodeInterface("Description", descriptions)
+  inputs["Parameters"] = () =>
+    new NodeInterface("Parameters", descriptions)
       .setComponent(markRaw(SidebarButton))
       .setPort(false);
 

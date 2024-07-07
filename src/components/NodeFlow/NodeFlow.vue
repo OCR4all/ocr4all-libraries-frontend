@@ -237,9 +237,9 @@ function togglePalette() {
         @toggle-palette="togglePalette"
       />
     </template>
-    <template #sidebar>
-      <CSidebar />
-    </template>
+<!--    <template #sidebar>-->
+<!--      <CSidebar />-->
+<!--    </template>-->
     <template #palette>
       <CPalette ref="palette" />
     </template>

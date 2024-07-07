@@ -8,7 +8,6 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import Image from "primevue/image";
 import Chip from "primevue/chip";
 import Skeleton from "primevue/skeleton";
-import DataTable from "primevue/datatable";
 const emit = defineEmits(["import-folios"]);
 
 function importFolios() {

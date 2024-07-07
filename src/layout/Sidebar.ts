@@ -4,7 +4,6 @@ import {
   HomeIcon,
   QueueListIcon,
   ServerIcon,
-  Square3Stack3DIcon,
   Squares2X2Icon,
   UsersIcon,
   UserGroupIcon,
