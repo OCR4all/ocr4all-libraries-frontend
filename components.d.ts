@@ -68,6 +68,7 @@ declare module 'vue' {
     InstanceTag: typeof import('./src/components/ui/InstanceTag.vue')['default']
     JournalDialog: typeof import('./src/components/Admin/InstanceAdministration/JournalDialog.vue')['default']
     ModeSelect: typeof import('./src/components/Layout/Topbar/ModeSelect.vue')['default']
+    ModeTag: typeof import('./src/components/ui/ModeTag.vue')['default']
     NewProject: typeof import('./src/components/Project/NewProject.vue')['default']
     NewSandbox: typeof import('./src/components/Project/Project/Sandbox/NewSandbox.vue')['default']
     NodeFlow: typeof import('./src/components/NodeFlow/NodeFlow.vue')['default']

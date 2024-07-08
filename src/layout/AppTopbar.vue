@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useAuthStore } from "@/stores/auth.store";
 import { Bars3CenterLeftIcon } from "@heroicons/vue/24/outline";
-import { useUiStore } from "@/stores/ui.store";
 const authStore = useAuthStore();
 
 const router = useRouter();
@@ -34,6 +33,7 @@ defineEmits(["toggle-sidebar-mobile"]);
       <BreadcrumbNavigation />
     </div>
     <div class="flex gap-x-0.5">
+      <ModeTag />
       <InstanceTag />
       <NotificationDropdown />
       <DarkModeToggle />

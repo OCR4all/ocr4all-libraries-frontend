@@ -50,7 +50,7 @@ refetch();
       <template #header>
         <div class="flex justify-between">
           <div>
-            <p>{{ $t("pages.dashboard.components.workflows.header") }}</p>
+            <p class="font-bold">{{ $t("pages.dashboard.components.workflows.header") }}</p>
           </div>
           <div class="flex justify-end">
             <button

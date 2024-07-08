@@ -42,6 +42,7 @@ refetch();
       :value="projects"
       :rows="5"
       :loading="initialLoading"
+      striped-rows
       @row-click="router.push(`/project/${$event.data.id}/view`)"
       :rowClass="rowClass"
       :row-hover="true"
@@ -58,16 +59,17 @@ refetch();
       <template #header>
         <div class="flex justify-between">
           <div>
-            <p>{{ $t("pages.dashboard.components.recent-projects.header") }}</p>
+            <p class="font-bold">{{ $t("pages.dashboard.components.recent-projects.header") }}</p>
           </div>
           <div class="flex justify-end">
-            <button @click="router.push('/project/overview')">
-              <div
-                class="flex text-surface-600 hover:text-surface-800 dark:text-surface-400 hover:dark:text-surface-100"
-              >
-                <p>View all</p>
-                <i class="pi pi-chevron-right pt-1"></i>
-              </div>
+            <button
+              v-tooltip.left="'Open project overview'"
+              @click="router.push('/project/overview')"
+            >
+              <ArrowUpOnSquareIcon
+                data-tooltip-target="tooltip-project-overview"
+                class="h-6 w-6 text-surface-500 hover:cursor-pointer hover:text-black dark:text-surface-200 dark:hover:text-white"
+              />
             </button>
           </div>
         </div>
