@@ -42,7 +42,6 @@ refetch();
       :value="projects"
       :rows="5"
       :loading="initialLoading"
-      striped-rows
       @row-click="router.push(`/project/${$event.data.id}/view`)"
       :rowClass="rowClass"
       :row-hover="true"

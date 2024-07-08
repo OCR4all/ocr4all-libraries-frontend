@@ -1,7 +1,21 @@
 <script setup lang="ts">
 
+import {useUiStore} from "@/stores/ui.store";
+
 const datasets = ref()
 const parameters = ref()
+
+const uiStore = useUiStore();
+uiStore.breadcrumb = [
+  {
+    label: "Training",
+    to: "/training/overview"
+  },
+  {
+    label: "Calamari",
+  },
+];
+
 
 function run(){
   datasets.value.getDatasets()

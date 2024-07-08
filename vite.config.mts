@@ -8,6 +8,7 @@ import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import VueDevTools from "vite-plugin-vue-devtools";
 import { visualizer } from "rollup-plugin-visualizer";
 import Icons from 'unplugin-icons/vite'
+import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import { unheadVueComposablesImports } from "@unhead/vue";
 import { version as pkgVersion } from "./package.json";
 
@@ -43,7 +44,13 @@ export default defineConfig({
     vue(),
     visualizer(),
     Icons({
-      compiler: 'vue3'
+      compiler: 'vue3',
+      customCollections: {
+        'custom-logos': FileSystemIconLoader(
+            './public/icons',
+            svg => svg.replace(/^<svg /, '<svg fill="currentColor" '),
+        ),
+      }
     }),
     VueI18nPlugin({
       /* options */

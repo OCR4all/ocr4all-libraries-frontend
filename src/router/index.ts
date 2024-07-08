@@ -107,6 +107,11 @@ const routes = [
     ]
   },
   {
+    path: "/evaluation",
+    name: "evaluation",
+    component: () => import("@/pages/EvaluationPage.vue"),
+  },
+  {
     path: "/login",
     name: "Login",
     component: () => import("@/pages/LoginPage.vue"),
