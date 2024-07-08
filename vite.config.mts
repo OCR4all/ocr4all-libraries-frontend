@@ -7,6 +7,7 @@ import { defineConfig } from "vite";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import VueDevTools from "vite-plugin-vue-devtools";
 import { visualizer } from "rollup-plugin-visualizer";
+import Icons from 'unplugin-icons/vite'
 import { unheadVueComposablesImports } from "@unhead/vue";
 import { version as pkgVersion } from "./package.json";
 
@@ -41,6 +42,9 @@ export default defineConfig({
     VueDevTools(),
     vue(),
     visualizer(),
+    Icons({
+      compiler: 'vue3'
+    }),
     VueI18nPlugin({
       /* options */
       // locale messages resource pre-compile option

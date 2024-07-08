@@ -54,7 +54,7 @@ refetch();
           </div>
           <div class="flex justify-end">
             <button
-              v-tooltip="'Refresh'"
+              v-tooltip.left="'Refresh'"
               :disabled="isRefetching === true"
               @click="refetch"
             >
@@ -64,7 +64,7 @@ refetch();
               />
             </button>
             <button
-              v-tooltip="'Open workflow overview'"
+              v-tooltip.left="'Open workflow overview'"
               @click="router.push({ name: 'repository-overview', query: { section: 'Workflows' }})"
             >
               <ArrowUpOnSquareIcon

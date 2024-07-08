@@ -1,4 +1,4 @@
-export function buildProcessorSchema(data) {
+export function buildProcessorSchema(data, grid: number = 1) {
   const processorSchema = [];
 
   for (const entry of data.entries) {
@@ -66,7 +66,7 @@ export function buildProcessorSchema(data) {
     {
       $el: "div",
       attrs: {
-        class: "grid grid-cols-1",
+        class: `grid grid-cols-${grid}`,
       },
       children: processorSchema,
     },

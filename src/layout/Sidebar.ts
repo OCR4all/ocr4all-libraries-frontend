@@ -11,12 +11,14 @@ import {
   InformationCircleIcon,
   CpuChipIcon,
 } from "@heroicons/vue/24/outline";
+import IconCompare from '~icons/carbon/compare'
 import { FunctionalComponent, HTMLAttributes, VNodeProps } from "vue";
 
 interface navigationEntry {
   to: string;
   label: string;
   icon: FunctionalComponent<HTMLAttributes & VNodeProps>;
+  children?: navigationEntry[]
 }
 
 export const mainNavigation: navigationEntry[] = [
@@ -29,6 +31,28 @@ export const mainNavigation: navigationEntry[] = [
     to: "/repository",
     label: "nav.sidebar.links.main.repository",
     icon: ServerIcon,
+    children: [
+      {
+        to: "/repository/overview?section=Images",
+        label: "Images",
+        icon: ServerIcon
+      },
+      {
+        to: "/repository?section=Datasets",
+        label: "Datasets",
+        icon: ServerIcon
+      },
+      {
+        to: "/repository?section=Models",
+        label: "Models",
+        icon: ServerIcon
+      },
+      {
+        to: "/repository?section=Workflows",
+        label: "Workflows",
+        icon: ServerIcon
+      }
+    ]
   },
   {
     to: "/project",
@@ -50,6 +74,11 @@ export const mainNavigation: navigationEntry[] = [
     label: "nav.sidebar.links.main.training",
     icon: AcademicCapIcon,
   },
+  {
+    to: "/evaluation",
+    label: "Evaluation",
+    icon: IconCompare,
+  }
 ];
 
 export const adminNavigation: navigationEntry[] = [

@@ -263,13 +263,14 @@ refetch();
   <Toolbar class="mb-4">
     <template #start>
       <div class="my-2 space-x-2">
-        <button
-          type="button"
-          class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+        <ActionButton
+          rounded
+          type="primary"
+          size="large"
           @click="router.push('/nodeflow')"
         >
           {{ $t("pages.workflows.toolbar.new") }}
-        </button>
+        </ActionButton>
       </div>
     </template>
   </Toolbar>

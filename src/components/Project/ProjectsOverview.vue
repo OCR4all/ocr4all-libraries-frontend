@@ -198,7 +198,7 @@ refetch();
 
       <template #end>
         <button
-          v-tooltip="'Refresh'"
+          v-tooltip.left="'Refresh'"
           :disabled="isRefetching === true"
           @click="refetch"
         >

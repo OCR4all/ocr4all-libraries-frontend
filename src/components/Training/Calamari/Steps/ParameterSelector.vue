@@ -12,12 +12,12 @@ useCustomFetch(`/spi/entity/${processor}`)
     .get()
     .json()
     .then((response) => {
-      buildProcessorFormSchema(response.data.value);
       console.log(response.data.value)
+      buildProcessorFormSchema(response.data.value, 2);
     });
 
-function buildProcessorFormSchema(data) {
-  schema.value = buildProcessorSchema(data);
+function buildProcessorFormSchema(data, cols: number) {
+  schema.value = buildProcessorSchema(data, cols);
 }
 
 function getParameters(){

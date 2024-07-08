@@ -46,12 +46,13 @@ defineExpose({
           <span>
             <Button
               type="button"
-              @click="closeCallback"
-              icon="pi pi-times"
-              rounded
-              severity="contrast"
               text
-            ></Button>
+              @click="closeCallback"
+            >
+              <p class="text-surface-800 dark:text-surface-200 hover:text-surface-950 hover:dark:text-surface-0">
+                <i class="pi pi-times"></i>
+              </p>
+            </Button>
           </span>
         </div>
         <div class="grid h-full content-between overflow-y-auto">
