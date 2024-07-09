@@ -436,3 +436,8 @@ refresh();
     </Suspense>
   </ComponentContainer>
 </template>
+<style>
+.p-fileupload-choose-button {
+  padding: 14px !important;
+}
+</style>
