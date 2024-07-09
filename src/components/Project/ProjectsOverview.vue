@@ -5,7 +5,6 @@ import Column from "primevue/column";
 import Toolbar from "primevue/toolbar";
 import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
-import Dropdown from "primevue/dropdown";
 
 import { ArrowPathIcon } from "@heroicons/vue/24/outline";
 
@@ -15,7 +14,23 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useUiStore } from "@/stores/ui.store";
 import Button from "primevue/button";
 
+const editDialog = defineAsyncComponent(
+  () =>
+    import(
+      "@/components/Project/Project/Dialog/EditDialog.vue"
+      ),
+);
+const deleteDialog = defineAsyncComponent(
+  () =>
+    import(
+      "@/components/Project/Project/Dialog/DeleteDialog.vue"
+      ),
+);
+
 const router = useRouter();
+
+import { useDialog } from "primevue/usedialog";
+const dialog = useDialog()
 
 const loading = ref(true);
 const isRefetching = ref(false);
@@ -106,12 +121,34 @@ const onRowContextMenu = (event) => {
     {
       label: "Edit",
       icon: "pi pi-pencil",
-      command: () => {},
+      command: () => {
+        dialog.open(editDialog, {
+          props: {
+            header: "Edit Project",
+            modal: true,
+          },
+          data: event.data,
+          onClose: () => {
+            refetch();
+          },
+        });
+      },
     },
     {
       label: "Delete",
       icon: "pi pi-trash",
-      command: () => {},
+      command: () => {
+        dialog.open(deleteDialog, {
+          props: {
+            header: "Delete Project",
+            modal: true,
+          },
+          data: event.data,
+          onClose: () => {
+            refetch();
+          },
+        });
+      },
     },
   ];
   contextMenu.value.show(event.originalEvent);
@@ -217,8 +254,7 @@ refetch();
         :rows="10"
         :loading="loading"
         scrollable
-        contextMenu
-        @rowContextmenu="onRowContextMenu"
+        context-menu
         filter-display="row"
         :global-filter-fields="['name', 'state', 'keywords']"
         sort-field="tracking.updated"
@@ -226,6 +262,7 @@ refetch();
         :row-hover="true"
         paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
         :rows-per-page-options="[10, 25, 50]"
+        @row-contextmenu="onRowContextMenu"
       >
         <template #header>
           <div
