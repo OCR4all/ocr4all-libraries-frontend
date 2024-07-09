@@ -302,7 +302,7 @@ useHead({
   >
     <template #container="{ message, closeCallback }">
       <section
-        class="grid w-full justify-center gap-3 bg-surface-0/40 p-3 backdrop-blur-sm"
+        class="grid w-full justify-center gap-3 bg-surface-100/70 dark:bg-surface-800/80 p-3 backdrop-blur-sm border dark:border-surface-600"
         style="border-radius: 10px"
       >
         <div class="flex w-full gap-3 justify-self-center">
