@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useStringToHexColor } from "@/composables/useStringToHexColor";
+import { stringToColour } from "@/utils/colors";
 
 enum Size {
   xs = "xs",
@@ -61,11 +61,12 @@ const isSelectable = computed(() => {
 </script>
 <template>
   <div
-    class="flex items-center justify-center rounded-full bg-primary-100 px-2 dark:bg-primary-200"
+    class="flex items-center justify-center rounded-full px-2"
     :class="[getSize, isSelectable]"
+    :style="{ 'background-color': stringToColour(props.name) }"
   >
     <span
-      class="font-medium text-gray-600 dark:text-surface-900"
+      class="font-medium text-white"
       :class="getTextSize"
     >
       {{ initials }}
