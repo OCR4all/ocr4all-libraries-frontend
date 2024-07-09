@@ -393,13 +393,6 @@ refresh();
           <Checkbox
             v-model="checked"
             :binary="true"
-            :pt="{
-              root: { class: 'z-50 pb-4' },
-              input: {
-                class:
-                  'peer absolute h-6 w-6 border border-solid cursor-pointer hover:bg-primary-200',
-              },
-            }"
             @update:model-value="updateTotalSelection"
           />
         </div>
