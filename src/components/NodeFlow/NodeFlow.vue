@@ -101,6 +101,10 @@ function newGraph() {
 
   uiStore.breadcrumb = [
     {
+      label: "Workflows",
+      to: "/workflows"
+    },
+    {
       label: "NodeFlow",
     },
   ];
@@ -176,6 +180,10 @@ async function loadWorkflow() {
     originalWorkflowName.value = data.value.metadata.label;
 
     uiStore.breadcrumb = [
+      {
+        label: "Workflows",
+        to: "/workflows"
+      },
       {
         label: "NodeFlow",
       },

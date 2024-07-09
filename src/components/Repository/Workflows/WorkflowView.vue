@@ -293,9 +293,9 @@ refetch();
     >
       <template #header>
         <div class="flex justify-between">
-          <h2 class="my-4 text-xl">
+          <h4 class="m-0 font-bold self-center">
             {{ $t("pages.workflows.table.heading") }}
-          </h2>
+          </h4>
           <span class="p-input-icon-left ml-10">
             <button :disabled="isRefetching === true" @click="refetch">
               <ArrowPathIcon

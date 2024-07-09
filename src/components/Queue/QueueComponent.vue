@@ -148,7 +148,9 @@ async function removeJob(job) {
       </template>
       <template #header>
         <div class="flex justify-between">
-          <h2 class="my-4 text-xl">{{ $t("pages.queue.table.header") }}</h2>
+          <h4 class="m-0 font-bold self-center">
+            {{ $t("pages.queue.table.header") }}
+          </h4>
           <span class="p-input-icon-left ml-10 space-x-4">
             <button
               v-tooltip="'Refresh'"

@@ -13,6 +13,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import IconCompare from '~icons/carbon/compare'
 import { FunctionalComponent, HTMLAttributes, VNodeProps } from "vue";
+import { Square3Stack3DIcon } from "@heroicons/vue/16/solid";
 
 interface navigationEntry {
   to: string;
@@ -58,6 +59,11 @@ export const mainNavigation: navigationEntry[] = [
     to: "/project",
     label: "nav.sidebar.links.main.projects",
     icon: Squares2X2Icon,
+  },
+  {
+    to: "/workflows",
+    label: "nav.sidebar.links.main.workflows",
+    icon: Square3Stack3DIcon,
   },
   {
     to: "/nodeflow",

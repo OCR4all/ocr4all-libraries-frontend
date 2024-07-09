@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Workflows from "@/components/Workflows/WorkflowOverview.vue";
 import AppLayout from "@/layout/AppLayout.vue";
 import { useUiStore } from "@/stores/ui.store";
 
@@ -22,6 +21,6 @@ useHead({
 
 <template>
   <AppLayout padded>
-    <Workflows />
+    <WorkflowView />
   </AppLayout>
 </template>
