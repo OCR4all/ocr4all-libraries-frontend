@@ -73,11 +73,13 @@ const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
-function getDatasets(){
+async function getDatasets() {
   const registry = {};
   const selection = [];
   for (const [key, value] of Object.entries(selectedSets.value)) {
-    if (value.checked === true) selection.push(key);
+    if (value.checked === true) {
+      const { data, error } = await useCustomFetch(`/data/collection/set/list/${key}`).json()
+    }
   }
   for (const sets of nodes.value) {
     if (selection.includes(sets.key)) {
@@ -95,6 +97,8 @@ function getDatasets(){
     }
   }
   console.log(registry)
+  console.log(selection)
+  return selection
 }
 
 defineExpose({

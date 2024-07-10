@@ -61,7 +61,13 @@
     --p-bg-800: rgb(var(--bg-800));
     --p-bg-900: rgb(var(--bg-900));
     --p-bg-950: rgb(var(--bg-950));
+
+    --base-font-size: 14px;
   }
+}
+
+html {
+  font-size: var(--base-font-size)
 }
 
 /** Keyframes **/

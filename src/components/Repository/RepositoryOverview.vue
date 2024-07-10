@@ -29,6 +29,7 @@ const options = ref(["Images", "Datasets", "Models", "Workflows"]);
       <SelectButton
         v-model="section"
         :options="options"
+        :allow-empty="false"
         aria-labelledby="basic"
       />
     </div>

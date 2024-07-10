@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    A11N: typeof import('./src/components/Settings/A11N.vue')['default']
     ActionButton: typeof import('./src/components/ui/ActionButton.vue')['default']
     ActionMenu: (typeof import("./src/components/ui/ActionMenu.vue"))["default"]
     AdministrationCard: (typeof import("./src/components/Admin/InstanceOverview/AdministrationCard.vue"))["default"]
@@ -42,12 +43,12 @@ declare module 'vue' {
     DatasetView: typeof import('./src/components/Repository/Datasets/DatasetView.vue')['default']
     DefaultSpinner: typeof import('./src/components/Layout/utils/DefaultSpinner.vue')['default']
     DeleteDataset: typeof import('./src/components/Repository/Datasets/Dialog/DeleteDataset.vue')['default']
-    DeleteDialog: typeof import('./src/components/Repository/Workflows/Dialog/DeleteDialog.vue')['default']
+    DeleteDialog: typeof import('./src/components/Project/Project/Dialog/DeleteDialog.vue')['default']
     DeleteGroupDialog: typeof import('./src/components/Admin/GroupManagement/Dialog/DeleteGroupDialog.vue')['default']
     DeleteSet: typeof import('./src/components/Repository/Datasets/Dialog/DeleteSet.vue')['default']
     DeleteUserDialog: typeof import('./src/components/Admin/UserManagement/Dialog/DeleteUserDialog.vue')['default']
     EditDataset: typeof import('./src/components/Repository/Datasets/Dialog/EditDataset.vue')['default']
-    EditDialog: typeof import('./src/components/Repository/Workflows/Dialog/EditDialog.vue')['default']
+    EditDialog: typeof import('./src/components/Project/Project/Dialog/EditDialog.vue')['default']
     EditGroupDialogForm: typeof import('./src/components/Admin/GroupManagement/Dialog/EditGroupDialog/EditGroupDialogForm.vue')['default']
     EditSet: typeof import('./src/components/Repository/Datasets/Dialog/EditSet.vue')['default']
     EditUserDialog: (typeof import("./src/components/Admin/UserManagement/Dialog/EditUserDialog/EditUserDialog.vue"))["default"]

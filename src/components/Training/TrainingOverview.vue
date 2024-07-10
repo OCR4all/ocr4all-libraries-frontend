@@ -33,7 +33,7 @@ useHead({
   <ComponentContainer>
     <div class="grid grid-cols-1 gap-y-12 m-12 lg/container:m-23 content-center">
       <div class="flex justify-center">
-        <SelectButton v-model="category" :options="options" aria-labelledby="basic" >
+        <SelectButton v-model="category" :options="options" aria-labelledby="basic" :allowEmpty="false" >
           <template #option="slotProps">
             <p class="text-xl">{{ slotProps.option }}</p>
           </template>

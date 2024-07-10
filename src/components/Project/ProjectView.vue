@@ -39,6 +39,7 @@ useHead({
       <SelectButton
         v-model="category"
         :options="options"
+        :allow-empty="false"
         aria-labelledby="basic"
       />
     </div>

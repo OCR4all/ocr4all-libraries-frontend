@@ -18,8 +18,7 @@ uiStore.breadcrumb = [
 
 
 function run(){
-  datasets.value.getDatasets()
-  console.log(parameters.value.getParameters())
+  console.log(datasets.value.getDatasets())
 }
 </script>
 <template>

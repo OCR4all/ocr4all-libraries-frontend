@@ -106,6 +106,88 @@ export const setPrimaryColors = (palette) => {
   );
 };
 
+export const setDarkModeTheme = (palette) => {
+  localStorage.setItem(
+    "ocr4all/frontend/colors/surface/dark",
+    JSON.stringify({
+      0: palette[0].hex(),
+      50: palette[1].hex(),
+      100: palette[2].hex(),
+      200: palette[3].hex(),
+      300: palette[4].hex(),
+      400: palette[5].hex(),
+      500: palette[6].hex(),
+      600: palette[7].hex(),
+      700: palette[8].hex(),
+      800: palette[9].hex(),
+      900: palette[10].hex(),
+      950: palette[11].hex(),
+    }),
+  );
+
+  updatePrimaryPalette({
+    50: palette[1].hex(),
+    100: palette[2].hex(),
+    200: palette[3].hex(),
+    300: palette[4].hex(),
+    400: palette[5].hex(),
+    500: palette[6].hex(),
+    600: palette[7].hex(),
+    700: palette[8].hex(),
+    800: palette[9].hex(),
+    900: palette[10].hex(),
+    950: palette[11].hex(),
+  });
+  document.documentElement.style.setProperty(
+    "--main-0",
+    palette[0].rgb().join(" "),
+  );
+  document.documentElement.style.setProperty(
+    "--main-50",
+    palette[1].rgb().join(" "),
+  );
+  document.documentElement.style.setProperty(
+    "--main-100",
+    palette[2].rgb().join(" "),
+  );
+  document.documentElement.style.setProperty(
+    "--main-200",
+    palette[3].rgb().join(" "),
+  );
+  document.documentElement.style.setProperty(
+    "--main-300",
+    palette[4].rgb().join(" "),
+  );
+  document.documentElement.style.setProperty(
+    "--main-400",
+    palette[5].rgb().join(" "),
+  );
+  document.documentElement.style.setProperty(
+    "--main-500",
+    palette[6].rgb().join(" "),
+  );
+  document.documentElement.style.setProperty(
+    "--main-600",
+    palette[7].rgb().join(" "),
+  );
+  document.documentElement.style.setProperty(
+    "--main-700",
+    palette[8].rgb().join(" "),
+  );
+  document.documentElement.style.setProperty(
+    "--main-800",
+    palette[9].rgb().join(" "),
+  );
+  document.documentElement.style.setProperty(
+    "--main-900",
+    palette[10].rgb().join(" "),
+  );
+  document.documentElement.style.setProperty(
+    "--main-950",
+    palette[11].rgb().join(" "),
+  );
+};
+
 export const setPrimaryColorsFromStorage = () => {
   const palette = JSON.parse(
     localStorage.getItem("ocr4all/frontend/colors/primary"),
