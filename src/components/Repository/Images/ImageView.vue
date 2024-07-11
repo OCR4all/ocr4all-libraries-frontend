@@ -7,7 +7,6 @@ import Column from "primevue/column";
 import Button from "primevue/button";
 import DataView from "primevue/dataview";
 import DataTable from "primevue/datatable";
-import Chip from "primevue/chip";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { FilterMatchMode } from "@primevue/core/api";

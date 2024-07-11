@@ -142,7 +142,7 @@ defineExpose({
       Delete
     </button>
   </Dialog>
-  <div class="grid grid-cols-1 justify-self-center">
+  <div class="grid grid-cols-1">
     <div
       class="shadow-xs group relative m-2 grid h-64 w-64 rounded-md bg-clip-border text-surface-700 hover:bg-primary-200 hover:dark:bg-surface-700"
       :class="[
