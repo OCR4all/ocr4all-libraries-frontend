@@ -27,6 +27,47 @@ const deleteGroupDialog = defineAsyncComponent(
 
 const dialog = useDialog();
 
+const items = ref([])
+const menu = ref()
+
+const toggle = (event, data) => {
+  items.value = [
+    {
+      label: "Actions",
+      items: [
+        {
+          label: "Edit",
+          icon: "pi pi-pencil",
+          command: () => openEditGroupDialog(data)
+        },
+        {
+          label: "Delete",
+          icon: "pi pi-trash",
+          command: () => openDeleteGroupDialog(data)
+        },
+      ],
+    },
+  ];
+  menu.value.toggle(event);
+};
+
+const contextMenu = ref();
+const onRowContextMenu = (event) => {
+  items.value = [
+    {
+      label: "Edit",
+      icon: "pi pi-pencil",
+      command: () => openEditGroupDialog(event.data)
+    },
+    {
+      label: "Delete",
+      icon: "pi pi-trash",
+      command: () => openDeleteGroupDialog(event.data)
+    },
+  ];
+  contextMenu.value.show(event.originalEvent);
+};
+
 const uiStore = useUiStore();
 uiStore.breadcrumb = [
   {
@@ -80,7 +121,7 @@ function openNewGroupDialog() {
 function openEditGroupDialog(data) {
   dialog.open(editGroupDialog, {
     props: {
-      header: i18n.t("admin.group-management.dialog.edit.header"),
+      header: "Edit Group",
       modal: true,
     },
     data: {
@@ -108,6 +149,58 @@ function openDeleteGroupDialog(data: any) {
 refetch();
 </script>
 <template>
+  <ContextMenu ref="contextMenu" :model="items">
+    <template #item="{ item, props }">
+      <a
+        v-ripple
+        class="group flex items-center"
+        :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+        v-bind="props.action"
+      >
+        <span
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+          :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+        >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </ContextMenu>
+  <Menu ref="menu" :model="items" :popup="true">
+    <template #item="{ item, props }">
+      <a
+        v-ripple
+        class="group flex items-center"
+        :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+        v-bind="props.action"
+      >
+        <span
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+          :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+        >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </Menu>
   <Toolbar class="mb-4">
     <template #start>
       <div class="my-2 space-x-2">
@@ -141,6 +234,7 @@ refetch();
       :paginator="true"
       :rows="10"
       :filters="filters"
+      @row-contextmenu="onRowContextMenu"
       paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :rowsPerPageOptions="[5, 10, 25]"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
@@ -174,21 +268,16 @@ refetch();
         </template>
       </Column>
       <Column :exportable="false" style="min-width: 8rem">
-        <template #body="slotProps">
-          <Button
-            icon="pi pi-pencil"
-            text
-            rounded
-            class="mr-2"
-            @click="openEditGroupDialog(slotProps.data)"
-          />
-          <Button
-            icon="pi pi-trash"
-            text
-            rounded
-            severity="danger"
-            @click="openDeleteGroupDialog([slotProps.data])"
-          />
+        <template #body="{ data }">
+          <div class="space-y-2">
+            <Button
+              type="button"
+              icon="pi pi-ellipsis-v"
+              text
+              severity="secondary"
+              @click="toggle($event, data)"
+            />
+          </div>
         </template>
       </Column>
     </DataTable>
