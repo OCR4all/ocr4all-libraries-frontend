@@ -148,7 +148,7 @@ async function launchWorkflow() {
     >
       {{ $t("pages.projects.sandbox.workflow.directive") }}
     </h2>
-    <Dropdown
+    <Select
       v-model="selectedWorkflow"
       :options="workflows"
       filter

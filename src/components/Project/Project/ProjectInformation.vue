@@ -101,7 +101,7 @@ async function deleteProject() {
           class="mb-2 inline-block text-sm text-surface-800 dark:text-white sm:text-base"
           >{{ $t("pages.projects.project.information.form.state") }}</label
         >
-        <Dropdown
+        <Select
           v-model="state"
           :options="states"
           option-label="name"

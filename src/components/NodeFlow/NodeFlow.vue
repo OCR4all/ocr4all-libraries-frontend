@@ -259,7 +259,7 @@ function togglePalette() {
     :style="{ width: '50vw' }"
   >
     <div class="space-y-5">
-      <Dropdown
+      <Select
         v-model="selectedWorkflow"
         :options="availableWorkflows"
         option-label="label"
@@ -280,7 +280,7 @@ function togglePalette() {
             <div>{{ slotProps.option.label }}</div>
           </div>
         </template>
-      </Dropdown>
+      </Select>
       <button
         type="button"
         class="mb-2 mr-2 rounded-md bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

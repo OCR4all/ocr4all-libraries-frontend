@@ -35,7 +35,7 @@ function save() {
       <div class="dark:!text-surface-200">Username</div>
       <p class="dark:!text-surface-200">{{ authStore.user }}</p>
       <div class="dark:!text-surface-200">Language</div>
-      <Dropdown
+      <Select
         v-model="selectedCountry"
         :options="countries"
         optionLabel="name"
@@ -66,7 +66,7 @@ function save() {
             <div>{{ slotProps.option.name }}</div>
           </div>
         </template>
-      </Dropdown>
+      </Select>
     </div>
     <template #footer>
       <Button :label="$t('settings.buttons.close')" icon="pi pi-times" text />
