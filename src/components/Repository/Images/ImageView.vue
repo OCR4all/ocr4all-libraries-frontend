@@ -63,6 +63,7 @@ async function listContainers() {
         })
       }else if(response.data.value){
         const data: IContainer[] = response.data.value
+        console.log(data)
         containers.value = data.filter(function (container: IContainer){
           return container.right !== null
         })
@@ -554,12 +555,9 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
         >
           <ContainerCard
             v-for="(item) in slotProps.items"
-            :id="item.id"
+            v-bind="item"
             :key="item.id"
             :ref="setContainerCardsRef"
-            :title="item.name"
-            :description="item.description"
-            :keywords="item.keywords"
             @refresh="listContainers"
             @update-selection="updateSelection"
           />

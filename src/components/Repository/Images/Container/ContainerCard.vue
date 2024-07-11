@@ -13,16 +13,12 @@ import { useI18n } from "vue-i18n";
 import Chips from "primevue/chips";
 import Textarea from "primevue/textarea";
 import { useToast } from "primevue/usetoast";
+import { IContainer } from "@/components/Repository/Images/images.interface";
 const toast = useToast();
 
 const { t } = useI18n();
 
-const props = defineProps<{
-  title?: string;
-  description?: string;
-  keywords?: string[];
-  id?: string;
-}>();
+const props = defineProps<IContainer>();
 
 const editDialogVisible = ref(false);
 
@@ -37,7 +33,7 @@ const router = useRouter();
 function openContainer() {
   router.push({
     path: "/repository/container",
-    query: { id: props.id, name: props.title },
+    query: { id: props.id, name: props.name },
   });
 }
 
@@ -98,7 +94,7 @@ function downloadContainer() {
       const url = window.URL.createObjectURL(new Blob([response.data.value]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `${props.title}.zip`);
+      link.setAttribute("download", `${props.name}.zip`);
       document.body.appendChild(link);
       link.click();
       toast.removeGroup("download-toast");
@@ -128,14 +124,15 @@ const shareDialogVisible = ref();
 async function updateContainerShare() {}
 
 function openShareModal() {
-  toast.add({
+  console.log()
+  /*  toast.add({
     severity: "info",
     summary: t(
       "pages.repository.container.card.toast.share-modal.info.summary",
     ),
     detail: t("pages.repository.container.card.toast.share-modal.info.detail"),
     life: 3000,
-  });
+  });*/
 }
 
 function actionMenuBlurred(event) {
@@ -330,7 +327,7 @@ defineExpose({
           />
           <div class="flex space-x-2">
             <button
-              class="bg-primary-600 p-2 font-semibold text-white hover:bg-primary-800"
+              class="bg-primary-600 p-2 rounded-sm font-semibold text-white hover:bg-primary-800"
               @click="openShareModal"
             >
               {{ t("pages.repository.container.card.button.share") }}
@@ -369,7 +366,7 @@ defineExpose({
         class="cursor-pointer font-semibold text-black hover:underline dark:text-white"
         @click="openContainer"
       >
-        {{ props.title }}
+        {{ props.name }}
       </p>
       <div class="flex space-x-1">
         <p class="font-light text-surface-600 dark:text-surface-300">
