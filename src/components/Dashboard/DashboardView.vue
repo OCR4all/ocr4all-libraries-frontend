@@ -21,10 +21,10 @@ uiStore.breadcrumb = [
   },
 ];
 
-const projects: Ref<number | undefined> = ref();
-const workflows: Ref<number | undefined> = ref();
-const collections: Ref<number | undefined> = ref();
-const folios: Ref<number | undefined> = ref();
+const projects: Ref<number | null> = ref(null);
+const workflows: Ref<number | null> = ref(null);
+const collections: Ref<number | null> = ref(null);
+const folios: Ref<number | null> = ref(null);
 
 useCustomFetch(`/project/list`)
   .get()
@@ -89,7 +89,7 @@ await useCustomFetch(`/account`)
       <StatsCard>
         <template #title> {{ $t("pages.dashboard.stats.projects") }} </template>
         <template #value>
-          <div v-if="projects">
+          <div v-if="projects !== undefined">
             {{ projects }}
           </div>
           <div v-else>

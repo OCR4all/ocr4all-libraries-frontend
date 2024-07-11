@@ -20,6 +20,22 @@ import Chips from "primevue/chips";
 import Toast from "primevue/toast";
 import Textarea from "primevue/textarea";
 import { RemovableRef } from "@vueuse/core";
+
+interface ITracking {
+  created: string,
+  updated: string,
+  user: string
+}
+
+interface IContainer {
+  description: string,
+  id: string,
+  keywords: string[],
+  name: string,
+  right: string,
+  tracking: ITracking
+}
+
 const router: Router = useRouter();
 
 const containers = ref();
@@ -52,7 +68,19 @@ async function listContainers() {
   useCustomFetch("/repository/container/list")
     .json()
     .then((response) => {
-      containers.value = response.data.value;
+      if(response.error.value){
+        toast.add({
+          severity: "error",
+          summary: "Error",
+          detail: response.error.value,
+          life: 3000,
+        })
+      }else if(response.data.value){
+        const data: IContainer[] = response.data.value
+        containers.value = data.filter(function (container: IContainer){
+          return container.right !== null
+        })
+      }
     });
 }
 
