@@ -61,11 +61,6 @@ export const mainNavigation: navigationEntry[] = [
     icon: Squares2X2Icon,
   },
   {
-    to: "/workflows",
-    label: "nav.sidebar.links.main.workflows",
-    icon: Square3Stack3DIcon,
-  },
-  {
     to: "/nodeflow",
     label: "nav.sidebar.links.main.nodeflow",
     icon: CubeTransparentIcon,
