@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { UseTimeAgo } from "@vueuse/components";
 import {
   ArrowPathIcon,
@@ -11,10 +11,8 @@ import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
-import Dropdown from "primevue/dropdown";
 import Toast from "primevue/toast";
 import Button from "primevue/button";
-import Menu from "primevue/menu";
 import ProgressBar from "primevue/progressbar";
 import { FilterMatchMode } from "@primevue/core/api";
 
@@ -23,26 +21,30 @@ const { t } = useI18n();
 
 import { useToast } from "primevue/usetoast";
 import { useCustomFetch } from "@/composables/useCustomFetch";
+import { IJob, IQueue } from "@/components/Queue/queue.interfaces";
+import { Ref } from "vue";
+import { RemovableRef } from "@vueuse/core";
 const toast = useToast();
 
-const loading = ref(true);
-const isRefetching = ref(false);
+const loading: Ref<boolean> = ref(true);
+const isRefetching: Ref<boolean> = ref(false);
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  state: { value: null, matchMode: FilterMatchMode.MATCHES },
+  state: { value: null, matchMode: FilterMatchMode.EQUALS },
 });
 
-const states = ref([
+const states: Ref<string[]> = ref([
   "scheduled",
   "running",
   "interrupted",
   "cancelled",
   "completed",
 ]);
-const jobs = ref();
 
-const getColor = (entry) => {
+const jobs: Ref<IJob[] | undefined> = ref();
+
+const getColor = (entry: string) => {
   switch (entry) {
     case "scheduled":
       return { background: "#76A9FA", color: "white" };
@@ -65,18 +67,27 @@ async function refetch() {
   )
     .get()
     .json();
-  const _jobs = [];
-  for (const entries of Object.values(data.value)) {
-    for (const job of entries) {
-      console.log(job);
-      _jobs.push(job);
-    }
+  if(error.value) {
+    toast.add({
+      severity: "error",
+      summary: t("pages.login.toasts.login.error.summary"),
+      detail: error.value,
+      life: 3000,
+    })
+  }else{
+    const queue: IQueue = data.value
+    const _jobs: IJob[] = [];
+    for (const entries of Object.values(queue)) {
+      for (const job of entries) {
+        _jobs.push(job);
+      }
   }
   loading.value = isFetching.value;
   setTimeout(function () {
     isRefetching.value = isFetching.value;
   }, 500);
   jobs.value = _jobs;
+  }
 }
 
 refetch();
@@ -84,7 +95,7 @@ refetch();
 setInterval(function () {
   refetch();
 }, 5000);
-async function cancelJob(id) {
+async function cancelJob(id: string) {
   const data = await useCustomFetch(`/job/cancel/${id}`).get().json();
   await refetch().then(() => {
     toast.add({
@@ -111,7 +122,7 @@ async function expungeJobs() {
     });
 }
 
-async function removeJob(job) {
+async function removeJob(job: string) {
   useCustomFetch(`job/remove/${job}`)
     .then(() => {
       refetch();
@@ -219,7 +230,7 @@ async function removeJob(job) {
           <Tag :value="data.state" :style="getColor(data.state)" />
         </template>
         <template #filter="{ filterModel, filterCallback }">
-          <Dropdown
+          <Select
             v-model="filterModel.value"
             placeholder="Select State"
             :options="states"
@@ -233,7 +244,7 @@ async function removeJob(job) {
                 :style="getColor(slotProps.option)"
               />
             </template>
-          </Dropdown>
+          </Select>
         </template>
       </Column>
       <Column

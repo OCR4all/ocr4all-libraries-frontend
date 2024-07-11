@@ -11,7 +11,7 @@ const category = ref("Results");
 const options = ref(["Results", "Images", "Information"]);
 
 const router = useRouter();
-const project: string[] = router.currentRoute.value.params.project;
+const project: string | string[] = router.currentRoute.value.params.project;
 
 const uiStore = useUiStore();
 uiStore.breadcrumb = [
