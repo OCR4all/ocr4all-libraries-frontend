@@ -147,9 +147,7 @@ function openEditDialog(data) {
       header: "Edit Workflow",
       modal: true,
     },
-    data: {
-      data,
-    },
+    data: data,
     onClose: () => {
       refetch();
     },
