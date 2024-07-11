@@ -40,7 +40,7 @@ useHead({
         </SelectButton>
       </div>
       <section v-if="category === 'Automatic Text Recognition'" class="flex-col space-y-12">
-        <Spotlight class="max-w-sm mx-auto grid gap-6 grid-cols-1 @2xl/content:grid-cols-3 items-start lg:max-w-none group">
+        <Spotlight class="mx-auto grid gap-6 grid-cols-1 @2xl/content:grid-cols-3 items-start lg:max-w-none group">
           <SpotlightCard @click="router.push('/training/calamari')">
             <div class="relative cursor-pointer h-full bg-surface-0 dark:bg-surface-900 p-6 pb-8 rounded-[inherit] z-20 overflow-hidden">
               <!-- Radial gradient -->
