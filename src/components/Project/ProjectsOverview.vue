@@ -24,17 +24,29 @@ const deleteDialog = defineAsyncComponent(
 const router = useRouter();
 
 import { useDialog } from "primevue/usedialog";
+import { useToast } from "primevue/usetoast";
 const dialog = useDialog();
 
 const loading = ref(true);
 const isRefetching = ref(false);
+
+ const toast = useToast()
 
 async function refetch() {
   isRefetching.value = true;
   const { isFetching, error, data } = await useCustomFetch(`/project/list`)
     .get()
     .json();
-  projects.value = data.value;
+  if(error.value){
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: error.value,
+      life: 3000,
+    })
+  }else{
+    projects.value = data.value;
+  }
   loading.value = isFetching.value;
   setTimeout(function () {
     isRefetching.value = isFetching.value;
@@ -151,6 +163,7 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
 refetch();
 </script>
 <template>
+  <Toast />
   <ContextMenu ref="contextMenu" :model="items">
     <template #item="{ item, props }">
       <a

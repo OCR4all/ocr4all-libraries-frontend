@@ -11,6 +11,8 @@ import { ToastServiceMethods } from "primevue/toastservice";
 import { useToast } from "primevue/usetoast";
 import ProgressSpinner from "primevue/progressspinner";
 import Toast from "primevue/toast";
+import { IContainer } from "@/components/Project/project.interfaces";
+import { ICollectionSet } from "@/components/Repository/Datasets/dataset.interfaces";
 
 const router = useRouter();
 
@@ -30,13 +32,13 @@ const filters: Ref = ref({
 
 const dialog = useDialog();
 
-const isRefetching = ref(false);
-const datasets = ref();
-const selectedDatasets = ref();
+const isRefetching: Ref<boolean> = ref(false);
+const datasets: Ref<ICollectionSet[]> = ref([]);
+const selectedDatasets: Ref<ICollectionSet[]> = ref([]);
 
 const toast: ToastServiceMethods = useToast();
 
-async function downloadDataset(data) {
+async function downloadDataset(data: ICollectionSet) {
   toast.add({
     severity: "info",
     summary: "Preparing download",
@@ -45,12 +47,21 @@ async function downloadDataset(data) {
   useCustomFetch(`/data/collection/set/zip/${data.id}`)
     .blob()
     .then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data.value]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `${data.name}.zip`);
-      document.body.appendChild(link);
-      link.click();
+      if(response.data.value){
+        const url = window.URL.createObjectURL(new Blob([response.data.value]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `${data.name}.zip`);
+        document.body.appendChild(link);
+        link.click();
+      }else {
+        toast.add({
+          severity: "error",
+          summary: "Error",
+          detail: "Couldn't create export.",
+          life: 3000,
+        })
+      }
       toast.removeGroup("download-toast");
     });
 }
@@ -62,7 +73,18 @@ async function refetch() {
   )
     .get()
     .json();
-  datasets.value = data.value;
+  if(error.value){
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: error.value,
+      life: 3000,
+    });
+  }else{
+    datasets.value = data.value.filter(function (container: IContainer){
+      return container.right !== null
+    })
+  }
   setTimeout(function () {
     isRefetching.value = isFetching.value;
   }, 500);
@@ -131,14 +153,14 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   contextMenu.value.toggle(event.originalEvent);
 };
 
-function openDataset(id, name) {
+function openDataset(id: string, name: string) {
   router.push({
     name: "Dataset",
     query: { id: id, name: name },
   });
 }
 
-function openDeleteDialog(data) {
+function openDeleteDialog(data: ICollectionSet) {
   dialog.open(deleteDatasetDialog, {
     props: {
       header: "Delete Dataset",
@@ -163,7 +185,7 @@ function openCreateDialog() {
   });
 }
 
-function openEditDialog(data) {
+function openEditDialog(data: ICollectionSet) {
   dialog.open(editDatasetDialog, {
     props: {
       header: "Edit Dataset",

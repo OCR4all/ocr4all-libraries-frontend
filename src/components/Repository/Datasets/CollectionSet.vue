@@ -36,6 +36,8 @@ const deleteDatasetDialog = defineAsyncComponent(
 import { useDialog } from "primevue/usedialog";
 import Toast from "primevue/toast";
 import Toolbar from "primevue/toolbar";
+import { ISet } from "@/components/Repository/Datasets/dataset.interfaces";
+import { Ref } from "vue";
 const dialog = useDialog();
 
 const { t } = useI18n();
@@ -67,7 +69,6 @@ uiStore.breadcrumb = [
 const showUploadToast = () => {
   if (!uploadToastVisible.value) {
     toast.add({
-      severity: "custom",
       summary: t(
         "pages.repository.container.overview.toast.upload.headless.summary",
       ),
@@ -78,7 +79,7 @@ const showUploadToast = () => {
   }
 };
 
-const sets = ref();
+const sets: Ref<ISet[]> = ref([]);
 
 async function refresh() {
   useCustomFetch(`/data/collection/set/list/${dataset}`)
@@ -120,7 +121,7 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
       },
       onUploadProgress: function (progressEvent) {
         progress.value = parseInt(
-          Math.round((progressEvent.loaded / progressEvent.total) * 100),
+          String(Math.round((progressEvent.loaded / progressEvent.total) * 100)),
         );
       },
     })
@@ -135,7 +136,7 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
     });
 };
 
-function openEditDialog(data) {
+function openEditDialog(data: ISet) {
   dialog.open(editSetDialog, {
     props: {
       header: "Edit Set",
@@ -151,7 +152,7 @@ function openEditDialog(data) {
   });
 }
 
-function openDeleteDialog(data) {
+function openDeleteDialog(data: ISet) {
   dialog.open(deleteSetDialog, {
     props: {
       header: "Delete Set",
@@ -167,7 +168,7 @@ function openDeleteDialog(data) {
   });
 }
 
-async function downloadSet(data) {
+async function downloadSet(data: ISet) {
   toast.add({
     severity: "info",
     summary: "Preparing download",
@@ -176,17 +177,19 @@ async function downloadSet(data) {
   useCustomFetch(`/data/collection/set/download/${dataset}?id=${data.id}`)
     .blob()
     .then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data.value]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `${data.name}.zip`);
-      document.body.appendChild(link);
-      link.click();
+      if(response.data.value){
+        const url = window.URL.createObjectURL(new Blob([response.data.value]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `${data.name}.zip`);
+        document.body.appendChild(link);
+        link.click();
+      }
       toast.removeGroup("download-toast");
     });
 }
 
-async function downloadDataset(data) {
+async function downloadDataset() {
   toast.add({
     severity: "info",
     summary: "Preparing download",
@@ -195,19 +198,21 @@ async function downloadDataset(data) {
   useCustomFetch(`/data/collection/set/zip/${dataset}`)
     .blob()
     .then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data.value]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `${datasetName}.zip`);
-      document.body.appendChild(link);
-      link.click();
+      if(response.data.value){
+        const url = window.URL.createObjectURL(new Blob([response.data.value]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `${datasetName}.zip`);
+        document.body.appendChild(link);
+        link.click();
+      }
       toast.removeGroup("download-toast");
     });
 }
 
 const items = ref();
 const menu = ref();
-const toggle = (event, data) => {
+const toggle = (event, data: ISet) => {
   items.value = [
     {
       label: "Actions",
@@ -265,7 +270,7 @@ const hideUploadToast = () => {
   }, 2000);
 };
 
-async function openSet(data) {
+async function openSet(data: ISet) {
   useCustomFetch(`/data/collection/set/entity/${dataset}?id=${data.id}`)
     .get()
     .json()
