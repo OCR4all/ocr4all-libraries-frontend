@@ -182,20 +182,20 @@ const contextMenu = ref();
 </script>
 <template>
   <Toast position="bottom-right" group="download-toast">
-    <template #message="slotProps">
-      <div class="flex-column align-items-start flex" style="flex: 1">
-        <div class="align-items-center flex gap-4">
-          <ProgressSpinner
-            style="width: 50px; height: 50px"
-            stroke-width="8"
-            fill="transparent"
-            animation-duration=".5s"
-            aria-label="Custom ProgressSpinner"
-          />
-          <div class="text-md my-3 text-surface-800">
-            {{ slotProps.message.summary }}
-          </div>
+    <template #container="{ message, closeCallback }">
+      <div class="flex items-center w-full p-4 rounded-lg shadow bg-surface-200/50 dark:bg-surface-700/50 backdrop-md" role="alert">
+        <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8">
+          <ProgressSpinner class="w-4 h-4" strokeWidth="8" fill="transparent"
+                           animationDuration=".5s" aria-label="Download Spinner" />
+          <span class="sr-only">Fire icon</span>
         </div>
+        <div class="ms-3 text-sm text-surface-800 dark:text-surface-100 font-normal">{{ message.summary }}</div>
+        <button @click="closeCallback" type="button" class="ms-auto -mx-1.5 -my-1.5 text-surface-800 hover:text-surface-950 rounded-lg focus:ring-2 focus:ring-surface-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-surface-200 dark:hover:text-white dark:hover:bg-gray-800" data-dismiss-target="#toast-default" aria-label="Close">
+          <span class="sr-only">Close</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          </svg>
+        </button>
       </div>
     </template>
   </Toast>

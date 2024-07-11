@@ -4,8 +4,6 @@ import { useUiStore } from "@/stores/ui.store";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import FileUpload, { FileUploadUploaderEvent } from "primevue/fileupload";
 import axios from "axios";
-import Checkbox from "primevue/checkbox";
-import Dropdown from "primevue/dropdown";
 import Button from "primevue/button";
 import { useI18n } from "vue-i18n";
 import { Store } from "pinia";
@@ -185,6 +183,25 @@ async function downloadSet(data) {
     });
 }
 
+async function downloadDataset(data) {
+  toast.add({
+    severity: "info",
+    summary: "Preparing download",
+    group: "download-toast",
+  });
+  useCustomFetch(`/data/collection/set/zip/${dataset}`)
+    .blob()
+    .then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data.value]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${datasetName}.zip`);
+      document.body.appendChild(link);
+      link.click();
+      toast.removeGroup("download-toast");
+    });
+}
+
 const items = ref();
 const menu = ref();
 const toggle = (event, data) => {
@@ -192,6 +209,13 @@ const toggle = (event, data) => {
     {
       label: "Actions",
       items: [
+        {
+          label: "Open",
+          icon: "pi pi-eye",
+          command: () => {
+            openSet(data)
+          }
+        },
         {
           label: "Edit",
           icon: "pi pi-pencil",
@@ -238,6 +262,16 @@ const hideUploadToast = () => {
   }, 2000);
 };
 
+async function openSet(data) {
+  console.log(data)
+  useCustomFetch(`/data/collection/set/entity/${dataset}?id=${data.id}`)
+    .get()
+    .json()
+    .then((response) => {
+      console.log(response.data.value)
+    });
+}
+
 const selectedSets = ref();
 
 const filters: RemovableRef<any> = ref({
@@ -253,6 +287,13 @@ const options = ref(["list", "grid"]);
 const contextMenu = ref();
 const onRowContextMenu = (event) => {
   (items.value = [
+    {
+      label: "Open",
+      icon: "pi pi-eye",
+      command: () => {
+        openSet(event.data)
+      }
+    },
     {
       label: "Edit",
       icon: "pi pi-pencil",
@@ -274,31 +315,28 @@ const onRowContextMenu = (event) => {
         openDeleteDialog(event.data);
       },
     },
-  ]),
-    contextMenu.value.show(event.originalEvent);
+  ])
+  contextMenu.value.show(event.originalEvent);
 };
 
 refresh();
 </script>
 <template>
   <Toast position="bottom-right" group="download-toast">
-    <template #message="slotProps">
-      <div class="flex-column align-items-start flex" style="flex: 1">
-        <div class="align-items-center flex gap-4">
-          <ProgressSpinner
-            :pt="{
-              root: {
-                class:
-                  'relative self-center mx-auto w-6 h-6 inline-block before:block before:pt-full',
-              },
-            }"
-            animation-duration=".5s"
-            aria-label="Custom ProgressSpinner"
-          />
-          <div class="text-md my-3 text-surface-800">
-            {{ slotProps.message.summary }}
-          </div>
+    <template #container="{ message, closeCallback }">
+      <div class="flex items-center w-full p-4 rounded-lg shadow bg-surface-200/50 dark:bg-surface-700/50 backdrop-md" role="alert">
+        <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8">
+          <ProgressSpinner class="w-4 h-4" strokeWidth="8" fill="transparent"
+                           animationDuration=".5s" aria-label="Download Spinner" />
+          <span class="sr-only">Fire icon</span>
         </div>
+        <div class="ms-3 text-sm text-surface-800 dark:text-surface-100 font-normal">{{ message.summary }}</div>
+        <button @click="closeCallback" type="button" class="ms-auto -mx-1.5 -my-1.5 text-surface-800 hover:text-surface-950 rounded-lg focus:ring-2 focus:ring-surface-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-surface-200 dark:hover:text-white dark:hover:bg-gray-800" data-dismiss-target="#toast-default" aria-label="Close">
+          <span class="sr-only">Close</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          </svg>
+        </button>
       </div>
     </template>
   </Toast>
@@ -356,26 +394,32 @@ refresh();
   </Menu>
   <Toolbar class="mb-4">
     <template #start>
-      <FileUpload
-        ref="fileUpload"
-        name="folioUpload[]"
-        :choose-label="
+      <div class="flex gap-x-2">
+        <FileUpload
+          ref="fileUpload"
+          name="folioUpload[]"
+          :choose-label="
           t('pages.repository.container.overview.toolbar.button.file-upload')
         "
-        mode="basic"
-        :auto="true"
-        :custom-upload="true"
-        :multiple="true"
-        :pt="{
+          mode="basic"
+          :auto="true"
+          :custom-upload="true"
+          :multiple="true"
+          :pt="{
           chooseButton: {
             class:
               'rounded-md flex bg-primary-600 p-4 text-white cursor-pointer',
           },
         }"
-        :max-file-size="1000000000"
-        @uploader="uploader"
-      >
-      </FileUpload>
+          :max-file-size="1000000000"
+          @uploader="uploader"
+        >
+        </FileUpload>
+        <Button
+          @click="downloadDataset"
+          label="Export"
+          icon="pi pi-download" />
+      </div>
     </template>
   </Toolbar>
   <ComponentContainer>
@@ -476,6 +520,12 @@ refresh();
                 >
               </div>
             </template>
+          </Column>
+          <Column
+            field="description"
+            :header="$t('pages.projects.overview.table.columns.description')"
+            :sortable="true"
+          >
           </Column>
           <Column
             field="date"

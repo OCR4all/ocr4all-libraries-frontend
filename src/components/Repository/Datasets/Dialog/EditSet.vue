@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { datasetSchema } from "@/components/Repository/Datasets/Dialog/Schema/dataset";
+import { setSchema } from "@/components/Repository/Datasets/Dialog/Schema/set";
 
 const dialogRef = inject("dialogRef");
 
@@ -13,15 +13,15 @@ onMounted(() => {
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
-const schema = datasetSchema;
+const schema = setSchema;
 
 function editDataset(values, { setErrors }) {
   const payload = {
     metadata: [
       {
-        id: data.value.id,
-        name: data.value.name,
-        keywords: data.value.keywords,
+        id: values.id,
+        name: values.name,
+        keywords: values.keywords,
       },
     ],
   };
