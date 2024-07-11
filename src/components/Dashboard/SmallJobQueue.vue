@@ -59,76 +59,74 @@ const getSeverity = (entry) => {
 
 <template>
   <Toast />
-  <div>
-    <DataTable
-      :value="jobs"
-      stripedRows
-      :loading="loading"
-      paginator
-      paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-      :rows="3"
+  <DataTable
+    :value="jobs"
+    stripedRows
+    :loading="loading"
+    paginator
+    paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+    :rows="3"
+  >
+    <template #empty
+      ><span class="text-primary-950 dark:text-primary-50">
+        {{ $t("pages.dashboard.components.queue.empty") }}
+      </span></template
     >
-      <template #empty
-        ><span class="text-primary-950 dark:text-primary-50">
-          {{ $t("pages.dashboard.components.queue.empty") }}
-        </span></template
-      >
-      <template #loading>
-        <DefaultSpinner />
-      </template>
-      <template #header>
-        <div class="flex justify-between">
-          <div>
-            <p>{{ $t("pages.dashboard.components.queue.header") }}</p>
-          </div>
-          <div class="flex justify-end">
-            <button
-              v-tooltip.left="'Refresh'"
-              :disabled="isRefetching === true"
-              @click="refetch"
-            >
-              <ArrowPathIcon
-                :class="{ 'animate-spin': isRefetching }"
-                class="mr-2 h-6 w-6 text-surface-500 hover:text-black dark:text-surface-200 dark:hover:text-white"
-              />
-            </button>
-            <button
-              v-tooltip.left="'Open job queue'"
-              @click="router.push('/queue')"
-            >
-              <ArrowUpOnSquareIcon
-                class="h-6 w-6 text-surface-500 hover:cursor-pointer hover:text-black dark:text-surface-200 dark:hover:text-white"
-              />
-            </button>
-          </div>
+    <template #loading>
+      <DefaultSpinner />
+    </template>
+    <template #header>
+      <div class="flex justify-between font-bold">
+        <div>
+          <p>{{ $t("pages.dashboard.components.queue.header") }}</p>
         </div>
-      </template>
-      <Column
-        field="id"
-        :header="$t('pages.dashboard.components.queue.columns.id')"
-      ></Column>
-      <Column
-        field="state"
-        :header="$t('pages.dashboard.components.queue.columns.state')"
-      >
-        <template #body="{ data }">
-          <Tag
-            class="m-0 p-0"
-            :value="data.state"
-            :severity="getSeverity(data.state)"
-          />
-        </template>
-      </Column>
-      <Column :header="$t('pages.dashboard.components.queue.columns.queued')">
-        <template #body="slotProps">
-          <UseTimeAgo
-            v-slot="{ timeAgo }"
-            :time="Date.parse(slotProps.data.created)"
+        <div class="flex justify-end">
+          <button
+            v-tooltip.left="'Refresh'"
+            :disabled="isRefetching === true"
+            @click="refetch"
           >
-            {{ timeAgo }}
-          </UseTimeAgo>
-        </template>
-      </Column>
-    </DataTable>
-  </div>
+            <ArrowPathIcon
+              :class="{ 'animate-spin': isRefetching }"
+              class="mr-2 h-6 w-6 text-surface-500 hover:text-black dark:text-surface-200 dark:hover:text-white"
+            />
+          </button>
+          <button
+            v-tooltip.left="'Open job queue'"
+            @click="router.push('/queue')"
+          >
+            <ArrowUpOnSquareIcon
+              class="h-6 w-6 text-surface-500 hover:cursor-pointer hover:text-black dark:text-surface-200 dark:hover:text-white"
+            />
+          </button>
+        </div>
+      </div>
+    </template>
+    <Column
+      field="id"
+      :header="$t('pages.dashboard.components.queue.columns.id')"
+    ></Column>
+    <Column
+      field="state"
+      :header="$t('pages.dashboard.components.queue.columns.state')"
+    >
+      <template #body="{ data }">
+        <Tag
+          class="m-0 p-0"
+          :value="data.state"
+          :severity="getSeverity(data.state)"
+        />
+      </template>
+    </Column>
+    <Column :header="$t('pages.dashboard.components.queue.columns.queued')">
+      <template #body="slotProps">
+        <UseTimeAgo
+          v-slot="{ timeAgo }"
+          :time="Date.parse(slotProps.data.created)"
+        >
+          {{ timeAgo }}
+        </UseTimeAgo>
+      </template>
+    </Column>
+  </DataTable>
 </template>
