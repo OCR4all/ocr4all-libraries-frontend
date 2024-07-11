@@ -29,8 +29,11 @@ const deleteSetDialog = defineAsyncComponent(
   () => import("@/components/Repository/Datasets/Dialog/DeleteSet.vue"),
 );
 
+const deleteDatasetDialog = defineAsyncComponent(
+  () => import("@/components/Repository/Datasets/Dialog/DeleteDataset.vue")
+)
+
 import { useDialog } from "primevue/usedialog";
-import ProgressSpinner from "primevue/progressspinner";
 import Toast from "primevue/toast";
 import Toolbar from "primevue/toolbar";
 const dialog = useDialog();
@@ -263,13 +266,29 @@ const hideUploadToast = () => {
 };
 
 async function openSet(data) {
-  console.log(data)
   useCustomFetch(`/data/collection/set/entity/${dataset}?id=${data.id}`)
     .get()
     .json()
     .then((response) => {
       console.log(response.data.value)
     });
+}
+
+async function removeDataset() {
+  const data = [{
+    id: dataset
+  }]
+
+  dialog.open(deleteDatasetDialog, {
+    props: {
+      header: "Delete Dataset",
+      modal: true,
+    },
+    data: data,
+    onClose: () => {
+      router.push("/repository/overview?category=Datasets")
+    },
+  });
 }
 
 const selectedSets = ref();
@@ -394,32 +413,39 @@ refresh();
   </Menu>
   <Toolbar class="mb-4">
     <template #start>
-      <div class="flex gap-x-2">
-        <FileUpload
-          ref="fileUpload"
-          name="folioUpload[]"
-          :choose-label="
+        <div class="flex gap-x-2">
+          <FileUpload
+            ref="fileUpload"
+            name="folioUpload[]"
+            :choose-label="
           t('pages.repository.container.overview.toolbar.button.file-upload')
         "
-          mode="basic"
-          :auto="true"
-          :custom-upload="true"
-          :multiple="true"
-          :pt="{
+            mode="basic"
+            :auto="true"
+            :custom-upload="true"
+            :multiple="true"
+            :pt="{
           chooseButton: {
             class:
               'rounded-md flex bg-primary-600 p-4 text-white cursor-pointer',
           },
         }"
-          :max-file-size="1000000000"
-          @uploader="uploader"
-        >
-        </FileUpload>
-        <Button
-          @click="downloadDataset"
-          label="Export"
-          icon="pi pi-download" />
-      </div>
+            :max-file-size="1000000000"
+            @uploader="uploader"
+          >
+          </FileUpload>
+          <Button
+            @click="downloadDataset"
+            label="Export"
+            icon="pi pi-download" />
+        </div>
+    </template>
+    <template #end>
+      <Button
+        @click="removeDataset"
+        severity="danger"
+        label="Delete"
+        icon="pi pi-trash" />
     </template>
   </Toolbar>
   <ComponentContainer>
