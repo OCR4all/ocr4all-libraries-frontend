@@ -66,15 +66,54 @@ const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
+const items = ref([])
+const menu = ref()
+
+const toggle = (event, data) => {
+  items.value = [
+    {
+      label: "Actions",
+      items: [
+        {
+          label: "Edit",
+          icon: "pi pi-pencil",
+          command: () => openEditUserDialog(data)
+        },
+        {
+          label: "Delete",
+          icon: "pi pi-trash",
+          command: () => openDeleteDialog(data)
+        },
+      ],
+    },
+  ];
+  menu.value.toggle(event);
+};
+
+const contextMenu = ref();
+const onRowContextMenu = (event) => {
+  items.value = [
+    {
+      label: "Edit",
+      icon: "pi pi-pencil",
+      command: () => openEditUserDialog(event.data)
+    },
+    {
+      label: "Delete",
+      icon: "pi pi-trash",
+      command: () => openDeleteDialog(event.data)
+    },
+  ];
+  contextMenu.value.show(event.originalEvent);
+};
+
 function openEditUserDialog(data) {
   dialog.open(editUserDialog, {
     props: {
       header: i18n.t("admin.user-management.dialog.edit.header"),
       modal: true,
     },
-    data: {
-      data,
-    },
+    data: data,
     onClose: () => {
       refetch();
     },
@@ -99,9 +138,7 @@ function openDeleteDialog(data: any) {
       header: i18n.t("admin.user-management.dialog.delete.single.header"),
       modal: true,
     },
-    data: {
-      data,
-    },
+    data: [data],
     onClose: () => {
       refetch();
     },
@@ -111,6 +148,58 @@ function openDeleteDialog(data: any) {
 refetch();
 </script>
 <template>
+  <ContextMenu ref="contextMenu" :model="items">
+    <template #item="{ item, props }">
+      <a
+        v-ripple
+        class="group flex items-center"
+        :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+        v-bind="props.action"
+      >
+        <span
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+          :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+        >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </ContextMenu>
+  <Menu ref="menu" :model="items" :popup="true">
+    <template #item="{ item, props }">
+      <a
+        v-ripple
+        class="group flex items-center"
+        :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+        v-bind="props.action"
+      >
+        <span
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+          :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+        >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </Menu>
   <Toolbar class="mb-4">
     <template #start>
       <div class="my-2 space-x-2">
@@ -142,6 +231,7 @@ refetch();
       v-model:selection="selectedUsers"
       dataKey="login"
       :paginator="true"
+      @row-contextmenu="onRowContextMenu"
       :rows="10"
       :filters="filters"
       paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -207,23 +297,16 @@ refetch();
         style="min-width: 12rem"
       ></Column>
       <Column :exportable="false" style="min-width: 8rem">
-        <template #body="slotProps">
-          <Button
-            icon="pi pi-pencil"
-            outlined
-            rounded
-            text
-            class="mr-2"
-            @click="openEditUserDialog(slotProps.data)"
-          />
-          <Button
-            icon="pi pi-trash"
-            outlined
-            rounded
-            text
-            severity="danger"
-            @click="openDeleteDialog([slotProps.data])"
-          />
+        <template #body="{ data }">
+          <div class="space-y-2">
+            <Button
+              type="button"
+              icon="pi pi-ellipsis-v"
+              text
+              severity="secondary"
+              @click="toggle($event, data)"
+            />
+          </div>
         </template>
       </Column>
     </DataTable>

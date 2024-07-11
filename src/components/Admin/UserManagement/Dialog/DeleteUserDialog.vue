@@ -10,7 +10,9 @@ onMounted(() => {
 });
 
 async function deleteUsers() {
-  for (const user of data.value.data) {
+  console.log(data.value)
+  for (const user of data.value) {
+    console.log(user)
     await useCustomFetch(
       `/administration/security/user/remove?login=${user.login}`,
     )
