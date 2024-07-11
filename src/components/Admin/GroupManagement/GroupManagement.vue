@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
-import DataTable from "primevue/datatable";
+import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
 import Toolbar from "primevue/toolbar";
 import InputText from "primevue/inputtext";
 import Tag from "primevue/tag";
@@ -52,7 +52,7 @@ const toggle = (event, data) => {
 };
 
 const contextMenu = ref();
-const onRowContextMenu = (event) => {
+const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   items.value = [
     {
       label: "Edit",

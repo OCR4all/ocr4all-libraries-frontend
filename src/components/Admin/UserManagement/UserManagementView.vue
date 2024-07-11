@@ -18,7 +18,7 @@ const deleteUserDialog = defineAsyncComponent(
 );
 
 import { FilterMatchMode } from "@primevue/core/api";
-import DataTable from "primevue/datatable";
+import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
 import Column from "primevue/column";
 import Button from "primevue/button";
 import Toolbar from "primevue/toolbar";
@@ -91,7 +91,7 @@ const toggle = (event, data) => {
 };
 
 const contextMenu = ref();
-const onRowContextMenu = (event) => {
+const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   items.value = [
     {
       label: "Edit",

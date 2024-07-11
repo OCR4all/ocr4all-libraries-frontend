@@ -3,7 +3,7 @@ import { useDialog } from "primevue/usedialog";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import Button from "primevue/button";
 import Skeleton from "primevue/skeleton";
-import DataTable from "primevue/datatable";
+import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
 import Column from "primevue/column";
 import InputText from "primevue/inputtext";
 import { FilterMatchMode } from "@primevue/core/api";
@@ -104,7 +104,7 @@ const toggle = (event, data) => {
   ];
   menu.value.toggle(event);
 };
-const onRowContextMenu = (event) => {
+const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   items.value = [
     {
       label: "Edit",

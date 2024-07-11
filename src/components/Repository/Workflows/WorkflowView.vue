@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import DataTable from "primevue/datatable";
+import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
 
 interface IWorkflowMetadata {
   label: string;
@@ -81,7 +81,7 @@ const toggle = (event, data) => {
   menu.value.toggle(event);
 };
 const contextMenu = ref();
-const onRowContextMenu = (event) => {
+const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   items.value = [
     {
       label: "Open",

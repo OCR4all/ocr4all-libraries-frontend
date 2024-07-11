@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { FilterMatchMode } from "@primevue/core/api";
-import DataTable from "primevue/datatable";
+import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
 import Column from "primevue/column";
 import Toolbar from "primevue/toolbar";
 import Tag from "primevue/tag";
@@ -103,7 +103,7 @@ const toggle = (event, data) => {
 };
 
 const contextMenu = ref();
-const onRowContextMenu = (event) => {
+const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   items.value = [
     {
       label: "Open",

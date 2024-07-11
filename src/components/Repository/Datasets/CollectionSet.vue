@@ -14,7 +14,7 @@ import { useToast } from "primevue/usetoast";
 import { RemovableRef } from "@vueuse/core";
 import InputText from "primevue/inputtext";
 import Skeleton from "primevue/skeleton";
-import DataTable from "primevue/datatable";
+import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
 import Column from "primevue/column";
 import { FilterMatchMode } from "@primevue/core/api";
 import { UseTimeAgo } from "@vueuse/components";
@@ -304,7 +304,7 @@ const layout: RemovableRef<string> = useLocalStorage(
 const options = ref(["list", "grid"]);
 
 const contextMenu = ref();
-const onRowContextMenu = (event) => {
+const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   (items.value = [
     {
       label: "Open",

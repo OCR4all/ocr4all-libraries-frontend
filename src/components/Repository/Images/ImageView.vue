@@ -6,7 +6,7 @@ import SelectButton from "primevue/selectbutton";
 import Column from "primevue/column";
 import Button from "primevue/button";
 import DataView from "primevue/dataview";
-import DataTable from "primevue/datatable";
+import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { FilterMatchMode } from "@primevue/core/api";
@@ -20,21 +20,7 @@ import Chips from "primevue/chips";
 import Toast from "primevue/toast";
 import Textarea from "primevue/textarea";
 import { RemovableRef } from "@vueuse/core";
-
-interface ITracking {
-  created: string,
-  updated: string,
-  user: string
-}
-
-interface IContainer {
-  description: string,
-  id: string,
-  keywords: string[],
-  name: string,
-  right: string,
-  tracking: ITracking
-}
+import { IContainer } from "@/components/Project/project.interfaces";
 
 const router: Router = useRouter();
 
@@ -89,7 +75,7 @@ await listContainers();
 const items = ref();
 const menu = ref();
 
-const toggle = (event, data) => {
+const toggle = (event: Event, data) => {
   items.value = [
     {
       label: "Actions",
@@ -134,16 +120,18 @@ async function createContainer() {
 }
 
 async function deleteContainers() {
-  for (const container of selectedContainers.value) {
-    await deleteContainer(container.id);
+  if(selectedContainers.value !== undefined){
+    for (const container of selectedContainers.value) {
+      await deleteContainer(container.id);
+    }
+    toast.add({
+      severity: "success",
+      summary: "Success",
+      detail: "Containers deleted",
+      life: 3000,
+    });
+    toggleDeleteDialog();
   }
-  toast.add({
-    severity: "success",
-    summary: "Success",
-    detail: "Containers deleted",
-    life: 3000,
-  });
-  toggleDeleteDialog();
 }
 async function deleteContainer(id: string) {
   useCustomFetch(`/repository/container/remove?id=${id}`).then(() => {
@@ -153,15 +141,15 @@ async function deleteContainer(id: string) {
 }
 
 function updateSelection(selectedContainer: string, add: boolean) {
-  const container = containers.value.find((entry) => {
+  const container = containers.value.find((entry: IContainer) => {
     return entry.id === selectedContainer;
   });
-  if (!add && selectedContainers.value.indexOf(container) != -1) {
+  if (selectedContainers.value !== undefined && !add && selectedContainers.value.indexOf(container) != -1) {
     selectedContainers.value.splice(
       selectedContainers.value.indexOf(container),
       1,
     );
-  } else if (add) {
+  } else if (selectedContainers.value !== undefined && add) {
     selectedContainers.value.push(container);
   }
 }
@@ -170,7 +158,7 @@ const toggleCreateContainerPanel = (event: Event) => {
   createContainerPanel.value.toggle(event);
 };
 
-const selectedContainers: Ref<object[]> = ref([]);
+const selectedContainers: Ref<IContainer[] | undefined> = ref([]);
 const filters: Ref = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
@@ -186,12 +174,12 @@ async function updateContainer() {
     keywords: keywords.value ? Array.from(keywords.value) : [],
     description: description.value,
   };
-  const { isFetching, error, data } = await useCustomFetch(
+  const { error } = await useCustomFetch(
     `/repository/container/update?id=${id.value}`,
   )
     .post(payload)
     .json();
-  listContainers();
+  await listContainers();
   editDialogVisible.value = false;
   if (!error.value) {
     toast.add({
@@ -210,7 +198,7 @@ async function updateContainer() {
   }
 }
 
-function openEditDialog(node) {
+function openEditDialog(node: IContainer) {
   id.value = node.id;
   name.value = node.name;
   description.value = node.description;
@@ -227,7 +215,7 @@ function openContainer(containerId: string, containerName: string) {
 }
 
 const contextMenu = ref();
-const onRowContextMenu = (event) => {
+const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   items.value = [
     {
       label: "Open",

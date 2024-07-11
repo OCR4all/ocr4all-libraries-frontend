@@ -6,7 +6,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import { UseTimeAgo } from "@vueuse/components";
 
-import DataTable from "primevue/datatable";
+import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
 import Column from "primevue/column";
 import InputText from "primevue/inputtext";
 import Toolbar from "primevue/toolbar";
@@ -145,7 +145,7 @@ async function downloadSandbox(sandbox) {
       link.click();
     });
 }
-const onRowContextMenu = (event) => {
+const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   items.value = [
     {
       label: "Open",
