@@ -6,7 +6,7 @@ const uiStore = useUiStore();
 uiStore.breadcrumb = [
   {
     label: "Repository",
-    to: "/repository",
+    to: "/repository/overview",
   },
 ];
 

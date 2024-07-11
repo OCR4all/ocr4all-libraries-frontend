@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SelectButton from "primevue/selectbutton";
+import { useUiStore } from "@/stores/ui.store";
 
 const router = useRouter();
 
@@ -26,6 +27,14 @@ if (
 }
 
 const options = ref(["Images", "Datasets", "Models", "Workflows"]);
+
+const uiStore = useUiStore()
+uiStore.breadcrumb = [
+  {
+    label: "Repository",
+    to: "/repository/overview",
+  },
+];
 </script>
 <template>
   <div class="flex flex-col gap-y-6">
