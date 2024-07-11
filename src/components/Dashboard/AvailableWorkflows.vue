@@ -50,7 +50,9 @@ refetch();
       <template #header>
         <div class="flex justify-between">
           <div>
-            <p class="font-bold">{{ $t("pages.dashboard.components.workflows.header") }}</p>
+            <p class="font-bold">
+              {{ $t("pages.dashboard.components.workflows.header") }}
+            </p>
           </div>
           <div class="flex justify-end">
             <button
@@ -65,7 +67,12 @@ refetch();
             </button>
             <button
               v-tooltip.left="'Open workflow overview'"
-              @click="router.push({ name: 'repository-overview', query: { section: 'Workflows' }})"
+              @click="
+                router.push({
+                  name: 'repository-overview',
+                  query: { section: 'Workflows' },
+                })
+              "
             >
               <ArrowUpOnSquareIcon
                 data-tooltip-target="tooltip-project-overview"

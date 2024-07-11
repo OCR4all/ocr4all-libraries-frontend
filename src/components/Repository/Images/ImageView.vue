@@ -444,9 +444,7 @@ const onRowContextMenu = (event) => {
           ></Column>
           <Column
             field="name"
-            :header="
-              $t('pages.repository.overview.dataview.list.column.name')
-            "
+            :header="$t('pages.repository.overview.dataview.list.column.name')"
             sortable
           >
             <template #loading>
@@ -513,7 +511,7 @@ const onRowContextMenu = (event) => {
                 <Tag
                   v-for="keyword of slotProps.data.keywords"
                   :key="keyword"
-                >{{ keyword }}</Tag
+                  >{{ keyword }}</Tag
                 >
               </div>
             </template>

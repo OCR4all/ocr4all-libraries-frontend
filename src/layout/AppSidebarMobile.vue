@@ -44,12 +44,10 @@ defineExpose({
             @click="router.push({ name: 'Dashboard' })"
           />
           <span>
-            <Button
-              type="button"
-              text
-              @click="closeCallback"
-            >
-              <p class="text-surface-800 dark:text-surface-200 hover:text-surface-950 hover:dark:text-surface-0">
+            <Button type="button" text @click="closeCallback">
+              <p
+                class="text-surface-800 hover:text-surface-950 dark:text-surface-200 hover:dark:text-surface-0"
+              >
                 <i class="pi pi-times"></i>
               </p>
             </Button>

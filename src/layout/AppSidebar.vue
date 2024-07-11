@@ -104,7 +104,7 @@ const maximized = computed(() => !uiStore.sidebarMinimized);
         </div>
         <div v-else-if="uiStore.sidebarCtaVisible" class="flex justify-center">
           <span
-            class="bg-orange-100 rounded-md px-2.5 py-0.5 text-sm font-semibold text-orange-800 dark:bg-orange-200 dark:text-orange-900"
+            class="rounded-md bg-orange-100 px-2.5 py-0.5 text-sm font-semibold text-orange-800 dark:bg-orange-200 dark:text-orange-900"
             >{{ $t("nav.sidebar.cta.header") }}</span
           >
         </div>

@@ -11,7 +11,7 @@ export const workflowSchema = ref([
     label: "ID",
     validation: "required",
     help: "Display name.",
-    disabled: true
+    disabled: true,
   },
   {
     $formkit: "primeTextarea",

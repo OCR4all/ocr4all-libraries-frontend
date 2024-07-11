@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import SelectButton from "primevue/selectbutton";
 
-const router = useRouter()
+const router = useRouter();
 
 enum Section {
   images = "Images",
   datasets = "Datasets",
   models = "Models",
-  workflows = "Workflows"
+  workflows = "Workflows",
 }
 
 const section = useLocalStorage(
@@ -15,10 +15,14 @@ const section = useLocalStorage(
   "Images",
 );
 
-const sectionQuery = router.currentRoute.value.query.section
+const sectionQuery = router.currentRoute.value.query.section;
 
-if(sectionQuery && typeof sectionQuery === "string" && Object.values(Section).includes(sectionQuery as Section)){
-  section.value = sectionQuery
+if (
+  sectionQuery &&
+  typeof sectionQuery === "string" &&
+  Object.values(Section).includes(sectionQuery as Section)
+) {
+  section.value = sectionQuery;
 }
 
 const options = ref(["Images", "Datasets", "Models", "Workflows"]);

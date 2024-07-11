@@ -15,22 +15,16 @@ import { useUiStore } from "@/stores/ui.store";
 import Button from "primevue/button";
 
 const editDialog = defineAsyncComponent(
-  () =>
-    import(
-      "@/components/Project/Project/Dialog/EditDialog.vue"
-      ),
+  () => import("@/components/Project/Project/Dialog/EditDialog.vue"),
 );
 const deleteDialog = defineAsyncComponent(
-  () =>
-    import(
-      "@/components/Project/Project/Dialog/DeleteDialog.vue"
-      ),
+  () => import("@/components/Project/Project/Dialog/DeleteDialog.vue"),
 );
 
 const router = useRouter();
 
 import { useDialog } from "primevue/usedialog";
-const dialog = useDialog()
+const dialog = useDialog();
 
 const loading = ref(true);
 const isRefetching = ref(false);
@@ -345,7 +339,10 @@ refetch();
             </Select>
           </template>
         </Column>
-        <Column :sortable="true" :header="$t('pages.projects.overview.table.columns.keywords')">
+        <Column
+          :sortable="true"
+          :header="$t('pages.projects.overview.table.columns.keywords')"
+        >
           <template #body="slotProps">
             <div class="flex gap-1">
               <Tag

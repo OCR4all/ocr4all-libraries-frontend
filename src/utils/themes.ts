@@ -1,16 +1,7 @@
-export const midnightBlue = {
+export const midnightBlue = {};
 
-}
+export const lightsOut = {};
 
-export const lightsOut = {
+export const coffee = {};
 
-}
-
-export const coffee = {
-
-}
-
-export const highContrast = {
-
-}
-
+export const highContrast = {};

@@ -58,7 +58,9 @@ refetch();
       <template #header>
         <div class="flex justify-between">
           <div>
-            <p class="font-bold">{{ $t("pages.dashboard.components.recent-projects.header") }}</p>
+            <p class="font-bold">
+              {{ $t("pages.dashboard.components.recent-projects.header") }}
+            </p>
           </div>
           <div class="flex justify-end">
             <button

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { projectInformationSchema } from "@/components/Project/Project/Dialog/Schemas/projectInformationSchema";
-import { useToast } from "primevue/usetoast"
+import { useToast } from "primevue/usetoast";
 
 const dialogRef = inject("dialogRef");
-const toast = useToast()
+const toast = useToast();
 
 const schema = projectInformationSchema;
-const data = ref()
+const data = ref();
 
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
@@ -27,7 +27,7 @@ async function submitProjectInformationChange(values, { setErrors }) {
   const { isFetching, error, data } = await useCustomFetch(`/project/update`)
     .post(payload)
     .json();
-  if(!error){
+  if (!error) {
     toast.add({
       severity: "success",
       summary: t(
@@ -38,7 +38,7 @@ async function submitProjectInformationChange(values, { setErrors }) {
       ),
       life: 3000,
     });
-  }else{
+  } else {
     toast.add({
       severity: "error",
       summary: "Error",

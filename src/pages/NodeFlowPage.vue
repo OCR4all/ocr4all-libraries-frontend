@@ -7,7 +7,7 @@ const uiStore = useUiStore();
 uiStore.breadcrumb = [
   {
     label: "Workflows",
-    to: "/repository/overview?category=Workflows"
+    to: "/repository/overview?category=Workflows",
   },
   {
     label: "NodeFlow",

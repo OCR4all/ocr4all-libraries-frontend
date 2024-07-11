@@ -295,7 +295,9 @@ refresh();
     @close="uploadToastVisible = false"
   >
     <template #container="{ message, closeCallback }">
-      <section class="flex flex-col p-4 gap-4 w-full bg-surface-950/50 dark:bg-surface-200/50 backdrop-blur-sm rounded-xl">
+      <section
+        class="flex w-full flex-col gap-4 rounded-xl bg-surface-950/50 p-4 backdrop-blur-sm dark:bg-surface-200/50"
+      >
         <div class="flex w-full gap-3 justify-self-center">
           <i
             class="pi pi-cloud-upload text-2xl text-surface-0 dark:text-primary-0"
@@ -317,15 +319,13 @@ refresh();
           class="flex flex-col justify-center space-y-2"
         >
           <ProgressBar mode="indeterminate"></ProgressBar>
-          <p
-            class="self-center font-semibold text-surface-50"
-          >
+          <p class="self-center font-semibold text-surface-50">
             Finalizing upload
           </p>
         </div>
-        <div class="flex gap-4 mb-4 justify-end">
+        <div class="mb-4 flex justify-end gap-4">
           <Button label="Cancel" size="small" @click="closeCallback">
-            <p class="text-white font-semibold">Cancel</p>
+            <p class="font-semibold text-white">Cancel</p>
           </Button>
         </div>
       </section>

@@ -6,7 +6,7 @@ import {
   NumberInterface,
   SelectInterface,
   TextInputInterface,
-  displayInSidebar
+  displayInSidebar,
 } from "baklavajs";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
@@ -67,7 +67,10 @@ function createNodeType(nodeData: any) {
     switch (entry.type) {
       case "string":
         inputs[entry.argument] = () =>
-          new TextInputInterface(entry.argument, entry.value).setHidden(true).use(displayInSidebar, true).setPort(false);
+          new TextInputInterface(entry.argument, entry.value)
+            .setHidden(true)
+            .use(displayInSidebar, true)
+            .setPort(false);
         break;
       case "select":
         inputs[entry.argument] = () =>
@@ -75,24 +78,31 @@ function createNodeType(nodeData: any) {
             entry.argument,
             untangleItems(entry.items, "default"),
             untangleItems(entry.items, "entries"),
-          ).use(displayInSidebar, true).setHidden(true).setPort(false);
+          )
+            .use(displayInSidebar, true)
+            .setHidden(true)
+            .setPort(false);
         break;
       case "integer":
         inputs[entry.argument] = () =>
-          new IntegerInterface(entry.argument, entry.value).setHidden(true).use(displayInSidebar, true).setPort(false);
+          new IntegerInterface(entry.argument, entry.value)
+            .setHidden(true)
+            .use(displayInSidebar, true)
+            .setPort(false);
         break;
       case "decimal":
         inputs[entry.argument] = () =>
-          new NumberInterface(
-            entry.argument,
-            entry.value,
-            entry.min,
-            entry.max,
-          ).use(displayInSidebar, true).setHidden(true).setPort(false);
+          new NumberInterface(entry.argument, entry.value, entry.min, entry.max)
+            .use(displayInSidebar, true)
+            .setHidden(true)
+            .setPort(false);
         break;
       case "boolean":
         inputs[entry.argument] = () =>
-          new CheckboxInterface(entry.argument, entry.value).setHidden(true).use(displayInSidebar, true).setPort(false);
+          new CheckboxInterface(entry.argument, entry.value)
+            .setHidden(true)
+            .use(displayInSidebar, true)
+            .setPort(false);
         break;
     }
   }

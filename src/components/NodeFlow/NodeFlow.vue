@@ -102,7 +102,7 @@ function newGraph() {
   uiStore.breadcrumb = [
     {
       label: "Workflows",
-      to: "/repository/overview?category=Workflows"
+      to: "/repository/overview?category=Workflows",
     },
     {
       label: "NodeFlow",
@@ -182,7 +182,7 @@ async function loadWorkflow() {
     uiStore.breadcrumb = [
       {
         label: "Workflows",
-        to: "/repository/overview?category=Workflows"
+        to: "/repository/overview?category=Workflows",
       },
       {
         label: "NodeFlow",

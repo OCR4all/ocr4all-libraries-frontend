@@ -23,6 +23,7 @@ await useCustomFetch(`/account`)
       <div class="col-span-3 space-y-4 lg:col-span-2">
         <GeneralInformation />
         <UserPassword />
+        <A11N />
       </div>
     </div>
   </div>

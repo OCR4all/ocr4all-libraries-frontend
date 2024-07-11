@@ -123,8 +123,8 @@ refetch();
           rounded
           type="delete"
           size="large"
-          @click="openDeleteGroupDialog(selectedGroups)"
           :disabled="!selectedGroups || !selectedGroups.length"
+          @click="openDeleteGroupDialog(selectedGroups)"
         >
           Delete Group
         </ActionButton>

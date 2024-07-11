@@ -58,8 +58,8 @@ const toggle = (event, data) => {
           label: "Open",
           icon: "pi pi-eye",
           command: () => {
-            loadWorkflow(data)
-          }
+            loadWorkflow(data);
+          },
         },
         {
           label: "Edit",
@@ -87,8 +87,8 @@ const onRowContextMenu = (event) => {
       label: "Open",
       icon: "pi pi-eye",
       command: () => {
-        loadWorkflow(event.data)
-      }
+        loadWorkflow(event.data);
+      },
     },
     {
       label: "Edit",
@@ -227,7 +227,7 @@ refetch();
           :class="{
             'text-red-500 group-hover:text-white': item.label === 'Delete',
           }"
-        >{{ item.label }}</span
+          >{{ item.label }}</span
         >
       </a>
     </template>
@@ -291,7 +291,7 @@ refetch();
     >
       <template #header>
         <div class="flex justify-between">
-          <h4 class="m-0 font-bold self-center">
+          <h4 class="m-0 self-center font-bold">
             {{ $t("pages.workflows.table.heading") }}
           </h4>
           <span class="p-input-icon-left ml-10">
@@ -322,10 +322,7 @@ refetch();
         :sortable="true"
       >
         <template #body="{ data }">
-          <p
-            class="cursor-pointer hover:underline"
-            @click="loadWorkflow(data)"
-          >
+          <p class="cursor-pointer hover:underline" @click="loadWorkflow(data)">
             {{ data.label }}
           </p>
         </template>

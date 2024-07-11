@@ -102,9 +102,10 @@ const routes = [
       {
         path: "calamari",
         name: "training_calamari",
-        component: () => import("@/components/Training/Calamari/CalamariView.vue"),
+        component: () =>
+          import("@/components/Training/Calamari/CalamariView.vue"),
       },
-    ]
+    ],
   },
   {
     path: "/evaluation",

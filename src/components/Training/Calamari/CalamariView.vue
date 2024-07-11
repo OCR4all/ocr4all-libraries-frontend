@@ -1,24 +1,22 @@
 <script setup lang="ts">
+import { useUiStore } from "@/stores/ui.store";
 
-import {useUiStore} from "@/stores/ui.store";
-
-const datasets = ref()
-const parameters = ref()
+const datasets = ref();
+const parameters = ref();
 
 const uiStore = useUiStore();
 uiStore.breadcrumb = [
   {
     label: "Training",
-    to: "/training/overview"
+    to: "/training/overview",
   },
   {
     label: "Calamari",
   },
 ];
 
-
-function run(){
-  console.log(datasets.value.getDatasets())
+function run() {
+  console.log(datasets.value.getDatasets());
 }
 </script>
 <template>
@@ -37,8 +35,12 @@ function run(){
         <Step>Parameters</Step>
         <StepPanel v-slot="{ activateCallback }">
           <ParameterSelector ref="parameters" />
-          <div class="flex py-6 gap-2">
-            <Button label="Back" severity="secondary" @click="activateCallback('1')" />
+          <div class="flex gap-2 py-6">
+            <Button
+              label="Back"
+              severity="secondary"
+              @click="activateCallback('1')"
+            />
             <Button label="Next" @click="activateCallback('3')" />
           </div>
         </StepPanel>
@@ -48,7 +50,11 @@ function run(){
         <StepPanel v-slot="{ activateCallback }">
           <Button label="Launch" @click="run" />
           <div class="py-6">
-            <Button label="Back" severity="secondary" @click="activateCallback('2')" />
+            <Button
+              label="Back"
+              severity="secondary"
+              @click="activateCallback('2')"
+            />
           </div>
         </StepPanel>
       </StepItem>

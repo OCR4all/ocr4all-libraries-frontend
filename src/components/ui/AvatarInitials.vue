@@ -65,10 +65,7 @@ const isSelectable = computed(() => {
     :class="[getSize, isSelectable]"
     :style="{ 'background-color': stringToColour(props.name) }"
   >
-    <span
-      class="font-medium text-white"
-      :class="getTextSize"
-    >
+    <span class="font-medium text-white" :class="getTextSize">
       {{ initials }}
     </span>
   </div>

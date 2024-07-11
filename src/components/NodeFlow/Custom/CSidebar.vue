@@ -1,5 +1,10 @@
 <template>
-  <div ref="el" class="baklava-sidebar" :class="{ '--open': graph.sidebar.visible }" :style="styles">
+  <div
+    ref="el"
+    class="baklava-sidebar"
+    :class="{ '--open': graph.sidebar.visible }"
+    :style="styles"
+  >
     <div v-if="resizable" class="__resizer" @mousedown="startResize" />
 
     <div class="__header text-black dark:text-white">
@@ -9,9 +14,18 @@
       </div>
     </div>
 
-    <h2 class="text-black dark:text-white text-xl">Parameters</h2>
-    <div v-for="intf in displayedInterfaces" :key="intf.id" class="__interface text-black dark:text-white" >
-      <component :is="intf.component" v-model="intf.value" :node="node" :intf="intf" />
+    <h2 class="text-xl text-black dark:text-white">Parameters</h2>
+    <div
+      v-for="intf in displayedInterfaces"
+      :key="intf.id"
+      class="__interface text-black dark:text-white"
+    >
+      <component
+        :is="intf.component"
+        v-model="intf.value"
+        :node="node"
+        :intf="intf"
+      />
     </div>
   </div>
 </template>
@@ -28,7 +42,9 @@ export default defineComponent({
     const el = ref<HTMLElement | null>(null);
 
     const width = toRef(viewModel.value.settings.sidebar, "width");
-    const resizable = computed(() => viewModel.value.settings.sidebar.resizable);
+    const resizable = computed(
+      () => viewModel.value.settings.sidebar.resizable,
+    );
 
     const node = computed(() => {
       const id = graph.value.sidebar.nodeId;
@@ -43,7 +59,10 @@ export default defineComponent({
       if (!node.value) {
         return [];
       }
-      const allIntfs = [...Object.values(node.value.inputs), ...Object.values(node.value.outputs)];
+      const allIntfs = [
+        ...Object.values(node.value.inputs),
+        ...Object.values(node.value.outputs),
+      ];
       return allIntfs.filter((intf) => intf.displayInSidebar && intf.component);
     });
 
@@ -54,16 +73,17 @@ export default defineComponent({
     const startResize = () => {
       window.addEventListener("mousemove", onMouseMove);
       window.addEventListener(
-          "mouseup",
-          () => {
-            window.removeEventListener("mousemove", onMouseMove);
-          },
-          { once: true },
+        "mouseup",
+        () => {
+          window.removeEventListener("mousemove", onMouseMove);
+        },
+        { once: true },
       );
     };
 
     const onMouseMove = (event: MouseEvent) => {
-      const maxwidth = el.value?.parentElement?.getBoundingClientRect().width ?? 500;
+      const maxwidth =
+        el.value?.parentElement?.getBoundingClientRect().width ?? 500;
       let newWidth = width.value - event.movementX;
       if (newWidth < 300) {
         newWidth = 300;
@@ -73,7 +93,16 @@ export default defineComponent({
       width.value = newWidth;
     };
 
-    return { el, graph, resizable, node, styles, displayedInterfaces, startResize, close };
+    return {
+      el,
+      graph,
+      resizable,
+      node,
+      styles,
+      displayedInterfaces,
+      startResize,
+      close,
+    };
   },
 });
 </script>

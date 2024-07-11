@@ -15,7 +15,7 @@ export const projectInformationSchema = ref([
     label: "ID",
     validation: "required",
     help: "Display name.",
-    disabled: true
+    disabled: true,
   },
   {
     $formkit: "primeSelect",
