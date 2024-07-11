@@ -26,7 +26,7 @@ function toggleSidebarMobile() {
       <AppSidebar :mode="SidebarMode.Admin" />
       <AppSidebarMobile :mode="SidebarMode.Admin" ref="mobileSidebarRef" />
       <main
-        class="flex-1 justify-center overflow-x-auto bg-surface-100 shadow-md dark:bg-surface-950 lg:m-1.5 lg:rounded-md lg:bg-surface-0 lg:dark:bg-surface-900"
+        class="flex-1 justify-center overflow-x-auto bg-surface-100 shadow-md dark:bg-surface-950 lg:m-2 lg:rounded-md lg:bg-surface-0 lg:dark:bg-surface-900"
       >
         <AppTopbar @toggle-sidebar-mobile="toggleSidebarMobile" />
         <div
