@@ -21,15 +21,6 @@ uiStore.breadcrumb = [
   },
 ];
 
-await useCustomFetch(`/administration/security/user/list`)
-  .get()
-  .json()
-  .then((response) => {
-    for (const user of response.data.value) {
-      console.log(user)
-    }
-  });
-
 const projects: Ref<number | null> = ref(null);
 const workflows: Ref<number | null> = ref(null);
 const collections: Ref<number | null> = ref(null);
