@@ -106,6 +106,7 @@ declare module 'vue' {
     SandboxRunWorkflow: typeof import('./src/components/Project/Project/Sandbox/SandboxRunWorkflow.vue')['default']
     ServiceProviderPropertyCard: typeof import('./src/components/Admin/InstanceOverview/Cards/ServiceProviderPropertyCard.vue')['default']
     SettingsDialog: typeof import('./src/components/Layout/Topbar/SettingsDialog.vue')['default']
+    ShareDialog: typeof import('./src/components/Repository/Images/Container/Dialog/ShareDialog.vue')['default']
     SidebarToggle: typeof import('./src/components/Layout/SidebarToggle.vue')['default']
     SmallJobQueue: typeof import('./src/components/Dashboard/SmallJobQueue.vue')['default']
     Spotlight: typeof import('./src/components/ui/Spotlight/Spotlight.vue')['default']

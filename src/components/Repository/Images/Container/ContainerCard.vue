@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
+
+import ShareDialog from "@/components/Repository/Images/Container/Dialog/ShareDialog.vue";
+
 import Button from "primevue/button";
 import Menu from "primevue/menu";
 import Checkbox from "primevue/checkbox";
@@ -14,7 +17,10 @@ import Chips from "primevue/chips";
 import Textarea from "primevue/textarea";
 import { useToast } from "primevue/usetoast";
 import { IContainer } from "@/components/Repository/Images/images.interface";
+import { useDialog } from "primevue/usedialog";
 const toast = useToast();
+
+const dialog = useDialog()
 
 const { t } = useI18n();
 
@@ -124,6 +130,16 @@ const shareDialogVisible = ref();
 async function updateContainerShare() {}
 
 function openShareModal() {
+  dialog.open(ShareDialog, {
+    props: {
+      header: "Share Container",
+      modal: true,
+    },
+    data: props,
+    onClose: () => {
+      emit("refresh");
+    },
+  });
   console.log()
   /*  toast.add({
     severity: "info",
