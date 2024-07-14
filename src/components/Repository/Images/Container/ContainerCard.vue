@@ -132,8 +132,15 @@ async function updateContainerShare() {}
 function openShareModal() {
   dialog.open(ShareDialog, {
     props: {
-      header: "Share Container",
+      header: `Share ${props.name}`,
       modal: true,
+      style: {
+        width: '50vw',
+      },
+      breakpoints:{
+        '960px': '75vw',
+        '640px': '90vw'
+      },
     },
     data: props,
     onClose: () => {
