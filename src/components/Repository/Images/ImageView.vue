@@ -63,7 +63,6 @@ async function listContainers() {
         })
       }else if(response.data.value){
         const data: IContainer[] = response.data.value
-        console.log(data)
         containers.value = data.filter(function (container: IContainer){
           return container.right !== null
         })

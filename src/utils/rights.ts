@@ -13,7 +13,7 @@ interface IRight {
 
 interface IDestructRight {
     name: string,
-    rights: string[]
+    role: string
 }
 
 export function destructureRights(rights: IRight[]): IDestructRight[] {
@@ -33,11 +33,21 @@ export function destructureRights(rights: IRight[]): IDestructRight[] {
     for(const [key, value] of Object.entries(registry)){
         destructRights.push({
             name: key,
-            rights: value
+            role: getRole(value)
         })
     }
 
     return destructRights
+}
+
+function getRole(rights: string[]): string {
+    if(rights.includes("special")){
+        return "admin"
+    }else if(rights.includes("write")){
+        return "write"
+    }
+
+    return "read"
 }
 
 export function restructureRights(destructRights: IDestructRight[]): IRight[] {
