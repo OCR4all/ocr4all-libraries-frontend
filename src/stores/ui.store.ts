@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { IBreadCrumbEntry } from "@/components/Layout/Breadcrumb/Breadcrumb.interface";
 
 export const useUiStore = defineStore("ui", () => {
   const sidebarCtaVisible = useStorage(

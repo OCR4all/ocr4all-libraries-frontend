@@ -69,6 +69,7 @@ declare module 'vue' {
     InstanceOverview: typeof import('./src/components/Admin/InstanceOverview/InstanceOverview.vue')['default']
     InstanceTag: typeof import('./src/components/ui/InstanceTag.vue')['default']
     JournalDialog: typeof import('./src/components/Admin/InstanceAdministration/JournalDialog.vue')['default']
+    MobileBreadcrumbNavigation: typeof import('./src/components/Layout/Breadcrumb/MobileBreadcrumbNavigation.vue')['default']
     ModeSelect: typeof import('./src/components/Layout/Topbar/ModeSelect.vue')['default']
     ModeTag: typeof import('./src/components/ui/ModeTag.vue')['default']
     NewProject: typeof import('./src/components/Project/NewProject.vue')['default']

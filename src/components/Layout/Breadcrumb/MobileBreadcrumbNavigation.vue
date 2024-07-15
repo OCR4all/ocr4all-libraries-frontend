@@ -5,17 +5,15 @@ const store = useUiStore();
 </script>
 <template>
   <nav
-    v-if="store.breadcrumb"
-    class="hidden lg:flex justify-between max-w-lg overflow-x-auto overflow-y-auto px-4 py-3 lg:p-0 rounded-lg border border-gray-200 bg-surface-0 dark:border-gray-700 dark:bg-surface-800 lg:border-none lg:bg-surface-0  lg:dark:bg-surface-900"
+    v-if="store.breadcrumb && store.breadcrumb.length > 1"
+    class="flex lg:hidden justify-center mx-6 mb-6 overflow-x-auto"
     aria-label="Breadcrumb"
   >
-    <ol
-      class="inline-flex items-center space-x-1 rtl:space-x-reverse sm:mb-0 md:space-x-2"
-    >
+    <ol class="flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
       <li
         v-for="(item, index) in store.breadcrumb"
         :key="item.label"
-        class="inline-flex items-center"
+        class="flex items-center"
       >
         <span
           v-show="index != 0"
@@ -37,13 +35,13 @@ const store = useUiStore();
         <RouterLink
           v-if="item.to"
           :to="item.to"
-          class="unstyled text-nowrap text-md font-medium text-surface-700 hover:text-primary-600 dark:text-surface-100 dark:hover:text-white"
+          class="unstyled text-md font-medium text-surface-700 hover:text-primary-600 dark:text-surface-100 dark:hover:text-white"
           :class="[
             index === store.breadcrumb.length - 1
               ? 'font-semibold'
               : 'font-medium',
           ]"
-          >{{ item.label }}</RouterLink
+        >{{ item.label }}</RouterLink
         >
         <p
           v-else

@@ -37,6 +37,7 @@ function toggleSidebarMobile() {
           class="h-[calc(100vh-4rem)] w-full overflow-y-auto rounded-b-2xl lg:h-[calc(100vh-5rem)]"
           :class="{ 'p-8': props.padded }"
         >
+          <MobileBreadcrumbNavigation />
           <slot />
         </div>
       </main>
