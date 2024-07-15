@@ -17,7 +17,7 @@ const props = defineProps<{
 }>();
 
 const initials = computed(() => {
-  const nameParts = props.name.split(" ");
+  const nameParts = props.name.toUpperCase().split(" ");
   return `${nameParts[0].charAt(0)}${nameParts[1] ? nameParts[1].charAt(0) : ""}`;
 });
 

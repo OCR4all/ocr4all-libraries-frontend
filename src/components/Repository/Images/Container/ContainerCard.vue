@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
+
+import ShareDialog from "@/components/Repository/Images/Container/Dialog/ShareDialog.vue";
+
 import Button from "primevue/button";
 import Menu from "primevue/menu";
 import Checkbox from "primevue/checkbox";
@@ -14,7 +17,10 @@ import Chips from "primevue/chips";
 import Textarea from "primevue/textarea";
 import { useToast } from "primevue/usetoast";
 import { IContainer } from "@/components/Repository/Images/images.interface";
+import { useDialog } from "primevue/usedialog";
 const toast = useToast();
+
+const dialog = useDialog()
 
 const { t } = useI18n();
 
@@ -46,10 +52,21 @@ const toggle = (event: Event) => {
   actionMenuVisible.value = actionMenu.value.overlayVisible;
 };
 
+const getSelectLabel = computed(() => {
+  return checked.value ? "Deselect" : "Select"
+});
+
 const actionMenuItems = ref([
   {
     label: t("pages.repository.container.card.actions.label"),
     items: [
+      {
+        label: getSelectLabel,
+        icon: "pi pi-check-square",
+        command: () => {
+          toggleCheckbox();
+        },
+      },
       {
         label: t("pages.repository.container.card.actions.edit"),
         icon: "pi pi-pencil",
@@ -65,10 +82,43 @@ const actionMenuItems = ref([
         },
       },
       {
+        label: "Download",
+        icon: "pi pi-download",
+        command: () => {
+          downloadContainer();
+        },
+      },
+      {
         label: t("pages.repository.container.card.actions.delete"),
         icon: "pi pi-times",
         command: () => {
           toggleDeleteDialog();
+        },
+      },
+    ],
+  },
+]);
+
+const items = ref([
+      {
+        label: getSelectLabel,
+        icon: "pi pi-check-square",
+        command: () => {
+          toggleCheckbox();
+        },
+      },
+      {
+        label: t("pages.repository.container.card.actions.edit"),
+        icon: "pi pi-pencil",
+        command: () => {
+          editDialogVisible.value = true;
+        },
+      },
+      {
+        label: t("pages.repository.container.card.actions.share"),
+        icon: "pi pi-share-alt",
+        command: () => {
+          openShareModal();
         },
       },
       {
@@ -78,9 +128,20 @@ const actionMenuItems = ref([
           downloadContainer();
         },
       },
-    ],
-  },
+      {
+        label: t("pages.repository.container.card.actions.delete"),
+        icon: "pi pi-times",
+        command: () => {
+          toggleDeleteDialog();
+        },
+      },
 ]);
+
+const contextMenu = ref()
+
+const onContextMenu = (event) => {
+  contextMenu.value.show(event);
+};
 
 function downloadContainer() {
   toast.add({
@@ -101,8 +162,9 @@ function downloadContainer() {
     });
 }
 
-function updateSelection(event: Event) {
-  emit("updateSelection", props.id, event);
+function updateSelection(toggle: boolean) {
+  console.log(toggle)
+  emit("updateSelection", props.id, toggle);
 }
 
 async function deleteContainer() {
@@ -124,6 +186,23 @@ const shareDialogVisible = ref();
 async function updateContainerShare() {}
 
 function openShareModal() {
+  dialog.open(ShareDialog, {
+    props: {
+      header: `Share ${props.name}`,
+      modal: true,
+      style: {
+        width: '50vw',
+      },
+      breakpoints:{
+        '960px': '75vw',
+        '640px': '90vw'
+      },
+    },
+    data: props,
+    onClose: () => {
+      emit("refresh");
+    },
+  });
   console.log()
   /*  toast.add({
     severity: "info",
@@ -182,7 +261,7 @@ function toggleDeleteDialog() {
   deleteDialogVisible.value = !deleteDialogVisible.value;
 }
 
-const name = ref(props.title);
+const name = ref(props.name);
 const keywords = ref(props.keywords);
 const description = ref(props.description);
 
@@ -190,33 +269,36 @@ function select(doSelect: boolean) {
   checked.value = doSelect;
 }
 
+function toggleCheckbox(){
+  checked.value = !checked.value
+  updateSelection(checked.value)
+}
+
+
+
 defineExpose({
   select,
 });
 </script>
 <template>
   <Toast position="bottom-right" group="download-toast">
-    <template #message="slotProps">
-      <div class="flex-column align-items-start flex" style="flex: 1">
-        <div class="align-items-center flex gap-4">
-          <ProgressSpinner
-            :pt="{
-              root: {
-                class:
-                  'relative self-center mx-auto w-6 h-6 inline-block before:block before:pt-full',
-              },
-            }"
-            animation-duration=".5s"
-            aria-label="Custom ProgressSpinner"
-          />
-          <div class="text-md my-3 text-surface-800">
-            {{ slotProps.message.summary }}
-          </div>
+    <template #container="{ message, closeCallback }">
+      <div class="flex items-center w-full p-4 rounded-lg shadow bg-surface-200/50 dark:bg-surface-700/50 backdrop-md" role="alert">
+        <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8">
+          <ProgressSpinner class="w-4 h-4" strokeWidth="8" fill="transparent"
+                           animationDuration=".5s" aria-label="Download Spinner" />
+          <span class="sr-only">Fire icon</span>
         </div>
+        <div class="ms-3 text-sm text-surface-800 dark:text-surface-100 font-normal">{{ message.summary }}</div>
+        <button @click="closeCallback" type="button" class="ms-auto -mx-1.5 -my-1.5 text-surface-800 hover:text-surface-950 rounded-lg focus:ring-2 focus:ring-surface-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-surface-200 dark:hover:text-white dark:hover:bg-gray-800" data-dismiss-target="#toast-default" aria-label="Close">
+          <span class="sr-only">Close</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          </svg>
+        </button>
       </div>
     </template>
   </Toast>
-  <Toast />
   <Dialog
     v-model:visible="deleteDialogVisible"
     modal
@@ -298,7 +380,33 @@ defineExpose({
       />
     </template>
   </Dialog>
-  <div class="grid grid-cols-1 justify-self-center">
+  <ContextMenu ref="contextMenu" :model="items">
+    <template #item="{ item, props }">
+      <a
+        v-ripple
+        class="group flex items-center"
+        :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+        v-bind="props.action"
+      >
+        <span
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+          :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+        >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </ContextMenu>
+  <div class="grid grid-cols-1 justify-self-center" @contextmenu="onContextMenu">
     <div
       class="shadow-xs group relative m-2 grid h-64 w-64 cursor-pointer rounded-md bg-clip-border text-surface-700 hover:bg-primary-100 hover:dark:bg-surface-800"
       :class="[
@@ -312,7 +420,7 @@ defineExpose({
         class="absolute w-max cursor-default group-hover:flex"
         :class="{ hidden: !checked && !actionMenuVisible }"
       >
-        <div class="flex justify-between space-x-28 p-4">
+        <div class="flex justify-between space-x-28 p-2">
           <Checkbox
             v-model="checked"
             :binary="true"
@@ -347,7 +455,31 @@ defineExpose({
               :model="actionMenuItems"
               :popup="true"
               @blur="actionMenuBlurred"
-            />
+            >    <template #item="{ item, props }">
+              <a
+                v-ripple
+                class="group flex items-center"
+                :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+                v-bind="props.action"
+              >
+        <span
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+                <span
+                  :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+                >{{ item.label }}</span
+                >
+              </a>
+            </template>
+            </Menu>
           </div>
         </div>
       </div>

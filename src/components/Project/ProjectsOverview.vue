@@ -21,10 +21,14 @@ const deleteDialog = defineAsyncComponent(
   () => import("@/components/Project/Project/Dialog/DeleteDialog.vue"),
 );
 
+const shareDialog = defineAsyncComponent(
+    () => import("@/components/Project/Project/Dialog/ShareDialog.vue"),
+);
 const router = useRouter();
 
 import { useDialog } from "primevue/usedialog";
 import { useToast } from "primevue/usetoast";
+import ShareDialog from "@/components/Repository/Images/Container/Dialog/ShareDialog.vue";
 const dialog = useDialog();
 
 const loading = ref(true);
@@ -153,6 +157,22 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
         dialog.open(editDialog, {
           props: {
             header: "Edit Project",
+            modal: true,
+          },
+          data: event.data,
+          onClose: () => {
+            refetch();
+          },
+        });
+      },
+    },
+    {
+      label: "Share",
+      icon: "pi pi-share-alt",
+      command: () => {
+        dialog.open(shareDialog, {
+          props: {
+            header: `Share ${event.data.name}`,
             modal: true,
           },
           data: event.data,
