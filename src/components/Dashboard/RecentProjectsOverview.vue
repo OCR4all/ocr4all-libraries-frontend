@@ -77,10 +77,11 @@ refetch();
       </template>
       <Column
         field="name"
+        class="max-w-xs truncate"
         :header="
           $t('pages.dashboard.components.recent-projects.columns.project')
         "
-        >></Column
+        ></Column
       >
       <Column
         field="tracking.updated"

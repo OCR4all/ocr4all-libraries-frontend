@@ -86,7 +86,7 @@ uiStore.breadcrumb = [
 const items = ref();
 const menu = ref();
 
-const toggle = (event, data) => {
+const toggle = (event: Event, data) => {
   items.value = [
     {
       label: "Actions",
@@ -101,12 +101,34 @@ const toggle = (event, data) => {
         {
           label: "Edit",
           icon: "pi pi-pencil",
-          command: () => {},
+          command: () => {
+            dialog.open(editDialog, {
+              props: {
+                header: "Edit Project",
+                modal: true,
+              },
+              data: data,
+              onClose: () => {
+                refetch();
+              },
+            });
+          },
         },
         {
           label: "Delete",
           icon: "pi pi-trash",
-          command: () => {},
+          command: () => {
+            dialog.open(deleteDialog, {
+              props: {
+                header: "Delete Project",
+                modal: true,
+              },
+              data: data,
+              onClose: () => {
+                refetch();
+              },
+            });
+          },
         },
       ],
     },
@@ -303,12 +325,13 @@ refetch();
         </template>
         <Column
           field="name"
+          class="max-w-xs"
           :header="$t('pages.projects.overview.table.columns.project')"
           :sortable="true"
         >
           <template #body="{ data }">
             <p
-              class="cursor-pointer hover:underline"
+              class="cursor-pointer hover:underline truncate"
               @click="router.push(`/project/${data.id}/view`)"
             >
               {{ data.name }}
@@ -394,17 +417,16 @@ refetch();
             </UseTimeAgo>
           </template>
         </Column>
-        <Column :exportable="false" style="min-width: 8rem">
+        <Column header="Actions" :exportable="false" style="min-width: 8rem">
           <template #body="{ data }">
-            <div class="space-y-2">
-              <Button
-                type="button"
-                icon="pi pi-ellipsis-v"
-                text
-                severity="secondary"
-                @click="toggle($event, data)"
-              />
-            </div>
+            <Button
+              type="button"
+              text
+              severity="secondary"
+              @click="toggle($event, data)"
+            >
+              <i class="pi pi-ellipsis-h text-black dark:text-white" />
+            </Button>
           </template>
         </Column>
       </DataTable>
