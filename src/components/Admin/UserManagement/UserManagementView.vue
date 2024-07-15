@@ -200,7 +200,7 @@ refetch();
       </a>
     </template>
   </Menu>
-  <Toolbar class="mb-4">
+<!--  <Toolbar class="mb-4">
     <template #start>
       <div class="my-2 space-x-2">
         <ActionButton
@@ -209,106 +209,116 @@ refetch();
           size="large"
           @click="openNewUserDialog"
         >
-          {{ $t("admin.user-management.table.toolbar.add-user") }}
+          {{  }}
         </ActionButton>
         <ActionButton
           rounded
           type="delete"
           size="large"
-          @click="openDeleteDialog(selectedUsers)"
-          :disabled="!selectedUsers || !selectedUsers.length"
+
+
         >
-          {{ $t("admin.user-management.table.toolbar.delete-user") }}
+          {{  }}
         </ActionButton>
       </div>
     </template>
-  </Toolbar>
+  </Toolbar>-->
   <ComponentContainer>
-    <DataTable
-      ref="dt"
-      scrollable
-      :value="users"
-      v-model:selection="selectedUsers"
-      dataKey="login"
-      :paginator="true"
-      @row-contextmenu="onRowContextMenu"
-      :rows="10"
-      :filters="filters"
-      paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-      :rowsPerPageOptions="[5, 10, 25]"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
-    >
-      <template #header>
-        <div class="align-items-center flex flex-wrap justify-between gap-2">
-          <span class="text-xl font-bold">
-            {{ $t("admin.user-management.table.header") }}
-          </span>
-          <InputText
-            v-model="filters['global'].value"
-            :placeholder="$t('admin.user-management.table.search-placeholder')"
-          />
-        </div>
-      </template>
-
-      <Column
-        selectionMode="multiple"
-        style="width: 3rem"
-        :exportable="false"
-      ></Column>
-      <Column
-        field="name"
-        :header="$t('admin.user-management.table.columns.name')"
-        sortable
-        style="min-width: 16rem"
-      ></Column>
-      <Column
-        field="login"
-        :header="$t('admin.user-management.table.columns.login')"
-        sortable
-        style="min-width: 12rem"
-      ></Column>
-      <Column
-        field="email"
-        :header="$t('admin.user-management.table.columns.mail')"
-        sortable
-        style="min-width: 12rem"
-      ></Column>
-      <Column
-        field="groups"
-        :header="$t('admin.user-management.table.columns.groups')"
-        sortable
-        style="min-width: 12rem"
+      <div class="px-4 pb-6 space-y-1">
+        <h1 class="text-2xl font-semibold">Users</h1>
+        <h3 class="text-md text-surface-700 dark:text-surface-300">Manage users</h3>
+      </div>
+      <DataTable
+        ref="dt"
+        scrollable
+        :value="users"
+        v-model:selection="selectedUsers"
+        dataKey="login"
+        :paginator="true"
+        @row-contextmenu="onRowContextMenu"
+        :rows="10"
+        :filters="filters"
+        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+        :rowsPerPageOptions="[5, 10, 25]"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
       >
-        <template #body="slotProps">
-          <div class="flex space-x-1">
-            <Tag
-              v-for="group in slotProps.data.groups"
-              :key="group.label"
-              :value="group.name"
-              severity="info"
-            />
+        <template #header>
+          <div class="align-items-center flex flex-wrap justify-between gap-2">
+            <IconField>
+              <InputIcon class="pi pi-search" />
+              <InputText
+                v-model="filters['global'].value"
+                placeholder="Login or name"
+              />
+            </IconField>
+            <div class="flex space-x-2">
+              <Button severity="primary" :label="$t('admin.user-management.table.toolbar.add-user')" @click="openNewUserDialog" />
+              <Button severity="danger" :label="$t('admin.user-management.table.toolbar.delete-user')" @click="openDeleteDialog(selectedUsers)" :disabled="!selectedUsers || !selectedUsers.length" />
+            </div>
           </div>
         </template>
-      </Column>
-      <Column
-        field="state"
-        :header="$t('admin.user-management.table.columns.state')"
-        sortable
-        style="min-width: 12rem"
-      ></Column>
-      <Column :exportable="false" style="min-width: 8rem">
-        <template #body="{ data }">
-          <div class="space-y-2">
-            <Button
-              type="button"
-              icon="pi pi-ellipsis-v"
-              text
-              severity="secondary"
-              @click="toggle($event, data)"
-            />
-          </div>
-        </template>
-      </Column>
-    </DataTable>
-  </ComponentContainer>
+
+        <Column
+          selectionMode="multiple"
+          style="width: 3rem"
+          :exportable="false"
+        ></Column>
+        <Column
+          field="name"
+          :header="$t('admin.user-management.table.columns.name')"
+          sortable
+          style="min-width: 16rem"
+        ></Column>
+        <Column
+          field="login"
+          :header="$t('admin.user-management.table.columns.login')"
+          sortable
+          style="min-width: 12rem"
+        ></Column>
+        <Column
+          field="email"
+          :header="$t('admin.user-management.table.columns.mail')"
+          sortable
+          style="min-width: 12rem"
+        ></Column>
+        <Column
+          field="groups"
+          :header="$t('admin.user-management.table.columns.groups')"
+          sortable
+          style="min-width: 12rem"
+        >
+          <template #body="slotProps">
+            <div class="flex space-x-1">
+              <Tag
+                v-for="group in slotProps.data.groups"
+                :key="group.label"
+                :value="group.name"
+                severity="info"
+              />
+            </div>
+          </template>
+        </Column>
+        <Column
+          field="state"
+          :header="$t('admin.user-management.table.columns.state')"
+          sortable
+          style="min-width: 12rem"
+        ></Column>
+        <Column header="Actions" :exportable="false" style="min-width: 8rem">
+          <template #body="{ data }">
+            <div class="space-y-2">
+              <Button
+                type="button"
+                text
+                severity="secondary"
+                @click="toggle($event, data)"
+              >
+                <i class="pi pi-ellipsis-h text-black dark:text-white" />
+              </Button>
+            </div>
+          </template>
+        </Column>
+      </DataTable>
+    </ComponentContainer>
+
 </template>
