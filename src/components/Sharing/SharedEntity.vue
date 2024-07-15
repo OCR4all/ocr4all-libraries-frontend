@@ -8,11 +8,11 @@ const props = defineProps<{
 
 const options = ref([
   {
-    name: "Can Read",
+    name: "Can View",
     value: "read"
   },
   {
-    name: "Can Write",
+    name: "Can Edit",
     value: "write"
   },
   {
@@ -41,23 +41,23 @@ defineExpose({
 <template>
   <div class="flex justify-between">
     <div class="flex items-center gap-x-2">
-      <Button label="Get" @click="console.log(get())" />
-      <Button text @click="emit('remove', props.type, props.id)">
-        <i class="pi pi-times text-surface-800 hover:text-surface-950 dark:text-surface-200 dark:hover:text-surface-0" />
-      </Button>
       <AvatarInitials :name="label" :admin="false" :selectable="false" size="lg" />
       <div class="flex flex-col -space-y-0.5">
         <p class="font-bold">{{ label }}</p>
         <p>{{ id }}</p>
       </div>
     </div>
-    <div>
+    <div class="flex space-x-2">
       <Select
         v-model="role"
         :options="options"
         optionLabel="name"
         placeholder="Select Rights"
-        class="w-full" />
+        class="w-full"
+      ></Select>
+      <Button severity="danger" text @click="emit('remove', props.type, props.id)">
+        <i class="pi pi-times text-surface-800 hover:text-surface-950 dark:text-surface-200 dark:hover:text-surface-0" />
+      </Button>
     </div>
   </div>
 </template>

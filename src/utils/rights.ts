@@ -2,10 +2,6 @@ interface IDestructRegistry {
     [user: string]: string[]
 }
 
-interface IStructRegistry {
-    [right: string]: string[]
-}
-
 interface IRight {
     right: string,
     targets: string[]
@@ -51,23 +47,44 @@ function getRole(rights: string[]): string {
 }
 
 export function restructureRights(destructRights: IDestructRight[]): IRight[] {
-    const rights: IRight[] = []
-    const registry: IStructRegistry = {}
+    const read: string[] = []
+    const write: string[] = []
+    const admin: string[] = []
+
+    const rights = []
 
     for(const user of destructRights){
-        for(const right of user.rights){
-            if(right in registry){
-                registry[`${right}`].push(user.name)
-            }else{
-                registry[`${right}`] = [user.name]
-            }
+        switch(user.role){
+            case "admin":
+                read.push(user.name)
+                write.push(user.name)
+                admin.push(user.name)
+                break;
+            case "write":
+                read.push(user.name)
+                write.push(user.name)
+                break;
+            case "read":
+                read.push(user.name)
         }
     }
 
-    for(const [key, value] of Object.entries(registry)){
+    if(read.length > 0){
         rights.push({
-            right: key,
-            targets: value
+            right: "read",
+            targets: read
+        })
+    }
+    if(write.length > 0){
+        rights.push({
+            right: "write",
+            targets: write
+        })
+    }
+    if(admin.length > 0){
+        rights.push({
+            right: "special",
+            targets: admin
         })
     }
 

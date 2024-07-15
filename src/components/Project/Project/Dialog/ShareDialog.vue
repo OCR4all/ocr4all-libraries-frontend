@@ -25,28 +25,16 @@ interface ISharedEntity {
   role: string
 }
 
-const generalRole = ref()
-const generalOptions = ref([
-  {
-    name: "No general access",
-    value: null
-  },
-  {
-    name: "Anyone can view",
-    value: "read"
-  },
-  {
-    name: "Anyone can edit",
-    value: "write"
-  },
-  {
-    name: "Anyone is admin",
-    value: "admin"
-  }
-])
+interface IGeneralOption {
+  name: string,
+  value: boolean
+}
+
+const generalRole: Ref<IGeneralOption[]> = ref([])
+const generalOptions: Ref<IGeneralOption[]> = ref([])
 
 onMounted(async() => {
-  useCustomFetch(`/repository/container/security?id=${dialogRef?.value.data.id}`)
+  useCustomFetch(`/project/security/information?id=${dialogRef?.value.data.id}`)
     .get()
     .json()
     .then((response) => {
@@ -54,11 +42,26 @@ onMounted(async() => {
         console.log(response.error.value)
       } else {
         data.value = response.data.value
-        generalRole.value = generalOptions.value.find(option => {
-          return option.value === response.data.value.security.other
-        })
-        sharedUsers.value = response.data.value.security.users ? destructureRights(response.data.value.security.users) : []
-        sharedGroups.value = response.data.value.security.groups ? destructureRights(response.data.value.security.groups) : []
+        generalOptions.value = [
+          {
+            name: "Can Read",
+            value: data.value.other.read
+          },
+          {
+            name: "Can Write",
+            value: data.value.other.write
+          },
+          {
+            name: "Can Execute",
+            value: data.value.other.execute
+          },
+          {
+            name: "Is Admin",
+            value: data.value.other.special
+          },
+        ]
+        sharedUsers.value = data.value.users ? destructureRights(data.value.users) : []
+        sharedGroups.value = data.value.groups ? destructureRights(data.value.groups) : []
       }
     });
 });
@@ -157,18 +160,35 @@ function removeShare(type: string, id: string){
 
 async function save(){
   const payload = {
-    "users": restructureRights(userRefs.value.map((userRef) => userRef.get())),
-    "groups": restructureRights(groupRefs.value.map((groupRef) => groupRef.get())),
-    "other": generalRole.value.value
-  }
-  useCustomFetch(
-      `/repository/container/security/update?id=${dialogRef?.value.data.id}`,
-  ).post(payload).then((response) => {
-    if(response.error.value){
-      console.log(response.error.value)
-    }else{
-      dialogRef?.value.close()
+    id: data.value.id,
+    users: restructureRights(userRefs.value.map((userRef) => userRef.get())),
+    groups: restructureRights(groupRefs.value.map((groupRef) => groupRef.get())),
+    other: {
+      read: generalRole.value.find(role => {
+        return role.name === "Can Read"
+      })?.value || false,
+      write: generalRole.value.find(role => {
+        return role.name === "Can Write"
+      })?.value || false,
+      execute: generalRole.value.find(role => {
+        return role.name === "Can Execute"
+      })?.value || false,
+      special: generalRole.value.find(role => {
+        return role.name === "Is Admin"
+      })?.value || false,
     }
+  }
+  console.log(payload)
+  useCustomFetch(
+      "/project/security/update",
+  )
+      .post(payload)
+      .then((response) => {
+        if(response.error.value){
+          console.log(response.error.value)
+        }else{
+          dialogRef?.value.close()
+        }
   });
 }
 </script>
@@ -243,13 +263,7 @@ async function save(){
     <p class="text-xl font-bold">General access</p>
     <div class="flex space-x-2 items-center">
       <i class="pi pi-share-alt bg-surface-400 rounded-full p-4 text-black" />
-      <Select
-          v-model="generalRole"
-          :options="generalOptions"
-          optionLabel="name"
-          placeholder="Select Rights"
-          class="w-full"
-      ></Select>
+      <MultiSelect v-model="generalRole" :options="generalOptions" optionLabel="name" filter placeholder="Select Rights" class="w-full" />
     </div>
   </div>
   <div class="flex space-x-2 justify-end">

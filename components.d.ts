@@ -107,7 +107,7 @@ declare module 'vue' {
     ServiceProviderPropertyCard: typeof import('./src/components/Admin/InstanceOverview/Cards/ServiceProviderPropertyCard.vue')['default']
     SettingsDialog: typeof import('./src/components/Layout/Topbar/SettingsDialog.vue')['default']
     SharedEntity: typeof import('./src/components/Sharing/SharedEntity.vue')['default']
-    ShareDialog: typeof import('./src/components/Repository/Images/Container/Dialog/ShareDialog.vue')['default']
+    ShareDialog: typeof import('./src/components/Project/Project/Dialog/ShareDialog.vue')['default']
     ShareEntity: typeof import('./src/components/Sharing/ShareEntity.vue')['default']
     SidebarToggle: typeof import('./src/components/Layout/SidebarToggle.vue')['default']
     SmallJobQueue: typeof import('./src/components/Dashboard/SmallJobQueue.vue')['default']
