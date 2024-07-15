@@ -10,5 +10,5 @@ export interface IContainer {
   keywords: string[] | null,
   name: string,
   right: string | null,
-  tracking: ITracking[]
+  tracking: ITracking
 }
