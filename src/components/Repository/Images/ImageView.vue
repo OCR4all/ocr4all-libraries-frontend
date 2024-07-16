@@ -14,6 +14,11 @@ import { FilterMatchMode } from "@primevue/core/api";
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
+const dialog = useDialog()
+
+import { useConfirm } from "primevue/useconfirm";
+const confirm = useConfirm();
+
 import { Router } from "vue-router";
 import Dialog from "primevue/dialog";
 import Chips from "primevue/chips";
@@ -21,6 +26,9 @@ import Toast from "primevue/toast";
 import Textarea from "primevue/textarea";
 import { RemovableRef } from "@vueuse/core";
 import { IContainer } from "@/components/Project/project.interfaces";
+import ShareDialog from "@/components/Repository/Images/Container/Dialog/ShareDialog.vue";
+import { useDialog } from "primevue/usedialog";
+import ProgressSpinner from "primevue/progressspinner";
 
 const router: Router = useRouter();
 
@@ -95,9 +103,25 @@ const toggle = (event: Event, data) => {
           },
         },
         {
+          label: "Share",
+          icon: "pi pi-share-alt",
+          command: () => {
+            openShareModal(data);
+          },
+        },
+        {
+          label: "Download",
+          icon: "pi pi-download",
+          command: () => {
+            downloadContainer(data);
+          },
+        },
+        {
           label: "Delete",
           icon: "pi pi-trash",
-          command: () => {},
+          command: () => {
+            confirmDelete(data.id)
+          },
         },
       ],
     },
@@ -133,6 +157,32 @@ async function deleteContainers() {
     toggleDeleteDialog();
   }
 }
+
+const confirmDelete = (id: string) => {
+  confirm.require({
+    message: 'Do you want to delete this project?',
+    header: 'Danger Zone',
+    icon: 'pi pi-info-circle',
+    position: "bottom",
+    rejectLabel: 'Cancel',
+    rejectProps: {
+      label: 'Cancel',
+      severity: 'secondary',
+      outlined: true
+    },
+    acceptProps: {
+      label: 'Delete',
+      severity: 'danger'
+    },
+    accept: () => {
+      deleteContainer(id)
+    },
+    reject: () => {
+
+    }
+  });
+}
+
 async function deleteContainer(id: string) {
   useCustomFetch(`/repository/container/remove?id=${id}`).then(() => {
     updateSelection(id, false);
@@ -232,16 +282,90 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
       },
     },
     {
+      label: "Share",
+      icon: "pi pi-share-alt",
+      command: () => {
+        openShareModal(event.data);
+      },
+    },
+    {
+      label: "Download",
+      icon: "pi pi-download",
+      command: () => {
+        downloadContainer(event.data);
+      },
+    },
+    {
       label: "Delete",
       icon: "pi pi-trash",
-      command: () => {},
+      command: () => {
+        confirmDelete(event.data.id)
+      },
     },
   ];
   contextMenu.value.show(event.originalEvent);
 };
+
+function openShareModal(data: IContainer) {
+  dialog.open(ShareDialog, {
+    props: {
+      header: `Share ${name.value}`,
+      modal: true,
+      style: {
+        width: '50vw',
+      },
+      breakpoints:{
+        '960px': '75vw',
+        '640px': '90vw'
+      },
+    },
+    data: data,
+    onClose: () => {
+      listContainers();
+    },
+  });
+}
+
+function downloadContainer(container: IContainer) {
+  toast.add({
+    severity: "info",
+    summary: "Preparing download",
+    group: "download-toast",
+  });
+  useCustomFetch(`/repository/container/folio/zip/${container.id}`)
+    .blob()
+    .then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data.value]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${container.name}.zip`);
+      document.body.appendChild(link);
+      link.click();
+      toast.removeGroup("download-toast");
+    });
+}
 </script>
 <template>
+  <ConfirmDialog />
   <Toast />
+  <Toast position="bottom-right" group="download-toast">
+    <template #container="{ message, closeCallback }">
+      <div class="flex items-center w-full p-4 rounded-lg shadow bg-surface-200/50 dark:bg-surface-700/50 backdrop-md" role="alert">
+        <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8">
+          <ProgressSpinner class="w-4 h-4" strokeWidth="8" fill="transparent"
+                           animationDuration=".5s" aria-label="Download Spinner" />
+          <span class="sr-only">Fire icon</span>
+        </div>
+        <div class="ms-3 text-sm text-surface-800 dark:text-surface-100 font-normal">{{ message.summary }}</div>
+        <button @click="closeCallback" type="button" class="ms-auto -mx-1.5 -my-1.5 text-surface-800 hover:text-surface-950 rounded-lg focus:ring-2 focus:ring-surface-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-surface-200 dark:hover:text-white dark:hover:bg-gray-800" data-dismiss-target="#toast-default" aria-label="Close">
+          <span class="sr-only">Close</span>
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          </svg>
+        </button>
+      </div>
+    </template>
+  </Toast>
   <ContextMenu ref="contextMenu" :model="items">
     <template #item="{ item, props }">
       <a

@@ -100,6 +100,16 @@ const actionMenuItems = ref([
 ]);
 
 const items = ref([
+  {
+    label: "Open",
+    icon: "pi pi-eye",
+    command: () => {
+      router.push({
+        name: "Container",
+        query: { id: props.id, name: props.name },
+      });
+    }
+  },
       {
         label: getSelectLabel,
         icon: "pi pi-check-square",
@@ -182,8 +192,6 @@ async function deleteContainer() {
 
 const checked = ref();
 const shareDialogVisible = ref();
-
-async function updateContainerShare() {}
 
 function openShareModal() {
   dialog.open(ShareDialog, {
