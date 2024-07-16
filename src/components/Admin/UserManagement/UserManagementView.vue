@@ -200,34 +200,11 @@ refetch();
       </a>
     </template>
   </Menu>
-<!--  <Toolbar class="mb-4">
-    <template #start>
-      <div class="my-2 space-x-2">
-        <ActionButton
-          rounded
-          type="primary"
-          size="large"
-          @click="openNewUserDialog"
-        >
-          {{  }}
-        </ActionButton>
-        <ActionButton
-          rounded
-          type="delete"
-          size="large"
-
-
-        >
-          {{  }}
-        </ActionButton>
-      </div>
-    </template>
-  </Toolbar>-->
-  <ComponentContainer>
-      <div class="px-4 pb-6 space-y-1">
-        <h1 class="text-2xl font-semibold">Users</h1>
-        <h3 class="text-md text-surface-700 dark:text-surface-300">Manage users</h3>
-      </div>
+  <div class="px-4 pb-6 space-y-1">
+    <h1 class="text-2xl font-semibold">Users</h1>
+    <h3 class="text-md text-surface-700 dark:text-surface-300">Manage users</h3>
+  </div>
+  <ComponentContainer border>
       <DataTable
         ref="dt"
         scrollable
