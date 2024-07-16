@@ -258,7 +258,6 @@ refetch();
       </a>
     </template>
   </Menu>
-  <div class="card">
     <Toolbar class="mb-4">
       <template #start>
         <div class="my-2 space-x-2">
@@ -295,7 +294,7 @@ refetch();
         </button>
       </template>
     </Toolbar>
-    <ComponentContainer>
+    <ComponentContainer border>
       <DataTable
         v-model:filters="filters"
         :value="projects"
@@ -451,5 +450,4 @@ refetch();
         </Column>
       </DataTable>
     </ComponentContainer>
-  </div>
 </template>

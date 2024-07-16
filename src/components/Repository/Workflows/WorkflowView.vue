@@ -272,7 +272,7 @@ refetch();
       </div>
     </template>
   </Toolbar>
-  <ComponentContainer>
+  <ComponentContainer border>
     <DataTable
       :value="workflows"
       :paginator="true"
@@ -294,7 +294,7 @@ refetch();
           <h4 class="m-0 self-center font-bold">
             {{ $t("pages.workflows.table.heading") }}
           </h4>
-          <span class="p-input-icon-left ml-10">
+          <span class="flex p-input-icon-left ml-10">
             <button :disabled="isRefetching === true" @click="refetch">
               <ArrowPathIcon
                 :class="{ 'animate-spin': isRefetching }"

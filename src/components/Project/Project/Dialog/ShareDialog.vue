@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
-import { restructureRights, destructureRights } from "@/utils/rights";
+import { restructureRights, destructureRights, restructureRightsProjects } from "@/utils/rights";
 import {DynamicDialogInstance} from "primevue/dynamicdialogoptions";
 import SharedEntity from "@/components/Sharing/SharedEntity.vue";
 
@@ -161,8 +161,8 @@ function removeShare(type: string, id: string){
 async function save(){
   const payload = {
     id: data.value.id,
-    users: restructureRights(userRefs.value.map((userRef) => userRef.get())),
-    groups: restructureRights(groupRefs.value.map((groupRef) => groupRef.get())),
+    users: restructureRightsProjects(userRefs.value.map((userRef) => userRef.get())),
+    groups: restructureRightsProjects(groupRefs.value.map((groupRef) => groupRef.get())),
     other: {
       read: generalRole.value.find(role => {
         return role.name === "Can Read"
@@ -187,7 +187,7 @@ async function save(){
         if(response.error.value){
           console.log(response.error.value)
         }else{
-          dialogRef?.value.close()
+          /*dialogRef?.value.close()*/
         }
   });
 }

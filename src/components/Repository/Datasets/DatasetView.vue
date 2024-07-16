@@ -298,7 +298,7 @@ const contextMenu = ref();
     </template>
     <template #end> </template>
   </Toolbar>
-  <ComponentContainer>
+  <ComponentContainer border>
     <DataTable
       ref="containerDataTable"
       v-model:selection="selectedDatasets"

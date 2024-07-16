@@ -536,7 +536,7 @@ function downloadContainer(container: IContainer) {
       </SelectButton>
     </template>
   </Toolbar>
-  <ComponentContainer>
+  <ComponentContainer border>
     <DataView
       class="bg-surface-50 dark:bg-surface-700"
       :value="containers"
