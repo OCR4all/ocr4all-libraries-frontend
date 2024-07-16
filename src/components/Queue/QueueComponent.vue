@@ -140,7 +140,7 @@ async function removeJob(job: string) {
 
 <template>
   <Toast />
-  <ComponentContainer>
+  <ComponentContainer border>
     <DataTable
       v-model:filters="filters"
       :value="jobs"

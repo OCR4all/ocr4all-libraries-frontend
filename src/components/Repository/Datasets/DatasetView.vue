@@ -97,9 +97,6 @@ const menu = ref();
 
 const toggle = (event, data) => {
   items.value = [
-    {
-      label: "Actions",
-      items: [
         {
           label: "Edit",
           icon: "pi pi-pencil",
@@ -121,9 +118,7 @@ const toggle = (event, data) => {
             openDeleteDialog([data]);
           },
         },
-      ],
-    },
-  ];
+      ]
   menu.value.toggle(event);
 };
 const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
@@ -404,17 +399,16 @@ const contextMenu = ref();
           </div>
         </template>
       </Column>
-      <Column :exportable="false" style="min-width: 8rem">
+      <Column header="Actions" :exportable="false" style="min-width: 8rem">
         <template #body="{ data }">
-          <div class="space-y-2">
-            <Button
-              type="button"
-              icon="pi pi-ellipsis-v"
-              text
-              severity="secondary"
-              @click="toggle($event, data)"
-            />
-          </div>
+          <Button
+            type="button"
+            text
+            severity="secondary"
+            @click="toggle($event, data)"
+          >
+            <i class="pi pi-ellipsis-h text-black dark:text-white" />
+          </Button>
         </template>
       </Column>
     </DataTable>

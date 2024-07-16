@@ -453,7 +453,7 @@ refresh();
         icon="pi pi-trash" />
     </template>
   </Toolbar>
-  <ComponentContainer>
+  <ComponentContainer border>
     <DataView :value="sets" :layout="layout">
       <template #header>
         <div class="flex justify-end">
