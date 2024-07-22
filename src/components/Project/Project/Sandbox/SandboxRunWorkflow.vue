@@ -62,7 +62,7 @@ async function checkImageJob(startedJob) {
 
 async function importImages() {
   const payload = {
-    id: "de.uniwuerzburg.zpd.ocr4all.application.core.spi.launcher.provider.SandboxLauncher",
+    id: "de.uniwuerzburg.zpd.ocr4all.application.core.spi.launcher.provider.SandboxNormalizedLauncher",
     images: [{ argument: "images", values: store.selectedImages }],
     label: "Import images",
     description: "Import images",
