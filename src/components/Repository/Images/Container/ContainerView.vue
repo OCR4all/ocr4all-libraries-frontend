@@ -296,7 +296,7 @@ refresh();
   >
     <template #container="{ message, closeCallback }">
       <section
-        class="flex w-full flex-col gap-4 rounded-xl bg-surface-950/50 p-4 backdrop-blur-sm dark:bg-surface-200/50"
+        class="flex w-full flex-col gap-4 rounded-xl bg-surface-950/40 p-4 backdrop-blur-sm dark:bg-surface-800/40 border dark:border-surface-800 border-surface-300"
       >
         <div class="flex w-full gap-3 justify-self-center">
           <i
