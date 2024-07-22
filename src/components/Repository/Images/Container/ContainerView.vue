@@ -106,7 +106,7 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
     formData.append("files", file);
   }
   showUploadToast();
-  axios.defaults.timeout = 100000;
+  axios.defaults.timeout = 3600000;
   axios
     .post(
       `${config.baseUrl}/repository/container/folio/upload/${container}`,
