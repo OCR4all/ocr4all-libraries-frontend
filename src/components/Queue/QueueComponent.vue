@@ -90,6 +90,10 @@ async function refetch() {
   }
 }
 
+function calculateProgress(data) {
+  return data.state === "completed" ? 100 : data.journal.progress * 100
+}
+
 refetch();
 
 setInterval(function () {
@@ -256,7 +260,7 @@ async function removeJob(job: string) {
       >
         <template #body="slotProps">
           <ProgressBar
-            :value="slotProps.data.journal.progress * 100"
+            :value="calculateProgress(slotProps.data)"
             :show-value="false"
             style="height: 6px"
           ></ProgressBar>
