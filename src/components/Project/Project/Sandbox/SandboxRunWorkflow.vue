@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useSandboxCreationStore } from "@/stores/sandboxCreation.store";
-import Dropdown from "primevue/dropdown";
 
 const store = useSandboxCreationStore();
 
