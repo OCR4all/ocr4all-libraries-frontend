@@ -77,18 +77,18 @@ const onExpand = (node) => {
           )
             .get()
             .blob();
-          const detailImgFetch = await useCustomFetch(
+/*          const detailImgFetch = await useCustomFetch(
             `/repository/container/folio/derivative/best/${node.key}?id=${key}`,
           )
             .get()
-            .blob();
+            .blob();*/
           children.push({
             key: key,
             data: {
               name: folio.name,
               type: "folio",
               thumbnail: useObjectUrl(thumbnailImgFetch.data.value),
-              detail: useObjectUrl(detailImgFetch.data.value),
+              detail: null,
               keywords: folio.keywords,
             },
           });

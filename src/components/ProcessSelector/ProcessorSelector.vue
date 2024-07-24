@@ -6,6 +6,7 @@ import Dialog from "primevue/dialog";
 import Tree from "primevue/tree";
 
 import { buildProcessorSchema } from "@/components/ProcessSelector/utils";
+import { useToast } from "primevue/usetoast";
 
 const props = defineProps<{
   project: string;
@@ -14,6 +15,8 @@ const props = defineProps<{
 }>();
 
 const nodes = ref([]);
+
+const toast = useToast()
 
 function structureData(data) {
   let categories = Object.groupBy(data, ({ type }) => type);
@@ -89,17 +92,91 @@ const formData = ref();
 
 function runProcessor(values, { setErrors }) {
   const url = `/spi/${selectedProcessor.value.type}/schedule/${props.project}/${props.sandbox}`;
+
+  const registry = {}
+  for(const entry of selectedProcessor.value.entries){
+    registry[entry.label] = entry.type
+  }
+
+  console.log(selectedProcessor.value.entries)
+
+  const booleans = [];
+  const decimals = [];
+  const integers = [];
+  const selects = [];
+  const strings = [];
+
+  for(const [key, value] of Object.entries(values)){
+    const processorType = registry[key]
+    switch (processorType) {
+      case "boolean":
+        booleans.push({
+          argument: key,
+          value: value,
+        });
+        break;
+      case "decimal":
+        decimals.push({
+          argument: key,
+          value: value,
+        });
+        break;
+      case "integer":
+        integers.push({
+          argument: key,
+          value: value,
+        });
+        break;
+      case "select":
+        selects.push({
+          argument: key,
+          value: [value],
+        });
+        break;
+      case "string":
+        strings.push({
+          argument: key,
+          value: value,
+        });
+        break;
+    }
+  }
+
   const payload = {
     id: selectedProcessor.value.id,
     label: selectedProcessor.value.label,
-    description: "",
+    description: `Run ${selectedProcessor.value.label} on ${props.sandbox}`,
     "job-short-description": "string",
     "parent-snapshot": {
       track: props.track,
     },
+    ...(booleans.length !== 0 && { booleans: booleans }),
+    ...(decimals.length !== 0 && { decimals: decimals }),
+    ...(integers.length !== 0 && { integers: integers }),
+    ...(selects.length !== 0 && { selects: selects }),
+    ...(strings.length !== 0 && { strings: strings }),
   };
-  console.log(selectedProcessor.value);
-  console.log(values);
+  console.log(payload)
+  useCustomFetch(url)
+    .post(payload)
+    .json()
+    .then((response) => {
+      if(response.error.value){
+        toast.add({
+          severity: "error",
+          summary: "Error",
+          detail: response.error.value,
+          life: 3000,
+        })
+      }else{
+        toast.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Processor scheduled",
+          life: 3000,
+        })
+      }
+    })
 }
 
 function buildProcessorFormSchema(data) {
@@ -116,6 +193,7 @@ function openProcessor(data) {
 const processorDialogVisible = ref(false);
 </script>
 <template>
+  <Toast />
   <Dialog v-model:visible="processorDialogVisible" modal header="Run Processor">
     <div class="pb-6">
       <div class="flex space-x-2">

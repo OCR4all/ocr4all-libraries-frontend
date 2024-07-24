@@ -84,12 +84,6 @@ const imageImportDialogVisible = ref(false);
     maximizable
     modal
     @close="imageImportDialogVisible = false"
-    :pt="{
-      root: 'border-none w-5/6 h-4/12',
-      mask: {
-        style: 'backdrop-filter: blur(2px)',
-      },
-    }"
   >
     <template #container="{ closeCallback }">
       <div class="rounded-md bg-surface-50 p-4 dark:bg-surface-700">
