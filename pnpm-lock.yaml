@@ -66,8 +66,8 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0
       primevue:
-        specifier: ^4.0.0
-        version: 4.0.0(@primeuix/utils@0.0.5)(vue@3.4.27(typescript@5.3.3))
+        specifier: ^4.0.1
+        version: 4.0.1(vue@3.4.27(typescript@5.3.3))
       quill:
         specifier: ^2.0.2
         version: 2.0.2
@@ -100,8 +100,8 @@ importers:
         specifier: 1.40.1
         version: 1.40.1
       '@sfxcode/formkit-primevue':
-        specifier: ^2.3.1
-        version: 2.3.1(@primeuix/utils@0.0.5)(tailwindcss@3.3.6)(vue@3.4.27(typescript@5.3.3))
+        specifier: ^2.3.3
+        version: 2.3.3(tailwindcss@3.3.6)(vue@3.4.27(typescript@5.3.3))
       '@tailwindcss/aspect-ratio':
         specifier: 0.4.2
         version: 0.4.2(tailwindcss@3.3.6)
@@ -217,8 +217,8 @@ importers:
         specifier: 5.2.12
         version: 5.2.12(@types/node@20.10.4)
       vite-plugin-vue-devtools:
-        specifier: ^7.3.6
-        version: 7.3.6(rollup@4.18.0)(vite@5.2.12(@types/node@20.10.4))(vue@3.4.27(typescript@5.3.3))
+        specifier: ^7.3.7
+        version: 7.3.7(rollup@4.18.0)(vite@5.2.12(@types/node@20.10.4))(vue@3.4.27(typescript@5.3.3))
       vitest:
         specifier: 1.0.2
         version: 1.0.2(@types/node@20.10.4)(happy-dom@12.10.3)
@@ -884,6 +884,9 @@ packages:
   '@formkit/dev@1.6.5':
     resolution: {integrity: sha512-dg62HTehLPi9lLBShixr9AoYgIv13gpxTZgiHEvf1UZz2HQq0Lcp63d0a+XT/tQ2HTz2ewLUGeXSN9dUVkYFSg==}
 
+  '@formkit/drag-and-drop@0.1.6':
+    resolution: {integrity: sha512-wZyxvk7WTbQ12q8ZGvLoYner1ktBOUf+lCblJT3P0LyqpjGCKTfQMKJtwToKQzJgTbhvow4LBu+yP92Mux321w==}
+
   '@formkit/i18n@1.6.5':
     resolution: {integrity: sha512-mM1UKGSa0Mdd8a8AAF+6BCNFnf8gUD1nOzU6dJ9UoPE8M/qA+hmcPR3PJm39p6e3OaT5O0Gn/J6JxgccPyWmGA==}
 
@@ -963,6 +966,10 @@ packages:
         optional: true
       vue-i18n:
         optional: true
+
+  '@intlify/core-base@9.13.1':
+    resolution: {integrity: sha512-+bcQRkJO9pcX8d0gel9ZNfrzU22sZFSA0WVhfXrf5jdJOS24a+Bp8pozuS9sBI9Hk/tGz83pgKfmqcn/Ci7/8w==}
+    engines: {node: '>= 16'}
 
   '@intlify/core-base@9.8.0':
     resolution: {integrity: sha512-UxaSZVZ1DwqC/CltUZrWZNaWNhfmKtfyV4BJSt/Zt4Or/fZs1iFj0B+OekYk1+MRHfIOe3+x00uXGQI4PbO/9g==}
@@ -1102,21 +1109,20 @@ packages:
     resolution: {integrity: sha512-ntUiUgtRtkF8KuaxHffzhYxQxoXk6LAPHm7CVlFjdqS8Rx8xRkLkZVyo84E+pO2hcNFkOGVP/GxHhQ2s94O8zA==}
     engines: {node: '>=12.11.0'}
 
-  '@primevue/core@4.0.0':
-    resolution: {integrity: sha512-M+GF1HYnl/x5J6uevXh1k42J0XnFhp0XHce+cHddWg7v3bVwgsn7LD3AKKcf0A/iQQPXVKX9nY/4/9eFVct67w==}
-    engines: {node: '>=12.11.0'}
-    peerDependencies:
-      '@primeuix/utils': ^0.0.5
-      vue: ^3.0.0
-
   '@primevue/core@4.0.0-beta.5':
     resolution: {integrity: sha512-WW3yva0irZ6tZ4UI2YKmWJERojRC+VqHyHksomMkqQQikoFv+mFjpausdbAYStoqQt3X43Y/vgipcaa6/Am5BA==}
     engines: {node: '>=12.11.0'}
     peerDependencies:
       vue: ^3.0.0
 
-  '@primevue/icons@4.0.0':
-    resolution: {integrity: sha512-gv9pbj7JjCuW59tW2csIJgg6btTJpkr/mjlfqscEIrYzDGqzCrbfxLur48gA2dyhYsiQPPTbIHFwL944piFgIg==}
+  '@primevue/core@4.0.1':
+    resolution: {integrity: sha512-BreY1LybcRmzI8zXktqKVoq1eMeH//Ab4NUpzyFMdRKq4QoTvVuYMrlS9PGlQi+c9RmAcb6rzIIpcczqEGEAaw==}
+    engines: {node: '>=12.11.0'}
+    peerDependencies:
+      vue: ^3.0.0
+
+  '@primevue/icons@4.0.1':
+    resolution: {integrity: sha512-tK3cYOSabRiSmAMuivw2QM/oG1ER5RGL9k7Vua7arQiwBghyPg04J/XllJ9SjORyNIY+dwbLuNyUwLKty4S0Hg==}
     engines: {node: '>=12.11.0'}
 
   '@primevue/themes@4.0.0-beta.5':
@@ -1218,8 +1224,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@sfxcode/formkit-primevue@2.3.1':
-    resolution: {integrity: sha512-q8mM5cbOH2vM2W2+1Po6I0jgTu3AdI1XVrTaoK4Kz62RO4ymXOP2H9vQr7SZqYgSanhFf3D/4aYXq5A1vxIfPg==}
+  '@sfxcode/formkit-primevue@2.3.3':
+    resolution: {integrity: sha512-TiYRb/kna1/ORcTL7HkG+BGpOFIiLEMGAkjF2jx/eJpXWLUYVAVeDmhBvJD+abH4pBDJ4Y1wcURinadJGubJ0g==}
     peerDependencies:
       vue: ^3.4.0
 
@@ -1423,17 +1429,11 @@ packages:
   '@vue/compiler-core@3.4.27':
     resolution: {integrity: sha512-E+RyqY24KnyDXsCuQrI+mlcdW3ALND6U7Gqa/+bVwbcpcR3BRRIckFoz7Qyd4TTlnugtwuI7YgjbvsLmxb+yvg==}
 
-  '@vue/compiler-core@3.4.31':
-    resolution: {integrity: sha512-skOiodXWTV3DxfDhB4rOf3OGalpITLlgCeOwb+Y9GJpfQ8ErigdBUHomBzvG78JoVE8MJoQsb+qhZiHfKeNeEg==}
-
   '@vue/compiler-core@3.4.33':
     resolution: {integrity: sha512-MoIREbkdPQlnGfSKDMgzTqzqx5nmEjIc0ydLVYlTACGBsfvOJ4tHSbZXKVF536n6fB+0eZaGEOqsGThPpdvF5A==}
 
   '@vue/compiler-dom@3.4.27':
     resolution: {integrity: sha512-kUTvochG/oVgE1w5ViSr3KUBh9X7CWirebA3bezTbB5ZKBQZwR2Mwj9uoSKRMFcz4gSMzzLXBPD6KpCLb9nvWw==}
-
-  '@vue/compiler-dom@3.4.31':
-    resolution: {integrity: sha512-wK424WMXsG1IGMyDGyLqB+TbmEBFM78hIsOJ9QwUVLGrcSk0ak6zYty7Pj8ftm7nEtdU/DGQxAXp0/lM/2cEpQ==}
 
   '@vue/compiler-dom@3.4.33':
     resolution: {integrity: sha512-GzB8fxEHKw0gGet5BKlpfXEqoBnzSVWwMnT+dc25wE7pFEfrU/QsvjZMP9rD4iVXHBBoemTct8mN0GJEI6ZX5A==}
@@ -1453,16 +1453,16 @@ packages:
   '@vue/devtools-api@6.6.1':
     resolution: {integrity: sha512-LgPscpE3Vs0x96PzSSB4IGVSZXZBZHpfxs+ZA1d+VEPwHdOXowy/Y2CsvCAIFrf+ssVU1pD1jidj505EpUnfbA==}
 
-  '@vue/devtools-core@7.3.6':
-    resolution: {integrity: sha512-XqFYVkyS3eySHF4bgLt+KF6yL6nYzVY/JTJHnK6KIJXIE4GIAxmn5Gxfsb4cUG9sl0FGiMqRCnM37Q+P08wr8A==}
+  '@vue/devtools-core@7.3.7':
+    resolution: {integrity: sha512-IapWbHUqvO6n+p5JFTCE5JyNjpsZ5IS1GYIRX0P7/SqYPgFCOdH0dG+u8PbBHYdnp+VPxHLO+GGZ/WBZFCZnsA==}
     peerDependencies:
       vue: ^3.0.0
 
-  '@vue/devtools-kit@7.3.6':
-    resolution: {integrity: sha512-5Ym9V3fkJenEoptqKoo+cgY5RTVwrSssFdzRsuyIgaeiskCT+rRJeQdwoo81tyrQ1mfS7Er1rYZlSzr3Y3L/ew==}
+  '@vue/devtools-kit@7.3.7':
+    resolution: {integrity: sha512-ktHhhjI4CoUrwdSUF5b/MFfjrtAtK8r4vhOkFyRN5Yp9kdXTwsRBYcwarHuP+wFPKf4/KM7DVBj2ELO8SBwdsw==}
 
-  '@vue/devtools-shared@7.3.6':
-    resolution: {integrity: sha512-R/FOmdJV+hhuwcNoxp6e87RRkEeDMVhWH+nOsnHUrwjjsyeXJ2W1475Ozmw+cbZhejWQzftkHVKO28Fuo1yqCw==}
+  '@vue/devtools-shared@7.3.7':
+    resolution: {integrity: sha512-M9EU1/bWi5GNS/+IZrAhwGOVZmUTN4MH22Hvh35nUZZg9AZP2R2OhfCb+MG4EtAsrUEYlu3R43/SIj3G7EZYtQ==}
 
   '@vue/reactivity@3.4.27':
     resolution: {integrity: sha512-kK0g4NknW6JX2yySLpsm2jlunZJl2/RJGZ0H9ddHdfBVHcNzxmQ0sS0b09ipmBoQpY8JM2KmUw+a6sO8Zo+zIA==}
@@ -1480,9 +1480,6 @@ packages:
 
   '@vue/shared@3.4.27':
     resolution: {integrity: sha512-DL3NmY2OFlqmYYrzp39yi3LDkKxa5vZVwxWdQ3rG0ekuWscHraeIbnI8t+aZK7qhYqEqWKTUdijadunb9pnrgA==}
-
-  '@vue/shared@3.4.31':
-    resolution: {integrity: sha512-Yp3wtJk//8cO4NItOPpi3QkLExAr/aLBGZMmTtW9WpdwBCJpRM6zj9WgWktXAl8IDIozwNMByT45JP3tO3ACWA==}
 
   '@vue/shared@3.4.33':
     resolution: {integrity: sha512-aoRY0jQk3A/cuvdkodTrM4NMfxco8n55eG4H7ML/CRy7OryHfiqvug4xrCBBMbbN+dvXAetDDwZW9DXWWjBntA==}
@@ -3385,8 +3382,8 @@ packages:
   primeicons@7.0.0:
     resolution: {integrity: sha512-jK3Et9UzwzTsd6tzl2RmwrVY/b8raJ3QZLzoDACj+oTJ0oX7L9Hy+XnVwgo4QVKlKpnP/Ur13SXV/pVh4LzaDw==}
 
-  primevue@4.0.0:
-    resolution: {integrity: sha512-2PFmmJqyXpOcKOdF+gbps5fpSXfoXZp2LwX+hya/b5SDseMt3UNboyEgVI6B+DNbJRrib35EbDiMw+7RIANQ1w==}
+  primevue@4.0.1:
+    resolution: {integrity: sha512-mAIoOcx7pnqPOhohw+JYyuVO46R4hUMComFTNzjHabEIsUIyIgTXNtWqiSwbn7zE4hEhnPwNa9XX97XE4Cz+1g==}
     engines: {node: '>=12.11.0'}
 
   proc-log@4.2.0:
@@ -3942,14 +3939,14 @@ packages:
       '@nuxt/kit':
         optional: true
 
-  vite-plugin-vue-devtools@7.3.6:
-    resolution: {integrity: sha512-j4Cssv6DVBtMZfyVBEm/4MZy7BiL6RedEn+f9jT3zFyGZKG1vNuEpTO86XvPPbHbYdITFyrkWb7VQuWyhfSgqA==}
+  vite-plugin-vue-devtools@7.3.7:
+    resolution: {integrity: sha512-pPv6YJYrCIlWP+wwRk9gzDp2rK5M5jQ5oz//Nci3C3FDvORL1btKQqGvgthx3hs6xbx5acToJtkMGgDnZg8smw==}
     engines: {node: '>=v14.21.3'}
     peerDependencies:
       vite: ^3.1.0 || ^4.0.0-0 || ^5.0.0-0
 
-  vite-plugin-vue-inspector@5.1.2:
-    resolution: {integrity: sha512-M+yH2LlQtVNzJAljQM+61CqDXBvHim8dU5ImGaQuwlo13tMDHue5D7IC20YwDJuWDODiYc/cZBUYspVlyPf2vQ==}
+  vite-plugin-vue-inspector@5.1.3:
+    resolution: {integrity: sha512-pMrseXIDP1Gb38mOevY+BvtNGNqiqmqa2pKB99lnLsADQww9w9xMbAfT4GB6RUoaOkSPrtlXqpq2Fq+Dj2AgFg==}
     peerDependencies:
       vite: ^3.0.0-0 || ^4.0.0-0 || ^5.0.0-0
 
@@ -4064,6 +4061,12 @@ packages:
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=6.0.0'
+
+  vue-i18n@9.13.1:
+    resolution: {integrity: sha512-mh0GIxx0wPtPlcB1q4k277y0iKgo25xmDPWioVVYanjPufDBpvu5ySTjP5wOrSvlYQ2m1xI+CFhGdauv/61uQg==}
+    engines: {node: '>= 16'}
+    peerDependencies:
+      vue: ^3.0.0
 
   vue-i18n@9.8.0:
     resolution: {integrity: sha512-Izho+6PYjejsTq2mzjcRdBZ5VLRQoSuuexvR8029h5CpN03FYqiqBrShMyf2I1DKkN6kw/xmujcbvC+4QybpsQ==}
@@ -4693,6 +4696,8 @@ snapshots:
       '@formkit/core': 1.6.5
       '@formkit/utils': 1.6.5
 
+  '@formkit/drag-and-drop@0.1.6': {}
+
   '@formkit/i18n@1.6.5':
     dependencies:
       '@formkit/core': 1.6.5
@@ -4800,6 +4805,11 @@ snapshots:
       yaml-eslint-parser: 1.2.3
     optionalDependencies:
       vue-i18n: 9.8.0(vue@3.4.27(typescript@5.3.3))
+
+  '@intlify/core-base@9.13.1':
+    dependencies:
+      '@intlify/message-compiler': 9.13.1
+      '@intlify/shared': 9.13.1
 
   '@intlify/core-base@9.8.0':
     dependencies:
@@ -4965,22 +4975,22 @@ snapshots:
 
   '@primeuix/utils@0.0.5': {}
 
-  '@primevue/core@4.0.0(@primeuix/utils@0.0.5)(vue@3.4.27(typescript@5.3.3))':
-    dependencies:
-      '@primeuix/styled': 0.0.5
-      '@primeuix/utils': 0.0.5
-      vue: 3.4.27(typescript@5.3.3)
-
   '@primevue/core@4.0.0-beta.5(vue@3.4.27(typescript@5.3.3))':
     dependencies:
       '@primevue/themes': 4.0.0-beta.5
       vue: 3.4.27(typescript@5.3.3)
 
-  '@primevue/icons@4.0.0(@primeuix/utils@0.0.5)(vue@3.4.27(typescript@5.3.3))':
+  '@primevue/core@4.0.1(vue@3.4.27(typescript@5.3.3))':
     dependencies:
-      '@primevue/core': 4.0.0(@primeuix/utils@0.0.5)(vue@3.4.27(typescript@5.3.3))
+      '@primeuix/styled': 0.0.5
+      '@primeuix/utils': 0.0.5
+      vue: 3.4.27(typescript@5.3.3)
+
+  '@primevue/icons@4.0.1(vue@3.4.27(typescript@5.3.3))':
+    dependencies:
+      '@primeuix/utils': 0.0.5
+      '@primevue/core': 4.0.1(vue@3.4.27(typescript@5.3.3))
     transitivePeerDependencies:
-      - '@primeuix/utils'
       - vue
 
   '@primevue/themes@4.0.0-beta.5': {}
@@ -5045,16 +5055,17 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.18.0':
     optional: true
 
-  '@sfxcode/formkit-primevue@2.3.1(@primeuix/utils@0.0.5)(tailwindcss@3.3.6)(vue@3.4.27(typescript@5.3.3))':
+  '@sfxcode/formkit-primevue@2.3.3(tailwindcss@3.3.6)(vue@3.4.27(typescript@5.3.3))':
     dependencies:
       '@formkit/addons': 1.6.5
+      '@formkit/drag-and-drop': 0.1.6
       '@formkit/i18n': 1.6.5
       '@formkit/vue': 1.6.5(tailwindcss@3.3.6)(vue@3.4.27(typescript@5.3.3))
       primeicons: 7.0.0
-      primevue: 4.0.0(@primeuix/utils@0.0.5)(vue@3.4.27(typescript@5.3.3))
+      primevue: 4.0.1(vue@3.4.27(typescript@5.3.3))
       vue: 3.4.27(typescript@5.3.3)
+      vue-i18n: 9.13.1(vue@3.4.27(typescript@5.3.3))
     transitivePeerDependencies:
-      - '@primeuix/utils'
       - tailwindcss
       - unocss
       - windicss
@@ -5309,14 +5320,6 @@ snapshots:
       estree-walker: 2.0.2
       source-map-js: 1.2.0
 
-  '@vue/compiler-core@3.4.31':
-    dependencies:
-      '@babel/parser': 7.24.7
-      '@vue/shared': 3.4.31
-      entities: 4.5.0
-      estree-walker: 2.0.2
-      source-map-js: 1.2.0
-
   '@vue/compiler-core@3.4.33':
     dependencies:
       '@babel/parser': 7.24.7
@@ -5329,11 +5332,6 @@ snapshots:
     dependencies:
       '@vue/compiler-core': 3.4.27
       '@vue/shared': 3.4.27
-
-  '@vue/compiler-dom@3.4.31':
-    dependencies:
-      '@vue/compiler-core': 3.4.31
-      '@vue/shared': 3.4.31
 
   '@vue/compiler-dom@3.4.33':
     dependencies:
@@ -5376,10 +5374,10 @@ snapshots:
 
   '@vue/devtools-api@6.6.1': {}
 
-  '@vue/devtools-core@7.3.6(vite@5.2.12(@types/node@20.10.4))(vue@3.4.27(typescript@5.3.3))':
+  '@vue/devtools-core@7.3.7(vite@5.2.12(@types/node@20.10.4))(vue@3.4.27(typescript@5.3.3))':
     dependencies:
-      '@vue/devtools-kit': 7.3.6
-      '@vue/devtools-shared': 7.3.6
+      '@vue/devtools-kit': 7.3.7
+      '@vue/devtools-shared': 7.3.7
       mitt: 3.0.1
       nanoid: 3.3.7
       pathe: 1.1.2
@@ -5388,9 +5386,9 @@ snapshots:
     transitivePeerDependencies:
       - vite
 
-  '@vue/devtools-kit@7.3.6':
+  '@vue/devtools-kit@7.3.7':
     dependencies:
-      '@vue/devtools-shared': 7.3.6
+      '@vue/devtools-shared': 7.3.7
       birpc: 0.2.17
       hookable: 5.5.3
       mitt: 3.0.1
@@ -5398,7 +5396,7 @@ snapshots:
       speakingurl: 14.0.1
       superjson: 2.2.1
 
-  '@vue/devtools-shared@7.3.6':
+  '@vue/devtools-shared@7.3.7':
     dependencies:
       rfdc: 1.4.1
 
@@ -5424,8 +5422,6 @@ snapshots:
       vue: 3.4.27(typescript@5.3.3)
 
   '@vue/shared@3.4.27': {}
-
-  '@vue/shared@3.4.31': {}
 
   '@vue/shared@3.4.33': {}
 
@@ -7454,12 +7450,13 @@ snapshots:
 
   primeicons@7.0.0: {}
 
-  primevue@4.0.0(@primeuix/utils@0.0.5)(vue@3.4.27(typescript@5.3.3)):
+  primevue@4.0.1(vue@3.4.27(typescript@5.3.3)):
     dependencies:
-      '@primevue/core': 4.0.0(@primeuix/utils@0.0.5)(vue@3.4.27(typescript@5.3.3))
-      '@primevue/icons': 4.0.0(@primeuix/utils@0.0.5)(vue@3.4.27(typescript@5.3.3))
+      '@primeuix/styled': 0.0.5
+      '@primeuix/utils': 0.0.5
+      '@primevue/core': 4.0.1(vue@3.4.27(typescript@5.3.3))
+      '@primevue/icons': 4.0.1(vue@3.4.27(typescript@5.3.3))
     transitivePeerDependencies:
-      - '@primeuix/utils'
       - vue
 
   proc-log@4.2.0: {}
@@ -8108,23 +8105,23 @@ snapshots:
       - rollup
       - supports-color
 
-  vite-plugin-vue-devtools@7.3.6(rollup@4.18.0)(vite@5.2.12(@types/node@20.10.4))(vue@3.4.27(typescript@5.3.3)):
+  vite-plugin-vue-devtools@7.3.7(rollup@4.18.0)(vite@5.2.12(@types/node@20.10.4))(vue@3.4.27(typescript@5.3.3)):
     dependencies:
-      '@vue/devtools-core': 7.3.6(vite@5.2.12(@types/node@20.10.4))(vue@3.4.27(typescript@5.3.3))
-      '@vue/devtools-kit': 7.3.6
-      '@vue/devtools-shared': 7.3.6
+      '@vue/devtools-core': 7.3.7(vite@5.2.12(@types/node@20.10.4))(vue@3.4.27(typescript@5.3.3))
+      '@vue/devtools-kit': 7.3.7
+      '@vue/devtools-shared': 7.3.7
       execa: 8.0.1
       sirv: 2.0.4
       vite: 5.2.12(@types/node@20.10.4)
       vite-plugin-inspect: 0.8.4(rollup@4.18.0)(vite@5.2.12(@types/node@20.10.4))
-      vite-plugin-vue-inspector: 5.1.2(vite@5.2.12(@types/node@20.10.4))
+      vite-plugin-vue-inspector: 5.1.3(vite@5.2.12(@types/node@20.10.4))
     transitivePeerDependencies:
       - '@nuxt/kit'
       - rollup
       - supports-color
       - vue
 
-  vite-plugin-vue-inspector@5.1.2(vite@5.2.12(@types/node@20.10.4)):
+  vite-plugin-vue-inspector@5.1.3(vite@5.2.12(@types/node@20.10.4)):
     dependencies:
       '@babel/core': 7.24.6
       '@babel/plugin-proposal-decorators': 7.24.6(@babel/core@7.24.6)
@@ -8132,7 +8129,7 @@ snapshots:
       '@babel/plugin-syntax-import-meta': 7.10.4(@babel/core@7.24.6)
       '@babel/plugin-transform-typescript': 7.24.6(@babel/core@7.24.6)
       '@vue/babel-plugin-jsx': 1.2.2(@babel/core@7.24.6)
-      '@vue/compiler-dom': 3.4.31
+      '@vue/compiler-dom': 3.4.33
       kolorist: 1.8.0
       magic-string: 0.30.10
       vite: 5.2.12(@types/node@20.10.4)
@@ -8214,6 +8211,13 @@ snapshots:
       semver: 7.6.2
     transitivePeerDependencies:
       - supports-color
+
+  vue-i18n@9.13.1(vue@3.4.27(typescript@5.3.3)):
+    dependencies:
+      '@intlify/core-base': 9.13.1
+      '@intlify/shared': 9.13.1
+      '@vue/devtools-api': 6.6.1
+      vue: 3.4.27(typescript@5.3.3)
 
   vue-i18n@9.8.0(vue@3.4.27(typescript@5.3.3)):
     dependencies:
