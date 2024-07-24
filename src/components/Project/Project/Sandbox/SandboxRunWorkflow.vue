@@ -5,6 +5,7 @@ const store = useSandboxCreationStore();
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import ProgressBar from "primevue/progressbar";
+import {IQueue} from "@/components/Queue/queue.interfaces";
 
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
@@ -17,6 +18,9 @@ const isRunning = ref(false);
 const isImportingImages = ref(false);
 const isWorkflowRunning = ref(false);
 const isWorkflowFinished = ref(false);
+
+const SANDBOX_LAUNCHER = "de.uniwuerzburg.zpd.ocr4all.application.core.spi.launcher.provider.SandboxNormalizedLauncher"
+
 async function refetch() {
   useCustomFetch(`/workflow/list`)
     .get()
@@ -40,7 +44,7 @@ async function createSandbox() {
   store.sandboxId = sandboxName;
 }
 
-async function checkImageJob(startedJob) {
+async function checkImageJob(startedJob: number) {
   return await new Promise((resolve) => {
     const jobInterval = setInterval(async () => {
       const { isFetching, error, data } = await useCustomFetch(
@@ -48,7 +52,9 @@ async function checkImageJob(startedJob) {
       )
         .get()
         .json();
-      for (const job of Object.values(data.value.done)) {
+      const queue: IQueue = data.value
+      for (const job of Object.values(queue.done)) {
+        console.log(job)
         if (job.id === startedJob && job.state == "completed") {
           clearInterval(jobInterval);
           isImportingImages.value = false;
@@ -61,7 +67,7 @@ async function checkImageJob(startedJob) {
 
 async function importImages() {
   const payload = {
-    id: "de.uniwuerzburg.zpd.ocr4all.application.core.spi.launcher.provider.SandboxNormalizedLauncher",
+    id: SANDBOX_LAUNCHER,
     images: [{ argument: "images", values: store.selectedImages }],
     label: "Import images",
     description: "Import images",
@@ -76,7 +82,7 @@ async function importImages() {
   await checkImageJob(startedJob);
 }
 
-async function checkWorkflowJob(startedJob) {
+async function checkWorkflowJob(startedJob: number) {
   return await new Promise((resolve) => {
     const jobInterval = setInterval(async () => {
       const { isFetching, error, data } = await useCustomFetch(
@@ -84,7 +90,8 @@ async function checkWorkflowJob(startedJob) {
       )
         .get()
         .json();
-      for (const job of Object.values(data.value.done)) {
+      const queue: IQueue = data.value
+      for (const job of Object.values(queue.done)) {
         if (job.id === startedJob && job.state == "completed") {
           jobStatus.value = "Done";
           clearInterval(jobInterval);
@@ -93,13 +100,13 @@ async function checkWorkflowJob(startedJob) {
           resolve(true);
         }
       }
-      for (const job of Object.values(data.value.running)) {
+      for (const job of Object.values(queue.running)) {
         if (job.id === startedJob) {
           jobStatus.value = "Running";
           workflowProgress.value = Math.round(job.journal.progress * 100);
         }
       }
-      for (const job of Object.values(data.value.scheduled)) {
+      for (const job of Object.values(queue.scheduled)) {
         if (job.id === startedJob) {
           jobStatus.value = "Scheduled";
         }
