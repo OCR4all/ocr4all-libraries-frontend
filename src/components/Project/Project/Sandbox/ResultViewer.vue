@@ -7,6 +7,7 @@ import Toast from "primevue/toast";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useToast } from "primevue/usetoast";
+
 const processorDialog = defineAsyncComponent(
   () =>
     import("@/components/Project/Project/Sandbox/Dialog/ProcessorDialog.vue"),
@@ -27,11 +28,32 @@ import { useUiStore } from "@/stores/ui.store";
 import { useDialog } from "primevue/usedialog";
 const { t } = useI18n();
 
+interface ITrack {
+  [key: string]: boolean;
+}
+
+interface IFile {
+  path: string,
+  "mime-type": string,
+  "image-id": string
+}
+
+interface ISnapshot {
+  role: string,
+  label: string,
+  parameter: string,
+  key: number[],
+  files: IFile[],
+  children: ISnapshot[]
+}
+
+const LAREX_LAUNCHER_SPI = "de.uniwuerzburg.zpd.ocr4all.application.core.spi.postcorrection.provider.LAREXLauncher"
+
 const isGeneratingSandbox = ref(false);
 const isReady = ref(false);
 
-const selectedSnapshot = ref(null);
-const selection = ref({});
+const selectedSnapshot: Ref<ISnapshot | undefined> = ref();
+const selection: Ref<ITrack> = ref({});
 
 const formFileMap = ref();
 const formMimeMap = ref();
@@ -50,7 +72,7 @@ const LAREX_LABEL = "ocr4all-LAREX-launcher v1.0";
 
 const dialog = useDialog();
 
-function openProcessorDialog(snapshot) {
+function openProcessorDialog(snapshot: ITrack) {
   const key = Object.keys(snapshot)[0]
     .split(",")
     .map(function (item) {
@@ -83,7 +105,7 @@ const showSandboxGenerationToast = () => {
   }
 };
 
-function collectSnapshotInformation(data: object) {
+function collectSnapshotInformation(data: ISnapshot) {
   selectedSnapshotInformation.value = JSON.parse(data.parameter);
   selectedSnapshotRole.value = data.role;
 }
@@ -112,7 +134,7 @@ async function refetch() {
   }
 }
 
-function getSnapshotFromSelection(selection: object) {
+function getSnapshotFromSelection(selection: ITrack): ISnapshot {
   const key = Object.keys(selection)[0]
     .split(",")
     .map(function (item) {
@@ -121,7 +143,7 @@ function getSnapshotFromSelection(selection: object) {
   return useFindNestedObject(nodes, "key", key);
 }
 
-async function generateSandbox(selection: object) {
+async function generateSandbox(selection: ITrack) {
   const snapshotData = getSnapshotFromSelection(selection);
   showSandboxGenerationToast();
   if (snapshotData.label === LAREX_LABEL) {
@@ -131,7 +153,7 @@ async function generateSandbox(selection: object) {
   } else {
     selectedSnapshot.value = snapshotData;
     const payload = {
-      id: "de.uniwuerzburg.zpd.ocr4all.application.core.spi.postcorrection.provider.LAREXLauncher",
+      id: LAREX_LAUNCHER_SPI,
       "parent-snapshot": { track: snapshotData.key },
       label: "LAREX launcher default",
       description: "LAREX snapshot",
@@ -204,7 +226,7 @@ async function generateSandbox(selection: object) {
   refetch();
 }
 
-async function addToDataset(selection) {
+async function addToDataset(selection: ITrack) {
   const key = Object.keys(selection)[0]
     .split(",")
     .map(function (item) {
@@ -220,14 +242,14 @@ async function addToDataset(selection) {
     .then((response) => {});
 }
 
-function hasLarexView(selection) {
+function hasLarexView(selection: ITrack): boolean {
   const snapshot = getSnapshotFromSelection(selection);
   return snapshot.children
     .map((entry) => entry.label)
     .includes("ocr4all-LAREX-launcher v1.0");
 }
 
-async function exportSnapshot(snapshot) {
+async function exportSnapshot(snapshot: ITrack) {
   const key = Object.keys(snapshot)[0]
     .split(",")
     .map(function (item) {
@@ -251,7 +273,7 @@ async function exportSnapshot(snapshot) {
       link.click();
     });
 }
-async function checkJob(startedJob) {
+async function checkJob(startedJob: number) {
   return await new Promise((resolve) => {
     const jobInterval = setInterval(async () => {
       const { isFetching, error, data } = await useCustomFetch(
@@ -466,9 +488,9 @@ useHead({
           >
             <template #default="slotProps">
               <div class="flex flex-col">
-                <div class="flex flex-col items-center">
-                  <span class="mb-2 font-bold">{{
-                    slotProps.node.label
+                <div class="flex items-center">
+                  <span class="mb-2 font-bold">
+                    {{ slotProps.node.label
                       .split(" ")[0]
                       .replace("ocr4all-LAREX-launcher", "LAREX")
                   }}</span>
