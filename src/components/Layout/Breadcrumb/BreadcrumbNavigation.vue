@@ -6,7 +6,7 @@ const store = useUiStore();
 <template>
   <nav
     v-if="store.breadcrumb"
-    class="hidden lg:flex justify-between max-w-lg overflow-x-auto overflow-y-auto px-4 py-3 lg:p-0 rounded-lg border border-gray-200 bg-surface-0 dark:border-gray-700 dark:bg-surface-800 lg:border-none lg:bg-surface-0  lg:dark:bg-surface-900"
+    class="hidden lg:flex justify-between max-w-2xl overflow-x-auto overflow-y-auto px-4 py-3 lg:p-0 rounded-lg border border-gray-200 bg-surface-0 dark:border-gray-700 dark:bg-surface-800 lg:border-none lg:bg-surface-0  lg:dark:bg-surface-900"
     aria-label="Breadcrumb"
   >
     <ol
