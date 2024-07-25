@@ -87,7 +87,7 @@ function getProcessors(connectionMap, nodeMap, parameterGroups) {
 
           for (const [inputName, inputValue] of Object.entries(node.inputs)) {
             for (const [key, value] of Object.entries(params.parameters)) {
-              if (key === inputName) {
+              if (inputValue.value !== null && key === inputName) {
                 switch (value) {
                   case "booleans":
                     booleans.push({

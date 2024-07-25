@@ -108,37 +108,39 @@ function runProcessor(values, { setErrors }) {
 
   for(const [key, value] of Object.entries(values)){
     const processorType = registry[key]
-    switch (processorType) {
-      case "boolean":
-        booleans.push({
-          argument: key,
-          value: value,
-        });
-        break;
-      case "decimal":
-        decimals.push({
-          argument: key,
-          value: value,
-        });
-        break;
-      case "integer":
-        integers.push({
-          argument: key,
-          value: value,
-        });
-        break;
-      case "select":
-        selects.push({
-          argument: key,
-          value: [value],
-        });
-        break;
-      case "string":
-        strings.push({
-          argument: key,
-          value: value,
-        });
-        break;
+    if(value){
+      switch (processorType) {
+        case "boolean":
+          booleans.push({
+            argument: key,
+            value: value,
+          });
+          break;
+        case "decimal":
+          decimals.push({
+            argument: key,
+            value: value,
+          });
+          break;
+        case "integer":
+          integers.push({
+            argument: key,
+            value: value,
+          });
+          break;
+        case "select":
+          selects.push({
+            argument: key,
+            values: [value],
+          });
+          break;
+        case "string":
+          strings.push({
+            argument: key,
+            value: value,
+          });
+          break;
+      }
     }
   }
 
@@ -146,7 +148,7 @@ function runProcessor(values, { setErrors }) {
     id: selectedProcessor.value.id,
     label: selectedProcessor.value.label,
     description: `Run ${selectedProcessor.value.label} on ${props.sandbox}`,
-    "job-short-description": "string",
+    "job-short-description": `Run ${selectedProcessor.value.label} on ${props.sandbox}`,
     "parent-snapshot": {
       track: props.track,
     },
