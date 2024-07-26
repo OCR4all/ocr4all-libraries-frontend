@@ -7,6 +7,13 @@ import Toast from "primevue/toast";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useToast } from "primevue/usetoast";
+import { useI18n } from "vue-i18n";
+import ProgressBar from "primevue/progressbar";
+import { useUiStore } from "@/stores/ui.store";
+import { useDialog } from "primevue/usedialog";
+import { useAuthStore } from "@/stores/auth.store";
+
+const authStore = useAuthStore()
 
 const processorDialog = defineAsyncComponent(
   () =>
@@ -22,10 +29,6 @@ const toast = useToast();
 const larexLocation = import.meta.env.VITE_PROJECT_LOCATION;
 const larexURL = import.meta.env.VITE_LAREX_URL;
 
-import { useI18n } from "vue-i18n";
-import ProgressBar from "primevue/progressbar";
-import { useUiStore } from "@/stores/ui.store";
-import { useDialog } from "primevue/usedialog";
 const { t } = useI18n();
 
 interface ITrack {
@@ -60,6 +63,7 @@ const formMimeMap = ref();
 
 const selectedSnapshotInformation = ref();
 const selectedSnapshotRole = ref();
+const selectedSnapshotLock = ref();
 
 const sandboxHome = ref();
 const createdTrack = ref();
@@ -71,6 +75,14 @@ const sandboxGenerationToastVisible = ref(false);
 const LAREX_LABEL = "ocr4all-LAREX-launcher v1.0";
 
 const dialog = useDialog();
+
+function convertSelectionToTrack(selection: ITrack){
+  return Object.keys(selection)[0]
+    .split(",")
+    .map(function(item) {
+      return parseInt(item, 10);
+    })
+}
 
 function openProcessorDialog(snapshot: ITrack) {
   const key = Object.keys(snapshot)[0]
@@ -105,9 +117,41 @@ const showSandboxGenerationToast = () => {
   }
 };
 
-function collectSnapshotInformation(data: ISnapshot) {
+async function collectSnapshotInformation(data: ISnapshot) {
+  const payload = {
+    track: data.key
+  }
+  useCustomFetch(`/snapshot/entity/${project}/${sandbox}`).post(payload).json().then((response) => {
+    selectedSnapshotLock.value = response.data.value.configuration.lock != null
+  })
   selectedSnapshotInformation.value = JSON.parse(data.parameter);
   selectedSnapshotRole.value = data.role;
+}
+
+async function unlockSnapshot(track: ITrack){
+  const payload = {
+    track: convertSelectionToTrack(track),
+    source: "unlockSnapshot",
+    description : `${authStore.user} unlocked the snapshot`
+  }
+  useCustomFetch(`/snapshot/unlock/${project}/${sandbox}`).post(payload).json().then((response) => {
+    if(response.error.value){
+      refetch()
+    }
+  })
+}
+
+async function lockSnapshot(track: ITrack){
+  const payload = {
+    track: track,
+    source: "unlockSnapshot",
+    description : `${authStore.user} unlocked the snapshot`
+  }
+  useCustomFetch(`/snapshot/lock/${project}/${sandbox}`).post(payload).json().then((response) => {
+    if(response.error.value){
+      refetch()
+    }
+  })
 }
 
 async function refetch() {
@@ -135,11 +179,7 @@ async function refetch() {
 }
 
 function getSnapshotFromSelection(selection: ITrack): ISnapshot {
-  const key = Object.keys(selection)[0]
-    .split(",")
-    .map(function (item) {
-      return parseInt(item, 10);
-    });
+  const key = convertSelectionToTrack(selection)
   return useFindNestedObject(nodes, "key", key);
 }
 
@@ -227,11 +267,7 @@ async function generateSandbox(selection: ITrack) {
 }
 
 async function addToDataset(selection: ITrack) {
-  const key = Object.keys(selection)[0]
-    .split(",")
-    .map(function (item) {
-      return parseInt(item, 10);
-    });
+  const key = convertSelectionToTrack(selection)
   const payload = {
     track: key,
     "collection-id": "string",
@@ -409,6 +445,21 @@ useHead({
             <span v-else> Open in LAREX </span>
           </button>
           <button
+            v-if="selectedSnapshotLock"
+            class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
+            @click="unlockSnapshot(selection)"
+          >
+              Unlock
+          </button>
+          <button
+            v-else
+            class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
+            @click="lockSnapshot(selection)"
+          >
+            Lock
+          </button>
+          <button
+            v-show="!selectedSnapshotLock"
             class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
             @click="openProcessorDialog(selection)"
           >
