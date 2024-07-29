@@ -9,40 +9,73 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 
 const store = useSandboxCreationStore();
 
+interface IDerivative {
+  width: number,
+  height: number
+}
+
+interface IDerivatives {
+  thumbnail: IDerivative,
+  detail: IDerivative,
+  best: IDerivative
+}
+
+interface IFolio {
+  date: string,
+  derivatives: IDerivatives,
+  user: string,
+  keywords: string[],
+  id: string,
+  name: string,
+  format: string
+  pageXMLType: null | string
+}
+
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
 
 const folios = ref([]);
+const selectedFolios: Ref<IFolio[] | undefined> = ref();
+
+const imageMap = ref(new Map())
+
 async function importImages() {
-  store.selectedImages = Array.from(folios.value[1].map((folio) => folio.id));
-  emit("next");
+  if(selectedFolios.value) {
+    store.selectedImages = Array.from(selectedFolios.value.map((folio) => folio.id));
+    emit("next");
+  }
+}
+
+async function loadDetail(id: string) {
+  await useCustomFetch(
+    `/project/folio/derivative/best/${project}?id=${id}`,
+  )
+    .get()
+    .blob()
+    .then((blob) => {
+      console.log(blob)
+      imageMap.value.get(id).detail = useObjectUrl(blob.data.value);
+    });
 }
 
 const folioData = await useCustomFetch(`/project/folio/list/${project}`)
   .get()
   .json();
-const imageData = [];
 for (const folio of folioData.data.value) {
-  const imageEntry = { id: folio.id, name: folio.name };
-  await useCustomFetch(
+  useCustomFetch(
     `/project/folio/derivative/thumbnail/${project}?id=${folio.id}`,
   )
     .get()
     .blob()
     .then((blob) => {
-      imageEntry["thumbnail"] = useObjectUrl(blob.data.value);
+      imageMap.value.set(folio.id, {
+        thumbnail: useObjectUrl(blob.data.value),
+        detail: null
+      })
     });
-  await useCustomFetch(
-    `/project/folio/derivative/best/${project}?id=${folio.id}`,
-  )
-    .get()
-    .blob()
-    .then((blob) => {
-      imageEntry["best"] = useObjectUrl(blob.data.value);
-    });
-  imageData.push(imageEntry);
 }
-folios.value = [imageData, []];
+folios.value = folioData.data.value
+console.log(folios.value)
 </script>
 
 <template>
@@ -59,37 +92,29 @@ folios.value = [imageData, []];
     >
       {{ $t("pages.projects.sandbox.images.directive") }}
     </h2>
-    <PickList v-model="folios" listStyle="height:342px" dataKey="id">
-      <template #sourceheader> Available </template>
-      <template #targetheader> Selected </template>
-      <template #item="slotProps">
-        <div class="group flex flex-wrap justify-center gap-3 p-2">
-          <Image alt="Image" preview>
-            <template #indicatoricon>
-              <i class="pi pi-eye"></i>
+    <DataTable :value="folios" v-model:selection="selectedFolios" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]">
+      <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+      <Column>
+        <template #body="{ data }">
+          <Image v-if="imageMap.get(data.id)" :alt="data.name" preview>
+            <template #previewicon>
+              <i class="pi pi-search" style="padding: 100%" @click="loadDetail(data.id)"></i>
             </template>
             <template #image>
-              <img :src="slotProps.item.thumbnail" alt="image" />
+              <img :src="imageMap.get(data.id).thumbnail" width="40" alt="image" />
             </template>
-            <template #preview="slotPropsImage">
-              <img
-                :src="slotProps.item.best"
-                alt="preview"
-                :style="slotPropsImage.style"
-                @click="slotPropsImage.onClick"
-              />
+              <template #preview="slotProps">
+              <img :src="imageMap.get(data.id).detail" class="max-h-screen" alt="preview" :style="slotProps.style" />
             </template>
           </Image>
-          <div class="flex-column flex flex-1 justify-center gap-2">
-            <span class="font-bold dark:text-white">{{
-              slotProps.item.name
-            }}</span>
-          </div>
-        </div>
-      </template>
-    </PickList>
+          <Skeleton v-else height="2rem"></Skeleton>
+        </template>
+      </Column>
+      <Column field="name" header="Name"></Column>
+      <Column field="keywords" header="Keywords"></Column>
+    </DataTable>
     <button
-      :disabled="folios[1].length === 0"
+      :disabled="selectedFolios.length === 0"
       class="mt-12 inline-block rounded-md bg-primary-600 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 disabled:bg-primary-300 dark:disabled:bg-blue-400 md:text-base"
       @click="importImages"
     >

@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 interface ISandboxCreationStore {
   projectId?: string;
   sandboxId?: string;
-  selectedImages?: number[];
+  selectedImages?: string[];
 }
 export const useSandboxCreationStore = defineStore({
   id: "sandboxCreation",
