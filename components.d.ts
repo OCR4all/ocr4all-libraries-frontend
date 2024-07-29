@@ -54,6 +54,7 @@ declare module 'vue' {
     EditUserDialog: (typeof import("./src/components/Admin/UserManagement/Dialog/EditUserDialog/EditUserDialog.vue"))["default"]
     EditUserDialogForm: typeof import('./src/components/Admin/UserManagement/Dialog/EditUserDialog/EditUserDialogForm.vue')['default']
     ExchangeCard: (typeof import("./src/components/Admin/InstanceOverview/ExchangeCard.vue"))["default"]
+    ExportSnapshotDialog: typeof import('./src/components/Project/Project/Sandbox/Dialog/ExportSnapshotDialog.vue')['default']
     FilesystemCard: typeof import('./src/components/Admin/InstanceOverview/Cards/FilesystemCard.vue')['default']
     FolioCard: typeof import('./src/components/Repository/Images/Folio/FolioCard.vue')['default']
     GeneralInformation: typeof import('./src/components/Settings/GeneralInformation.vue')['default']

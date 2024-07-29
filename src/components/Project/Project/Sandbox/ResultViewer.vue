@@ -20,6 +20,11 @@ const processorDialog = defineAsyncComponent(
     import("@/components/Project/Project/Sandbox/Dialog/ProcessorDialog.vue"),
 );
 
+const exportDialog = defineAsyncComponent(
+  () =>
+    import("@/components/Project/Project/Sandbox/Dialog/ExportSnapshotDialog.vue"),
+);
+
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
 const sandbox = router.currentRoute.value.params.sandbox;
@@ -285,30 +290,28 @@ function hasLarexView(selection: ITrack): boolean {
     .includes("ocr4all-LAREX-launcher v1.0");
 }
 
-async function exportSnapshot(snapshot: ITrack) {
+function openExportSnapshotDialog(snapshot: ITrack) {
   const key = Object.keys(snapshot)[0]
     .split(",")
     .map(function (item) {
       return parseInt(item, 10);
     });
-  const payload = {
-    track: key,
-  };
-  useCustomFetch(`/snapshot/zip/${project}/${sandbox}`)
-    .post(payload)
-    .blob()
-    .then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data.value]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute(
-        "download",
-        `${project}_${sandbox}_${key.toString().replace(",", "_")}.zip`,
-      );
-      document.body.appendChild(link);
-      link.click();
-    });
+  dialog.open(exportDialog, {
+    props: {
+      header: "Export snapshot",
+      modal: true,
+    },
+    data: {
+      project: project,
+      sandbox: sandbox,
+      track: key,
+    },
+    onClose: () => {
+      refetch();
+    },
+  });
 }
+
 async function checkJob(startedJob: number) {
   return await new Promise((resolve) => {
     const jobInterval = setInterval(async () => {
@@ -474,7 +477,7 @@ useHead({
           </button>
           <button
             class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
-            @click="exportSnapshot(selection)"
+            @click="openExportSnapshotDialog(selection)"
           >
             Export
           </button>
