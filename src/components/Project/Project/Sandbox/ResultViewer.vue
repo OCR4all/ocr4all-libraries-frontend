@@ -140,7 +140,7 @@ async function unlockSnapshot(track: ITrack){
     description : `${authStore.user} unlocked the snapshot`
   }
   useCustomFetch(`/snapshot/unlock/${project}/${sandbox}`).post(payload).json().then((response) => {
-    if(response.error.value){
+    if(!response.error.value){
       refetch()
     }
   })
@@ -153,7 +153,7 @@ async function lockSnapshot(track: ITrack){
     description : `${authStore.user} unlocked the snapshot`
   }
   useCustomFetch(`/snapshot/lock/${project}/${sandbox}`).post(payload).json().then((response) => {
-    if(response.error.value){
+    if(!response.error.value){
       refetch()
     }
   })
