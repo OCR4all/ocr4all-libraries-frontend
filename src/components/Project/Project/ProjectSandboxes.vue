@@ -57,7 +57,7 @@ const toggle = (event, data) => {
         },
         {
           label: "Download",
-          icon: "pi pi-pencil",
+          icon: "pi pi-download",
           command: () => {
             downloadSandbox(data.id);
           },
@@ -156,7 +156,7 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
     },
     {
       label: "Download",
-      icon: "pi pi-pencil",
+      icon: "pi pi-download",
       command: () => {
         downloadSandbox(event.data.id);
       },
