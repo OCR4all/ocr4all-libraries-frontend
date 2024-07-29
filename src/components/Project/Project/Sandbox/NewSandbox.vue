@@ -32,9 +32,7 @@ uiStore.breadcrumb = [
 </script>
 
 <template>
-  <div
-    class="rounded-md border bg-white dark:border-surface-800 dark:bg-surface-900"
-  >
+  <ComponentContainer>
     <section id="stepper" class="p-20">
       <div
         class="relative after:absolute after:inset-x-0 after:top-1/2 after:block after:h-0.5 after:-translate-y-1/2 after:rounded-md after:bg-surface-200 dark:after:bg-surface-400"
@@ -79,5 +77,5 @@ uiStore.breadcrumb = [
     <section v-if="step === 1">
       <SandboxRunWorkflow @next="next" @back="back" />
     </section>
-  </div>
+  </ComponentContainer>
 </template>
