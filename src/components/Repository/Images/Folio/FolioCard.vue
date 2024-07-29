@@ -22,8 +22,10 @@ const props = defineProps<{
   user?: string;
   id?: string;
   containerId?: string;
-  src?: string;
 }>();
+
+const thumb = ref()
+const detail = ref()
 
 const emit = defineEmits(["refresh", "updateSelection"]);
 
@@ -61,7 +63,25 @@ const actionMenuItems = ref([
   },
 ]);
 
-async function loadImage() {}
+useCustomFetch(
+  `/repository/container/folio/derivative/thumbnail/${props.containerId}?id=${props.id}`,
+)
+  .get()
+  .blob()
+  .then((response) => {
+    thumb.value = useObjectUrl(response.data.value);
+  });
+
+async function loadDetail() {
+  useCustomFetch(
+    `/repository/container/folio/derivative/best/${props.containerId}?id=${props.id}`,
+  )
+    .get()
+    .blob()
+    .then((response) => {
+      detail.value = useObjectUrl(response.data.value);
+    });
+}
 
 function downloadFolio() {
   useCustomFetch(
@@ -195,20 +215,21 @@ defineExpose({
       <div
         class="mx-4 mt-4 h-fit w-fit self-center justify-self-center text-surface-700"
       >
-        <Image v-if="src" @show="loadImage" alt="Image" preview>
-          <template #indicatoricon>
-            <i class="pi pi-search"></i>
+        <Image v-if="thumb" alt="Image" preview>
+          <template #previewicon>
+            <i class="pi pi-search" style="padding: 100%" @click="loadDetail"></i>
           </template>
           <template #image>
             <img
-              :src="src"
+              :src="thumb.value"
               class="max-w-48 max-h-48 object-scale-down"
               alt="image"
             />
           </template>
           <template #preview="slotProps">
             <img
-              :src="src"
+              v-if="detail"
+              :src="detail.value"
               alt="preview"
               class="max-h-screen"
               :style="slotProps.style"

@@ -82,17 +82,6 @@ async function refresh() {
     `/repository/container/folio/list/${container}`,
   ).json();
   folios.value = data.value;
-
-  for (const folio of folios.value) {
-    useCustomFetch(
-      `/repository/container/folio/derivative/thumbnail/${container}?id=${folio.id}`,
-    )
-      .get()
-      .blob()
-      .then((response) => {
-        thumbs.value[folio.id] = useObjectUrl(response.data.value);
-      });
-  }
 }
 const fileUpload = ref();
 const uploader = async function customUploader(event: FileUploadUploaderEvent) {
@@ -411,7 +400,6 @@ refresh();
           :id="folio.id"
           :ref="setFolioRef"
           :key="folio.id"
-          :src="thumbs[folio.id]"
           :name="folio.name"
           :format="folio.format"
           :keywords="folio.keywords"
@@ -423,9 +411,6 @@ refresh();
           @refresh="refresh"
         />
       </div>
-      <template #fallback>
-        {{ t("pages.repository.container.overview.fallback-cards") }}
-      </template>
     </Suspense>
   </ComponentContainer>
 </template>
