@@ -1,18 +1,63 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
-import Button from "primevue/button";
-import Tag from "primevue/tag";
-import Dialog from "primevue/dialog";
-import Tree from "primevue/tree";
-
 import { buildProcessorSchema } from "@/components/ProcessSelector/utils";
 import { useToast } from "primevue/usetoast";
 
 const props = defineProps<{
-  project: string;
-  sandbox: string;
-  track: number[];
+  project: string | undefined;
+  sandbox: string | undefined;
+  track: number[] | undefined;
 }>();
+
+interface IPremise {
+  state: string,
+  message: string | null
+}
+
+interface IItem {
+  type: string,
+  description: string | null,
+  value: string,
+  selected: boolean,
+  disabled: boolean
+}
+
+interface IEntry {
+  type: string,
+  label: string,
+  argument: string,
+  value: string | null,
+  description: string,
+  placeholder: string | null,
+  disabled: boolean
+}
+
+interface ISelectEntry extends IEntry {
+  items: IItem[]
+  "multiple-options": boolean
+}
+
+interface IDecimalEntry extends IEntry {
+  step: number | null,
+  minimum: number | null,
+  maximum: number | null,
+  unit: string | null,
+}
+
+interface IProcessor {
+  type: string,
+  id: string,
+  provider: string,
+  language: string,
+  name: string,
+  version: number,
+  description: string,
+  categories: string[],
+  steps: string[],
+  icon: string | null,
+  premise: IPremise,
+  entries: IEntry[]
+}
 
 const nodes = ref([]);
 
@@ -23,15 +68,19 @@ function structureData(data) {
   for (const [key, value] of Object.entries(categories)) {
     const node = {
       key: key,
-      label: key,
-      type: "category",
+      data: {
+        label: key,
+        type: "category",
+      },
       children: [],
     };
     for (const child of value) {
       node.children.push({
         key: child.id,
-        label: child.name,
-        ...child,
+        data: {
+          label: child.name,
+          ...child,
+        }
       });
     }
     nodes.value.push(node);
@@ -44,17 +93,6 @@ useCustomFetch("/spi/list/workflow")
   .then((data) => structureData(data.data.value));
 
 const expandedKeys = ref({});
-const expandAll = () => {
-  for (let node of nodes.value) {
-    expandNode(node);
-  }
-
-  expandedKeys.value = { ...expandedKeys.value };
-};
-
-const collapseAll = () => {
-  expandedKeys.value = {};
-};
 
 const expandNode = (node) => {
   if (node.children && node.children.length) {
@@ -97,8 +135,6 @@ function runProcessor(values, { setErrors }) {
   for(const entry of selectedProcessor.value.entries){
     registry[entry.label] = entry.type
   }
-
-  console.log(selectedProcessor.value.entries)
 
   const booleans = [];
   const decimals = [];
@@ -177,6 +213,8 @@ function runProcessor(values, { setErrors }) {
           detail: "Processor scheduled",
           life: 3000,
         })
+        processorDialogVisible.value = false
+        emit("close")
       }
     })
 }
@@ -193,6 +231,10 @@ function openProcessor(data) {
 }
 
 const processorDialogVisible = ref(false);
+
+const filters = ref({});
+
+const emit = defineEmits(["close"]);
 </script>
 <template>
   <Toast />
@@ -218,45 +260,47 @@ const processorDialogVisible = ref(false);
         ref="processorForm"
         v-model="formData"
         type="form"
-        :submit-attrs="{
-          inputClass: 'p-button p-component',
-        }"
         @submit="runProcessor"
       >
         <FormKitSchema :schema="processorFormSchema" :data="formData" />
       </FormKit>
     </div>
   </Dialog>
-  <div class="mb-4 flex flex-wrap gap-2">
-    <Button
-      type="button"
-      icon="pi pi-plus"
-      label="Expand All"
-      @click="expandAll"
-    />
-    <Button
-      type="button"
-      icon="pi pi-minus"
-      label="Collapse All"
-      @click="collapseAll"
-    />
-  </div>
-  <Tree
-    v-model:expandedKeys="expandedKeys"
-    :value="nodes"
-    :filter="true"
-    filter-mode="lenient"
-    class="w-full"
-  >
-    <template #category="slotProps">
-      <button @click="toggleNode(slotProps.node)">
-        {{ slotProps.node.label }}
-      </button>
+  <TreeTable :value="nodes" :filters="filters">
+    <template #header>
+      <div class="flex justify-end">
+        <IconField>
+          <InputIcon class="pi pi-search" />
+          <InputText v-model="filters['global']" placeholder="Global Search" />
+        </IconField>
+      </div>
     </template>
-    <template #default="slotProps">
-      <button @click="openProcessor(slotProps.node)">
-        {{ slotProps.node.label }}
-      </button>
-    </template>
-  </Tree>
+    <Column field="label" header="Label" expander style="min-width: 12rem">
+      <template #filter>
+        <InputText v-model="filters['name']" type="text" placeholder="Filter by label" />
+      </template>
+    </Column>
+    <Column field="steps" header="Steps" style="min-width: 12rem">
+      <template #filter>
+        <InputText v-model="filters['size']" type="text" placeholder="Filter by step" />
+      </template>
+      <template #body="slotProps">
+        <div class="flex flex-col space-y-2">
+          <Tag v-for="step of slotProps.node.data.steps" :key="step" :value="step" />
+        </div>
+      </template>
+    </Column>
+    <Column field="description" header="Description" style="min-width: 12rem">
+      <template #filter>
+        <InputText v-model="filters['type']" type="text" placeholder="Filter by description" />
+      </template>
+    </Column>
+    <Column>
+      <template #body="slotProps">
+        <Button v-if="slotProps.node.data.type !== 'category'" @click="openProcessor(slotProps.node.data)">
+          Select
+        </Button>
+      </template>
+    </Column>
+  </TreeTable>
 </template>

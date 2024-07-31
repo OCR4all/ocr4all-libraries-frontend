@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import {Ref} from "vue";
+
 const dialogRef = inject("dialogRef");
 
-const project = ref();
-const sandbox = ref();
-const track = ref();
+const project: Ref<string | undefined> = ref();
+const sandbox: Ref<string | undefined> = ref();
+const track: Ref<number[] | undefined> = ref();
 
 onMounted(() => {
   project.value = dialogRef.value.data.project;
@@ -12,5 +14,5 @@ onMounted(() => {
 });
 </script>
 <template>
-  <ProcessorSelector :project="project" :sandbox="sandbox" :track="track" />
+  <ProcessorSelector @close="dialogRef.close()" :project="project" :sandbox="sandbox" :track="track" />
 </template>

@@ -102,10 +102,18 @@ function openProcessorDialog(snapshot: ITrack) {
     .map(function (item) {
       return parseInt(item, 10);
     });
+
   dialog.open(processorDialog, {
     props: {
       header: "Run processor",
       modal: true,
+      style: {
+        width: '75vw',
+      },
+      breakpoints:{
+        '960px': '75vw',
+        '640px': '90vw'
+      },
     },
     data: {
       project: project,
@@ -148,7 +156,13 @@ async function unlockSnapshot(track: ITrack){
   }
   useCustomFetch(`/snapshot/unlock/${project}/${sandbox}`).post(payload).json().then((response) => {
     if(!response.error.value){
-      refetch()
+      toast.add({
+        severity: "success",
+        summary: "Success",
+        detail: "Snapshot unlocked",
+        life: 3000,
+      });
+      selectedSnapshotLock.value = false
     }
   })
 }
