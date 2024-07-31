@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { MoonIcon, SunIcon } from "@heroicons/vue/24/solid";
+import SunIcon from "~icons/line-md/moon-to-sunny-outline-transition";
+import MoonIcon from "~icons/line-md/moon-filled"
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
