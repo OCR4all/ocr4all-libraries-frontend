@@ -49,6 +49,7 @@ uiStore.breadcrumb = [
     <div>
       <ImageView v-if="section === 'Images'" />
       <DatasetView v-else-if="section === 'Datasets'" />
+      <ModelView v-else-if="section === 'Models'" />
       <WorkflowView v-else-if="section === 'Workflows'" />
     </div>
   </div>
