@@ -343,6 +343,33 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   contextMenu.value.show(event.originalEvent);
 };
 
+async function getCodec(){
+  const files = []
+  for(const set of selectedSets.value){
+    const xml = set.files.find(file => {
+      return file["content-type"] === "application/xml"
+    })
+    if(xml) files.push(xml.name)
+  }
+  const payload = {
+    "datasets": [
+      {
+        "id": dataset,
+        "filenames": files
+      }
+    ],
+    "level": "TextLine",
+    "index": 0,
+    "normalizer": "NFD"
+  }
+  console.log(payload)
+  await useCustomFetch(
+    "/data/collection/set/codec",
+  ).post(payload).then((response) => {
+    console.log(response.data.value)
+  });
+}
+
 refresh();
 </script>
 <template>
@@ -439,6 +466,10 @@ refresh();
             @uploader="uploader"
           >
           </FileUpload>
+          <Button
+            @click="getCodec"
+            label="Get Codec"
+            :disabled="!selectedSets || !selectedSets.length" />
           <Button
             @click="downloadDataset"
             label="Export"

@@ -66,6 +66,38 @@ async function downloadDataset(data: ICollectionSet) {
     });
 }
 
+async function getCodec(datasets) {
+  const datasetPayload = []
+  for(const dataset of datasets) {
+    const files = []
+    console.log(dataset)
+  }
+/*    for(const set of selectedSets.value){
+      const xml = set.files.find(file => {
+        return file["content-type"] === "application/xml"
+      })
+      if(xml) files.push(xml.name)*/
+/*    }
+  }*/
+/*  const payload = {
+    "datasets": [
+      {
+        "id": dataset,
+        "filenames": files
+      }
+    ],
+    "level": "TextLine",
+    "index": 0,
+    "normalizer": "NFD"
+  }
+  console.log(payload)
+  await useCustomFetch(
+    "/data/collection/set/codec",
+  ).post(payload).then((response) => {
+    console.log(response.data.value)
+  });*/
+}
+
 async function refetch() {
   isRefetching.value = true;
   const { isFetching, error, data } = await useCustomFetch(
@@ -279,6 +311,15 @@ const contextMenu = ref();
           @click="openCreateDialog"
         >
           {{ $t("pages.repository.overview.toolbar.button.create") }}
+        </ActionButton>
+        <ActionButton
+          rounded
+          type="primary"
+          size="large"
+          :disabled="!selectedDatasets || !selectedDatasets.length"
+          @click="getCodec(selectedDatasets)"
+        >
+          Get Codec
         </ActionButton>
         <ActionButton
           rounded

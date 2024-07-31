@@ -3,7 +3,8 @@ import { useUiStore } from "@/stores/ui.store";
 import { mainNavigation, adminNavigation } from "@/layout/Sidebar";
 import { SidebarMode } from "@/layout/Layout";
 
-import { Cog6ToothIcon } from "@heroicons/vue/24/outline";
+import AnimatedCogIcon from "~icons/line-md/cog-loop"
+import CogIcon from "~icons/line-md/cog"
 
 const props = defineProps<{
   mode: SidebarMode;
@@ -120,7 +121,7 @@ const maximized = computed(() => !uiStore.sidebarMinimized);
           class="group flex items-center space-x-4 rounded-md px-4 py-2.5 text-surface-900 hover:bg-surface-200 dark:text-white dark:hover:bg-surface-800"
           :class="[maximized ? 'justify-start' : 'justify-center']"
         >
-          <Cog6ToothIcon class="h-6 w-6" />
+          <CogIcon class="h-6 w-6" />
         </router-link>
       </div>
     </div>

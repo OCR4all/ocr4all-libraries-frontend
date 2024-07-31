@@ -7,7 +7,14 @@ import {
   XMarkIcon,
 } from "@heroicons/vue/24/outline";
 
-import DataTable from "primevue/datatable";
+const jobInfoDialog = defineAsyncComponent(
+  () =>
+    import(
+      "@/components/Queue/Dialog/JobInfoDialog.vue"
+      ),
+);
+
+import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
 import Column from "primevue/column";
 import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
@@ -15,6 +22,8 @@ import Toast from "primevue/toast";
 import Button from "primevue/button";
 import ProgressBar from "primevue/progressbar";
 import { FilterMatchMode } from "@primevue/core/api";
+
+const dialog = useDialog()
 
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
@@ -24,6 +33,7 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import { IJob, IQueue } from "@/components/Queue/queue.interfaces";
 import { Ref } from "vue";
 import { RemovableRef } from "@vueuse/core";
+import { useDialog } from "primevue/usedialog";
 const toast = useToast();
 
 const loading: Ref<boolean> = ref(true);
@@ -140,16 +150,115 @@ async function removeJob(job: string) {
       });
     });
 }
+
+const items = ref([])
+const menu = ref()
+
+const toggle = (event, data) => {
+  console.log(data)
+  items.value = [
+    {
+      label: "Actions",
+      items: [
+        {
+          label: "Info",
+          icon: "pi pi-info-circle",
+          command: () => openInfoDialog(data)
+        },
+      ],
+    },
+  ];
+  menu.value.toggle(event);
+};
+
+const contextMenu = ref();
+const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
+  items.value = [
+    {
+      label: "Info",
+      icon: "pi pi-info-circle",
+      command: () => openInfoDialog(event.data)
+    },
+  ];
+  contextMenu.value.show(event.originalEvent);
+};
+
+function openInfoDialog(data){
+  console.log(data)
+  dialog.open(jobInfoDialog, {
+    props: {
+      header: "Job Information",
+      modal: true,
+    },
+    data: data,
+    onClose: () => {
+      refetch();
+    },
+  });
+}
 </script>
 
 <template>
   <Toast />
+  <ContextMenu ref="contextMenu" :model="items">
+    <template #item="{ item, props }">
+      <a
+        v-ripple
+        class="group flex items-center"
+        :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+        v-bind="props.action"
+      >
+        <span
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+          :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+        >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </ContextMenu>
+  <Menu ref="menu" :model="items" :popup="true">
+    <template #item="{ item, props }">
+      <a
+        v-ripple
+        class="group flex items-center"
+        :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+        v-bind="props.action"
+      >
+        <span
+          :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+          :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+        >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </Menu>
   <ComponentContainer border>
     <DataTable
       v-model:filters="filters"
       :value="jobs"
       paginator
       filter-display="row"
+      @row-contextmenu="onRowContextMenu"
       :global-filter-fields="['id', 'description', 'state']"
       :loading="loading"
       :rows="5"
@@ -280,13 +389,20 @@ async function removeJob(job: string) {
           </UseTimeAgo>
         </template>
       </Column>
-      <!--    <Column
-      field="actions">
-        <template #body="slotProps">
-          <Button type="button" icon="pi pi-ellipsis-v" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" />
-          <Menu ref="menu" id="overlay_menu" :popup="true" />
+      <Column header="Actions" :exportable="false" style="min-width: 8rem">
+        <template #body="{ data }">
+          <div class="space-y-2">
+            <Button
+              type="button"
+              text
+              severity="secondary"
+              @click="toggle($event, data)"
+            >
+              <i class="pi pi-ellipsis-h text-black dark:text-white" />
+            </Button>
+          </div>
         </template>
-      </Column>-->
+      </Column>
     </DataTable>
   </ComponentContainer>
 </template>

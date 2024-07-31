@@ -158,7 +158,7 @@ function runProcessor(values, { setErrors }) {
     ...(selects.length !== 0 && { selects: selects }),
     ...(strings.length !== 0 && { strings: strings }),
   };
-  console.log(payload)
+
   useCustomFetch(url)
     .post(payload)
     .json()

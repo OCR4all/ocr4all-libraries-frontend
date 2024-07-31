@@ -13,6 +13,13 @@ import { useUiStore } from "@/stores/ui.store";
 import { useDialog } from "primevue/usedialog";
 import { useAuthStore } from "@/stores/auth.store";
 
+import IconUnlock from "~icons/fluent/lock-open-28-filled"
+import IconStart from "~icons/fluent/play-circle-28-filled"
+import IconAddToDataset from "~icons/fluent/stack-add-24-filled"
+import IconExport from "~icons/fluent/cloud-download-28-filled"
+import IconLarex from "~icons/fluent/notebook-eye-20-filled";
+import IconInformation from "~icons/fluent/info-32-filled"
+
 const authStore = useAuthStore()
 
 const processorDialog = defineAsyncComponent(
@@ -353,6 +360,47 @@ useHead({
   templateParams: { separator: "|", siteName: "OCR4all" },
   bodyAttrs: { class: { overflow: true } },
 });
+
+const items = ref([
+  {
+    label:  "LAREX",
+    icon: IconLarex,
+    visible: true,
+    disabled: false,
+    command: () => {
+      console.log("test")
+    }
+  },
+  {
+    label: 'Unlock Snapshot',
+    visible: selectedSnapshotLock,
+    disabled: false,
+    icon: IconUnlock
+  },
+  {
+    label: 'Run Processor',
+    visible: true,
+    disabled: selectedSnapshotLock,
+    icon: IconStart
+  },
+  {
+    label: 'Add to dataset',
+    visible: true,
+    disabled: false,
+    icon: IconAddToDataset
+  },
+  {
+    label: 'Export',
+    icon: IconExport,
+    disabled: false,
+  },
+  {
+    label: "Processor Information",
+    visible: true,
+    disabled: false,
+    icon: IconInformation
+  }
+]);
 </script>
 <template>
   <Toast />
@@ -423,6 +471,15 @@ useHead({
       </section>
     </template>
   </Toast>
+  <Dock v-show="Object.entries(selection).length > 0" :model="items">
+    <template #item="{ item }">
+      <div v-show="item.visible" class="flex flex-col">
+        <Button :disabled="item.disabled" v-tooltip.top="item.label" @click="item.command" text severity="contrast">
+          <component class="self-center dark:text-surface-100 text-surface-800" :is="item.icon" />
+        </Button>
+      </div>
+    </template>
+  </Dock>
   <div class="flex space-x-6">
     <transition
       class="w-128 flex-1 rounded-md border bg-white p-5 dark:border-surface-800 dark:bg-surface-900"
@@ -558,3 +615,6 @@ useHead({
     </div>
   </div>
 </template>
+<style scoped>
+
+</style>
