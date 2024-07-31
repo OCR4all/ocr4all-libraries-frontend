@@ -361,46 +361,80 @@ useHead({
   bodyAttrs: { class: { overflow: true } },
 });
 
-const items = ref([
-  {
-    label:  "LAREX",
-    icon: IconLarex,
-    visible: true,
-    disabled: false,
-    command: () => {
-      console.log("test")
+const actionDock = ref({
+  colorScheme: {
+    light: {
+      root: {
+        borderColor: "{surface.200}",
+        itemPadding: "0px",
+      }
+    },
+    dark: {
+      root: {
+        borderColor: "{surface.600}",
+        itemPadding: "0px",
+      },
     }
-  },
-  {
-    label: 'Unlock Snapshot',
-    visible: selectedSnapshotLock,
-    disabled: false,
-    icon: IconUnlock
-  },
-  {
-    label: 'Run Processor',
-    visible: true,
-    disabled: selectedSnapshotLock,
-    icon: IconStart
-  },
-  {
-    label: 'Add to dataset',
-    visible: true,
-    disabled: false,
-    icon: IconAddToDataset
-  },
-  {
-    label: 'Export',
-    icon: IconExport,
-    disabled: false,
-  },
-  {
-    label: "Processor Information",
-    visible: true,
-    disabled: false,
-    icon: IconInformation
   }
-]);
+});
+
+const items = computed(() => {
+  if(Object.keys(selection.value).length === 0) {
+    return false
+  }else{
+    return [
+      {
+        label:  "LAREX",
+        icon: IconLarex,
+        visible: !hasLarexView(selection.value),
+        disabled: false,
+        command: () => {
+          generateSandbox(selection.value)
+        }
+      },
+      {
+        label: 'Unlock Snapshot',
+        visible: selectedSnapshotLock.value,
+        disabled: false,
+        icon: IconUnlock,
+        command: () => {
+          unlockSnapshot(selection.value)
+        }
+      },
+      {
+        label: 'Run Processor',
+        visible: true,
+        disabled: selectedSnapshotLock.value,
+        icon: IconStart,
+        command: () => {
+          openProcessorDialog(selection.value)
+        }
+      },
+      {
+        label: 'Add to dataset',
+        visible: true,
+        disabled: false,
+        icon: IconAddToDataset
+      },
+      {
+        label: 'Export',
+        icon: IconExport,
+        visible: true,
+        disabled: false,
+        command: () => {
+          openExportSnapshotDialog(selection.value)
+        }
+      },
+      {
+        label: "Processor Information",
+        visible: true,
+        disabled: false,
+        icon: IconInformation
+      }
+    ]
+  }
+})
+
 </script>
 <template>
   <Toast />
@@ -471,114 +505,16 @@ const items = ref([
       </section>
     </template>
   </Toast>
-  <Dock v-show="Object.entries(selection).length > 0" :model="items">
+  <Dock class="lg:mb-4" v-show="Object.entries(selection).length > 0" :model="items" :dt="actionDock">
     <template #item="{ item }">
-      <div v-show="item.visible" class="flex flex-col">
-        <Button :disabled="item.disabled" v-tooltip.top="item.label" @click="item.command" text severity="contrast">
-          <component class="self-center dark:text-surface-100 text-surface-800" :is="item.icon" />
+      <div v-show="item.visible" class="flex flex-col lg:p-2">
+        <Button :disabled="item.disabled" v-tooltip.top="item.label" @click="item.command" text>
+          <component :is="item.icon" class="self-center dark:text-surface-100 text-surface-800 w-8 h-8" />
         </Button>
       </div>
     </template>
   </Dock>
   <div class="flex space-x-6">
-    <transition
-      class="w-128 flex-1 rounded-md border bg-white p-5 dark:border-surface-800 dark:bg-surface-900"
-      enter-active-class="transition ease-in-out duration-200 transform"
-      enter-from-class="-translate-x-full"
-      enter-to-class="translate-x-0"
-      leave-active-class="transition ease-in-out duration-200 transform"
-      leave-from-class="translate-x-0"
-      leave-to-class="-translate-x-full"
-    >
-      <div v-if="Object.entries(selection).length > 0">
-        <div class="grid grid-cols-1 gap-y-2">
-          <button
-            v-show="!hasLarexView(selection)"
-            class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
-            @click="generateSandbox(selection)"
-          >
-            <span
-              v-if="getSnapshotFromSelection(selection).label === LAREX_LABEL"
-            >
-              Open
-            </span>
-            <span v-else> Open in LAREX </span>
-          </button>
-          <button
-            v-if="selectedSnapshotLock"
-            class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
-            @click="unlockSnapshot(selection)"
-          >
-              Unlock
-          </button>
-          <button
-            v-else
-            class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
-            @click="lockSnapshot(selection)"
-          >
-            Lock
-          </button>
-          <button
-            v-show="!selectedSnapshotLock"
-            class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
-            @click="openProcessorDialog(selection)"
-          >
-            Run processor
-          </button>
-          <button
-            v-show="!hasLarexView(selection)"
-            class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
-            @click="pushToDataset(selection)"
-          >
-            Add to dataset
-          </button>
-          <button
-            class="inline-block rounded-md bg-primary-700 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 md:col-span-1 md:text-base"
-            @click="openExportSnapshotDialog(selection)"
-          >
-            Export
-          </button>
-        </div>
-        <Accordion expandIcon="pi pi-plus" collapseIcon="pi pi-minus">
-          <AccordionPanel value="information">
-            <AccordionHeader>Processor Information</AccordionHeader>
-            <AccordionContent>
-              <table
-                class="w-full text-left text-sm text-surface-500 dark:text-surface-400"
-              >
-                <thead
-                  class="bg-surface-50 text-xs uppercase text-surface-700 dark:bg-zinc-700 dark:text-white"
-                >
-                  <tr>
-                    <th scope="col" class="px-6 py-3">Parameter</th>
-                    <th scope="col" class="px-6 py-3">Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="(value, key) in Object.entries(
-                      selectedSnapshotInformation,
-                    )"
-                    :key="key"
-                    class="border-b bg-white dark:border-surface-800 dark:bg-surface-900"
-                  >
-                    <th
-                      scope="row"
-                      class="whitespace-nowrap px-6 py-4 font-medium text-surface-900 dark:text-white"
-                    >
-                      {{ value[0] }}
-                    </th>
-                    <td class="px-6 py-4 dark:text-white">
-                      {{ value[1] }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </AccordionContent>
-          </AccordionPanel>
-        </Accordion>
-      </div>
-    </transition>
     <div
       class="flex-1 rounded-md border bg-white p-5 dark:border-surface-800 dark:bg-surface-900"
     >
