@@ -73,6 +73,7 @@ declare module 'vue' {
     ParameterSelector: typeof import('./src/components/Training/Calamari/Steps/ParameterSelector.vue')['default']
     ProcessorDialog: typeof import('./src/components/Project/Project/Sandbox/Dialog/ProcessorDialog.vue')['default']
     ProcessorForm: typeof import('./src/components/Project/Project/Sandbox/ProcessorForm.vue')['default']
+    ProcessorInformationDialog: typeof import('./src/components/Project/Project/Sandbox/Dialog/ProcessorInformationDialog.vue')['default']
     ProcessorSelector: typeof import('./src/components/ProcessSelector/ProcessorSelector.vue')['default']
     ProjectContainer: typeof import('./src/components/Project/ProjectContainer.vue')['default']
     ProjectCreationImageSelection: typeof import('./src/components/Project/Create/ProjectCreationImageSelection.vue')['default']

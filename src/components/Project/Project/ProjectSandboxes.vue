@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import {
   ArrowPathIcon,
-  XMarkIcon,
-  ArchiveBoxArrowDownIcon,
 } from "@heroicons/vue/24/outline";
 import { UseTimeAgo } from "@vueuse/components";
 
@@ -36,6 +34,8 @@ const isRefetching = ref(false);
 const selectedSandbox = ref();
 
 const isDeleteDialogVisible = ref(false);
+
+const loading = ref(true)
 
 const store = useSandboxCreationStore();
 
@@ -88,7 +88,8 @@ async function refetch() {
     });
 }
 
-refetch();
+console.log(loading.value)
+refetch().then(() => loading.value = false);
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -313,14 +314,15 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   <ComponentContainer>
     <DataTable
       :value="sandboxes"
+      :loading="loading"
       sort-field="tracking.updated"
       :sort-order="-1"
       :filters="filters"
       lazy
-      contextMenu
-      @rowContextmenu="onRowContextMenu"
+      context-menu
       :row-hover="true"
       :global-filter-fields="['name', 'description', 'state']"
+      @row-contextmenu="onRowContextMenu"
     >
       <template #header>
         <div
@@ -347,6 +349,11 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
             </span>
           </div>
         </div>
+      </template>
+      <template #loading>
+        <ProgressSpinner
+style="width: 50px; height: 50px" stroke-width="8" fill="transparent"
+                         animation-duration=".5s" aria-label="Custom ProgressSpinner" />
       </template>
       <template #empty>
         <span class="text-primary-950 dark:text-primary-50">{{

@@ -17,13 +17,19 @@ import { ToastServiceMethods } from "primevue/toastservice";
 import { Store } from "pinia";
 import { useI18n } from "vue-i18n";
 import { useUiStore } from "@/stores/ui.store";
+import Image from "primevue/image";
+import { UseTimeAgo } from "@vueuse/components";
+import { useLocalDateFormat } from "@/composables/useLocalDateFormat";
 const config: Store = useConfigStore();
 const auth: Store = useAuthStore();
 
 const { t } = useI18n();
 
 const folios = ref();
-const thumbs = ref({});
+
+const layout: Ref<"list" | "grid" | undefined> = ref('grid');
+const options = ref(['list', 'grid']);
+
 
 const router: Router = useRouter();
 const container: LocationQueryValue | LocationQueryValue[] =
@@ -82,6 +88,7 @@ async function refresh() {
     `/repository/container/folio/list/${container}`,
   ).json();
   folios.value = data.value;
+  console.log(folios.value)
 }
 const fileUpload = ref();
 const uploader = async function customUploader(event: FileUploadUploaderEvent) {
@@ -349,18 +356,22 @@ refresh();
       <h2 class="text-3xl font-bold text-surface-950 dark:text-surface-50">
         {{ t("pages.repository.container.overview.all-folios") }}
       </h2>
-      <div class="align-center flex justify-between">
-        <div class="flex space-x-3">
-          <p
-            class="min-w-fit self-end text-xl font-semibold text-surface-950 dark:text-surface-50"
-          >
-            {{ t("pages.repository.container.overview.sort-by") }}
-          </p>
-          <Select
-            v-model="selectedSortMode"
-            :options="sortModes"
-            option-label="name"
-            :pt="{
+    </div>
+    <Suspense>
+      <DataView :value="folios" :layout="layout" paginator :rows="20" :rowsPerPageOptions="[5, 10, 15, 20, 25]">
+        <template #header>
+          <div class="flex justify-between">
+            <div class="flex space-x-3">
+              <p
+                class="min-w-fit self-end text-xl font-semibold text-surface-950 dark:text-surface-50"
+              >
+                {{ t("pages.repository.container.overview.sort-by") }}
+              </p>
+              <Select
+                v-model="selectedSortMode"
+                :options="sortModes"
+                option-label="name"
+                :pt="{
               root: {
                 class:
                   'inline-flex relative bg-transparent cursor-pointer self-end',
@@ -368,49 +379,74 @@ refresh();
               input: { class: 'text-surface-950 dark:text-surface-50 text-xl' },
               trigger: { class: 'hidden' },
             }"
-            @change="updateSort"
-          />
-        </div>
-        <div class="relative flex items-center space-x-2 space-y-2">
-          <p
-            v-show="selection.length"
-            class="self-center font-bold text-surface-950 dark:text-surface-50"
-          >
-            {{ selection.length }}
-            {{ t("pages.repository.container.overview.selected") }}
-          </p>
-          <Checkbox
-            v-model="checked"
-            :binary="true"
-            @update:model-value="updateTotalSelection"
-          />
-        </div>
-      </div>
-    </div>
-    <hr
-      class="mb-6 mt-2 h-0.5 border-t-0 bg-surface-300 opacity-40 dark:opacity-20"
-    />
-    <Suspense>
-      <div
-        v-auto-animate
-        class="grid grid-cols-1 content-center justify-center gap-x-2 gap-y-3 @[550px]/content:grid-cols-2 @[800px]/content:grid-cols-3 @[1050px]/content:grid-cols-4"
-      >
-        <FolioCard
-          v-for="folio in folios"
-          :id="folio.id"
-          :ref="setFolioRef"
-          :key="folio.id"
-          :name="folio.name"
-          :format="folio.format"
-          :keywords="folio.keywords"
-          :size="folio.size"
-          :date="folio.date"
-          :user="folio.user"
-          :container-id="container"
-          @update-selection="updateSelection"
-          @refresh="refresh"
-        />
-      </div>
+                @change="updateSort"
+              />
+            </div>
+            <SelectButton v-model="layout" :options="options" :allowEmpty="false">
+              <template #option="{ option }">
+                <i :class="[option === 'list' ? 'pi pi-bars' : 'pi pi-table']" />
+              </template>
+            </SelectButton>
+          </div>
+        </template>
+        <template #grid="slotProps">
+          <div class="grid grid-cols-1 content-center justify-center gap-x-2 gap-y-3 @[550px]/content:grid-cols-2 @[800px]/content:grid-cols-3 @[1050px]/content:grid-cols-4">
+            <div v-for="(item, index) in slotProps.items" :key="index">
+              <FolioCard
+                :id="item.id"
+                :ref="setFolioRef"
+                :key="item.id"
+                :name="item.name"
+                :format="item.format"
+                :keywords="item.keywords"
+                :size="item.size"
+                :date="item.date"
+                :user="item.user"
+                :container-id="container"
+                @update-selection="updateSelection"
+                @refresh="refresh"
+              />              </div>
+          </div>
+        </template>
+        <template #list="slotProps">
+          <DataTable :value="slotProps.items" v-model:selection="selection">
+            <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+<!--            <Column>
+              <template #body="{ data }">
+                <Image v-if="imageMap.get(data.id)" :alt="data.name" preview>
+                  <template #previewicon>
+                    <i class="pi pi-search" style="padding: 100%" @click="loadDetail(data.id)"></i>
+                  </template>
+                  <template #image>
+                    <img :src="imageMap.get(data.id).thumbnail" width="40" alt="image" />
+                  </template>
+                  <template #preview="slotProps">
+                    <img :src="imageMap.get(data.id).detail" class="max-h-screen" alt="preview" :style="slotProps.style" />
+                  </template>
+                </Image>
+                <Skeleton v-else height="2rem"></Skeleton>
+              </template>
+            </Column>-->
+            <Column field="name" header="Name"></Column>
+            <Column field="format" header="Format"></Column>
+            <Column field="size.height" header="Height"></Column>
+            <Column field="size.width" header="Width"></Column>
+            <Column field="keywords" header="Keywords"></Column>
+            <Column field="date" header="Added">
+              <template #body="slotProps">
+                <div v-tooltip.left="useLocalDateFormat(slotProps.data.date)">
+                  <UseTimeAgo
+                    v-slot="{ timeAgo }"
+                    :time="Date.parse(slotProps.data.date)"
+                  >
+                    {{ timeAgo }}
+                  </UseTimeAgo>
+                </div>
+              </template>
+            </Column>
+          </DataTable>
+        </template>
+      </DataView>
     </Suspense>
   </ComponentContainer>
 </template>
