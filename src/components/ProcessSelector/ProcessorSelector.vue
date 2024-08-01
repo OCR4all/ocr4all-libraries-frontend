@@ -64,7 +64,8 @@ const nodes = ref([]);
 const toast = useToast()
 
 function structureData(data) {
-  let categories = Object.groupBy(data, ({ type }) => type);
+  let categories = Object.groupBy(data, item => item["type-label"]);
+  console.log(categories)
   for (const [key, value] of Object.entries(categories)) {
     const node = {
       key: key,
@@ -90,7 +91,9 @@ function structureData(data) {
 useCustomFetch("/spi/list/workflow")
   .get()
   .json()
-  .then((data) => structureData(data.data.value));
+  .then((data) => {
+    structureData(data.data.value)
+  });
 
 const expandedKeys = ref({});
 
