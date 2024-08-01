@@ -32,6 +32,11 @@ const exportDialog = defineAsyncComponent(
     import("@/components/Project/Project/Sandbox/Dialog/ExportSnapshotDialog.vue"),
 );
 
+const processorInformationDialog = defineAsyncComponent(
+  () =>
+    import("@/components/Project/Project/Sandbox/Dialog/ProcessorInformationDialog.vue"),
+);
+
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
 const sandbox = router.currentRoute.value.params.sandbox;
@@ -311,13 +316,32 @@ function hasLarexView(selection: ITrack): boolean {
     .includes("ocr4all-LAREX-launcher v1.0");
 }
 
+function openProcessorInformationDialog(information: unknown) {
+  dialog.open(processorInformationDialog, {
+    props: {
+      header: "Processor information",
+      modal: true,
+      style: {
+        width: '75vw',
+      },
+      breakpoints:{
+        '960px': '75vw',
+        '640px': '90vw'
+      },
+    },
+    data: {
+      information: information,
+    },
+  });
+}
+
 function openExportSnapshotDialog(snapshot: ITrack) {
   const key = Object.keys(snapshot)[0]
     .split(",")
     .map(function (item) {
       return parseInt(item, 10);
     });
-  dialog.open(exportDialog, {
+  dialog.open(processorInformationDialog, {
     props: {
       header: "Export snapshot",
       modal: true,
@@ -443,7 +467,10 @@ const items = computed(() => {
         label: "Processor Information",
         visible: true,
         disabled: false,
-        icon: IconInformation
+        icon: IconInformation,
+        command: () => {
+          openProcessorInformationDialog(selectedSnapshotInformation.value)
+        }
       }
     ]
   }
@@ -519,7 +546,9 @@ const items = computed(() => {
       </section>
     </template>
   </Toast>
-  <Dock class="lg:mb-4" v-show="Object.entries(selection).length > 0" :model="items" :dt="actionDock">
+  <Dock class="lg:mb-4" v-show="Object.entries(selection).length > 0" :model="items" :dt="actionDock" :pt="{
+    listContainer: 'backdrop-blur-sm !rounded-0 lg:!rounded-xl'
+  }">
     <template #item="{ item }">
       <div v-show="item.visible" class="flex flex-col lg:p-2">
         <Button :disabled="item.disabled" v-tooltip.top="item.label" @click="item.command" text>
@@ -565,6 +594,6 @@ const items = computed(() => {
     </div>
   </div>
 </template>
-<style scoped>
+<style>
 
 </style>
