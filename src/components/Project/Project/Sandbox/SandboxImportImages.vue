@@ -114,7 +114,7 @@ console.log(folios.value)
       <Column field="keywords" header="Keywords"></Column>
     </DataTable>
     <button
-      :disabled="selectedFolios.length === 0"
+      :disabled="selectedFolios && selectedFolios.length === 0"
       class="mt-12 inline-block rounded-md bg-primary-600 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 disabled:bg-primary-300 dark:disabled:bg-blue-400 md:text-base"
       @click="importImages"
     >
