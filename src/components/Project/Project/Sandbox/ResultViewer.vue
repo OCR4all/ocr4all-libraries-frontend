@@ -19,6 +19,7 @@ import IconAddToDataset from "~icons/fluent/stack-add-24-filled"
 import IconExport from "~icons/fluent/cloud-download-28-filled"
 import IconLarex from "~icons/fluent/notebook-eye-20-filled";
 import IconInformation from "~icons/fluent/info-32-filled"
+import {IEnrichedNode, INode} from "@/components/Project/Project/Sandbox/resultviewer.interface";
 
 const authStore = useAuthStore()
 
@@ -52,27 +53,12 @@ interface ITrack {
   [key: string]: boolean;
 }
 
-interface IFile {
-  path: string,
-  "mime-type": string,
-  "image-id": string
-}
-
-interface ISnapshot {
-  role: string,
-  label: string,
-  parameter: string,
-  key: number[],
-  files: IFile[],
-  children: ISnapshot[]
-}
-
 const LAREX_LAUNCHER_SPI = "de.uniwuerzburg.zpd.ocr4all.application.core.spi.postcorrection.provider.LAREXLauncher"
 
 const isGeneratingSandbox = ref(false);
 const isReady = ref(false);
 
-const selectedSnapshot: Ref<ISnapshot | undefined> = ref();
+const selectedSnapshot: Ref<INode | undefined> = ref();
 const selection: Ref<ITrack> = ref({});
 
 const formFileMap = ref();
@@ -80,7 +66,6 @@ const formMimeMap = ref();
 
 const selectedSnapshotInformation = ref();
 const selectedSnapshotProcessors = ref();
-const selectedSnapshotRole = ref();
 const selectedSnapshotLock = ref();
 
 const sandboxHome = ref();
@@ -90,7 +75,7 @@ const nodes = ref();
 
 const sandboxGenerationToastVisible = ref(false);
 
-const LAREX_LABEL = "ocr4all-LAREX-launcher v1.0";
+const LAREX_LABEL = "LAREX launcher default";
 
 const dialog = useDialog();
 
@@ -143,16 +128,15 @@ const showSandboxGenerationToast = () => {
   }
 };
 
-async function collectSnapshotInformation(data: ISnapshot) {
+async function collectSnapshotInformation(data: INode) {
   const payload = {
-    track: data.key
+    track: data.snapshot.track
   }
   useCustomFetch(`/snapshot/entity/${project}/${sandbox}`).post(payload).json().then((response) => {
     selectedSnapshotLock.value = response.data.value.configuration.lock != null
     selectedSnapshotInformation.value = response.data.value.configuration;
-    selectedSnapshotProcessors.value = JSON.parse(data.parameter)
   })
-  selectedSnapshotRole.value = data.role;
+  /*selectedSnapshotProcessors.value = JSON.parse(data.parameter)*/
 }
 
 async function unlockSnapshot(track: ITrack){
@@ -187,31 +171,28 @@ async function lockSnapshot(track: ITrack){
   })
 }
 
-async function refetch() {
-  const { isFetching, error, data } = await useCustomFetch(
-    `/sandbox/entity/${project}?id=${sandbox}`,
-  )
-    .get()
-    .json();
-  const snapshots = data.value["snapshot-synopsis"];
-  if (snapshots !== undefined) {
-    const root = snapshots["root-processor"];
-    const firstClassChildren = root["derived-processors"];
-    const _nodes = {
-      key: "input",
-      label: "Input",
-      children: JSON.parse(
-        JSON.stringify(firstClassChildren)
-          .replaceAll('"derived-processors":', '"children":')
-          .replaceAll('"name":', '"label":')
-          .replaceAll('"track":', '"key":'),
-      ),
-    };
-    nodes.value = { ..._nodes };
+function enrichData(node: INode) {
+  const current = node as IEnrichedNode
+  current.label = node.snapshot.configuration.label
+  current.key = node.snapshot.track
+
+  if (node.children && node.children.length > 0) {
+    node.children.forEach(child => enrichData(child));
   }
 }
 
-function getSnapshotFromSelection(selection: ITrack): ISnapshot {
+async function refetch() {
+  const { isFetching, error, data } = await useCustomFetch(
+    `/sandbox/tree/${project}?id=${sandbox}`,
+  )
+    .get()
+    .json();
+  enrichData(data.value)
+  nodes.value = data.value
+  console.log(nodes.value)
+}
+
+function getSnapshotFromSelection(selection: ITrack): INode {
   const key = convertSelectionToTrack(selection)
   return useFindNestedObject(nodes, "key", key);
 }
@@ -315,7 +296,7 @@ function hasLarexView(selection: ITrack): boolean {
   const snapshot = getSnapshotFromSelection(selection);
   return snapshot.children
     .map((entry) => entry.label)
-    .includes("ocr4all-LAREX-launcher v1.0");
+    .includes(LAREX_LABEL);
 }
 
 function openProcessorInformationDialog(information: unknown) {
@@ -344,7 +325,7 @@ function openExportSnapshotDialog(snapshot: ITrack) {
     .map(function (item) {
       return parseInt(item, 10);
     });
-  dialog.open(processorInformationDialog, {
+  dialog.open(exportDialog, {
     props: {
       header: "Export snapshot",
       modal: true,
@@ -421,7 +402,7 @@ const actionDock = ref({
 
 const items = computed(() => {
   if(Object.keys(selection.value).length === 0) {
-    return false
+    return []
   }else{
     return [
       {
@@ -580,19 +561,15 @@ const items = computed(() => {
             @node-select="collectSnapshotInformation"
           >
             <template #default="slotProps">
-              <div class="flex flex-col">
-                <div class="flex items-center">
-                  <span class="mb-2 font-bold">
-                    {{ slotProps.node.label
-                      .split(" ")[0]
-                      .replace("ocr4all-LAREX-launcher", "LAREX")
-                  }}</span>
-                </div>
+              <div class="flex flex-col space-y-2">
+                <span class="mb-2 font-bold self-center">
+                  {{ slotProps.node.label.replace("LAREX launcher default", "LAREX") }}
+                </span>
+                <Tag :value="slotProps.node.snapshot.configuration.type" severity="secondary"></Tag>
               </div>
             </template>
           </OrganizationChart>
         </div>
-        <div class="card overflow-x-auto"></div>
       </section>
     </div>
   </div>

@@ -41,6 +41,7 @@ async function submitExportSnapshot(values, { setErrors }) {
       );
       document.body.appendChild(link);
       link.click();
+      dialogRef.value.close()
     })
 }
 </script>
