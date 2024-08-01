@@ -79,6 +79,7 @@ const formFileMap = ref();
 const formMimeMap = ref();
 
 const selectedSnapshotInformation = ref();
+const selectedSnapshotProcessors = ref();
 const selectedSnapshotRole = ref();
 const selectedSnapshotLock = ref();
 
@@ -148,8 +149,9 @@ async function collectSnapshotInformation(data: ISnapshot) {
   }
   useCustomFetch(`/snapshot/entity/${project}/${sandbox}`).post(payload).json().then((response) => {
     selectedSnapshotLock.value = response.data.value.configuration.lock != null
+    selectedSnapshotInformation.value = response.data.value.configuration;
+    selectedSnapshotProcessors.value = JSON.parse(data.parameter)
   })
-  selectedSnapshotInformation.value = JSON.parse(data.parameter);
   selectedSnapshotRole.value = data.role;
 }
 
@@ -330,8 +332,9 @@ function openProcessorInformationDialog(information: unknown) {
       },
     },
     data: {
-      information: information,
-    },
+      information: selectedSnapshotInformation.value,
+      processors: selectedSnapshotProcessors.value
+    }
   });
 }
 
