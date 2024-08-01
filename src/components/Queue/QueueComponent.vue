@@ -34,6 +34,7 @@ import { IJob, IQueue } from "@/components/Queue/queue.interfaces";
 import { Ref } from "vue";
 import { RemovableRef } from "@vueuse/core";
 import { useDialog } from "primevue/usedialog";
+import { useLocalDateFormat } from "@/composables/useLocalDateFormat";
 const toast = useToast();
 
 const loading: Ref<boolean> = ref(true);
@@ -381,12 +382,14 @@ function openInfoDialog(data){
         :header="$t('pages.queue.table.columns.created')"
       >
         <template #body="slotProps">
-          <UseTimeAgo
-            v-slot="{ timeAgo }"
-            :time="Date.parse(slotProps.data.created)"
-          >
-            {{ timeAgo }}
-          </UseTimeAgo>
+          <div v-tooltip.left="useLocalDateFormat(slotProps.data.created)">
+            <UseTimeAgo
+              v-slot="{ timeAgo }"
+              :time="Date.parse(slotProps.data.created)"
+            >
+              {{ timeAgo }}
+            </UseTimeAgo>
+          </div>
         </template>
       </Column>
       <Column header="Actions" :exportable="false" style="min-width: 8rem">
