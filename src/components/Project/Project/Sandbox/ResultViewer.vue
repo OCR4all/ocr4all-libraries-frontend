@@ -16,9 +16,10 @@ import { useAuthStore } from "@/stores/auth.store";
 import IconUnlock from "~icons/fluent/lock-open-28-filled"
 import IconStart from "~icons/fluent/play-circle-28-filled"
 import IconAddToDataset from "~icons/fluent/stack-add-24-filled"
-import IconExport from "~icons/fluent/cloud-download-28-filled"
+import IconExport from "~icons/fluent/arrow-download-20-filled"
 import IconLarex from "~icons/fluent/notebook-eye-20-filled";
 import IconInformation from "~icons/fluent/info-32-filled"
+
 import {IEnrichedNode, INode} from "@/components/Project/Project/Sandbox/resultviewer.interface";
 
 const authStore = useAuthStore()
@@ -171,8 +172,9 @@ async function lockSnapshot(track: ITrack){
 function enrichData(node: INode) {
   const current = node as IEnrichedNode
   current.label = node.snapshot.configuration.label
+  current.type = node.snapshot.configuration["type-label"]
   current.key = node.snapshot.track
-
+  console.log(node.snapshot.configuration)
   if (node.children && node.children.length > 0) {
     node.children.forEach(child => enrichData(child));
   }
@@ -186,7 +188,6 @@ async function refetch() {
     .json();
   enrichData(data.value)
   nodes.value = data.value
-  console.log(nodes.value)
 }
 
 function getSnapshotFromSelection(selection: ITrack): IEnrichedNode {
@@ -276,6 +277,23 @@ async function generateSandbox(selection: ITrack) {
   formFileMap.value = JSON.stringify(fileMap);
   formMimeMap.value = JSON.stringify(mimeMap);
   refetch();
+}
+
+function getTagClasses(type: string): string {
+  switch(type){
+    case "Launcher":
+      return "!bg-surface-100 !text-surface-900"
+    case "Preprocessing":
+      return "!bg-lime-100 !text-surface-900"
+    case "Layout Analysis":
+      return "!bg-teal-100 !text-surface-900"
+    case "Text Recognition":
+      return "!bg-indigo-100 !text-surface-900"
+    case "Format Conversion":
+      return "!bg-violet-100 !text-surface-900"
+    case "Postcorrection":
+      return "!bg-sky-100 !text-surface-900"
+  }
 }
 
 async function addToDataset(selection: ITrack) {
@@ -563,7 +581,7 @@ const items = computed(() => {
                 <span class="mb-2 font-bold self-center">
                   {{ slotProps.node.label.replace("LAREX launcher default", "LAREX") }}
                 </span>
-                <Tag :value="slotProps.node.snapshot.configuration.type" severity="secondary"></Tag>
+                <Tag :value="slotProps.node.type" :class="getTagClasses(slotProps.node.type)"></Tag>
               </div>
             </template>
           </OrganizationChart>

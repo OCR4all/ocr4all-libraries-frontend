@@ -52,6 +52,7 @@ interface IConfiguration {
     type: string,
     updated: string,
     label: string,
+    "type-label": string,
     description: string,
     instance: IInstance,
     lock: null | string,
@@ -84,7 +85,8 @@ export interface INode {
 }
 
 export interface IEnrichedNode extends INode {
-    key: string,
+    key: number[],
     label: string,
+    type: string,
     styleClass: string
 }

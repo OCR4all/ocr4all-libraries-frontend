@@ -112,6 +112,7 @@ declare module 'vue' {
     UserSettings: typeof import('./src/components/Settings/UserSettings.vue')['default']
     UserSettingsLanguageAndTime: typeof import('./src/components/Settings/UserSettingsLanguageAndTime.vue')['default']
     WideCard: typeof import('./src/components/Dashboard/WideCard.vue')['default']
+    WorkflowChooser: typeof import('./src/components/Project/Project/Sandbox/WorkflowChooser.vue')['default']
     WorkflowView: typeof import('./src/components/Repository/Workflows/WorkflowView.vue')['default']
     WorkspaceCard: typeof import('./src/components/Admin/InstanceOverview/Cards/WorkspaceCard.vue')['default']
   }
