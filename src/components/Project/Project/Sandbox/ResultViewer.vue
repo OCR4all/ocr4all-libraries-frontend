@@ -80,6 +80,7 @@ const LAREX_LABEL = "LAREX launcher default";
 const dialog = useDialog();
 
 function convertSelectionToTrack(selection: ITrack){
+  if(Object.keys(selection)[0].length == 0) return []
   return Object.keys(selection)[0]
     .split(",")
     .map(function(item) {
@@ -88,11 +89,7 @@ function convertSelectionToTrack(selection: ITrack){
 }
 
 function openProcessorDialog(snapshot: ITrack) {
-  const key = Object.keys(snapshot)[0]
-    .split(",")
-    .map(function (item) {
-      return parseInt(item, 10);
-    });
+  const key = convertSelectionToTrack(snapshot)
 
   dialog.open(processorDialog, {
     props: {
@@ -192,7 +189,8 @@ async function refetch() {
   console.log(nodes.value)
 }
 
-function getSnapshotFromSelection(selection: ITrack): INode {
+function getSnapshotFromSelection(selection: ITrack): IEnrichedNode {
+  if(Object.keys(selection)[0].length == 0) return nodes.value
   const key = convertSelectionToTrack(selection)
   return useFindNestedObject(nodes, "key", key);
 }
@@ -530,7 +528,7 @@ const items = computed(() => {
       </section>
     </template>
   </Toast>
-  <Dock class="lg:mb-4" v-show="Object.entries(selection).length > 0" :model="items" :dt="actionDock" :pt="{
+  <Dock class="lg:mb-4 !z-50" v-show="Object.entries(selection).length > 0" :model="items" :dt="actionDock" :pt="{
     listContainer: 'backdrop-blur-sm !rounded-0 lg:!rounded-xl'
   }">
     <template #item="{ item }">

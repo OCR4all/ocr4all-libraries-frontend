@@ -182,6 +182,7 @@ function runProcessor(values, { setErrors }) {
       }
     }
   }
+  console.log(props.track)
 
   const payload = {
     id: selectedProcessor.value.id,
