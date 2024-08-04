@@ -6,6 +6,8 @@ import Image from "primevue/image";
 const emit = defineEmits(["next"]);
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
+import { FilterMatchMode } from "@primevue/core/api";
+import InputText from "primevue/inputtext";
 
 const store = useSandboxCreationStore();
 
@@ -75,7 +77,13 @@ for (const folio of folioData.data.value) {
     });
 }
 folios.value = folioData.data.value
-console.log(folios.value)
+
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  name: { value: null, matchMode: FilterMatchMode.EQUALS },
+  keywords: { value: null, matchMode: FilterMatchMode.IN },
+});
+
 </script>
 
 <template>
@@ -92,27 +100,41 @@ console.log(folios.value)
     >
       {{ $t("pages.projects.sandbox.images.directive") }}
     </h2>
-    <DataTable :value="folios" v-model:selection="selectedFolios" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]">
-      <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-      <Column>
-        <template #body="{ data }">
-          <Image v-if="imageMap.get(data.id)" :alt="data.name" preview>
-            <template #previewicon>
-              <i class="pi pi-search" style="padding: 100%" @click="loadDetail(data.id)"></i>
-            </template>
-            <template #image>
-              <img :src="imageMap.get(data.id).thumbnail" width="40" alt="image" />
-            </template>
-              <template #preview="slotProps">
-              <img :src="imageMap.get(data.id).detail" class="max-h-screen" alt="preview" :style="slotProps.style" />
-            </template>
-          </Image>
-          <Skeleton v-else height="2rem"></Skeleton>
+    <div class="border border-surface-200 dark:border-surface-700 rounded-xl p-2">
+      <DataTable :value="folios" v-model:selection="selectedFolios" v-model:filters="filters" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]">
+        <template #header>
+          <Fluid>
+            <IconField>
+              <InputIcon class="pi pi-search" />
+              <InputText
+                v-model="filters['global'].value"
+                placeholder="Search"
+              />
+            </IconField>
+          </Fluid>
         </template>
-      </Column>
-      <Column field="name" header="Name"></Column>
-      <Column field="keywords" header="Keywords"></Column>
-    </DataTable>
+        <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+        <Column>
+          <template #body="{ data }">
+            <Image v-if="imageMap.get(data.id)" :alt="data.name" preview>
+              <template #previewicon>
+                <i class="pi pi-search" style="padding: 100%" @click="loadDetail(data.id)"></i>
+              </template>
+              <template #image>
+                <img :src="imageMap.get(data.id).thumbnail" width="40" alt="image" />
+              </template>
+              <template #preview="slotProps">
+                <img :src="imageMap.get(data.id).detail" class="max-h-screen" alt="preview" :style="slotProps.style" />
+              </template>
+            </Image>
+            <Skeleton v-else height="2rem"></Skeleton>
+          </template>
+        </Column>
+        <Column field="name" header="Name"></Column>
+        <Column field="keywords" header="Keywords"></Column>
+      </DataTable>
+
+    </div>
     <button
       :disabled="selectedFolios && selectedFolios.length === 0"
       class="mt-12 inline-block rounded-md bg-primary-600 px-8 py-3 text-center text-sm font-semibold text-white outline-none ring-primary-300 transition duration-100 hover:bg-primary-600 focus-visible:ring active:bg-primary-700 disabled:bg-primary-300 dark:disabled:bg-blue-400 md:text-base"

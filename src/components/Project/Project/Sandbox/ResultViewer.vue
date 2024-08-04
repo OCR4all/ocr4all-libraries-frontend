@@ -134,6 +134,7 @@ async function collectSnapshotInformation(data: INode) {
     selectedSnapshotLock.value = response.data.value.configuration.lock != null
     selectedSnapshotInformation.value = response.data.value.configuration;
   })
+  console.log(data)
   /*selectedSnapshotProcessors.value = JSON.parse(data.parameter)*/
 }
 
