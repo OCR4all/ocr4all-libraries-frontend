@@ -294,6 +294,8 @@ function getTagClasses(type: string): string {
       return "!bg-violet-100 !text-surface-900"
     case "Postcorrection":
       return "!bg-sky-100 !text-surface-900"
+    default:
+      return ""
   }
 }
 
