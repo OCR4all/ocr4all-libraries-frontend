@@ -134,7 +134,6 @@ async function collectSnapshotInformation(data: INode) {
     selectedSnapshotLock.value = response.data.value.configuration.lock != null
     selectedSnapshotInformation.value = response.data.value.configuration;
   })
-  console.log(data)
   /*selectedSnapshotProcessors.value = JSON.parse(data.parameter)*/
 }
 
@@ -175,7 +174,6 @@ function enrichData(node: INode) {
   current.label = node.snapshot.configuration.label
   current.type = node.snapshot.configuration["type-label"]
   current.key = node.snapshot.track
-  console.log(node.snapshot.configuration)
   if (node.children && node.children.length > 0) {
     node.children.forEach(child => enrichData(child));
   }
@@ -252,11 +250,24 @@ async function generateSandbox(selection: ITrack) {
   const fileMap = {};
   const mimeMap = {};
 
-  const files = useFindNestedObject(
-    sandboxData.data.value,
-    "track",
-    createdTrack.value,
-  ).files;
+  let files = null
+
+  /* ToDo: Bug that prevents LAREX from working; backend (?) */
+  await useCustomFetch(
+    `/snapshot/file/${project}/${sandbox}`,
+  ).post(
+    {
+      track: createdTrack.value
+    }
+  ).json(
+
+  ).then((response) => {
+    console.log(response.data.value)
+    files = response.data.value
+  });
+
+  console.log(files)
+
   const lookupMap = {};
   for (const file of files) {
     if (file["mime-type"] === "application/vnd.prima.page+xml") {
