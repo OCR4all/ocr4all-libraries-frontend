@@ -40,7 +40,7 @@ defineExpose({
 </script>
 <template>
   <div class="flex justify-between">
-    <div class="flex items-center gap-x-2">
+    <div class="flex items-center gap-x-4">
       <AvatarInitials :name="label" :admin="false" :selectable="false" size="lg" />
       <div class="flex flex-col -space-y-0.5">
         <p class="font-bold">{{ label }}</p>
