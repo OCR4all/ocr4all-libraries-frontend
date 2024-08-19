@@ -101,7 +101,7 @@ export function buildProcessorSchema(data, grid: number = 1) {
     {
       $el: "div",
       attrs: {
-        class: `grid grid-cols-${grid}`,
+        class: `grid grid-cols-${grid} gap-x-4`,
       },
       children: processorSchema,
     },

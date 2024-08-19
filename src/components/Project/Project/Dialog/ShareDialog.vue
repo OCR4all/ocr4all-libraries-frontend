@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
-import { restructureRights, destructureRights, restructureRightsProjects } from "@/utils/rights";
+import { destructureRights, restructureRightsProjects } from "@/utils/rights";
 import {DynamicDialogInstance} from "primevue/dynamicdialogoptions";
 import SharedEntity from "@/components/Sharing/SharedEntity.vue";
 
@@ -262,7 +262,7 @@ async function save(){
   <div class="flex flex-col space-y-2 my-10">
     <p class="text-xl font-bold">General access</p>
     <div class="flex space-x-2 items-center">
-      <i class="pi pi-share-alt bg-surface-400 rounded-full p-4 text-black" />
+      <i class="pi pi-share-alt bg-surface-100 rounded-full p-4 text-surface-700" />
       <MultiSelect v-model="generalRole" :options="generalOptions" optionLabel="name" filter placeholder="Select Rights" class="w-full" />
     </div>
   </div>
