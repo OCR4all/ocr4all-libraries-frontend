@@ -88,7 +88,6 @@ async function refresh() {
     `/repository/container/folio/list/${container}`,
   ).json();
   folios.value = data.value;
-  console.log(folios.value)
 }
 const fileUpload = ref();
 const uploader = async function customUploader(event: FileUploadUploaderEvent) {

@@ -1,81 +1,123 @@
 <script setup lang="ts">
-import Konva from "konva";
+import { Cropper, CropperResult } from "vue-advanced-cropper";
+import "vue-advanced-cropper/dist/style.css";
+import { useCustomFetch } from "@/composables/useCustomFetch";
 
-const router = useRouter();
-const containerName = router.currentRoute.value.query.id;
+import IconFlipHorizontal from "~icons/fluent/flip-horizontal-24-regular"
+import IconFlipVertical from "~icons/fluent/flip-vertical-24-filled"
+import IconRotateRight from "~icons/fluent/arrow-rotate-clockwise-16-filled"
+import IconRotateLeft from "~icons/fluent/arrow-rotate-counterclockwise-24-filled"
+import IconCrop from "~icons/fluent/crop-24-filled"
 
-const visible: Ref<boolean | null> = ref(null);
-const stage: Ref<KonvaNode<Konva.Stage> | null> = ref(null);
-const container: Ref<HTMLDivElement | null> = ref(null);
-const rasterImage: Ref<HTMLImageElement | null> = ref(null);
+const dialogRef = inject("dialogRef");
 
-const testRef = ref(null);
+const image = ref()
 
-function toggle() {
-  visible.value = !visible.value;
-  console.log(testRef.value);
-}
+const isLoading = ref(true)
 
 onMounted(() => {
-  console.log(testRef.value);
+  const container = dialogRef.value.data.container
+  const folio = dialogRef.value.data.id
+
+  useCustomFetch(
+    `/repository/container/folio/derivative/best/${container}?id=${folio}`,
+  )
+    .get()
+    .blob()
+    .then((response) => {
+      image.value = {
+        src: useObjectUrl(response.data.value),
+        type: "image/png"
+      };
+    });
 });
 
-function setImage(image: string) {
-  Konva.Image.fromURL(image, function (node) {
-    const imageLayer = new Konva.Layer();
-    stage.value?.getStage().add(imageLayer);
-    imageLayer.add(node);
-  });
-  fitStageToParent();
-}
-interface KonvaNode<NodeTy extends Konva.Node> {
-  getNode(): NodeTy;
-  getStage(): Konva.Stage;
-}
+const cropper = ref();
 
-const stageConfig = ref({
-  width: 0,
-  height: 0,
-  draggable: true,
-});
-
-function fitStageToParent() {
-  if (!container.value) {
-    return console.error("Could not fit stage to container because it is null");
+const cropImage = () => {
+  if (cropper.value) {
+    const { canvas } = cropper.value.getResult();
+    const newTab = window.open();
+    if (newTab && canvas) {
+      newTab.document.body.innerHTML = `<img src="${canvas.toDataURL(
+        image.value.type
+      )}"></img>`;
+    }
   }
+};
 
-  const editorContainer = container.value;
-  const [width, height] = [
-    editorContainer.offsetWidth,
-    editorContainer.offsetHeight,
-  ];
-  stageConfig.value.width = width;
-  stageConfig.value.height = height;
+function flip(x, y) {
+  const { image } = cropper.value.getResult();
+  if (image.transforms.rotate % 180 !== 0) {
+    cropper.value.flip(!x, !y);
+  } else {
+    cropper.value.flip(x, y);
+  }
 }
-
-defineExpose({
-  setImage,
-  toggle,
-  fitStageToParent,
-});
+function rotate(angle) {
+  cropper.value.rotate(angle);
+}
 </script>
+
 <template>
-  <div id="stage-container" ref="container">
-    <v-stage ref="stage" :config="stageConfig">
-      <v-layer>
-        <v-image
-          v-show="rasterImage"
-          :config="{
-            x: 0,
-            y: 0,
-            image: rasterImage,
-            shadowEnabled: true,
-            shadowOffsetX: 5,
-            shadowOffsetY: 5,
-            shadowBlur: 1200,
-          }"
-        ></v-image>
-      </v-layer>
-    </v-stage>
+  <div :class="{isLoading : 'hidden'}">
+    <Toolbar>
+      <template #start>
+        <div class="flex space-x-2">
+          <Button @click="flip(true, false)">
+            <IconFlipHorizontal />
+          </Button>
+          <Button @click="flip(false, true)">
+            <IconFlipVertical />
+          </Button>
+          <Button @click="rotate(90)">
+            <IconRotateRight />
+          </Button>
+          <Button @click="rotate(-90)">
+            <IconRotateLeft />
+          </Button>
+        </div>
+      </template>
+
+      <template #end>
+        <Button @click="save" label="Save"></Button>
+      </template>
+    </Toolbar>
+    <Cropper
+      v-if="image"
+      ref="cropper"
+      class="cropper"
+      :src="image.src"
+      @ready="isLoading = false" />
+  </div>
+  <div v-if="isLoading">
+    <Skeleton size="100vh"></Skeleton>
   </div>
 </template>
+
+<style>
+.cropper {
+  max-height: 500px;
+}
+
+.button {
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  width: 100%;
+  background: #d3d3d3;
+  cursor: pointer;
+  transition: background 0.5s;
+  border: none;
+  &:not(:last-of-type) {
+    margin-right: 10px;
+  }
+  &:hover {
+    background: #2F2F2F;
+  }
+  input {
+    display: none;
+  }
+}
+</style>
+

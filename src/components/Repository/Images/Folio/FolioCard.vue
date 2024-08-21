@@ -9,9 +9,16 @@ import Dialog from "primevue/dialog";
 import Toast from "primevue/toast";
 
 import { useToast } from "primevue/usetoast";
+const ImageEditor = defineAsyncComponent(
+  () =>
+    import(
+      "@/components/Repository/Images/ImageEditor.vue"
+      ),
+);
+import { useDialog } from "primevue/usedialog";
 const toast = useToast();
 
-const router = useRouter();
+const dialog = useDialog();
 
 const props = defineProps<{
   name?: string;
@@ -39,7 +46,19 @@ const actionMenuItems = ref([
     label: "Actions",
     items: [
       {
-        label: "Edit",
+        label: "Edit Metadata",
+        icon: "pi pi-file-edit",
+        command: () => {
+          toast.add({
+            severity: "info",
+            summary: "Info",
+            detail: "Not implemented yet",
+            life: 3000,
+          });
+        },
+      },
+      {
+        label: "Image Editor",
         icon: "pi pi-pencil",
         command: () => {
           openImageEditor();
@@ -108,7 +127,19 @@ function select(doSelect: boolean) {
 }
 
 function openImageEditor() {
-  router.push(`/repository/container/folio/editor?id=${props.id}`);
+  dialog.open(ImageEditor, {
+    props: {
+      header: "Edit Image",
+      modal: true,
+    },
+    data: {
+      container: props.containerId,
+      id: props.id
+    },
+    onClose: () => {
+      console.log("closed")
+    }
+  })
 }
 async function deleteFolio() {
   await useCustomFetch(
@@ -137,7 +168,6 @@ defineExpose({
 });
 </script>
 <template>
-  <Toast />
   <Dialog
     v-model:visible="deleteDialogVisible"
     modal
