@@ -558,7 +558,7 @@ const items = computed(() => {
   </Dock>
   <div class="flex space-x-6">
     <div
-      class="flex-1 rounded-md border bg-white p-5 dark:border-surface-800 dark:bg-surface-900"
+      class="flex-1 rounded-md bg-white p-5 dark:border-surface-800 dark:bg-surface-900"
     >
       <section>
         <h2
