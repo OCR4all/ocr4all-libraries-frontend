@@ -30,14 +30,14 @@ importers:
         specifier: 4.0.0-rc.2
         version: 4.0.0-rc.2(@primeuix/styled@0.0.5)
       '@tanstack/vue-query':
-        specifier: ^5.51.24
-        version: 5.51.24(vue@3.4.27(typescript@5.3.3))
+        specifier: ^5.52.0
+        version: 5.52.0(vue@3.4.27(typescript@5.3.3))
       '@types/chroma-js':
         specifier: ^2.4.4
         version: 2.4.4
       '@unhead/vue':
-        specifier: ^1.9.16
-        version: 1.9.16(vue@3.4.27(typescript@5.3.3))
+        specifier: ^1.10.0
+        version: 1.10.0(vue@3.4.27(typescript@5.3.3))
       '@vee-validate/i18n':
         specifier: ^4.13.2
         version: 4.13.2
@@ -51,8 +51,8 @@ importers:
         specifier: ^2.4.5
         version: 2.4.5
       chart.js:
-        specifier: ^4.4.3
-        version: 4.4.3
+        specifier: ^4.4.4
+        version: 4.4.4
       chroma-js:
         specifier: ^3.0.0
         version: 3.0.0
@@ -88,8 +88,8 @@ importers:
         version: 4.2.5(vue@3.4.27(typescript@5.3.3))
     devDependencies:
       '@iconify/json':
-        specifier: ^2.2.238
-        version: 2.2.238
+        specifier: ^2.2.239
+        version: 2.2.239
       '@intlify/unplugin-vue-i18n':
         specifier: ^4.0.0
         version: 4.0.0(rollup@4.18.0)(vue-i18n@9.8.0(vue@3.4.27(typescript@5.3.3)))
@@ -949,8 +949,8 @@ packages:
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
 
-  '@iconify/json@2.2.238':
-    resolution: {integrity: sha512-wtsUtPGeHH4Jy0Z+oIKyD9ldrFISAEzfGs1SM+PthhHRywDDiZsP2iVn6d2Vzn03wVTB7b8882zoztWWPl1ZmA==}
+  '@iconify/json@2.2.239':
+    resolution: {integrity: sha512-NoKhFlWGPQbKCUb0tslIQK00cbRXMH6NPxGvS4bQgkH2hfcK/jA7EuBEkOaIyR3HdtvRNCunCntuR9eJnP8FAQ==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -1273,11 +1273,11 @@ packages:
     resolution: {integrity: sha512-PnVV3d2poenUM31ZbZi/yXkBu3J7kd5k2u51CGwwNojag451AjTH9N6n41yjXz2fpLeewleyLBmNS6+HcGDlXw==}
     engines: {node: '>=12'}
 
-  '@tanstack/query-core@5.51.24':
-    resolution: {integrity: sha512-qtIR0FMHUDIWyIQw87q4C+so7XaN59MsGfWrc6rgi2VTHrVZF3Hd0St2dbpqRetHf6XW5yY5lzTrXpTilPlxUg==}
+  '@tanstack/query-core@5.52.0':
+    resolution: {integrity: sha512-U1DOEgltjUwalN6uWYTewSnA14b+tE7lSylOiASKCAO61ENJeCq9VVD/TXHA6O5u9+6v5+UgGYBSccTKDoyMqw==}
 
-  '@tanstack/vue-query@5.51.24':
-    resolution: {integrity: sha512-Qk6nr0m9N6SUMHlYSLLTAspwhDcboWcyl6nqJELZ+VMKgdtGsrozRKXKQ2nxyuIXzVV+QWgvthjg8Uia9GF9Vw==}
+  '@tanstack/vue-query@5.52.0':
+    resolution: {integrity: sha512-AfPLrWBIxbLy6x04eylfvpiCaAUJrIyz3MCWtANatFwme8QabQQ3F2/lskdNjeAqF0B2Tn2N2tzDrUa1aCCPVg==}
     peerDependencies:
       '@vue/composition-api': ^1.1.2
       vue: ^2.6.0 || ^3.3.0
@@ -1374,17 +1374,17 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  '@unhead/dom@1.9.16':
-    resolution: {integrity: sha512-aZIAnnc89Csi1vV4mtlHYI765B7m1yuaXUuQiYHwr6glE9FLyy2X87CzEci4yPH/YbkKm0bGQRfcxXq6Eq0W7g==}
+  '@unhead/dom@1.10.0':
+    resolution: {integrity: sha512-LdgtOlyMHOyuQNsUKM+1d8ViiiY4LxjCPJlgUU/5CwgqeRYf4LWFu8oRMQfSQVTusbPwwvr3MolM9iTUu2I4BQ==}
 
-  '@unhead/schema@1.9.16':
-    resolution: {integrity: sha512-V2BshX+I6D2wN4ys5so8RQDUgsggsxW9FVBiuQi4h8oPWtHclogxzDiHa5BH2TgvNIoUxLnLYNAShMGipmVuUw==}
+  '@unhead/schema@1.10.0':
+    resolution: {integrity: sha512-hmgkFdLzm/VPLAXBF89Iry4Wz/6FpHMfMKCnAdihAt1Ublsi04RrA0hQuAiuGG2CZiKL4VCxtmV++UXj/kyakA==}
 
-  '@unhead/shared@1.9.16':
-    resolution: {integrity: sha512-pfJnArULCY+GBr7OtYyyxihRiQLkT31TpyK6nUKIwyax4oNOGyhNfk0RFzNq16BwLg60d1lrc5bd5mZGbfClMA==}
+  '@unhead/shared@1.10.0':
+    resolution: {integrity: sha512-Lv7pP0AoWJy+YaiWd4kGD+TK78ahPUwnIRx6YCC6FjPmE0KCqooeDS4HbInYaklLlEMQZislXyIwLczK2DTWiw==}
 
-  '@unhead/vue@1.9.16':
-    resolution: {integrity: sha512-kpMWWwm8cOwo4gw4An43pz30l2CqNtmJpX5Xsu79rwf6Viq8jHAjk6BGqyKy220M2bpa0Va4fnR532SgGO1YgQ==}
+  '@unhead/vue@1.10.0':
+    resolution: {integrity: sha512-Cv9BViaOwCBdXy3bsTvJ10Rs808FSSq/ZfeBXzOjOxt08sbubf6Mr5opBdOlv/i1bzyFVIAqe5ABmrhC9mB80w==}
     peerDependencies:
       vue: '>=2.7 || >=3'
 
@@ -1730,8 +1730,8 @@ packages:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
 
-  chart.js@4.4.3:
-    resolution: {integrity: sha512-qK1gkGSRYcJzqrrzdR6a+I0vQ4/R+SoODXyAjscQ/4mzuNzySaMCd+hyVxitSY1+L2fjPD1Gbn+ibNqRmwQeLw==}
+  chart.js@4.4.4:
+    resolution: {integrity: sha512-emICKGBABnxhMjUjlYRR12PmOXhJ2eJjEHL2/dZlWjxRAZT1D8xplLFq5M0tMQK8ja+wBS/tuVEJB5C6r7VxJA==}
     engines: {pnpm: '>=8'}
 
   check-error@1.0.3:
@@ -3861,8 +3861,8 @@ packages:
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  unhead@1.9.16:
-    resolution: {integrity: sha512-FOoXkuRNDwt7PUaNE0LXNCb6RCz4vTpkGymz4tJ8rcaG5uUJ0lxGK536hzCFwFw3Xkp3n+tkt2yCcbAZE/FOvA==}
+  unhead@1.10.0:
+    resolution: {integrity: sha512-nv75Hvhu0asuD/rbP6b3tSRJUltxmThq/iZU5rLCGEkCqTkFk7ruQGNk+TRtx/RCYqL0R/IzIY9aqvhNOGe3mg==}
 
   unimport@3.7.2:
     resolution: {integrity: sha512-91mxcZTadgXyj3lFWmrGT8GyoRHWuE5fqPOjg5RVtF6vj+OfM5G6WCzXjuYtSgELE5ggB34RY4oiCSEP8I3AHw==}
@@ -4829,7 +4829,7 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.3': {}
 
-  '@iconify/json@2.2.238':
+  '@iconify/json@2.2.239':
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.2
@@ -5166,12 +5166,12 @@ snapshots:
     dependencies:
       remove-accents: 0.5.0
 
-  '@tanstack/query-core@5.51.24': {}
+  '@tanstack/query-core@5.52.0': {}
 
-  '@tanstack/vue-query@5.51.24(vue@3.4.27(typescript@5.3.3))':
+  '@tanstack/vue-query@5.52.0(vue@3.4.27(typescript@5.3.3))':
     dependencies:
       '@tanstack/match-sorter-utils': 8.15.1
-      '@tanstack/query-core': 5.51.24
+      '@tanstack/query-core': 5.52.0
       '@vue/devtools-api': 6.6.3
       vue: 3.4.27(typescript@5.3.3)
       vue-demi: 0.14.10(vue@3.4.27(typescript@5.3.3))
@@ -5283,26 +5283,26 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@unhead/dom@1.9.16':
+  '@unhead/dom@1.10.0':
     dependencies:
-      '@unhead/schema': 1.9.16
-      '@unhead/shared': 1.9.16
+      '@unhead/schema': 1.10.0
+      '@unhead/shared': 1.10.0
 
-  '@unhead/schema@1.9.16':
+  '@unhead/schema@1.10.0':
     dependencies:
       hookable: 5.5.3
       zhead: 2.2.4
 
-  '@unhead/shared@1.9.16':
+  '@unhead/shared@1.10.0':
     dependencies:
-      '@unhead/schema': 1.9.16
+      '@unhead/schema': 1.10.0
 
-  '@unhead/vue@1.9.16(vue@3.4.27(typescript@5.3.3))':
+  '@unhead/vue@1.10.0(vue@3.4.27(typescript@5.3.3))':
     dependencies:
-      '@unhead/schema': 1.9.16
-      '@unhead/shared': 1.9.16
+      '@unhead/schema': 1.10.0
+      '@unhead/shared': 1.10.0
       hookable: 5.5.3
-      unhead: 1.9.16
+      unhead: 1.10.0
       vue: 3.4.27(typescript@5.3.3)
 
   '@vee-validate/i18n@4.13.2': {}
@@ -5791,7 +5791,7 @@ snapshots:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
 
-  chart.js@4.4.3:
+  chart.js@4.4.4:
     dependencies:
       '@kurkle/color': 0.3.2
 
@@ -8046,11 +8046,11 @@ snapshots:
 
   undici-types@5.26.5: {}
 
-  unhead@1.9.16:
+  unhead@1.10.0:
     dependencies:
-      '@unhead/dom': 1.9.16
-      '@unhead/schema': 1.9.16
-      '@unhead/shared': 1.9.16
+      '@unhead/dom': 1.10.0
+      '@unhead/schema': 1.10.0
+      '@unhead/shared': 1.10.0
       hookable: 5.5.3
 
   unimport@3.7.2(rollup@4.18.0):
