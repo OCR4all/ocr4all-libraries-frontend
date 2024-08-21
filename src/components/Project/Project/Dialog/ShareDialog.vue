@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { destructureRights, restructureRightsProjects } from "@/utils/rights";
-import {DynamicDialogInstance} from "primevue/dynamicdialogoptions";
 import SharedEntity from "@/components/Sharing/SharedEntity.vue";
 
-const dialogRef = inject<Ref<DynamicDialogInstance>>("dialogRef");
+const dialogRef = inject<Ref<unknown>>("dialogRef");
 
 const data = ref();
 

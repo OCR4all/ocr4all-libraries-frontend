@@ -32,7 +32,6 @@ import { useToast } from "primevue/usetoast";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { IJob, IQueue } from "@/components/Queue/queue.interfaces";
 import { Ref } from "vue";
-import { RemovableRef } from "@vueuse/core";
 import { useDialog } from "primevue/usedialog";
 import { useLocalDateFormat } from "@/composables/useLocalDateFormat";
 const toast = useToast();
@@ -156,7 +155,6 @@ const items = ref([])
 const menu = ref()
 
 const toggle = (event, data) => {
-  console.log(data)
   items.value = [
     {
       label: "Actions",
@@ -185,7 +183,6 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
 };
 
 function openInfoDialog(data){
-  console.log(data)
   dialog.open(jobInfoDialog, {
     props: {
       header: "Job Information",
@@ -197,6 +194,10 @@ function openInfoDialog(data){
     },
   });
 }
+
+onUnmounted(() => {
+
+})
 </script>
 
 <template>

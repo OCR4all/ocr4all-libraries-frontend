@@ -1,77 +1,121 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { IJob } from "@/components/Queue/queue.interfaces";
+import { useDialog } from "primevue/usedialog";
 
 const dialogRef = inject("dialogRef");
+const logViewer = defineAsyncComponent(
+  () =>
+    import(
+      "@/components/Queue/Dialog/LogViewer.vue"
+      ),
+);
 
 const job: Ref<IJob | undefined> = ref()
 
 const expandedRows = ref()
 
+const dialog = useDialog()
+
 onMounted(async () => {
   await useCustomFetch(
     `/job/entity/${dialogRef.value.data.id}`,
   ).get().json().then((response) => {
-    job.value = response.data.value
+    job.value = [response.data.value]
     console.log(job.value)
   });
 });
+
+function openLogDialog(text: string, type: string){
+  dialog.open(logViewer, {
+    props: {
+      header: type,
+      modal: true,
+    },
+    data: {
+      text: text
+    },
+  });
+}
+
+function getSeverity(severity: string): string {
+  switch(severity){
+    case "completed":
+      return "success"
+    case "interrupted":
+      return "warn"
+  }
+}
 </script>
 <template>
-  <Suspense>
-    <DataTable v-model:expandedRows="expandedRows" :value="job" dataKey="id" tableStyle="min-width: 60rem">
-      <Column expander style="width: 5rem" />
-      <Column field="id" header="Id"></Column>
-      <Column header="Image">
-        <template #body="slotProps">
-          <img :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`" :alt="slotProps.data.image" class="shadow-lg" width="64" />
-        </template>
-      </Column>
-      <Column field="price" header="Price">
-        <template #body="slotProps">
-          {{ formatCurrency(slotProps.data.price) }}
-        </template>
-      </Column>
-      <Column field="category" header="Category"></Column>
-      <Column field="rating" header="Reviews">
-        <template #body="slotProps">
-          <Rating :modelValue="slotProps.data.rating" readonly />
-        </template>
-      </Column>
-      <Column header="Status">
-        <template #body="slotProps">
-          <Tag :value="slotProps.data.inventoryStatus" :severity="getSeverity(slotProps.data)" />
-        </template>
-      </Column>
-      <template #expansion="slotProps">
-        <div class="p-4">
-          <h5>Orders for {{ slotProps.data.name }}</h5>
-          <DataTable :value="slotProps.data.orders">
-            <Column field="id" header="Id" sortable></Column>
-            <Column field="customer" header="Customer" sortable></Column>
-            <Column field="date" header="Date" sortable></Column>
-            <Column field="amount" header="Amount" sortable>
-              <template #body="slotProps">
-                {{ formatCurrency(slotProps.data.amount) }}
-              </template>
-            </Column>
-            <Column field="status" header="Status" sortable>
-              <template #body="slotProps">
-                <Tag :value="slotProps.data.status.toLowerCase()" :severity="getOrderSeverity(slotProps.data)" />
-              </template>
-            </Column>
-            <Column headerStyle="width:4rem">
-              <template #body>
-                <Button icon="pi pi-search" />
-              </template>
-            </Column>
-          </DataTable>
-        </div>
+  <DataTable v-model:expandedRows="expandedRows" :value="job">
+    <Column expander style="width: 5rem" />
+    <Column field="id" header="Id"></Column>
+    <Column field="description" header="Description"></Column>
+    <Column field="created" header="Created"></Column>
+    <Column field="start" header="Started"></Column>
+    <Column field="end" header="End"></Column>
+    <Column field="state" header="State">
+      <template #body="{ data }">
+        <Tag :value="data.state" :severity="getSeverity(data.state)" />
       </template>
-    </DataTable>
-    <template #fallback>
-      <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="transparent"
-                       animationDuration=".5s" aria-label="Custom ProgressSpinner" />
+    </Column>
+    <template #expansion="slotProps">
+      <div class="p-4">
+        <h5>Journal</h5>
+        <DataTable :value="slotProps.data.journal.steps">
+          <Column field="index" header="Index"></Column>
+          <Column field="completed" header="Completed">
+            <template #body="{ data }">
+              <i
+                class="pi"
+                :class="{
+              'pi-check-circle text-green-500':
+                data.completed === true,
+              'pi-times-circle text-red-400':
+                data.completed !== true,
+            }"
+              ></i>
+            </template>
+          </Column>
+          <Column field="progress" header="Progress"></Column>
+          <Column field="service-provider-id" header="Service Provider">
+            <template #body="{ data }">
+              <Tag v-if="data['service-provider-id']" :value="data['service-provider-id']" />
+            </template>
+          </Column>
+          <Column field="note" header="Note">
+            <template #body="{ data }">
+              <Button v-if="data['note']" @click="openLogDialog(data['note'], 'Note')" severity="contrast">
+                View
+              </Button>
+              <p v-else>
+                Empty
+              </p>
+            </template>
+          </Column>
+          <Column field="standard-error" header="Error Log">
+            <template #body="{ data }">
+              <Button v-if="data['standard-error']" @click="openLogDialog(data['standard-error'], 'Error Log')" severity="contrast">
+                View
+              </Button>
+              <p v-else>
+                Empty
+              </p>
+            </template>
+          </Column>
+          <Column field="standard-output" header="Output Log">
+            <template #body="{ data }">
+              <Button v-if="data['standard-error']" @click="openLogDialog(data['standard-output'], 'Output Log')" severity="contrast">
+                View
+              </Button>
+              <p v-else>
+                Empty
+              </p>
+            </template>
+          </Column>
+        </DataTable>
+      </div>
     </template>
-  </Suspense>
+  </DataTable>
 </template>

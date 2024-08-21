@@ -60,6 +60,7 @@ declare module 'vue' {
     InstanceTag: typeof import('./src/components/ui/InstanceTag.vue')['default']
     JobInfoDialog: typeof import('./src/components/Queue/Dialog/JobInfoDialog.vue')['default']
     JournalDialog: typeof import('./src/components/Admin/InstanceAdministration/JournalDialog.vue')['default']
+    LogViewer: typeof import('./src/components/Queue/Dialog/LogViewer.vue')['default']
     MobileBreadcrumbNavigation: typeof import('./src/components/Layout/Breadcrumb/MobileBreadcrumbNavigation.vue')['default']
     ModeSelect: typeof import('./src/components/Layout/Topbar/ModeSelect.vue')['default']
     ModeTag: typeof import('./src/components/ui/ModeTag.vue')['default']
