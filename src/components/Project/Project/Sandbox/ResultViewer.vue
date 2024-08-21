@@ -478,7 +478,6 @@ const items = computed(() => {
 
 </script>
 <template>
-  <Toast />
   <Toast
     position="top-center"
     group="headless"
