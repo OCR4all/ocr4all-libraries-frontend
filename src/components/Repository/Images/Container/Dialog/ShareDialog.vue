@@ -126,6 +126,7 @@ function addUser(){
     name: selectedUser.value.login,
     role: "read"
   })
+  selectedUser.value = null
 }
 
 function addGroup(){
@@ -133,6 +134,7 @@ function addGroup(){
     name: selectedGroup.value.label,
     role: "read"
   })
+  selectedGroup.value = null
 }
 
 function removeShare(type: string, id: string){
@@ -172,52 +174,55 @@ async function save(){
 }
 </script>
 <template>
-  <div class="flex flex-col space-y-4 my-4">
-    <p class="text-xl font-bold">People with access</p>
-    <div class="grid grid-cols-5 gap-x-4">
+  <div class="mx-4">
+    <div class="flex flex-col space-y-4 my-4">
+      <p class="text-xl font-bold">People with access</p>
       <AutoComplete
-        v-model="selectedUser"
-        option-label="name"
-        placeholder="Add other users to collaborate with"
-        input-id="users"
-        class="col-span-4"
-        style="width: 100%"
-        :suggestions="filteredUsers"
-        @complete="searchUser">
-        <template #option="slotProps">
-          <div class="flex items-center gap-x-2">
-            <AvatarInitials :name="slotProps.option.name" :admin="false" />
-            <div>{{ slotProps.option.name }}</div>
-          </div>
-        </template>
-      </AutoComplete>
-      <Button @click="addUser" icon="pi pi-plus" severity="primary" label="Add" aria-label="Add" />
-    </div>
-    <div class="flex flex-col space-y-4">
-      <SharedEntity
-          v-for="user of sharedUsers" :key="user.role" ref="userRefs"
-          :label="getUserName(user.name)"
-          type="user"
-          @remove="removeShare"
-          :id="user.name"
-          :right="user.role" />
-      <div v-show="sharedUsers.length === 0">
-        <p>No users added yet</p>
+            v-model="selectedUser"
+            option-label="name"
+            dropdown
+            forceSelection
+            @option-select="addUser"
+            placeholder="Add other users to collaborate with"
+            input-id="users"
+            class="col-span-4"
+            style="width: 100%"
+            :suggestions="filteredUsers"
+            @complete="searchUser">
+          <template #option="slotProps">
+            <div class="flex items-center gap-x-2">
+              <AvatarInitials :name="slotProps.option.name" :admin="false" />
+              <div>{{ slotProps.option.name }}</div>
+            </div>
+          </template>
+        </AutoComplete>
+      <div class="flex flex-col space-y-4">
+        <SharedEntity
+            v-for="user of sharedUsers" :id="user.name" :key="user.role"
+            ref="userRefs"
+            :label="getUserName(user.name)"
+            type="user"
+            :right="user.role"
+            @remove="removeShare" />
+        <div v-show="sharedUsers.length === 0">
+          <p>No users added yet</p>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="flex flex-col space-y-2 my-10">
-    <p class="text-xl font-bold">Groups with access</p>
-    <div class="grid grid-cols-5 gap-x-2">
+    <div class="flex flex-col space-y-2 my-10">
+      <p class="text-xl font-bold">Groups with access</p>
       <AutoComplete
-        v-model="selectedGroup"
-        option-label="name"
-        placeholder="Add other groups to collaborate with"
-        input-id="users"
-        class="col-span-4"
-        style="width: 100%"
-        :suggestions="filteredGroups"
-        @complete="searchGroup">
+          v-model="selectedGroup"
+          option-label="name"
+          dropdown
+          forceSelection
+          @option-select="addGroup"
+          placeholder="Add other groups to collaborate with"
+          input-id="users"
+          class="col-span-4"
+          style="width: 100%"
+          :suggestions="filteredGroups"
+          @complete="searchGroup">
         <template #option="slotProps">
           <div class="flex items-center gap-x-2">
             <AvatarInitials :name="slotProps.option.name" :admin="false" />
@@ -225,35 +230,36 @@ async function save(){
           </div>
         </template>
       </AutoComplete>
-      <Button @click="addGroup" icon="pi pi-plus" severity="primary" label="Add" aria-label="Add" />
+      <SharedEntity
+          v-for="group of sharedGroups" :id="group.name" :key="group.role"
+          ref="groupRefs"
+          :label="getGroupName(group.name)"
+          type="group"
+          :right="group.role"
+          @remove="removeShare" />
+      <div v-show="sharedGroups.length === 0">
+        <p>No groups added yet</p>
+      </div>
     </div>
-    <SharedEntity
-      v-for="group of sharedGroups" :key="group.role" ref="groupRefs"
-      :label="getGroupName(group.name)"
-      type="group"
-      @remove="removeShare"
-      :id="group.name"
-      :right="group.role" />
-    <div v-show="sharedGroups.length === 0">
-      <p>No groups added yet</p>
+    <div class="flex flex-col space-y-2 my-10">
+      <p class="text-xl font-bold">General access</p>
+      <div class="flex space-x-2 items-center">
+        <i class="pi pi-share-alt bg-surface-100 rounded-full p-4 text-surface-800" />
+        <Select
+            v-model="generalRole"
+            :options="generalOptions"
+            option-label="name"
+            placeholder="Select Rights"
+            class="w-full"
+        ></Select>
+      </div>
     </div>
-  </div>
-  <div class="flex flex-col space-y-2 my-10">
-    <p class="text-xl font-bold">General access</p>
-    <div class="flex space-x-2 items-center">
-      <i class="pi pi-share-alt bg-surface-400 rounded-full p-4 text-black" />
-      <Select
-          v-model="generalRole"
-          :options="generalOptions"
-          optionLabel="name"
-          placeholder="Select Rights"
-          class="w-full"
-      ></Select>
+    <div class="flex space-x-2 justify-end">
+      <Button severity="secondary" label="Cancel" @click="dialogRef?.close()" />
+      <Button @click="save">
+        <p class="text-white">Save</p>
+      </Button>
     </div>
-  </div>
-  <div class="flex space-x-2 justify-end">
-    <Button @click="dialogRef?.close()" severity="secondary" label="Cancel" />
-    <Button @click="save" label="Save" />
   </div>
 </template>
 <style>

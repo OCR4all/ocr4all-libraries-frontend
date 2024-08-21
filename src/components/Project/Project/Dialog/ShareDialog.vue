@@ -129,6 +129,7 @@ function addUser(){
     name: selectedUser.value.login,
     role: "read"
   })
+  selectedUser.value = null
 }
 
 function addGroup(){
@@ -136,6 +137,7 @@ function addGroup(){
     name: selectedGroup.value.label,
     role: "read"
   })
+  selectedGroup.value = null
 }
 
 function removeShare(type: string, id: string){
@@ -152,7 +154,6 @@ function removeShare(type: string, id: string){
         console.log(id)
         return group.name !== id
       })
-      console.log(sharedGroups.value)
       break
   }
 }
@@ -194,25 +195,25 @@ async function save(){
 <template>
   <div class="flex flex-col space-y-4 my-4">
     <p class="text-xl font-bold">People with access</p>
-    <div class="grid grid-cols-5 gap-x-4">
-      <AutoComplete
-        v-model="selectedUser"
-        option-label="name"
-        placeholder="Add other users to collaborate with"
-        input-id="users"
-        class="col-span-4"
-        style="width: 100%"
-        :suggestions="filteredUsers"
-        @complete="searchUser">
-        <template #option="slotProps">
-          <div class="flex items-center gap-x-2">
-            <AvatarInitials :name="slotProps.option.name" :admin="false" />
-            <div>{{ slotProps.option.name }}</div>
-          </div>
-        </template>
-      </AutoComplete>
-      <Button @click="addUser" icon="pi pi-plus" severity="primary" label="Add" aria-label="Add" />
-    </div>
+    <AutoComplete
+      v-model="selectedUser"
+      option-label="name"
+      dropdown
+      forceSelection
+      @option-select="addUser"
+      placeholder="Add other users to collaborate with"
+      input-id="users"
+      class="col-span-4"
+      style="width: 100%"
+      :suggestions="filteredUsers"
+      @complete="searchUser">
+      <template #option="slotProps">
+        <div class="flex items-center gap-x-2">
+          <AvatarInitials :name="slotProps.option.name" :admin="false" />
+          <div>{{ slotProps.option.name }}</div>
+        </div>
+      </template>
+    </AutoComplete>
     <div class="flex flex-col space-y-4">
       <SharedEntity
           v-for="user of sharedUsers" :key="user.role" ref="userRefs"
@@ -228,25 +229,25 @@ async function save(){
   </div>
   <div class="flex flex-col space-y-2 my-10">
     <p class="text-xl font-bold">Groups with access</p>
-    <div class="grid grid-cols-5 gap-x-2">
-      <AutoComplete
-        v-model="selectedGroup"
-        option-label="name"
-        placeholder="Add other groups to collaborate with"
-        input-id="users"
-        class="col-span-4"
-        style="width: 100%"
-        :suggestions="filteredGroups"
-        @complete="searchGroup">
-        <template #option="slotProps">
-          <div class="flex items-center gap-x-2">
-            <AvatarInitials :name="slotProps.option.name" :admin="false" />
-            <div>{{ slotProps.option.name }}</div>
-          </div>
-        </template>
-      </AutoComplete>
-      <Button @click="addGroup" icon="pi pi-plus" severity="primary" label="Add" aria-label="Add" />
-    </div>
+    <AutoComplete
+      v-model="selectedGroup"
+      option-label="name"
+      dropdown
+      forceSelection
+      @option-select="addGroup"
+      placeholder="Add other groups to collaborate with"
+      input-id="users"
+      class="col-span-4"
+      style="width: 100%"
+      :suggestions="filteredGroups"
+      @complete="searchGroup">
+      <template #option="slotProps">
+        <div class="flex items-center gap-x-2">
+          <AvatarInitials :name="slotProps.option.name" :admin="false" />
+          <div>{{ slotProps.option.name }}</div>
+        </div>
+      </template>
+    </AutoComplete>
     <SharedEntity
       v-for="group of sharedGroups" :key="group.role" ref="groupRefs"
       :label="getGroupName(group.name)"

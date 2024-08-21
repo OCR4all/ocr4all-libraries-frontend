@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {SelectChangeEvent} from "primevue/select";
+
 const props = defineProps<{
   label: string;
   id: string;
@@ -18,6 +20,10 @@ const options = ref([
   {
     name: "Admin",
     value: "admin"
+  },
+  {
+    name: "Remove",
+    value: "remove"
   }
 ])
 
@@ -32,6 +38,10 @@ function get() {
     name: props.id,
     role: role.value!.value
   }
+}
+
+function change(event: SelectChangeEvent){
+  if(event.value.value === 'remove') emit('remove', props.type, props.id)
 }
 
 defineExpose({
@@ -51,13 +61,16 @@ defineExpose({
       <Select
         v-model="role"
         :options="options"
+        @change="change"
         optionLabel="name"
         placeholder="Select Rights"
         class="w-full"
-      ></Select>
-      <Button severity="danger" text @click="emit('remove', props.type, props.id)">
-        <i class="pi pi-times text-surface-800 hover:text-surface-950 dark:text-surface-200 dark:hover:text-surface-0" />
-      </Button>
+      >
+        <template #option="slotProps">
+          <div v-if="slotProps.option.value === 'remove'" class="text-red-700 dark:text-red-400">Remove</div>
+          <div v-else>{{ slotProps.option.name }}</div>
+        </template>
+      </Select>
     </div>
   </div>
 </template>

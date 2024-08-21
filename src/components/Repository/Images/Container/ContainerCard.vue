@@ -196,7 +196,7 @@ const shareDialogVisible = ref();
 function openShareModal() {
   dialog.open(ShareDialog, {
     props: {
-      header: `Share ${props.name}`,
+      header: `Share "${props.name}"`,
       modal: true,
       style: {
         width: '50vw',

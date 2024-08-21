@@ -38,6 +38,7 @@ declare module 'vue' {
     DeleteGroupDialog: typeof import('./src/components/Admin/GroupManagement/Dialog/DeleteGroupDialog.vue')['default']
     DeleteSet: typeof import('./src/components/Repository/Datasets/Dialog/DeleteSet.vue')['default']
     DeleteUserDialog: typeof import('./src/components/Admin/UserManagement/Dialog/DeleteUserDialog.vue')['default']
+    DropZoneBackground: typeof import('./src/components/NodeFlow/DropZoneBackground.vue')['default']
     EditDataset: typeof import('./src/components/Repository/Datasets/Dialog/EditDataset.vue')['default']
     EditDialog: typeof import('./src/components/Project/Project/Dialog/EditDialog.vue')['default']
     EditGroupDialogForm: typeof import('./src/components/Admin/GroupManagement/Dialog/EditGroupDialog/EditGroupDialogForm.vue')['default']

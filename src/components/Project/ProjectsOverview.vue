@@ -28,7 +28,6 @@ const router = useRouter();
 
 import { useDialog } from "primevue/usedialog";
 import { useToast } from "primevue/usetoast";
-import ShareDialog from "@/components/Repository/Images/Container/Dialog/ShareDialog.vue";
 const dialog = useDialog();
 
 const loading = ref(true);
@@ -174,6 +173,13 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
           props: {
             header: `Share ${event.data.name}`,
             modal: true,
+            style: {
+              width: '50vw',
+            },
+            breakpoints:{
+              '960px': '75vw',
+              '640px': '90vw'
+            },
           },
           data: event.data,
           onClose: () => {
