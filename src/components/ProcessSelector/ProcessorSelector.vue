@@ -1,13 +1,6 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { buildProcessorSchema } from "@/components/ProcessSelector/utils";
-import { useToast } from "primevue/usetoast";
-
-const props = defineProps<{
-  project: string | undefined;
-  sandbox: string | undefined;
-  track: number[] | undefined;
-}>();
 
 interface IPremise {
   state: string,
@@ -61,11 +54,9 @@ interface IProcessor {
 
 const nodes = ref([]);
 
-const toast = useToast()
-
 function structureData(data) {
   let categories = Object.groupBy(data, item => item["type-label"]);
-  console.log(categories)
+
   for (const [key, value] of Object.entries(categories)) {
     const node = {
       key: key,
@@ -131,9 +122,7 @@ const selectedProcessor = ref();
 const processorFormSchema = ref();
 const formData = ref();
 
-function runProcessor(values, { setErrors }) {
-  const url = `/spi/${selectedProcessor.value.type}/schedule/${props.project}/${props.sandbox}`;
-
+function get() {
   const registry = {}
   for(const entry of selectedProcessor.value.entries){
     registry[entry.label] = entry.type
@@ -145,7 +134,7 @@ function runProcessor(values, { setErrors }) {
   const selects = [];
   const strings = [];
 
-  for(const [key, value] of Object.entries(values)){
+  for(const [key, value] of Object.entries(formData.value)){
     const processorType = registry[key]
     if(value){
       switch (processorType) {
@@ -182,16 +171,8 @@ function runProcessor(values, { setErrors }) {
       }
     }
   }
-  console.log(props.track)
 
-  const payload = {
-    id: selectedProcessor.value.id,
-    label: selectedProcessor.value.label,
-    description: `Run ${selectedProcessor.value.label} on ${props.sandbox}`,
-    "job-short-description": `Run ${selectedProcessor.value.label} on ${props.sandbox}`,
-    "parent-snapshot": {
-      track: props.track,
-    },
+  const parameters = {
     ...(booleans.length !== 0 && { booleans: booleans }),
     ...(decimals.length !== 0 && { decimals: decimals }),
     ...(integers.length !== 0 && { integers: integers }),
@@ -199,38 +180,20 @@ function runProcessor(values, { setErrors }) {
     ...(strings.length !== 0 && { strings: strings }),
   };
 
-  useCustomFetch(url)
-    .post(payload)
-    .json()
-    .then((response) => {
-      if(response.error.value){
-        toast.add({
-          severity: "error",
-          summary: "Error",
-          detail: response.error.value,
-          life: 3000,
-        })
-      }else{
-        toast.add({
-          severity: "success",
-          summary: "Success",
-          detail: "Processor scheduled",
-          life: 3000,
-        })
-        processorDialogVisible.value = false
-        emit("close")
-      }
-    })
+  return {
+    processor: selectedProcessor.value,
+    parameters: parameters
+  }
 }
 
-function buildProcessorFormSchema(data) {
-  const schema = buildProcessorSchema(data);
+function buildProcessorFormSchema(data, cols: number) {
+  const schema = buildProcessorSchema(data, cols);
   processorFormSchema.value = schema;
 }
 
 function openProcessor(data) {
   selectedProcessor.value = data;
-  buildProcessorFormSchema(data);
+  buildProcessorFormSchema(data, 3);
   processorDialogVisible.value = true;
 }
 
@@ -238,10 +201,13 @@ const processorDialogVisible = ref(false);
 
 const filters = ref({});
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["submit"]);
+
+defineExpose({
+  get
+})
 </script>
 <template>
-  <Toast />
   <Dialog v-model:visible="processorDialogVisible" modal header="Run Processor">
     <div class="pb-6">
       <div class="flex space-x-2">
@@ -264,7 +230,7 @@ const emit = defineEmits(["close"]);
         ref="processorForm"
         v-model="formData"
         type="form"
-        @submit="runProcessor"
+        @submit="emit('submit')"
       >
         <FormKitSchema :schema="processorFormSchema" :data="formData" />
       </FormKit>

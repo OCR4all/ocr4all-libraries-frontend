@@ -1,3 +1,22 @@
+interface IItem {
+  type: string,
+  description: null | string,
+  value: string,
+  selected: boolean,
+  disabled: boolean
+}
+
+function collectSelection(items: IItem[], multiple: boolean): null | string | string[] {
+  const selection = []
+  for(const item of items){
+    if(item.selected){
+      selection.push(item.value)
+    }
+  }
+  if(selection.length === 0) return null
+  return multiple ? selection : selection[0]
+}
+
 export function buildProcessorSchema(data, grid: number = 1) {
   const processorSchema = [];
 
@@ -36,19 +55,35 @@ export function buildProcessorSchema(data, grid: number = 1) {
         });
         break;
       case "select":
-        processorSchema.push({
-          $formkit: "primeSelect",
-          id: entry.argument,
-          name: entry.argument,
-          label: entry.label,
-          value: entry.value,
-          showClear: true,
-          filter: true,
-          help: entry.description,
-          optionLabel: "value",
-          optionValue: "value",
-          options: entry.items,
-        });
+        if(entry["multiple-options"]){
+          processorSchema.push({
+            $formkit: "primeMultiSelect",
+            id: entry.argument,
+            name: entry.argument,
+            label: entry.label,
+            value: collectSelection(entry.items, true),
+            showClear: true,
+            filter: true,
+            help: entry.description,
+            optionLabel: "value",
+            optionValue: "value",
+            options: entry.items,
+          });
+        }else{
+          processorSchema.push({
+            $formkit: "primeSelect",
+            id: entry.argument,
+            name: entry.argument,
+            label: entry.label,
+            value: collectSelection(entry.items, false),
+            showClear: true,
+            filter: true,
+            help: entry.description,
+            optionLabel: "value",
+            optionValue: "value",
+            options: entry.items,
+          });
+        }
         break;
       case "string":
         processorSchema.push({
@@ -66,7 +101,7 @@ export function buildProcessorSchema(data, grid: number = 1) {
     {
       $el: "div",
       attrs: {
-        class: `grid grid-cols-${grid}`,
+        class: `grid grid-cols-${grid} gap-x-4`,
       },
       children: processorSchema,
     },
