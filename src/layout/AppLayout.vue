@@ -19,7 +19,7 @@ function toggleSidebarMobile() {
 
 <template>
   <DynamicDialog />
-  <Toast />
+  <Toast position="top-center" group="general" />
   <Toast position="top-center" group="jobs">
     <template #container="{ message, closeCallback }">
       <p>Global</p>
