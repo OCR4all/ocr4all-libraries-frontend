@@ -33,6 +33,13 @@ const deleteDatasetDialog = defineAsyncComponent(
   () => import("@/components/Repository/Datasets/Dialog/DeleteDataset.vue")
 )
 
+const codecDialog = defineAsyncComponent(
+  () =>
+    import(
+      "@/components/Codec/CodecDialog.vue"
+      ),
+);
+
 import { useDialog } from "primevue/usedialog";
 import Toast from "primevue/toast";
 import Toolbar from "primevue/toolbar";
@@ -87,6 +94,7 @@ async function refresh() {
     .json()
     .then((response) => {
       sets.value = response.data.value;
+      console.log(sets.value)
     });
 }
 
@@ -362,11 +370,29 @@ async function getCodec(){
     "index": 0,
     "normalizer": "NFD"
   }
-  console.log(payload)
   await useCustomFetch(
     "/data/collection/set/codec",
-  ).post(payload).then((response) => {
-    console.log(response.data.value)
+  ).post(payload).json().then((response) => {
+    if(response.error.value){
+      console.error("Couldn't retrieve codec")
+    }else{
+      dialog.open(codecDialog, {
+        props: {
+          header: "Codec",
+          modal: true,
+          style: {
+            width: '75vw',
+          },
+          breakpoints:{
+            '960px': '75vw',
+            '640px': '90vw'
+          },
+        },
+        data: {
+          codec: response.data.value,
+        },
+      });
+    }
   });
 }
 

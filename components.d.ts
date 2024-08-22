@@ -15,6 +15,7 @@ declare module 'vue' {
     AvatarInitials: typeof import('./src/components/ui/AvatarInitials.vue')['default']
     BreadcrumbNavigation: typeof import('./src/components/Layout/Breadcrumb/BreadcrumbNavigation.vue')['default']
     CalamariView: typeof import('./src/components/Training/Calamari/CalamariView.vue')['default']
+    CodecDialog: typeof import('./src/components/Codec/CodecDialog.vue')['default']
     CollectionSet: typeof import('./src/components/Repository/Datasets/CollectionSet.vue')['default']
     ComponentContainer: typeof import('./src/components/Layout/ComponentContainer.vue')['default']
     ContainerCard: typeof import('./src/components/Repository/Images/Container/ContainerCard.vue')['default']
