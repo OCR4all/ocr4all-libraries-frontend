@@ -32,8 +32,8 @@
     "@vueuse/components": "^11.0.1",
     "axios": "^1.7.4",
     "baklavajs": "^2.4.5",
-    "chart.js": "^4.4.4",
     "chroma-js": "^3.0.0",
+    "echarts": "^5.5.1",
     "konva": "^9.3.14",
     "pinia": "2.1.7",
     "primeicons": "^7.0.0",
@@ -42,6 +42,7 @@
     "vee-validate": "^4.13.2",
     "vue": "3.4.27",
     "vue-advanced-cropper": "^2.8.9",
+    "vue-echarts": "^7.0.3",
     "vue-konva": "^3.1.0",
     "vue-router": "4.2.5"
   },
