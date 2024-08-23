@@ -29,6 +29,7 @@ import { IContainer } from "@/components/Project/project.interfaces";
 import ShareDialog from "@/components/Repository/Images/Container/Dialog/ShareDialog.vue";
 import { useDialog } from "primevue/usedialog";
 import ProgressSpinner from "primevue/progressspinner";
+import {useI18n} from "vue-i18n";
 
 const router: Router = useRouter();
 
@@ -347,7 +348,6 @@ function downloadContainer(container: IContainer) {
 </script>
 <template>
   <ConfirmDialog />
-  <Toast />
   <Toast position="bottom-right" group="download-toast">
     <template #container="{ message, closeCallback }">
       <div class="flex items-center w-full p-4 rounded-lg shadow bg-surface-200/50 dark:bg-surface-700/50 backdrop-md" role="alert">
@@ -495,50 +495,50 @@ function downloadContainer(container: IContainer) {
       Delete
     </button>
   </Dialog>
-  <Toolbar class="mb-4">
-    <template #start>
-      <div class="my-2 flex space-x-2">
-        <ActionButton
-          rounded
-          type="primary"
-          size="large"
-          @click="toggleCreateContainerPanel"
-        >
-          {{ $t("pages.repository.overview.toolbar.button.create") }}
-        </ActionButton>
-        <Popover ref="createContainerPanel">
-          <div class="flex space-x-1">
-            <InputText v-model="newContainerName" />
-            <Button
-              icon="pi pi-check"
-              severity="info"
-              class="mr-2 w-fit"
-              @click="createContainer"
-            />
-          </div>
-        </Popover>
-        <ActionButton
-          rounded
-          type="delete"
-          size="large"
-          :disabled="!selectedContainers || !selectedContainers.length"
-          @click="toggleDeleteDialog"
-        >
-          {{ $t("pages.repository.overview.toolbar.button.delete") }}
-        </ActionButton>
-      </div>
-    </template>
-    <template #end>
+  <ComponentContainer spaced>
+    <Toolbar>
+      <template #start>
+        <div class="flex">
+          <Button v-tooltip.top="$t('pages.repository.overview.toolbar.button.create')" @click="toggleCreateContainerPanel" text>
+            <i class="pi pi-plus text-black dark:text-white" />
+          </Button>
+          <Popover ref="createContainerPanel">
+            <div class="flex space-x-1">
+              <InputText v-model="newContainerName" />
+              <Button
+                  icon="pi pi-check"
+                  severity="info"
+                  class="mr-2 w-fit"
+                  @click="createContainer"
+              />
+            </div>
+          </Popover>
+          <Button v-tooltip.top="$t('pages.repository.overview.toolbar.button.delete')" icon="pi pi-trash" @click="toggleDeleteDialog" :disabled="!selectedContainers || !selectedContainers.length" severity="danger" text />
+        </div>
+      </template>
+      <template #center>
+
+      </template>
+      <template #end>
+        <IconField>
+          <InputIcon>
+            <i class="pi pi-search" />
+          </InputIcon>
+          <InputText
+              v-model="filters['global'].value"
+              placeholder="Search"
+          />
+        </IconField>
+      </template>
+    </Toolbar>
+    <div class="flex justify-end">
       <SelectButton v-model="layout" :options="options" :allow-empty="false">
         <template #option="{ option }">
           <i :class="[option === 'list' ? 'pi pi-bars' : 'pi pi-th-large']" />
         </template>
       </SelectButton>
-    </template>
-  </Toolbar>
-  <ComponentContainer border>
+    </div>
     <DataView
-      class="bg-surface-50 dark:bg-surface-700"
       :value="containers"
       :layout="layout"
     >
@@ -556,26 +556,6 @@ function downloadContainer(container: IContainer) {
           :row-hover="true"
           table-style="min-width: 50rem"
         >
-          <template #header>
-            <div
-              class="sm:justify-items-between grid grid-cols-1 items-center justify-items-start gap-2 sm:grid-cols-2"
-            >
-              <h4 class="m-0 font-bold">
-                {{ $t("pages.repository.overview.dataview.list.header") }}
-              </h4>
-              <div class="flex justify-self-start sm:justify-self-end">
-                <IconField>
-                  <InputIcon>
-                    <i class="pi pi-search" />
-                  </InputIcon>
-                  <InputText
-                    v-model="filters['global'].value"
-                    placeholder="Search"
-                  />
-                </IconField>
-              </div>
-            </div>
-          </template>
           <Column
             selection-mode="multiple"
             style="width: 3rem"
@@ -671,13 +651,13 @@ function downloadContainer(container: IContainer) {
         </DataTable>
       </template>
 
-      <template #grid="slotProps">
+      <template #grid="{ items }">
         <div
           v-auto-animate
           class="grid grid-flow-row-dense grid-cols-1 justify-items-start gap-x-2 gap-y-3 @[550px]/content:grid-cols-2 @[850px]/content:grid-cols-3 @[1050px]/content:grid-cols-4 @[1400px]/content:grid-cols-5"
         >
           <ContainerCard
-            v-for="(item) in slotProps.items"
+            v-for="(item) in items"
             v-bind="item"
             :key="item.id"
             :ref="setContainerCardsRef"

@@ -174,7 +174,6 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
 };
 </script>
 <template>
-  <Toast />
   <Toast
     position="top-center"
     group="headless"
@@ -298,20 +297,33 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
       </a>
     </template>
   </Menu>
-  <Toolbar class="mb-4">
-    <template #start>
-      <div class="my-2 space-x-2">
-        <button
-          type="button"
-          class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-          @click="createSandbox()"
-        >
-          {{ $t("pages.projects.sandbox.results.toolbar.new") }}
-        </button>
-      </div>
-    </template>
-  </Toolbar>
-  <ComponentContainer>
+  <ComponentContainer spaced>
+    <Toolbar>
+      <template #start>
+        <Button v-tooltip.top="$t('pages.projects.sandbox.results.toolbar.new')" @click="createSandbox()" text>
+          <i class="pi pi-plus text-black dark:text-white" />
+        </Button>
+      </template>
+      <template #end>
+        <div class="flex space-x-2">
+          <button v-tooltip="'Refresh'" @click="refetch">
+            <ArrowPathIcon
+                :disabled="isRefetching"
+                :class="{ 'animate-spin': isRefetching }"
+                class="inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-300 dark:hover:text-white"
+            />
+          </button>
+          <span class="p-input-icon-left">
+              <InputText
+                  v-model="filters['global'].value"
+                  :placeholder="
+                  $t('pages.projects.sandbox.results.table.search.placeholder')
+                "
+              />
+            </span>
+        </div>
+      </template>
+    </Toolbar>
     <DataTable
       :value="sandboxes"
       :loading="loading"
@@ -324,32 +336,6 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
       :global-filter-fields="['name', 'description', 'state']"
       @row-contextmenu="onRowContextMenu"
     >
-      <template #header>
-        <div
-          class="sm:justify-items-between grid grid-cols-1 items-center justify-items-start gap-2 sm:grid-cols-2"
-        >
-          <h4 class="m-0 font-bold">
-            {{ $t("pages.projects.sandbox.results.table.header") }}
-          </h4>
-          <div class="flex space-x-1 justify-self-start sm:justify-self-end">
-            <button v-tooltip="'Refresh'" @click="refetch">
-              <ArrowPathIcon
-                :disabled="isRefetching"
-                :class="{ 'animate-spin': isRefetching }"
-                class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-300 dark:hover:text-white"
-              />
-            </button>
-            <span class="p-input-icon-left ml-10">
-              <InputText
-                v-model="filters['global'].value"
-                :placeholder="
-                  $t('pages.projects.sandbox.results.table.search.placeholder')
-                "
-              />
-            </span>
-          </div>
-        </div>
-      </template>
       <template #loading>
         <ProgressSpinner
 style="width: 50px; height: 50px" stroke-width="8" fill="transparent"

@@ -32,6 +32,8 @@ const filters: Ref = ref({
 
 const dialog = useDialog();
 
+import IconAnalytics from "~icons/carbon/data-analytics"
+
 const isRefetching: Ref<boolean> = ref(false);
 const datasets: Ref<ICollectionSet[]> = ref([]);
 const selectedDatasets: Ref<ICollectionSet[]> = ref([]);
@@ -248,7 +250,6 @@ const contextMenu = ref();
       </div>
     </template>
   </Toast>
-  <Toast />
   <ContextMenu ref="contextMenu" :model="items">
     <template #item="{ item, props }">
       <a
@@ -301,40 +302,29 @@ const contextMenu = ref();
       </a>
     </template>
   </Menu>
-  <Toolbar class="mb-4">
-    <template #start>
-      <div class="my-2 flex space-x-2">
-        <ActionButton
-          rounded
-          type="primary"
-          size="large"
-          @click="openCreateDialog"
-        >
-          {{ $t("pages.repository.overview.toolbar.button.create") }}
-        </ActionButton>
-        <ActionButton
-          rounded
-          type="primary"
-          size="large"
-          :disabled="!selectedDatasets || !selectedDatasets.length"
-          @click="getCodec(selectedDatasets)"
-        >
-          Get Codec
-        </ActionButton>
-        <ActionButton
-          rounded
-          type="delete"
-          size="large"
-          :disabled="!selectedDatasets || !selectedDatasets.length"
-          @click="openDeleteDialog(selectedDatasets)"
-        >
-          {{ $t("pages.repository.overview.toolbar.button.delete") }}
-        </ActionButton>
-      </div>
-    </template>
-    <template #end> </template>
-  </Toolbar>
-  <ComponentContainer border>
+  <ComponentContainer spaced>
+    <Toolbar>
+      <template #start>
+        <Button v-tooltip.top="$t('pages.repository.overview.toolbar.button.create')" @click="openCreateDialog" text>
+          <i class="pi pi-plus text-black dark:text-white" />
+        </Button>
+        <Button v-tooltip.top="'Analyze Codec'" @click="getCodec(selectedDatasets)" :disabled="!selectedDatasets || !selectedDatasets.length" text>
+          <IconAnalytics class="text-black dark:text-white" />
+        </Button>
+        <Button v-tooltip.top="$t('pages.repository.overview.toolbar.button.delete')" :disabled="!selectedDatasets || !selectedDatasets.length" icon="pi pi-trash" @click="openDeleteDialog(selectedDatasets)" severity="danger" text />
+      </template>
+      <template #end>
+        <IconField>
+          <InputIcon>
+            <i class="pi pi-search" />
+          </InputIcon>
+          <InputText
+              v-model="filters['global'].value"
+              placeholder="Search"
+          />
+        </IconField>
+      </template>
+    </Toolbar>
     <DataTable
       ref="containerDataTable"
       v-model:selection="selectedDatasets"
@@ -348,24 +338,6 @@ const contextMenu = ref();
       :row-hover="true"
       @row-contextmenu="onRowContextMenu"
     >
-      <template #header>
-        <div
-          class="sm:justify-items-between grid grid-cols-1 items-center justify-items-start gap-2 sm:grid-cols-2"
-        >
-          <h4 class="m-0 font-bold">Manage datasets</h4>
-          <div class="flex justify-self-start sm:justify-self-end">
-            <IconField>
-              <InputIcon>
-                <i class="pi pi-search" />
-              </InputIcon>
-              <InputText
-                v-model="filters['global'].value"
-                placeholder="Search"
-              />
-            </IconField>
-          </div>
-        </div>
-      </template>
       <Column
         selection-mode="multiple"
         style="width: 3rem"

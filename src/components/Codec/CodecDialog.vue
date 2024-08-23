@@ -9,6 +9,9 @@ import {
 } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 
+import darkTheme from '@/assets/echarts/dark.project.json'
+import lightTheme from '@/assets/echarts/light.project.json'
+
 use([
   TooltipComponent,
   ToolboxComponent,
@@ -21,7 +24,7 @@ use([
 
 import VChart, { THEME_KEY } from 'vue-echarts';
 
-provide(THEME_KEY, useDark().value ? 'dark' : 'light');
+provide(THEME_KEY, useDark().value ? darkTheme : lightTheme);
 
 
 const dialogRef = inject("dialogRef");
@@ -34,6 +37,7 @@ const options = ref(["Chart", "Table"])
 
 onMounted(() => {
   codec.value = dialogRef.value.data.codec
+  console.log(codec.value)
   option.value = {
     toolbox: {
       show: true,
@@ -93,17 +97,25 @@ onMounted(() => {
     }
   }
 })
+
+const selectedSet = ref()
+const sets = ref([])
+
+const datatableNodes = computed(() => {
+
+})
 </script>
 <template>
-  <div class="flex flex-col">
-    <div class="flex justify-center">
+  <div class="flex flex-col space-y-12">
+    <div class="flex justify-between">
+      <Select v-model="selectedSet" :options="sets" sets="name" placeholder="Select a Set" class="w-full md:w-56" />
       <SelectButton v-model="mode" :options="options" :allow-empty="false" />
     </div>
     <section v-if="mode === 'Chart'">
       <v-chart class="chart" :option="option" autoresize />
     </section>
     <section v-else>
-      <DataTable></DataTable>
+      <DataTable :value="datatableNodes"></DataTable>
     </section>
   </div>
 <!--  {{ codec.codec }}-->

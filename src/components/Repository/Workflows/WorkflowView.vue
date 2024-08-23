@@ -29,6 +29,7 @@ const deleteWorkflowDialog = defineAsyncComponent(
 );
 
 import { useI18n } from "vue-i18n";
+import Button from "primevue/button";
 const { t } = useI18n();
 
 const toast = useToast();
@@ -205,7 +206,6 @@ function loadWorkflow(data) {
 refetch();
 </script>
 <template>
-  <Toast />
   <ContextMenu ref="contextMenu" :model="items">
     <template #item="{ item, props }">
       <a
@@ -258,21 +258,28 @@ refetch();
       </a>
     </template>
   </Menu>
-  <Toolbar class="mb-4">
-    <template #start>
-      <div class="my-2 space-x-2">
-        <ActionButton
-          rounded
-          type="primary"
-          size="large"
-          @click="router.push('/nodeflow')"
-        >
-          {{ $t("pages.workflows.toolbar.new") }}
-        </ActionButton>
-      </div>
-    </template>
-  </Toolbar>
-  <ComponentContainer border>
+  <ComponentContainer spaced>
+    <Toolbar>
+      <template #start>
+        <Button v-tooltip.top="$t('pages.workflows.toolbar.new')" text @click="router.push('/nodeflow')">
+          <i class="pi pi-plus text-black dark:text-white" />
+        </Button>
+      </template>
+      <template #end>
+        <div class="flex">
+          <button :disabled="isRefetching === true" @click="refetch">
+            <ArrowPathIcon
+                :class="{ 'animate-spin': isRefetching }"
+                class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
+            />
+          </button>
+          <InputText
+              v-model="filters['global'].value"
+              :placeholder="$t('pages.workflows.table.search.placeholder')"
+          />
+        </div>
+      </template>
+    </Toolbar>
     <DataTable
       :value="workflows"
       :paginator="true"
@@ -280,34 +287,15 @@ refetch();
       :loading="loading"
       :filters="filters"
       context-menu
-      :globalFilterFields="['label', 'description']"
-      sortField="date"
-      :sortOrder="-1"
+      :global-filter-fields="['label', 'description']"
+      sort-field="date"
+      :sort-order="-1"
       :row-hover="true"
       paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :rows-per-page-options="[10, 25, 50]"
       responsive-layout="scroll"
       @row-contextmenu="onRowContextMenu"
     >
-      <template #header>
-        <div class="flex justify-between">
-          <h4 class="m-0 self-center font-bold">
-            {{ $t("pages.workflows.table.heading") }}
-          </h4>
-          <span class="flex p-input-icon-left ml-10">
-            <button :disabled="isRefetching === true" @click="refetch">
-              <ArrowPathIcon
-                :class="{ 'animate-spin': isRefetching }"
-                class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
-              />
-            </button>
-            <InputText
-              v-model="filters['global'].value"
-              :placeholder="$t('pages.workflows.table.search.placeholder')"
-            />
-          </span>
-        </div>
-      </template>
       <template #empty>
         <span class="text-primary-950 dark:text-primary-50">{{
           $t("pages.workflows.table.empty")

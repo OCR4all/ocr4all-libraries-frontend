@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Cropper, CropperResult } from "vue-advanced-cropper";
+import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 

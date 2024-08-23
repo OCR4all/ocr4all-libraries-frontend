@@ -264,43 +264,41 @@ refetch();
       </a>
     </template>
   </Menu>
-    <Toolbar class="mb-4">
-      <template #start>
-        <div class="my-2 space-x-2">
-          <ActionButton
-            rounded
-            size="large"
-            type="primary"
-            @click="router.push('/project/new')"
-          >
-            {{ $t("pages.projects.overview.toolbar.new") }}
-          </ActionButton>
-          <ActionButton
-            disabled
-            type="primary"
-            size="large"
-            rounded
-            @click="router.push('/project/import')"
-          >
-            {{ $t("pages.projects.overview.toolbar.import") }}
-          </ActionButton>
-        </div>
-      </template>
+    <ComponentContainer spaced>
+      <Toolbar>
+        <template #start>
+            <Button v-tooltip.top="$t('pages.projects.overview.toolbar.new')" @click="router.push('/project/new')" text>
+              <i class="pi pi-plus text-black dark:text-white" />
+            </Button>
+          <Button v-tooltip.top="$t('pages.projects.overview.toolbar.import')" @click="router.push('/project/import')" text>
+            <i class="pi pi-upload text-black dark:text-white" />
+          </Button>
+        </template>
 
-      <template #end>
-        <button
-          v-tooltip.left="'Refresh'"
-          :disabled="isRefetching === true"
-          @click="refetch"
-        >
-          <ArrowPathIcon
-            :class="{ 'animate-spin': isRefetching }"
-            class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-200 hover:dark:text-white"
-          />
-        </button>
-      </template>
-    </Toolbar>
-    <ComponentContainer border>
+        <template #end>
+          <button
+              v-tooltip.left="'Refresh'"
+              :disabled="isRefetching === true"
+              @click="refetch"
+          >
+            <ArrowPathIcon
+                :class="{ 'animate-spin': isRefetching }"
+                class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-200 hover:dark:text-white"
+            />
+          </button>
+          <IconField>
+            <InputIcon>
+              <i class="pi pi-search" />
+            </InputIcon>
+            <InputText
+                v-model="filters['global'].value"
+                :placeholder="
+                    $t('pages.projects.overview.table.search.placeholder')
+                  "
+            />
+          </IconField>
+        </template>
+      </Toolbar>
       <DataTable
         v-model:filters="filters"
         :value="projects"
@@ -318,28 +316,6 @@ refetch();
         :rows-per-page-options="[10, 25, 50]"
         @row-contextmenu="onRowContextMenu"
       >
-        <template #header>
-          <div
-            class="sm:justify-items-between grid grid-cols-1 items-center justify-items-start gap-2 sm:grid-cols-2"
-          >
-            <h4 class="m-0 font-bold">
-              {{ $t("pages.projects.overview.table.header") }}
-            </h4>
-            <div class="flex justify-self-start sm:justify-self-end">
-              <IconField>
-                <InputIcon>
-                  <i class="pi pi-search" />
-                </InputIcon>
-                <InputText
-                  v-model="filters['global'].value"
-                  :placeholder="
-                    $t('pages.projects.overview.table.search.placeholder')
-                  "
-                />
-              </IconField>
-            </div>
-          </div>
-        </template>
         <template #empty>
           <span class="text-primary-950 dark:text-primary-50">{{
             $t("pages.projects.overview.table.empty")

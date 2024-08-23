@@ -22,6 +22,7 @@ import Toast from "primevue/toast";
 import Button from "primevue/button";
 import ProgressBar from "primevue/progressbar";
 import { FilterMatchMode } from "@primevue/core/api";
+import IconExpunge from "~icons/ant-design/clear-outlined"
 
 const dialog = useDialog()
 
@@ -34,6 +35,7 @@ import { IJob, IQueue } from "@/components/Queue/queue.interfaces";
 import { Ref } from "vue";
 import { useDialog } from "primevue/usedialog";
 import { useLocalDateFormat } from "@/composables/useLocalDateFormat";
+import Toolbar from "primevue/toolbar";
 const toast = useToast();
 
 const loading: Ref<boolean> = ref(true);
@@ -54,7 +56,7 @@ const states: Ref<string[]> = ref([
 
 const jobs: Ref<IJob[] | undefined> = ref();
 
-const getColor = (entry: string) => {
+const getColor = (entry: string): string => {
   switch (entry) {
     case "scheduled":
       return { background: "#76A9FA", color: "white" };
@@ -201,7 +203,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <Toast />
   <ContextMenu ref="contextMenu" :model="items">
     <template #item="{ item, props }">
       <a
@@ -254,7 +255,36 @@ onUnmounted(() => {
       </a>
     </template>
   </Menu>
-  <ComponentContainer border>
+  <ComponentContainer spaced>
+    <Toolbar>
+      <template #start>
+        <Button v-tooltip.top="'Expunge queue'" severity="danger" @click="expungeJobs" text>
+          <IconExpunge />
+        </Button>
+      </template>
+
+      <template #end>
+        <button
+            v-tooltip.left="'Refresh'"
+            :disabled="isRefetching === true"
+            @click="refetch"
+        >
+          <ArrowPathIcon
+              :class="{ 'animate-spin': isRefetching }"
+              class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-200 hover:dark:text-white"
+          />
+        </button>
+        <IconField>
+          <InputIcon>
+            <i class="pi pi-search" />
+          </InputIcon>
+          <InputText
+              v-model="filters['global'].value"
+              :placeholder="$t('pages.queue.table.search.placeholder')"
+          />
+        </IconField>
+      </template>
+    </Toolbar>
     <DataTable
       v-model:filters="filters"
       :value="jobs"
@@ -271,34 +301,6 @@ onUnmounted(() => {
         <span class="text-primary-950 dark:text-primary-50">{{
           $t("pages.queue.table.empty")
         }}</span>
-      </template>
-      <template #header>
-        <div class="flex justify-between">
-          <h4 class="m-0 self-center font-bold">
-            {{ $t("pages.queue.table.header") }}
-          </h4>
-          <span class="p-input-icon-left ml-10 space-x-4">
-            <button
-              v-tooltip="'Refresh'"
-              :disabled="isRefetching === true"
-              @click="refetch"
-            >
-              <ArrowPathIcon
-                :class="{ 'animate-spin': isRefetching }"
-                class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
-              />
-            </button>
-            <button v-tooltip="'Expunge queue'" @click="expungeJobs">
-              <ArchiveBoxXMarkIcon
-                class="mr-2 inline h-6 w-6 text-surface-800 hover:text-red-600 dark:text-surface-200 dark:hover:text-red-600"
-              />
-            </button>
-            <InputText
-              v-model="filters['global'].value"
-              :placeholder="$t('pages.queue.table.search.placeholder')"
-            />
-          </span>
-        </div>
       </template>
       <Column :header="$t('pages.queue.table.columns.actions')">
         <template #body="slotProps">
