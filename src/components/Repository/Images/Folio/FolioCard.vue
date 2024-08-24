@@ -54,6 +54,7 @@ const actionMenuItems = ref([
             summary: "Info",
             detail: "Not implemented yet",
             life: 3000,
+            group: "general",
           });
         },
       },
@@ -151,6 +152,7 @@ async function deleteFolio() {
     summary: "Success",
     detail: "Folio deleted",
     life: 3000,
+    group: "general",
   });
   toggleDeleteDialog();
   emit("refresh");

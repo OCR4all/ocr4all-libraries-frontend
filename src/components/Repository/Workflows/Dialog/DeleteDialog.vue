@@ -21,6 +21,7 @@ async function deleteWorkflow() {
     summary: i18n.t("pages.workflows.toasts.remove.success.summary"),
     detail: i18n.t("pages.workflows.toasts.remove.success.detail"),
     life: 3000,
+    group: "general",
   });
   dialogRef.value.close();
 }

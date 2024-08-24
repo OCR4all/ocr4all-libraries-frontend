@@ -33,7 +33,6 @@ useHead({
 </script>
 
 <template>
-  <Toast />
   <div class="flex flex-col gap-y-6">
     <div class="flex justify-center">
       <SelectButton

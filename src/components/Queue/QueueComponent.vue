@@ -85,6 +85,7 @@ async function refetch() {
       summary: t("pages.login.toasts.login.error.summary"),
       detail: error.value,
       life: 3000,
+      group: "general",
     })
   }else{
     const queue: IQueue = data.value
@@ -119,6 +120,7 @@ async function cancelJob(id: string) {
       summary: t("pages.queue.table.toasts.cancel.success.summary"),
       detail: t("pages.queue.table.toasts.cancel.success.detail"),
       life: 3000,
+      group: "general",
     });
   });
 }
@@ -134,6 +136,7 @@ async function expungeJobs() {
         summary: t("pages.queue.table.toasts.expunge.success.summary"),
         detail: t("pages.queue.table.toasts.expunge.success.detail"),
         life: 3000,
+        group: "general",
       });
     });
 }
@@ -149,6 +152,7 @@ async function removeJob(job: string) {
         summary: t("pages.queue.table.toasts.remove.success.summary"),
         detail: t("pages.queue.table.toasts.remove.success.detail"),
         life: 3000,
+        group: "general",
       });
     });
 }

@@ -186,6 +186,7 @@ async function deleteContainer() {
     ),
     detail: t("pages.repository.container.card.toast.delete-container.detail"),
     life: 3000,
+    group: "general",
   });
   emit("refresh");
 }
@@ -249,6 +250,7 @@ async function updateContainer() {
         "pages.repository.container.card.toast.update-container.success.detail",
       ),
       life: 3000,
+      group: "general",
     });
   } else {
     toast.add({
@@ -260,6 +262,7 @@ async function updateContainer() {
         "pages.repository.container.card.toast.update-container.error.detail",
       ),
       life: 3000,
+      group: "general",
     });
   }
 }

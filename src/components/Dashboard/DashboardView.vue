@@ -65,6 +65,7 @@ function startTour() {
     summary: t("pages.dashboard.toasts.tour.summary"),
     detail: t("pages.dashboard.toasts.tour.detail"),
     life: 3000,
+    group: "general",
   });
 }
 
@@ -210,5 +211,4 @@ await useCustomFetch(`/account`)
       </div>
     </div>
   </div>
-  <Toast />
 </template>

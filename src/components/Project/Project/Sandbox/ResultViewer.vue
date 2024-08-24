@@ -150,6 +150,7 @@ async function unlockSnapshot(track: ITrack){
         summary: "Success",
         detail: "Snapshot unlocked",
         life: 3000,
+        group: "general",
       });
       selectedSnapshotLock.value = false
     }
@@ -225,6 +226,7 @@ async function generateSandbox(selection: ITrack) {
           "pages.projects.result-viewer.overview.toasts.schedule-result-view.error.summary",
         ),
         life: 3000,
+        group: "general",
       });
     } else {
       isGeneratingSandbox.value = true;

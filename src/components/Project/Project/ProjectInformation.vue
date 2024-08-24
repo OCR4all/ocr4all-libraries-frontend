@@ -51,6 +51,7 @@ async function update() {
       "pages.projects.project.information.toasts.update.success.detail",
     ),
     life: 3000,
+    group: "general",
   });
 }
 
@@ -65,7 +66,6 @@ async function deleteProject() {
 </script>
 
 <template>
-  <Toast />
   <ComponentContainer>
     <div class="grid grid-cols-4 gap-4">
       <div class="col-span-4 flex flex-col">

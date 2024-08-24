@@ -53,7 +53,6 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
 </script>
 <template>
   <div class="card">
-    <Toast />
     <FileUpload
       ref="fileUpload"
       name="folioUpload[]"

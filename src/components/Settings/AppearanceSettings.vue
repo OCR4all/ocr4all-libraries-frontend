@@ -27,6 +27,7 @@ function updateAppearance(values, { setErrors }) {
       summary: "Error",
       detail: error,
       life: 3000,
+      group: "general",
     });
   }
 }

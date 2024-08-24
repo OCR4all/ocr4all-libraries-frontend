@@ -159,6 +159,7 @@ async function saveWorkflow() {
         summary: t("pages.nodeflow.toasts.save.success.summary"),
         detail: t("pages.nodeflow.toasts.save.success.detail"),
         life: 3000,
+        group: "general",
       });
       isLoadingSaveWorkflow.value = false;
       isSaveDialogVisible.value = false;
@@ -196,6 +197,7 @@ async function loadWorkflow() {
       summary: t("pages.nodeflow.toasts.load.success.summary"),
       detail: t("pages.nodeflow.toasts.load.success.detail"),
       life: 3000,
+      group: "general",
     });
   } catch (error) {
     toast.add({
@@ -203,6 +205,7 @@ async function loadWorkflow() {
       summary: t("pages.nodeflow.toasts.load.error.summary"),
       detail: t("pages.nodeflow.toasts.load.error.summary"),
       life: 3000,
+      group: "general",
     });
     selectedWorkflow.value = undefined;
   }
@@ -215,6 +218,7 @@ function rateWorkflow() {
     summary: t("pages.nodeflow.toasts.rate-workflow.placeholder.summary"),
     detail: t("pages.nodeflow.toasts.rate-workflow.placeholder.detail"),
     life: 3000,
+    group: "general",
   });
 }
 
@@ -232,7 +236,6 @@ function togglePalette() {
 </script>
 
 <template>
-  <Toast />
   <EditorComponent id="editor" :view-model="baklava">
     <template #toolbar>
       <CToolbar

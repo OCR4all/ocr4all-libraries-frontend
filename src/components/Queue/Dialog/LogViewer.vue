@@ -37,6 +37,7 @@ function copyToClipboard(){
     severity: "info",
     summary: "Copied to Clipboard",
     life: 3000,
+    group: "general",
   })
 }
 
@@ -59,7 +60,7 @@ function download(){
           </InputIcon>
           <InputText v-model="search" placeholder="Search" />
         </IconField>
-        <p v-if="search" class="inline-block align-middle">
+        <p v-if="search" class="self-center">
           {{ filteredLogs.length }} results
         </p>
       </div>
@@ -70,7 +71,7 @@ function download(){
       <Button icon="pi pi-download" class="mr-2" severity="contrast" text @click="download" />
     </template>
   </Toolbar>
-  <div class="w-[80vw] max-h-full overflow-auto bg-black p-8 text-white rounded">
+  <div class="w-[90vw] md:w-[80vw] max-h-full overflow-auto bg-black p-8 text-white rounded">
     <div class="grid">
       <div v-for="(log, index) in filteredLogs" :key="index" class="max-w-[80vw]">
         <pre>{{ log }}</pre>

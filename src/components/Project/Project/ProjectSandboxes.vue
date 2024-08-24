@@ -130,6 +130,7 @@ async function removeResults() {
           "pages.projects.sandbox.results.toasts.remove-results.success.detail",
         ),
         life: 3000,
+        group: "general",
       });
     });
 }

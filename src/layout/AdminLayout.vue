@@ -20,7 +20,6 @@ function toggleSidebarMobile() {
 
 <template>
   <DynamicDialog />
-  <Toast />
   <div class="h-screen bg-surface-100 dark:bg-surface-950">
     <div class="flex h-screen flex-1 overflow-hidden">
       <AppSidebar :mode="SidebarMode.Admin" />

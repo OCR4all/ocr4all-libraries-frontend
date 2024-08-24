@@ -35,7 +35,6 @@ refetch();
 </script>
 
 <template>
-  <Toast />
   <div>
     <DataTable
       :value="workflows"

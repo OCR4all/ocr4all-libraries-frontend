@@ -20,6 +20,7 @@ function updateLanguageAndTime(values, { setErrors }) {
       summary: "Success",
       detail: "Language and Time updated",
       life: 3000,
+      group: "general",
     });
   } catch (error) {
     toast.add({
@@ -27,6 +28,7 @@ function updateLanguageAndTime(values, { setErrors }) {
       summary: "Error",
       detail: error,
       life: 3000,
+      group: "general",
     });
   }
 }

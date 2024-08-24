@@ -226,6 +226,7 @@ async function deleteModel(id: string) {
         summary: "Success",
         detail: "Model removed",
         life: 3000,
+        group: "general",
       });
     } else {
       toast.add({
@@ -233,6 +234,7 @@ async function deleteModel(id: string) {
         summary: "Error",
         detail: "Couldn't remove model",
         life: 3000,
+        group: "general",
       });
     }
     fetch()

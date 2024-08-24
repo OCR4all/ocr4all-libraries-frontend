@@ -184,6 +184,7 @@ async function updateWorkflow() {
         summary: t("pages.workflows.toasts.update.error.summary"),
         detail: t("pages.workflows.toasts.update.error.detail"),
         life: 3000,
+        group: "general",
       });
     } else {
       toast.add({
@@ -191,6 +192,7 @@ async function updateWorkflow() {
         summary: t("pages.workflows.toasts.update.success.summary"),
         detail: t("pages.workflows.toasts.update.success.detail"),
         life: 3000,
+        group: "general",
       });
     }
     refetch();

@@ -32,6 +32,7 @@ async function updateGeneralInformation(values, { setErrors }) {
           summary: "Success",
           detail: "General information updated",
           life: 3000,
+          group: "general",
         });
       }
     });

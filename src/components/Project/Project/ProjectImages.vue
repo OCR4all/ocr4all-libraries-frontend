@@ -69,6 +69,7 @@ async function importFolios(data) {
     summary: "Success",
     detail: "Folios succesfully imported into project",
     life: 3000,
+    group: "general",
   });
   await refresh();
 }
@@ -78,7 +79,6 @@ refresh();
 const imageImportDialogVisible = ref(false);
 </script>
 <template>
-  <Toast />
   <Dialog
     v-model:visible="imageImportDialogVisible"
     maximizable
@@ -100,7 +100,6 @@ const imageImportDialogVisible = ref(false);
     </template>
   </Dialog>
   <div class="@container/section">
-    <Toast />
     <Toolbar class="mb-4">
       <template #start>
         <div class="my-2 space-x-2">

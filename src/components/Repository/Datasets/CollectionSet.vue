@@ -274,6 +274,7 @@ const hideUploadToast = () => {
         "pages.repository.container.overview.toast.upload.success.summary",
       ),
       life: 3000,
+      group: "general",
     });
   }, 2000);
 };

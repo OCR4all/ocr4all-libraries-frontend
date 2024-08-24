@@ -62,6 +62,7 @@ async function downloadDataset(data: ICollectionSet) {
           summary: "Error",
           detail: "Couldn't create export.",
           life: 3000,
+          group: "general",
         })
       }
       toast.removeGroup("download-toast");
@@ -113,6 +114,7 @@ async function refetch() {
       summary: "Error",
       detail: error.value,
       life: 3000,
+      group: "general",
     });
   }else{
     datasets.value = data.value.filter(function (container: IContainer){

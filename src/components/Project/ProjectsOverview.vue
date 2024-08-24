@@ -46,9 +46,12 @@ async function refetch() {
       summary: "Error",
       detail: error.value,
       life: 3000,
+      group: "general",
     })
   }else{
     projects.value = data.value;
+
+    console.log(projects.value)
   }
   loading.value = isFetching.value;
   setTimeout(function () {
@@ -208,10 +211,18 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   contextMenu.value.show(event.originalEvent);
 };
 
+const keywords = computed(() => {
+  if(projects.value){
+    return projects.value.flatMap(item =>
+        item.keywords ? item.keywords.map(keyword => ({ name: keyword })) : []
+    );
+  }
+  return []
+})
+
 refetch();
 </script>
 <template>
-  <Toast />
   <ContextMenu ref="contextMenu" :model="items">
     <template #item="{ item, props }">
       <a
@@ -267,10 +278,10 @@ refetch();
     <ComponentContainer spaced>
       <Toolbar>
         <template #start>
-            <Button v-tooltip.top="$t('pages.projects.overview.toolbar.new')" @click="router.push('/project/new')" text>
+            <Button v-tooltip.top="$t('pages.projects.overview.toolbar.new')" text @click="router.push('/project/new')">
               <i class="pi pi-plus text-black dark:text-white" />
             </Button>
-          <Button v-tooltip.top="$t('pages.projects.overview.toolbar.import')" @click="router.push('/project/import')" text>
+          <Button v-tooltip.top="$t('pages.projects.overview.toolbar.import')" text @click="router.push('/project/import')">
             <i class="pi pi-upload text-black dark:text-white" />
           </Button>
         </template>
@@ -352,7 +363,6 @@ refetch();
         <Column
           field="state"
           :header="$t('pages.projects.overview.table.columns.state')"
-          :filter-menu-style="{ width: '14rem' }"
         >
           <template #body="{ data }">
             <Tag :value="data.state" :severity="getSeverity(data.state)" />
@@ -362,8 +372,6 @@ refetch();
               v-model="filterModel.value"
               :options="states"
               placeholder="Select State"
-              class="p-column-filter"
-              style="min-width: 5rem; max-width: 12rem"
               :show-clear="true"
               @change="filterCallback()"
             >

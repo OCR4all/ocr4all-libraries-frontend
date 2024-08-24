@@ -20,13 +20,13 @@ function onSubmit(
       summary: t("pages.login.toasts.login.error.summary"),
       detail: t("pages.login.toasts.login.error.detail"),
       life: 3000,
+      group: "general",
     }),
   );
 }
 </script>
 
 <template>
-  <Toast />
   <div
     class="mx-auto flex h-screen flex-col items-center justify-center bg-surface-100 px-6 py-8 dark:bg-surface-700 lg:py-0"
   >

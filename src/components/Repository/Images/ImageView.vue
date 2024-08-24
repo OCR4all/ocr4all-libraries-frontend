@@ -69,6 +69,7 @@ async function listContainers() {
           summary: "Error",
           detail: response.error.value,
           life: 3000,
+          group: "general",
         })
       }else if(response.data.value){
         const data: IContainer[] = response.data.value
@@ -154,6 +155,7 @@ async function deleteContainers() {
       summary: "Success",
       detail: "Containers deleted",
       life: 3000,
+      group: "general",
     });
     toggleDeleteDialog();
   }
@@ -212,6 +214,7 @@ const toggleCreateContainerPanel = (event: Event) => {
 const selectedContainers: Ref<IContainer[] | undefined> = ref([]);
 const filters: Ref = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  keywords: { value: null, matchMode: FilterMatchMode.IN }
 });
 
 const deleteDialogVisible = ref(false);
@@ -238,6 +241,7 @@ async function updateContainer() {
       summary: "Success",
       detail: "Container updated",
       life: 3000,
+      group: "general",
     });
   } else {
     toast.add({
@@ -245,6 +249,7 @@ async function updateContainer() {
       summary: "Error",
       detail: "Couldn't update container",
       life: 3000,
+      group: "general",
     });
   }
 }
@@ -332,7 +337,7 @@ function downloadContainer(container: IContainer) {
     severity: "info",
     summary: "Preparing download",
     group: "download-toast",
-  });
+  })
   useCustomFetch(`/repository/container/folio/zip/${container.id}`)
     .blob()
     .then((response) => {
@@ -345,6 +350,8 @@ function downloadContainer(container: IContainer) {
       toast.removeGroup("download-toast");
     });
 }
+
+
 </script>
 <template>
   <ConfirmDialog />
@@ -548,6 +555,8 @@ function downloadContainer(container: IContainer) {
           v-model:selection="selectedContainers"
           :value="slotProps.items"
           :filters="filters"
+          filterDisplay="menu"
+          :globalFilterFields="['name', 'keywords']"
           contextMenu
           @rowContextmenu="onRowContextMenu"
           :paginator="true"
@@ -609,6 +618,8 @@ function downloadContainer(container: IContainer) {
           <Column
             field="keywords"
             sortable
+            filterField="keywords"
+            :showFilterMatchModes="false"
             :header="
               $t('pages.repository.overview.dataview.list.column.keywords')
             "
@@ -633,6 +644,16 @@ function downloadContainer(container: IContainer) {
                   >{{ keyword }}</Tag
                 >
               </div>
+            </template>
+            <template #filter="{ filterModel }">
+              <MultiSelect v-model="filterModel.value" :options="[{name: 'test'}]" optionLabel="name" filter placeholder="Any">
+                <template #option="slotProps">
+                  {{ filterModel.value }}
+                  <div class="flex items-center gap-2">
+                    <span>{{ slotProps.option.name }}</span>
+                  </div>
+                </template>
+              </MultiSelect>
             </template>
           </Column>
           <Column :exportable="false" style="min-width: 8rem">

@@ -25,6 +25,7 @@ async function deleteProject() {
         "pages.projects.project.information.toasts.update.success.detail",
       ),
       life: 3000,
+      group: "general",
     });
   } else {
     toast.add({
@@ -32,6 +33,7 @@ async function deleteProject() {
       summary: "Error",
       detail: "Something went wrong.",
       life: 3000,
+      group: "general",
     });
   }
   dialogRef.value.close();

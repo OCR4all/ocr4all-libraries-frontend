@@ -79,6 +79,7 @@ const hideUploadToast = () => {
         "pages.repository.container.overview.toast.upload.success.summary",
       ),
       life: 3000,
+      group: "general",
     });
   }, 2000);
 };
@@ -167,6 +168,7 @@ async function deleteSelected() {
             "pages.repository.container.overview.toast.delete-selected.success.detail",
           ),
           life: 3000,
+          group: "general",
         });
         selection.value = [];
         checked.value = false;
@@ -180,6 +182,7 @@ async function deleteSelected() {
             "pages.repository.container.overview.toast.delete-selected.error.detail",
           ),
           life: 3000,
+          group: "general",
         });
       }
       refresh();
@@ -283,7 +286,6 @@ refresh();
       }}
     </button>
   </Dialog>
-  <Toast />
   <Toast
     position="top-center"
     group="headless"

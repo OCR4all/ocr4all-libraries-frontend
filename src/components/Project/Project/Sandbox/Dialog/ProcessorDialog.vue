@@ -45,6 +45,7 @@ async function run(){
           summary: "Error",
           detail: response.error.value,
           life: 3000,
+          group: "general",
         })
       }else{
         toast.add({
@@ -52,6 +53,7 @@ async function run(){
           summary: "Success",
           detail: "Processor scheduled",
           life: 3000,
+          group: "general",
         })
         processorSelector.value.processorDialogVisible = false
         dialogRef.value.close()
@@ -61,6 +63,5 @@ async function run(){
 }
 </script>
 <template>
-  <Toast />
   <ProcessorSelector ref="processorSelector" @submit="run" />
 </template>
