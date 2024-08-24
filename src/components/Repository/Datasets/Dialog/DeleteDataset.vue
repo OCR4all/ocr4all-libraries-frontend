@@ -1,7 +1,10 @@
 <script setup lang="ts">
+import {useToast} from "primevue/usetoast";
+
 const dialogRef = inject("dialogRef");
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
+const toast = useToast()
 const data = ref();
 
 onMounted(() => {
@@ -14,8 +17,21 @@ async function deleteDataset() {
       .get()
       .then((response) => {
         if (response.error.value) {
-          console.log(response.error.value);
+          toast.add({
+            severity: "error",
+            summary: "Error",
+            detail: "Error while trying to delete datasets",
+            life: 3000,
+            group: "general",
+          })
         } else {
+          toast.add({
+            severity: "success",
+            summary: "Success",
+            detail: "Datasets deleted.",
+            life: 3000,
+            group: "general",
+          })
           dialogRef.value.close();
         }
       });

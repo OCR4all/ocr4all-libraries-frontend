@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAuthStore } from "@/stores/auth.store";
-import { Bars3CenterLeftIcon } from "@heroicons/vue/24/outline";
+import IconBars from "~icons/heroicons/bars-3-center-left-16-solid"
 const authStore = useAuthStore();
 
 const router = useRouter();
@@ -26,7 +26,7 @@ defineEmits(["toggle-sidebar-mobile"]);
         value="Open sidebar"
         @click="$emit('toggle-sidebar-mobile')"
       >
-        <Bars3CenterLeftIcon class="h-8 w-8" />
+        <IconBars class="h-8 w-8" />
       </button>
     </div>
     <div class="flex">

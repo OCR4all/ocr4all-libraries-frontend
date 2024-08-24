@@ -11,9 +11,6 @@ onMounted(() => {
 });
 
 function deleteDataset() {
-  console.log(
-    `/data/collection/remove/entity/${collection.value}?id=${data.value.id}`,
-  );
   useCustomFetch(
     `/data/collection/set/remove/entity/${collection.value}?id=${data.value.id}`,
   )

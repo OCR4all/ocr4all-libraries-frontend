@@ -11,6 +11,8 @@ import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { FilterMatchMode } from "@primevue/core/api";
 
+import IconCreate from "~icons/gridicons/create"
+
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
@@ -507,7 +509,7 @@ function downloadContainer(container: IContainer) {
       <template #start>
         <div class="flex">
           <Button v-tooltip.top="$t('pages.repository.overview.toolbar.button.create')" @click="toggleCreateContainerPanel" text>
-            <i class="pi pi-plus text-black dark:text-white" />
+            <IconCreate class="text-black dark:text-white" />
           </Button>
           <Popover ref="createContainerPanel">
             <div class="flex space-x-1">

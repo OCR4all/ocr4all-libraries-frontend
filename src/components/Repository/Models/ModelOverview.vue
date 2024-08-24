@@ -6,6 +6,8 @@ import ShareDialog from "@/components/Repository/Images/Container/Dialog/ShareDi
 import Column from "primevue/column";
 import Button from "primevue/button";
 
+import IconCreate from "~icons/gridicons/create"
+
 const EditModelDialog = defineAsyncComponent(
     () =>
         import(
@@ -370,7 +372,7 @@ const selectedModels = ref([])
       <Toolbar>
         <template #start>
           <Button text>
-            <i class="pi pi-plus text-black dark:text-white" />
+            <IconCreate class="text-black dark:text-white" />
           </Button>
           <Button icon="pi pi-trash" @click="confirmDelete" :disabled="selectedModels.length == 0" severity="danger" text />
         </template>

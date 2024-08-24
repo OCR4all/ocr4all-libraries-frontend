@@ -26,6 +26,7 @@ const shareDialog = defineAsyncComponent(
 );
 const router = useRouter();
 
+import IconCreate from "~icons/gridicons/create"
 import { useDialog } from "primevue/usedialog";
 import { useToast } from "primevue/usetoast";
 const dialog = useDialog();
@@ -33,7 +34,7 @@ const dialog = useDialog();
 const loading = ref(true);
 const isRefetching = ref(false);
 
- const toast = useToast()
+const toast = useToast()
 
 async function refetch() {
   isRefetching.value = true;
@@ -307,7 +308,7 @@ refetch();
       <Toolbar>
         <template #start>
             <Button v-tooltip.top="$t('pages.projects.overview.toolbar.new')" text @click="router.push('/project/new')">
-              <i class="pi pi-plus text-black dark:text-white" />
+              <IconCreate class="text-black dark:text-white" />
             </Button>
           <Button v-tooltip.top="$t('pages.projects.overview.toolbar.import')" text @click="router.push('/project/import')">
             <i class="pi pi-upload text-black dark:text-white" />

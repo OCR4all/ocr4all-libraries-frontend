@@ -33,6 +33,7 @@ const filters: Ref = ref({
 const dialog = useDialog();
 
 import IconAnalytics from "~icons/carbon/data-analytics"
+import IconCreate from "~icons/gridicons/create"
 
 const isRefetching: Ref<boolean> = ref(false);
 const datasets: Ref<ICollectionSet[]> = ref([]);
@@ -329,7 +330,7 @@ const contextMenu = ref();
     <Toolbar>
       <template #start>
         <Button v-tooltip.top="$t('pages.repository.overview.toolbar.button.create')" @click="openCreateDialog" text>
-          <i class="pi pi-plus text-black dark:text-white" />
+          <IconCreate class="text-black dark:text-white" />
         </Button>
         <Button v-tooltip.top="'Analyze Codec'" @click="getCodec(selectedDatasets)" :disabled="!selectedDatasets || !selectedDatasets.length" text>
           <IconAnalytics class="text-black dark:text-white" />
@@ -353,11 +354,11 @@ const contextMenu = ref();
       v-model:selection="selectedDatasets"
       :value="datasets"
       :filters="filters"
-      lazy
       context-menu
       :paginator="true"
       :rows="5"
       :rows-per-page-options="[5, 10, 20, 50]"
+      paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :row-hover="true"
       @row-contextmenu="onRowContextMenu"
     >

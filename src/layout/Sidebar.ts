@@ -11,9 +11,16 @@ import {
   InformationCircleIcon,
   CpuChipIcon,
 } from "@heroicons/vue/24/outline";
-import IconCompare from "~icons/carbon/compare";
+
+import IconDashboard from "~icons/heroicons/home"
+import IconRepository from "~icons/material-symbols/home-storage-rounded"
+import IconProject from "~icons/heroicons/squares-2x2"
+import IconNodeflow from "~icons/hugeicons/flow-square"
+import IconQueue from "~icons/heroicons/queue-list"
+import IconTraining from "~icons/carbon/machine-learning-model"
+import IconEvaluation from "~icons/carbon/compare"
+
 import { FunctionalComponent, HTMLAttributes, VNodeProps } from "vue";
-import { Square3Stack3DIcon } from "@heroicons/vue/16/solid";
 
 interface navigationEntry {
   to: string;
@@ -26,59 +33,59 @@ export const mainNavigation: navigationEntry[] = [
   {
     to: "/",
     label: "nav.sidebar.links.main.dashboard",
-    icon: HomeIcon,
+    icon: IconDashboard,
   },
   {
     to: "/repository",
     label: "nav.sidebar.links.main.repository",
-    icon: ServerIcon,
+    icon: IconRepository,
     children: [
       {
         to: "/repository/overview?section=Images",
         label: "Images",
-        icon: ServerIcon,
+        icon: IconRepository,
       },
       {
         to: "/repository?section=Datasets",
         label: "Datasets",
-        icon: ServerIcon,
+        icon: IconRepository,
       },
       {
         to: "/repository?section=Models",
         label: "Models",
-        icon: ServerIcon,
+        icon: IconRepository,
       },
       {
         to: "/repository?section=Workflows",
         label: "Workflows",
-        icon: ServerIcon,
+        icon: IconRepository,
       },
     ],
   },
   {
     to: "/project",
     label: "nav.sidebar.links.main.projects",
-    icon: Squares2X2Icon,
+    icon: IconProject,
   },
   {
     to: "/nodeflow",
     label: "nav.sidebar.links.main.nodeflow",
-    icon: CubeTransparentIcon,
+    icon: IconNodeflow,
   },
   {
     to: "/queue",
     label: "nav.sidebar.links.main.queue",
-    icon: QueueListIcon,
+    icon: IconQueue,
   },
   {
     to: "/training",
     label: "nav.sidebar.links.main.training",
-    icon: AcademicCapIcon,
+    icon: IconTraining,
   },
   {
     to: "/evaluation",
     label: "Evaluation",
-    icon: IconCompare,
+    icon: IconEvaluation,
   },
 ];
 

@@ -2,6 +2,8 @@
 import {
   ArrowPathIcon,
 } from "@heroicons/vue/24/outline";
+import IconCreate from "~icons/gridicons/create"
+
 import { UseTimeAgo } from "@vueuse/components";
 
 import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
@@ -302,7 +304,7 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
     <Toolbar>
       <template #start>
         <Button v-tooltip.top="$t('pages.projects.sandbox.results.toolbar.new')" @click="createSandbox()" text>
-          <i class="pi pi-plus text-black dark:text-white" />
+          <IconCreate class="text-black dark:text-white" />
         </Button>
       </template>
       <template #end>

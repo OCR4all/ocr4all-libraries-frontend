@@ -12,6 +12,7 @@ import { useNodeFlowStore } from "@/stores/nodeflow.store";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useDialog } from "primevue/usedialog";
 import { UseTimeAgo } from "@vueuse/components";
+import IconCreate from "~icons/gridicons/create"
 
 import { FilterMatchMode } from "@primevue/core/api";
 
@@ -278,7 +279,7 @@ refetch();
     <Toolbar>
       <template #start>
         <Button v-tooltip.top="$t('pages.workflows.toolbar.new')" text @click="router.push('/nodeflow')">
-          <i class="pi pi-plus text-black dark:text-white" />
+          <IconCreate class="text-black dark:text-white" />
         </Button>
       </template>
       <template #end>

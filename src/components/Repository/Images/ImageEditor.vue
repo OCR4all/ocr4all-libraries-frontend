@@ -7,7 +7,6 @@ import IconFlipHorizontal from "~icons/fluent/flip-horizontal-24-regular"
 import IconFlipVertical from "~icons/fluent/flip-vertical-24-filled"
 import IconRotateRight from "~icons/fluent/arrow-rotate-clockwise-16-filled"
 import IconRotateLeft from "~icons/fluent/arrow-rotate-counterclockwise-24-filled"
-import IconCrop from "~icons/fluent/crop-24-filled"
 
 const dialogRef = inject("dialogRef");
 
