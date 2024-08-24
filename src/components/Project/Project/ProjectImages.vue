@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import Dialog from "primevue/dialog";
-import Image from "primevue/image";
-import Button from "primevue/button";
-import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import Toolbar from "primevue/toolbar";
 import ImageCard from "@/components/Project/Project/ImageCard.vue";
+import IconImageImport from "~icons/lucide/image-plus"
 
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
@@ -102,15 +100,13 @@ const imageImportDialogVisible = ref(false);
   <div class="@container/section">
     <Toolbar class="mb-4">
       <template #start>
-        <div class="my-2 space-x-2">
-          <button
-            type="button"
-            class="rounded-md bg-primary-700 px-5 py-3 text-center text-base font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            @click="imageImportDialogVisible = true"
+          <Button
+              v-tooltip.top="'Import Images'"
+              text
+              @click="imageImportDialogVisible = true"
           >
-            Import Images
-          </button>
-        </div>
+            <IconImageImport class="text-black dark:text-white" />
+          </Button>
       </template>
     </Toolbar>
     <ComponentContainer>
