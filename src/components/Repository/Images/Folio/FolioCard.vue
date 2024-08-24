@@ -132,6 +132,13 @@ function openImageEditor() {
     props: {
       header: "Edit Image",
       modal: true,
+      style: {
+        width: '70vw',
+      },
+      breakpoints:{
+        '960px': '80vw',
+        '640px': '90vw'
+      },
     },
     data: {
       container: props.containerId,

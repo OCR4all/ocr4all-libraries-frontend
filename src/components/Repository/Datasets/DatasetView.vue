@@ -196,6 +196,13 @@ function openDeleteDialog(data: ICollectionSet) {
     props: {
       header: "Delete Dataset",
       modal: true,
+      style: {
+        width: '70vw',
+      },
+      breakpoints:{
+        '960px': '80vw',
+        '640px': '90vw'
+      },
     },
     data: data,
     onClose: () => {
@@ -209,6 +216,13 @@ function openCreateDialog() {
     props: {
       header: "Create Dataset",
       modal: true,
+      style: {
+        width: '70vw',
+      },
+      breakpoints:{
+        '960px': '80vw',
+        '640px': '90vw'
+      },
     },
     onClose: () => {
       refetch();
@@ -221,6 +235,13 @@ function openEditDialog(data: ICollectionSet) {
     props: {
       header: "Edit Dataset",
       modal: true,
+      style: {
+        width: '70vw',
+      },
+      breakpoints:{
+        '960px': '80vw',
+        '640px': '90vw'
+      },
     },
     data: {
       data,

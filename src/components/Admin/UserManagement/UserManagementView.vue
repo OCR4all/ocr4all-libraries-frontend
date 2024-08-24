@@ -112,6 +112,13 @@ function openEditUserDialog(data) {
     props: {
       header: i18n.t("admin.user-management.dialog.edit.header"),
       modal: true,
+      style: {
+        width: '70vw',
+      },
+      breakpoints:{
+        '960px': '80vw',
+        '640px': '90vw'
+      },
     },
     data: data,
     onClose: () => {
@@ -125,6 +132,13 @@ function openNewUserDialog() {
     props: {
       header: i18n.t("admin.user-management.dialog.create.header"),
       modal: true,
+      style: {
+        width: '70vw',
+      },
+      breakpoints:{
+        '960px': '80vw',
+        '640px': '90vw'
+      },
     },
     onClose: () => {
       refetch();
@@ -137,6 +151,13 @@ function openDeleteDialog(data: any) {
     props: {
       header: i18n.t("admin.user-management.dialog.delete.single.header"),
       modal: true,
+      style: {
+        width: '70vw',
+      },
+      breakpoints:{
+        '960px': '80vw',
+        '640px': '90vw'
+      },
     },
     data: [data],
     onClose: () => {

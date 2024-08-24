@@ -149,6 +149,13 @@ function openEditDialog(data: ISet) {
     props: {
       header: "Edit Set",
       modal: true,
+      style: {
+        width: '70vw',
+      },
+      breakpoints:{
+        '960px': '80vw',
+        '640px': '90vw'
+      },
     },
     data: {
       collection: dataset,
@@ -165,6 +172,13 @@ function openDeleteDialog(data: ISet) {
     props: {
       header: "Delete Set",
       modal: true,
+      style: {
+        width: '70vw',
+      },
+      breakpoints:{
+        '960px': '80vw',
+        '640px': '90vw'
+      },
     },
     data: {
       collection: dataset,
@@ -297,6 +311,13 @@ async function removeDataset() {
     props: {
       header: "Delete Dataset",
       modal: true,
+      style: {
+        width: '70vw',
+      },
+      breakpoints:{
+        '960px': '80vw',
+        '640px': '90vw'
+      },
     },
     data: data,
     onClose: () => {
@@ -385,7 +406,7 @@ async function getCodec(){
             width: '75vw',
           },
           breakpoints:{
-            '960px': '75vw',
+            '960px': '80vw',
             '640px': '90vw'
           },
         },

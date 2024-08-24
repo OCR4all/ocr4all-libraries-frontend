@@ -112,6 +112,13 @@ const toggle = (event: Event, data) => {
               props: {
                 header: "Edit Project",
                 modal: true,
+                style: {
+                  width: '70vw',
+                },
+                breakpoints:{
+                  '960px': '80vw',
+                  '640px': '90vw'
+                },
               },
               data: data,
               onClose: () => {
@@ -128,6 +135,13 @@ const toggle = (event: Event, data) => {
               props: {
                 header: "Delete Project",
                 modal: true,
+                style: {
+                  width: '70vw',
+                },
+                breakpoints:{
+                  '960px': '80vw',
+                  '640px': '90vw'
+                },
               },
               data: data,
               onClose: () => {
@@ -160,6 +174,13 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
           props: {
             header: "Edit Project",
             modal: true,
+            style: {
+              width: '70vw',
+            },
+            breakpoints:{
+              '960px': '80vw',
+              '640px': '90vw'
+            },
           },
           data: event.data,
           onClose: () => {
@@ -177,10 +198,10 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
             header: `Share ${event.data.name}`,
             modal: true,
             style: {
-              width: '50vw',
+              width: '75vw',
             },
             breakpoints:{
-              '960px': '75vw',
+              '960px': '80vw',
               '640px': '90vw'
             },
           },
@@ -199,6 +220,13 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
           props: {
             header: "Delete Project",
             modal: true,
+            style: {
+              width: '70vw',
+            },
+            breakpoints:{
+              '960px': '80vw',
+              '640px': '90vw'
+            },
           },
           data: event.data,
           onClose: () => {

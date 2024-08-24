@@ -111,6 +111,13 @@ function openNewGroupDialog() {
     props: {
       header: "Create Group",
       modal: true,
+      style: {
+        width: '70vw',
+      },
+      breakpoints:{
+        '960px': '80vw',
+        '640px': '90vw'
+      },
     },
     onClose: () => {
       refetch();
@@ -123,6 +130,13 @@ function openEditGroupDialog(data) {
     props: {
       header: "Edit Group",
       modal: true,
+      style: {
+        width: '70vw',
+      },
+      breakpoints:{
+        '960px': '80vw',
+        '640px': '90vw'
+      },
     },
     data: {
       data,
@@ -137,6 +151,13 @@ function openDeleteGroupDialog(data: any) {
     props: {
       header: i18n.t("admin.user-management.dialog.delete.single.header"),
       modal: true,
+      style: {
+        width: '70vw',
+      },
+      breakpoints:{
+        '960px': '80vw',
+        '640px': '90vw'
+      },
     },
     data: {
       data,

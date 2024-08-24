@@ -193,6 +193,13 @@ function openInfoDialog(data){
     props: {
       header: "Job Information",
       modal: true,
+      style: {
+        width: '75vw',
+      },
+      breakpoints:{
+        '960px': '80vw',
+        '640px': '90vw'
+      },
     },
     data: data,
     onClose: () => {

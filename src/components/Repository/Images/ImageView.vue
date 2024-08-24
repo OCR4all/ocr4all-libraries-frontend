@@ -318,10 +318,10 @@ function openShareModal(data: IContainer) {
       header: `Share ${name.value}`,
       modal: true,
       style: {
-        width: '50vw',
+        width: '70vw',
       },
       breakpoints:{
-        '960px': '75vw',
+        '960px': '80vw',
         '640px': '90vw'
       },
     },

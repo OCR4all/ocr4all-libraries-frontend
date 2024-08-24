@@ -31,6 +31,13 @@ function openLogDialog(text: string, type: string){
     props: {
       header: type,
       modal: true,
+      style: {
+        width: '70vw',
+      },
+      breakpoints:{
+        '960px': '80vw',
+        '640px': '90vw'
+      },
     },
     data: {
       text: text
