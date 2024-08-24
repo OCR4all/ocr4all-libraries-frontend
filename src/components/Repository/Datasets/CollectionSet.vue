@@ -40,6 +40,9 @@ const codecDialog = defineAsyncComponent(
       ),
 );
 
+import IconAnalytics from "~icons/carbon/data-analytics"
+import IconUpload from "~icons/carbon/upload"
+import IconDownload from "~icons/carbon/download"
 import { useDialog } from "primevue/usedialog";
 import Toast from "primevue/toast";
 import Toolbar from "primevue/toolbar";
@@ -491,55 +494,59 @@ refresh();
       </a>
     </template>
   </Menu>
-  <Toolbar class="mb-4">
-    <template #start>
-        <div class="flex gap-x-2">
-          <FileUpload
-            ref="fileUpload"
-            name="folioUpload[]"
-            :choose-label="
-          t('pages.repository.container.overview.toolbar.button.file-upload')
-        "
-            mode="basic"
-            :auto="true"
-            :custom-upload="true"
-            :multiple="true"
-            :pt="{
-          chooseButton: {
-            class:
-              'rounded-md flex bg-primary-600 p-4 text-white cursor-pointer',
-          },
-        }"
-            :max-file-size="1000000000"
-            @uploader="uploader"
-          >
-          </FileUpload>
-          <Button
-            @click="getCodec"
-            label="Get Codec"
-            :disabled="!selectedSets || !selectedSets.length" />
-          <Button
-            @click="downloadDataset"
-            label="Export"
-            icon="pi pi-download" />
-        </div>
-    </template>
-    <template #end>
-      <Button
-        @click="removeDataset"
-        severity="danger"
-        label="Delete"
-        icon="pi pi-trash" />
-    </template>
-  </Toolbar>
-  <ComponentContainer border>
+  <ComponentContainer spaced>
+    <Toolbar class="mb-4">
+      <template #start>
+        <Button v-tooltip.top="$t('pages.repository.container.overview.toolbar.button.file-upload')" icon="pi pi-trash" @click="toggleUploadDialog" text>
+          <IconUpload class="text-black dark:text-white" />
+        </Button>
+<!--          <FileUpload-->
+<!--              ref="fileUpload"-->
+<!--              name="folioUpload[]"-->
+<!--              :choose-label="-->
+<!--          t('pages.repository.container.overview.toolbar.button.file-upload')-->
+<!--        "-->
+<!--              mode="basic"-->
+<!--              :auto="true"-->
+<!--              :custom-upload="true"-->
+<!--              :multiple="true"-->
+<!--              :pt="{-->
+<!--          chooseButton: {-->
+<!--            class:-->
+<!--              'rounded-md flex bg-primary-600 p-4 text-white cursor-pointer',-->
+<!--          },-->
+<!--        }"-->
+<!--              :max-file-size="1000000000"-->
+<!--              @uploader="uploader"-->
+<!--          >-->
+<!--          </FileUpload>-->
+        <Button v-tooltip.top="'Analyze Codec'" @click="getCodec" :disabled="!selectedSets || !selectedSets.length" text>
+          <IconAnalytics class="text-black dark:text-white" />
+        </Button>
+        <Button icon="pi pi-trash" @click="removeDataset" :disabled="!selectedSets || !selectedSets.length" severity="danger" text />
+        <Button v-tooltip.top="'Export'" @click="downloadDataset" text>
+          <IconDownload class="text-black dark:text-white" />
+        </Button>
+      </template>
+      <template #end>
+        <IconField>
+          <InputIcon>
+            <i class="pi pi-search" />
+          </InputIcon>
+          <InputText
+              v-model="filters['global'].value"
+              placeholder="Search"
+          />
+        </IconField>
+      </template>
+    </Toolbar>
     <DataView :value="sets" :layout="layout">
       <template #header>
         <div class="flex justify-end">
           <SelectButton
-            v-model="layout"
-            :options="options"
-            :allow-empty="false"
+              v-model="layout"
+              :options="options"
+              :allow-empty="false"
           >
             <template #option="{ option }">
               <i :class="[option === 'list' ? 'pi pi-bars' : 'pi pi-table']" />
@@ -550,50 +557,32 @@ refresh();
 
       <template #list="slotProps">
         <DataTable
-          ref="containerDataTable"
-          v-model:selection="selectedSets"
-          :value="slotProps.items"
-          :filters="filters"
-          context-menu
-          :paginator="true"
-          :rows="5"
-          :rows-per-page-options="[5, 10, 20, 50]"
-          :row-hover="true"
-          table-style="min-width: 50rem"
-          @row-contextmenu="onRowContextMenu"
+            ref="containerDataTable"
+            v-model:selection="selectedSets"
+            :value="slotProps.items"
+            :filters="filters"
+            context-menu
+            :paginator="true"
+            :rows="5"
+            :rows-per-page-options="[5, 10, 20, 50]"
+            :row-hover="true"
+            table-style="min-width: 50rem"
+            @row-contextmenu="onRowContextMenu"
         >
-          <template #header>
-            <div
-              class="sm:justify-items-between grid grid-cols-1 items-center justify-items-start gap-2 sm:grid-cols-2"
-            >
-              <h4 class="m-0 font-bold">Manage Datasets</h4>
-              <div class="flex justify-self-start sm:justify-self-end">
-                <IconField>
-                  <InputIcon>
-                    <i class="pi pi-search" />
-                  </InputIcon>
-                  <InputText
-                    v-model="filters['global'].value"
-                    placeholder="Search"
-                  />
-                </IconField>
-              </div>
-            </div>
-          </template>
           <Column
-            selection-mode="multiple"
-            style="width: 3rem"
-            :exportable="false"
+              selection-mode="multiple"
+              style="width: 3rem"
+              :exportable="false"
           ></Column>
           <Column
-            field="name"
-            :header="$t('pages.repository.overview.dataview.list.column.name')"
-            sortable
+              field="name"
+              :header="$t('pages.repository.overview.dataview.list.column.name')"
+              sortable
           >
             <template #loading>
               <div
-                class="align-items-center flex"
-                :style="{
+                  class="align-items-center flex"
+                  :style="{
                   height: '17px',
                   'flex-grow': '1',
                   overflow: 'hidden',
@@ -604,15 +593,15 @@ refresh();
             </template>
           </Column>
           <Column
-            field="keywords"
-            :header="
+              field="keywords"
+              :header="
               $t('pages.repository.overview.dataview.list.column.keywords')
             "
           >
             <template #loading>
               <div
-                class="align-items-center flex"
-                :style="{
+                  class="align-items-center flex"
+                  :style="{
                   height: '17px',
                   'flex-grow': '1',
                   overflow: 'hidden',
@@ -624,23 +613,23 @@ refresh();
             <template #body="slotProps">
               <div class="flex space-x-1">
                 <Tag
-                  v-for="keyword of slotProps.data.keywords"
-                  :key="keyword"
-                  >{{ keyword }}</Tag
+                    v-for="keyword of slotProps.data.keywords"
+                    :key="keyword"
+                >{{ keyword }}</Tag
                 >
               </div>
             </template>
           </Column>
           <Column
-            field="description"
-            :header="$t('pages.projects.overview.table.columns.description')"
-            :sortable="true"
+              field="description"
+              :header="$t('pages.projects.overview.table.columns.description')"
+              :sortable="true"
           >
           </Column>
           <Column
-            field="date"
-            :header="$t('pages.projects.overview.table.columns.created')"
-            :sortable="true"
+              field="date"
+              :header="$t('pages.projects.overview.table.columns.created')"
+              :sortable="true"
           >
             <template #body="{ data }">
               <UseTimeAgo v-slot="{ timeAgo }" :time="Date.parse(data.date)">
@@ -652,11 +641,11 @@ refresh();
             <template #body="{ data }">
               <div class="space-y-2">
                 <Button
-                  type="button"
-                  icon="pi pi-ellipsis-v"
-                  text
-                  severity="secondary"
-                  @click="toggle($event, data)"
+                    type="button"
+                    icon="pi pi-ellipsis-v"
+                    text
+                    severity="secondary"
+                    @click="toggle($event, data)"
                 />
               </div>
             </template>

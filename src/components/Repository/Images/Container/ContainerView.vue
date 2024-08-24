@@ -10,18 +10,17 @@ import ProgressBar from "primevue/progressbar";
 import axios from "axios";
 import { useConfigStore } from "@/stores/config.store";
 import { useAuthStore } from "@/stores/auth.store";
-import Checkbox from "primevue/checkbox";
 import Dialog from "primevue/dialog";
 import { LocationQueryValue, Router } from "vue-router";
 import { ToastServiceMethods } from "primevue/toastservice";
 import { Store } from "pinia";
 import { useI18n } from "vue-i18n";
 import { useUiStore } from "@/stores/ui.store";
-import Image from "primevue/image";
 import { UseTimeAgo } from "@vueuse/components";
 import { useLocalDateFormat } from "@/composables/useLocalDateFormat";
 const config: Store = useConfigStore();
 const auth: Store = useAuthStore();
+import IconImageUpload from "~icons/icon-park-outline/upload-picture"
 
 const { t } = useI18n();
 
@@ -328,47 +327,46 @@ refresh();
       </section>
     </template>
   </Toast>
-  <ComponentContainer>
-    <div class="m-4 flex space-x-4">
-      <FileUpload
-        ref="fileUpload"
-        name="folioUpload[]"
-        :choose-label="
-          t('pages.repository.container.overview.toolbar.button.file-upload')
-        "
-        mode="basic"
-        :auto="true"
-        :custom-upload="true"
-        :multiple="true"
-        accept="image/*"
-        :max-file-size="1000000000"
-        @uploader="uploader"
-      >
-      </FileUpload>
-      <button
-        class="rounded-md bg-red-600 p-4 text-primary-0 hover:bg-red-700 disabled:bg-red-400"
-        :disabled="selection.length === 0"
-        @click="toggleDeleteDialog"
-      >
-        {{ t("pages.repository.container.overview.toolbar.button.delete") }}
-      </button>
-    </div>
-    <div class="mx-4 mt-10 flex flex-col space-y-8">
-      <h2 class="text-3xl font-bold text-surface-950 dark:text-surface-50">
-        {{ t("pages.repository.container.overview.all-folios") }}
-      </h2>
-    </div>
+  <ComponentContainer spaced>
+    <Toolbar>
+      <template #start>
+        <Button v-tooltip.top="$t('pages.repository.container.overview.toolbar.button.file-upload')" icon="pi pi-trash" @click="toggleUploadDialog" text>
+          <IconImageUpload class="text-black dark:text-white" />
+        </Button>
+<!--        <FileUpload-->
+<!--            ref="fileUpload"-->
+<!--            name="folioUpload[]"-->
+<!--            :choose-label="-->
+<!--          -->
+<!--        "-->
+<!--            :auto="true"-->
+<!--            :custom-upload="true"-->
+<!--            :multiple="true"-->
+<!--            accept="image/*"-->
+<!--            :max-file-size="1000000000"-->
+<!--            @uploader="uploader"-->
+<!--        >-->
+<!--        </FileUpload>-->
+        <Button v-tooltip.top="$t('pages.repository.container.overview.toolbar.button.delete')" icon="pi pi-trash" @click="toggleDeleteDialog" :disabled="selection.length === 0" severity="danger" text />
+      </template>
+      <template #end>
+        <SelectButton v-model="layout" :options="options" :allowEmpty="false">
+          <template #option="{ option }">
+            <i :class="[option === 'list' ? 'pi pi-bars' : 'pi pi-table']" />
+          </template>
+        </SelectButton>
+      </template>
+    </Toolbar>
     <Suspense>
       <DataView :value="folios" :layout="layout" paginator :rows="20" :rowsPerPageOptions="[5, 10, 15, 20, 25]">
-        <template #header>
-          <div class="flex justify-between">
-            <div class="flex space-x-3">
-              <p
+        <template #grid="slotProps">
+          <div class="flex space-x-3">
+            <p
                 class="min-w-fit self-end text-xl font-semibold text-surface-950 dark:text-surface-50"
-              >
-                {{ t("pages.repository.container.overview.sort-by") }}
-              </p>
-              <Select
+            >
+              {{ t("pages.repository.container.overview.sort-by") }}
+            </p>
+            <Select
                 v-model="selectedSortMode"
                 :options="sortModes"
                 option-label="name"
@@ -381,16 +379,8 @@ refresh();
               trigger: { class: 'hidden' },
             }"
                 @change="updateSort"
-              />
-            </div>
-            <SelectButton v-model="layout" :options="options" :allowEmpty="false">
-              <template #option="{ option }">
-                <i :class="[option === 'list' ? 'pi pi-bars' : 'pi pi-table']" />
-              </template>
-            </SelectButton>
+            />
           </div>
-        </template>
-        <template #grid="slotProps">
           <div class="grid grid-cols-1 content-center justify-center gap-x-2 gap-y-3 @[550px]/content:grid-cols-2 @[800px]/content:grid-cols-3 @[1050px]/content:grid-cols-4">
             <div v-for="(item, index) in slotProps.items" :key="index">
               <FolioCard
