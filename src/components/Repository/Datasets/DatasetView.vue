@@ -412,16 +412,17 @@ const contextMenu = ref();
           </div>
         </template>
       </Column>
-      <Column header="Actions" :exportable="false" style="min-width: 8rem">
+      <Column :exportable="false" style="min-width: 8rem">
         <template #body="{ data }">
-          <Button
-            type="button"
-            text
-            severity="secondary"
-            @click="toggle($event, data)"
-          >
-            <i class="pi pi-ellipsis-h text-black dark:text-white" />
-          </Button>
+          <div class="space-y-2">
+            <Button
+                type="button"
+                icon="pi pi-ellipsis-v"
+                text
+                severity="secondary"
+                @click="toggle($event, data)"
+            />
+          </div>
         </template>
       </Column>
     </DataTable>

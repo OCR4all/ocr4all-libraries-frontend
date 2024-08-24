@@ -388,19 +388,15 @@ style="width: 50px; height: 50px" stroke-width="8" fill="transparent"
           </UseTimeAgo>
         </template>
       </Column>
-      <Column
-        :header="$t('pages.projects.sandbox.results.table.columns.actions')"
-        :exportable="false"
-        style="min-width: 8rem"
-      >
+      <Column :exportable="false" style="min-width: 8rem">
         <template #body="{ data }">
           <div class="space-y-2">
             <Button
-              type="button"
-              icon="pi pi-ellipsis-v"
-              text
-              severity="secondary"
-              @click="toggle($event, data)"
+                type="button"
+                icon="pi pi-ellipsis-v"
+                text
+                severity="secondary"
+                @click="toggle($event, data)"
             />
           </div>
         </template>

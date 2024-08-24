@@ -2,7 +2,6 @@
 import { UseTimeAgo } from "@vueuse/components";
 import {
   ArrowPathIcon,
-  ArchiveBoxXMarkIcon,
   StopIcon,
   XMarkIcon,
 } from "@heroicons/vue/24/outline";
@@ -36,6 +35,7 @@ import { Ref } from "vue";
 import { useDialog } from "primevue/usedialog";
 import { useLocalDateFormat } from "@/composables/useLocalDateFormat";
 import Toolbar from "primevue/toolbar";
+import DialogLoadingSkeleton from "@/components/Layout/Dialog/DialogLoadingSkeleton.vue";
 const toast = useToast();
 
 const loading: Ref<boolean> = ref(true);
@@ -395,17 +395,16 @@ onUnmounted(() => {
           </div>
         </template>
       </Column>
-      <Column header="Actions" :exportable="false" style="min-width: 8rem">
+      <Column :exportable="false" style="min-width: 8rem">
         <template #body="{ data }">
           <div class="space-y-2">
             <Button
-              type="button"
-              text
-              severity="secondary"
-              @click="toggle($event, data)"
-            >
-              <i class="pi pi-ellipsis-h text-black dark:text-white" />
-            </Button>
+                type="button"
+                icon="pi pi-ellipsis-v"
+                text
+                severity="secondary"
+                @click="toggle($event, data)"
+            />
           </div>
         </template>
       </Column>
