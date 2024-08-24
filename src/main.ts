@@ -13,6 +13,8 @@ import router from "./router";
 import { createHead } from "@unhead/vue";
 const head = createHead();
 
+import '@sfxcode/formkit-primevue/dist/sass/formkit-primevue.scss'
+
 import { VueQueryPlugin } from "@tanstack/vue-query";
 // PrimeVue imports
 import Aura from "@primevue/themes/aura";

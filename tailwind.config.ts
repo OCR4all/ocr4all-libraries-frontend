@@ -7,7 +7,6 @@ module.exports = {
     "./index.html",
     "./src/**/*.{vue,js,ts}",
     "./node_modules/primevue/**/*.{vue,js,ts,jsx,tsx}",
-    "./src/formkit.theme.ts",
   ],
   theme: {
     extend: {
