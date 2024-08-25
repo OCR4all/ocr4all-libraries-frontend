@@ -28,23 +28,20 @@ const deleteSetDialog = defineAsyncComponent(
 );
 
 const deleteDatasetDialog = defineAsyncComponent(
-  () => import("@/components/Repository/Datasets/Dialog/DeleteDataset.vue")
-)
-
-const uploadSetDialog = defineAsyncComponent(
-    () => import("@/components/Repository/Datasets/Dialog/UploadSetDialog.vue")
-)
-
-const codecDialog = defineAsyncComponent(
-  () =>
-    import(
-      "@/components/Codec/CodecDialog.vue"
-      ),
+  () => import("@/components/Repository/Datasets/Dialog/DeleteDataset.vue"),
 );
 
-import IconAnalytics from "~icons/carbon/data-analytics"
-import IconUpload from "~icons/carbon/upload"
-import IconDownload from "~icons/carbon/download"
+const uploadSetDialog = defineAsyncComponent(
+  () => import("@/components/Repository/Datasets/Dialog/UploadSetDialog.vue"),
+);
+
+const codecDialog = defineAsyncComponent(
+  () => import("@/components/Codec/CodecDialog.vue"),
+);
+
+import IconAnalytics from "~icons/carbon/data-analytics";
+import IconUpload from "~icons/carbon/upload";
+import IconDownload from "~icons/carbon/download";
 import { useDialog } from "primevue/usedialog";
 import Toast from "primevue/toast";
 import Toolbar from "primevue/toolbar";
@@ -75,17 +72,17 @@ uiStore.breadcrumb = [
   },
 ];
 
-function openUploadDialog(){
+function openUploadDialog() {
   dialog.open(uploadSetDialog, {
     props: {
       header: "Upload additional datasets",
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: {
@@ -105,7 +102,7 @@ async function refresh() {
     .json()
     .then((response) => {
       sets.value = response.data.value;
-      console.log(sets.value)
+      console.log(sets.value);
     });
 }
 
@@ -122,11 +119,11 @@ function openEditDialog(data: ISet) {
       header: "Edit Set",
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: {
@@ -145,11 +142,11 @@ function openDeleteDialog(data: ISet) {
       header: "Delete Set",
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: {
@@ -171,7 +168,7 @@ async function downloadSet(data: ISet) {
   useCustomFetch(`/data/collection/set/download/${dataset}?id=${data.id}`)
     .blob()
     .then((response) => {
-      if(response.data.value){
+      if (response.data.value) {
         const url = window.URL.createObjectURL(new Blob([response.data.value]));
         const link = document.createElement("a");
         link.href = url;
@@ -192,7 +189,7 @@ async function downloadDataset() {
   useCustomFetch(`/data/collection/set/zip/${dataset}`)
     .blob()
     .then((response) => {
-      if(response.data.value){
+      if (response.data.value) {
         const url = window.URL.createObjectURL(new Blob([response.data.value]));
         const link = document.createElement("a");
         link.href = url;
@@ -215,8 +212,8 @@ const toggle = (event, data: ISet) => {
           label: "Open",
           icon: "pi pi-eye",
           command: () => {
-            openSet(data)
-          }
+            openSet(data);
+          },
         },
         {
           label: "Edit",
@@ -250,30 +247,32 @@ async function openSet(data: ISet) {
     .get()
     .json()
     .then((response) => {
-      console.log(response.data.value)
+      console.log(response.data.value);
     });
 }
 
 async function removeDataset() {
-  const data = [{
-    id: dataset
-  }]
+  const data = [
+    {
+      id: dataset,
+    },
+  ];
 
   dialog.open(deleteDatasetDialog, {
     props: {
       header: "Delete Dataset",
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: data,
     onClose: () => {
-      router.push("/repository/overview?category=Datasets")
+      router.push("/repository/overview?category=Datasets");
     },
   });
 }
@@ -292,13 +291,13 @@ const options = ref(["list", "grid"]);
 
 const contextMenu = ref();
 const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
-  (items.value = [
+  items.value = [
     {
       label: "Open",
       icon: "pi pi-eye",
       command: () => {
-        openSet(event.data)
-      }
+        openSet(event.data);
+      },
     },
     {
       label: "Edit",
@@ -321,53 +320,54 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
         openDeleteDialog(event.data);
       },
     },
-  ])
+  ];
   contextMenu.value.show(event.originalEvent);
 };
 
-async function getCodec(){
-  const files = []
-  for(const set of selectedSets.value){
-    const xml = set.files.find(file => {
-      return file["content-type"] === "application/xml"
-    })
-    if(xml) files.push(xml.name)
+async function getCodec() {
+  const files = [];
+  for (const set of selectedSets.value) {
+    const xml = set.files.find((file) => {
+      return file["content-type"] === "application/xml";
+    });
+    if (xml) files.push(xml.name);
   }
   const payload = {
-    "datasets": [
+    datasets: [
       {
-        "id": dataset,
-        "filenames": files
-      }
+        id: dataset,
+        filenames: files,
+      },
     ],
-    "level": "TextLine",
-    "index": 0,
-    "normalizer": "NFD"
-  }
-  await useCustomFetch(
-    "/data/collection/set/codec",
-  ).post(payload).json().then((response) => {
-    if(response.error.value){
-      console.error("Couldn't retrieve codec")
-    }else{
-      dialog.open(codecDialog, {
-        props: {
-          header: "Codec",
-          modal: true,
-          style: {
-            width: '75vw',
+    level: "TextLine",
+    index: 0,
+    normalizer: "NFD",
+  };
+  await useCustomFetch("/data/collection/set/codec")
+    .post(payload)
+    .json()
+    .then((response) => {
+      if (response.error.value) {
+        console.error("Couldn't retrieve codec");
+      } else {
+        dialog.open(codecDialog, {
+          props: {
+            header: "Codec",
+            modal: true,
+            style: {
+              width: "75vw",
+            },
+            breakpoints: {
+              "960px": "80vw",
+              "640px": "90vw",
+            },
           },
-          breakpoints:{
-            '960px': '80vw',
-            '640px': '90vw'
+          data: {
+            codec: response.data.value,
           },
-        },
-        data: {
-          codec: response.data.value,
-        },
-      });
-    }
-  });
+        });
+      }
+    });
 }
 
 refresh();
@@ -375,17 +375,49 @@ refresh();
 <template>
   <Toast position="bottom-right" group="download-toast">
     <template #container="{ message, closeCallback }">
-      <div class="flex items-center w-full p-4 rounded-lg shadow bg-surface-200/50 dark:bg-surface-700/50 backdrop-md" role="alert">
-        <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8">
-          <ProgressSpinner class="w-4 h-4" strokeWidth="8" fill="transparent"
-                           animationDuration=".5s" aria-label="Download Spinner" />
+      <div
+        class="backdrop-md flex w-full items-center rounded-lg bg-surface-200/50 p-4 shadow dark:bg-surface-700/50"
+        role="alert"
+      >
+        <div
+          class="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center"
+        >
+          <ProgressSpinner
+            class="h-4 w-4"
+            strokeWidth="8"
+            fill="transparent"
+            animationDuration=".5s"
+            aria-label="Download Spinner"
+          />
           <span class="sr-only">Fire icon</span>
         </div>
-        <div class="ms-3 text-sm text-surface-800 dark:text-surface-100 font-normal">{{ message.summary }}</div>
-        <button @click="closeCallback" type="button" class="ms-auto -mx-1.5 -my-1.5 text-surface-800 hover:text-surface-950 rounded-lg focus:ring-2 focus:ring-surface-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-surface-200 dark:hover:text-white dark:hover:bg-gray-800" data-dismiss-target="#toast-default" aria-label="Close">
+        <div
+          class="ms-3 text-sm font-normal text-surface-800 dark:text-surface-100"
+        >
+          {{ message.summary }}
+        </div>
+        <button
+          @click="closeCallback"
+          type="button"
+          class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg p-1.5 text-surface-800 hover:bg-gray-100 hover:text-surface-950 focus:ring-2 focus:ring-surface-300 dark:text-surface-200 dark:hover:bg-gray-800 dark:hover:text-white"
+          data-dismiss-target="#toast-default"
+          aria-label="Close"
+        >
           <span class="sr-only">Close</span>
-          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          <svg
+            class="h-3 w-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
           </svg>
         </button>
       </div>
@@ -446,13 +478,31 @@ refresh();
   <ComponentContainer spaced>
     <Toolbar class="mb-4">
       <template #start>
-        <Button v-tooltip.top="$t('pages.repository.container.overview.toolbar.button.file-upload')" icon="pi pi-trash" @click="openUploadDialog" text>
+        <Button
+          v-tooltip.top="
+            $t('pages.repository.container.overview.toolbar.button.file-upload')
+          "
+          icon="pi pi-trash"
+          @click="openUploadDialog"
+          text
+        >
           <IconUpload class="text-black dark:text-white" />
         </Button>
-        <Button v-tooltip.top="'Analyze Codec'" @click="getCodec" :disabled="!selectedSets || !selectedSets.length" text>
+        <Button
+          v-tooltip.top="'Analyze Codec'"
+          @click="getCodec"
+          :disabled="!selectedSets || !selectedSets.length"
+          text
+        >
           <IconAnalytics class="text-black dark:text-white" />
         </Button>
-        <Button icon="pi pi-trash" @click="removeDataset" :disabled="!selectedSets || !selectedSets.length" severity="danger" text />
+        <Button
+          icon="pi pi-trash"
+          @click="removeDataset"
+          :disabled="!selectedSets || !selectedSets.length"
+          severity="danger"
+          text
+        />
         <Button v-tooltip.top="'Export'" @click="downloadDataset" text>
           <IconDownload class="text-black dark:text-white" />
         </Button>
@@ -462,10 +512,7 @@ refresh();
           <InputIcon>
             <i class="pi pi-search" />
           </InputIcon>
-          <InputText
-              v-model="filters['global'].value"
-              placeholder="Search"
-          />
+          <InputText v-model="filters['global'].value" placeholder="Search" />
         </IconField>
       </template>
     </Toolbar>
@@ -473,9 +520,9 @@ refresh();
       <template #header>
         <div class="flex justify-end">
           <SelectButton
-              v-model="layout"
-              :options="options"
-              :allow-empty="false"
+            v-model="layout"
+            :options="options"
+            :allow-empty="false"
           >
             <template #option="{ option }">
               <i :class="[option === 'list' ? 'pi pi-bars' : 'pi pi-table']" />
@@ -486,32 +533,32 @@ refresh();
 
       <template #list="slotProps">
         <DataTable
-            ref="containerDataTable"
-            v-model:selection="selectedSets"
-            :value="slotProps.items"
-            :filters="filters"
-            context-menu
-            :paginator="true"
-            :rows="5"
-            :rows-per-page-options="[5, 10, 20, 50]"
-            :row-hover="true"
-            table-style="min-width: 50rem"
-            @row-contextmenu="onRowContextMenu"
+          ref="containerDataTable"
+          v-model:selection="selectedSets"
+          :value="slotProps.items"
+          :filters="filters"
+          context-menu
+          :paginator="true"
+          :rows="5"
+          :rows-per-page-options="[5, 10, 20, 50]"
+          :row-hover="true"
+          table-style="min-width: 50rem"
+          @row-contextmenu="onRowContextMenu"
         >
           <Column
-              selection-mode="multiple"
-              style="width: 3rem"
-              :exportable="false"
+            selection-mode="multiple"
+            style="width: 3rem"
+            :exportable="false"
           ></Column>
           <Column
-              field="name"
-              :header="$t('pages.repository.overview.dataview.list.column.name')"
-              sortable
+            field="name"
+            :header="$t('pages.repository.overview.dataview.list.column.name')"
+            sortable
           >
             <template #loading>
               <div
-                  class="align-items-center flex"
-                  :style="{
+                class="align-items-center flex"
+                :style="{
                   height: '17px',
                   'flex-grow': '1',
                   overflow: 'hidden',
@@ -522,15 +569,15 @@ refresh();
             </template>
           </Column>
           <Column
-              field="keywords"
-              :header="
+            field="keywords"
+            :header="
               $t('pages.repository.overview.dataview.list.column.keywords')
             "
           >
             <template #loading>
               <div
-                  class="align-items-center flex"
-                  :style="{
+                class="align-items-center flex"
+                :style="{
                   height: '17px',
                   'flex-grow': '1',
                   overflow: 'hidden',
@@ -542,23 +589,23 @@ refresh();
             <template #body="slotProps">
               <div class="flex space-x-1">
                 <Tag
-                    v-for="keyword of slotProps.data.keywords"
-                    :key="keyword"
-                >{{ keyword }}</Tag
+                  v-for="keyword of slotProps.data.keywords"
+                  :key="keyword"
+                  >{{ keyword }}</Tag
                 >
               </div>
             </template>
           </Column>
           <Column
-              field="description"
-              :header="$t('pages.projects.overview.table.columns.description')"
-              :sortable="true"
+            field="description"
+            :header="$t('pages.projects.overview.table.columns.description')"
+            :sortable="true"
           >
           </Column>
           <Column
-              field="date"
-              :header="$t('pages.projects.overview.table.columns.created')"
-              :sortable="true"
+            field="date"
+            :header="$t('pages.projects.overview.table.columns.created')"
+            :sortable="true"
           >
             <template #body="{ data }">
               <UseTimeAgo v-slot="{ timeAgo }" :time="Date.parse(data.date)">
@@ -570,11 +617,11 @@ refresh();
             <template #body="{ data }">
               <div class="space-y-2">
                 <Button
-                    type="button"
-                    icon="pi pi-ellipsis-v"
-                    text
-                    severity="secondary"
-                    @click="toggle($event, data)"
+                  type="button"
+                  icon="pi pi-ellipsis-v"
+                  text
+                  severity="secondary"
+                  @click="toggle($event, data)"
                 />
               </div>
             </template>

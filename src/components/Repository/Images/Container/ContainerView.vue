@@ -20,15 +20,14 @@ import { UseTimeAgo } from "@vueuse/components";
 import { useLocalDateFormat } from "@/composables/useLocalDateFormat";
 const config: Store = useConfigStore();
 const auth: Store = useAuthStore();
-import IconImageUpload from "~icons/icon-park-outline/upload-picture"
+import IconImageUpload from "~icons/icon-park-outline/upload-picture";
 
 const { t } = useI18n();
 
 const folios = ref();
 
-const layout: Ref<"list" | "grid" | undefined> = ref('grid');
-const options = ref(['list', 'grid']);
-
+const layout: Ref<"list" | "grid" | undefined> = ref("grid");
+const options = ref(["list", "grid"]);
 
 const router: Router = useRouter();
 const container: LocationQueryValue | LocationQueryValue[] =
@@ -292,7 +291,7 @@ refresh();
   >
     <template #container="{ message, closeCallback }">
       <section
-        class="flex w-full flex-col gap-4 rounded-xl bg-surface-950/40 p-4 backdrop-blur-sm dark:bg-surface-800/40 border dark:border-surface-800 border-surface-300"
+        class="flex w-full flex-col gap-4 rounded-xl border border-surface-300 bg-surface-950/40 p-4 backdrop-blur-sm dark:border-surface-800 dark:bg-surface-800/40"
       >
         <div class="flex w-full gap-3 justify-self-center">
           <i
@@ -330,24 +329,40 @@ refresh();
   <ComponentContainer spaced>
     <Toolbar>
       <template #start>
-        <Button v-tooltip.top="$t('pages.repository.container.overview.toolbar.button.file-upload')" icon="pi pi-trash" @click="toggleUploadDialog" text>
+        <Button
+          v-tooltip.top="
+            $t('pages.repository.container.overview.toolbar.button.file-upload')
+          "
+          icon="pi pi-trash"
+          @click="toggleUploadDialog"
+          text
+        >
           <IconImageUpload class="text-black dark:text-white" />
         </Button>
-<!--        <FileUpload-->
-<!--            ref="fileUpload"-->
-<!--            name="folioUpload[]"-->
-<!--            :choose-label="-->
-<!--          -->
-<!--        "-->
-<!--            :auto="true"-->
-<!--            :custom-upload="true"-->
-<!--            :multiple="true"-->
-<!--            accept="image/*"-->
-<!--            :max-file-size="1000000000"-->
-<!--            @uploader="uploader"-->
-<!--        >-->
-<!--        </FileUpload>-->
-        <Button v-tooltip.top="$t('pages.repository.container.overview.toolbar.button.delete')" icon="pi pi-trash" @click="toggleDeleteDialog" :disabled="selection.length === 0" severity="danger" text />
+        <!--        <FileUpload-->
+        <!--            ref="fileUpload"-->
+        <!--            name="folioUpload[]"-->
+        <!--            :choose-label="-->
+        <!--          -->
+        <!--        "-->
+        <!--            :auto="true"-->
+        <!--            :custom-upload="true"-->
+        <!--            :multiple="true"-->
+        <!--            accept="image/*"-->
+        <!--            :max-file-size="1000000000"-->
+        <!--            @uploader="uploader"-->
+        <!--        >-->
+        <!--        </FileUpload>-->
+        <Button
+          v-tooltip.top="
+            $t('pages.repository.container.overview.toolbar.button.delete')
+          "
+          icon="pi pi-trash"
+          @click="toggleDeleteDialog"
+          :disabled="selection.length === 0"
+          severity="danger"
+          text
+        />
       </template>
       <template #end>
         <SelectButton v-model="layout" :options="options" :allowEmpty="false">
@@ -358,30 +373,40 @@ refresh();
       </template>
     </Toolbar>
     <Suspense>
-      <DataView :value="folios" :layout="layout" paginator :rows="20" :rowsPerPageOptions="[5, 10, 15, 20, 25]">
+      <DataView
+        :value="folios"
+        :layout="layout"
+        paginator
+        :rows="20"
+        :rowsPerPageOptions="[5, 10, 15, 20, 25]"
+      >
         <template #grid="slotProps">
           <div class="flex space-x-3">
             <p
-                class="min-w-fit self-end text-xl font-semibold text-surface-950 dark:text-surface-50"
+              class="min-w-fit self-end text-xl font-semibold text-surface-950 dark:text-surface-50"
             >
               {{ t("pages.repository.container.overview.sort-by") }}
             </p>
             <Select
-                v-model="selectedSortMode"
-                :options="sortModes"
-                option-label="name"
-                :pt="{
-              root: {
-                class:
-                  'inline-flex relative bg-transparent cursor-pointer self-end',
-              },
-              input: { class: 'text-surface-950 dark:text-surface-50 text-xl' },
-              trigger: { class: 'hidden' },
-            }"
-                @change="updateSort"
+              v-model="selectedSortMode"
+              :options="sortModes"
+              option-label="name"
+              :pt="{
+                root: {
+                  class:
+                    'inline-flex relative bg-transparent cursor-pointer self-end',
+                },
+                input: {
+                  class: 'text-surface-950 dark:text-surface-50 text-xl',
+                },
+                trigger: { class: 'hidden' },
+              }"
+              @change="updateSort"
             />
           </div>
-          <div class="grid grid-cols-1 content-center justify-center gap-x-2 gap-y-3 @[550px]/content:grid-cols-2 @[800px]/content:grid-cols-3 @[1050px]/content:grid-cols-4">
+          <div
+            class="grid grid-cols-1 content-center justify-center gap-x-2 gap-y-3 @[550px]/content:grid-cols-2 @[800px]/content:grid-cols-3 @[1050px]/content:grid-cols-4"
+          >
             <div v-for="(item, index) in slotProps.items" :key="index">
               <FolioCard
                 :id="item.id"
@@ -396,13 +421,14 @@ refresh();
                 :container-id="container"
                 @update-selection="updateSelection"
                 @refresh="refresh"
-              />              </div>
+              />
+            </div>
           </div>
         </template>
         <template #list="slotProps">
           <DataTable :value="slotProps.items" v-model:selection="selection">
             <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-<!--            <Column>
+            <!--            <Column>
               <template #body="{ data }">
                 <Image v-if="imageMap.get(data.id)" :alt="data.name" preview>
                   <template #previewicon>

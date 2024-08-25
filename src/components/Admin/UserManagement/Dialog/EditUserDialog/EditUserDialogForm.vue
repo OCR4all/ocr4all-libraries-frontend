@@ -74,8 +74,8 @@ function submitGroupChange() {}
           v-model="profileData"
           type="form"
           :submit-attrs="{
-      inputClass: 'formkit-submit-btn',
-    }"
+            inputClass: 'formkit-submit-btn',
+          }"
           @submit="submitProfileChanges"
         >
           <FormKitSchema :schema="profileSchema" :data="profileData" />

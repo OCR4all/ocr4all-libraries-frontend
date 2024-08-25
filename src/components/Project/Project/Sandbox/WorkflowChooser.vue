@@ -7,8 +7,8 @@ import { FilterMatchMode } from "@primevue/core/api";
 import { Events } from "vue";
 
 const workflows = ref([]);
-const loading = ref(true)
-const isRefetching = ref(true)
+const loading = ref(true);
+const isRefetching = ref(true);
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -27,9 +27,9 @@ async function refetch() {
     });
 }
 
-const selectedWorkflow = ref()
+const selectedWorkflow = ref();
 
-refetch()
+refetch();
 </script>
 <template>
   <DataTable
@@ -58,9 +58,9 @@ refetch()
       </div>
     </template>
     <template #empty>
-        <span class="text-primary-950 dark:text-primary-50">{{
-            $t("pages.workflows.table.empty")
-          }}</span>
+      <span class="text-primary-950 dark:text-primary-50">{{
+        $t("pages.workflows.table.empty")
+      }}</span>
     </template>
     <template #loading>
       <DefaultSpinner />
@@ -71,7 +71,7 @@ refetch()
       :sortable="true"
     >
       <template #body="{ data }">
-          {{ data.label }}
+        {{ data.label }}
       </template>
     </Column>
     <Column

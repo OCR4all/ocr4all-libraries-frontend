@@ -6,7 +6,7 @@ const toast = useToast();
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import Toolbar from "primevue/toolbar";
 import ImageCard from "@/components/Project/Project/ImageCard.vue";
-import IconImageImport from "~icons/lucide/image-plus"
+import IconImageImport from "~icons/lucide/image-plus";
 
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
@@ -100,13 +100,13 @@ const imageImportDialogVisible = ref(false);
   <div class="@container/section">
     <Toolbar class="mb-4">
       <template #start>
-          <Button
-              v-tooltip.top="'Import Images'"
-              text
-              @click="imageImportDialogVisible = true"
-          >
-            <IconImageImport class="text-black dark:text-white" />
-          </Button>
+        <Button
+          v-tooltip.top="'Import Images'"
+          text
+          @click="imageImportDialogVisible = true"
+        >
+          <IconImageImport class="text-black dark:text-white" />
+        </Button>
       </template>
     </Toolbar>
     <ComponentContainer>

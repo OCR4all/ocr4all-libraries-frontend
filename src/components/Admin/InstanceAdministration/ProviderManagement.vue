@@ -4,7 +4,7 @@ import { useDialog } from "primevue/usedialog";
 import { FilterMatchMode } from "@primevue/core/api";
 import { useUiStore } from "@/stores/ui.store";
 import ComponentContainer from "@/components/Layout/ComponentContainer.vue";
-import {DataTableRowContextMenuEvent} from "primevue/datatable";
+import { DataTableRowContextMenuEvent } from "primevue/datatable";
 
 const dialog = useDialog();
 const journalDialog = defineAsyncComponent(
@@ -72,11 +72,11 @@ function showJournal(data) {
       header: data.name,
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
   });
@@ -231,25 +231,25 @@ getProviders();
   <ContextMenu ref="contextMenu" :model="items">
     <template #item="{ item, props }">
       <a
-          v-ripple
-          class="group flex items-center"
-          :class="{
+        v-ripple
+        class="group flex items-center"
+        :class="{
           'rounded-md hover:bg-red-500 hover:text-white':
             item.label === 'Delete',
         }"
-          v-bind="props.action"
+        v-bind="props.action"
       >
         <span
-            :class="[
+          :class="[
             item.icon,
             { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
           ]"
         />
         <span
-            :class="{
+          :class="{
             'text-red-500 group-hover:text-white': item.label === 'Delete',
           }"
-        >{{ item.label }}</span
+          >{{ item.label }}</span
         >
       </a>
     </template>
@@ -258,27 +258,29 @@ getProviders();
     <Toolbar>
       <template #start>
         <Button
-            icon="pi pi-ellipsis-v text-black dark:text-white"
-            severity="contrast"
-            :disabled="selectedProviders.length === 0"
-            text
-            rounded
-            aria-label="Filter"
-            @click="toggleMenu($event)"
+          icon="pi pi-ellipsis-v text-black dark:text-white"
+          severity="contrast"
+          :disabled="selectedProviders.length === 0"
+          text
+          rounded
+          aria-label="Filter"
+          @click="toggleMenu($event)"
         />
-    </template>
-    <template #end>
-      <Button icon="pi pi-refresh text-black dark:text-white" text rounded @click="getProviders" />
-      <IconField>
-        <InputIcon>
-          <i class="pi pi-search" />
-        </InputIcon>
-        <InputText
-            v-model="filters['global'].value"
-            placeholder="Search"
+      </template>
+      <template #end>
+        <Button
+          icon="pi pi-refresh text-black dark:text-white"
+          text
+          rounded
+          @click="getProviders"
         />
-      </IconField>
-    </template>
+        <IconField>
+          <InputIcon>
+            <i class="pi pi-search" />
+          </InputIcon>
+          <InputText v-model="filters['global'].value" placeholder="Search" />
+        </IconField>
+      </template>
     </Toolbar>
     <DataTable
       v-model:filters="filters"

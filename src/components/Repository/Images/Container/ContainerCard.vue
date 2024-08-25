@@ -20,7 +20,7 @@ import { IContainer } from "@/components/Repository/Images/images.interface";
 import { useDialog } from "primevue/usedialog";
 const toast = useToast();
 
-const dialog = useDialog()
+const dialog = useDialog();
 
 const { t } = useI18n();
 
@@ -53,7 +53,7 @@ const toggle = (event: Event) => {
 };
 
 const getSelectLabel = computed(() => {
-  return checked.value ? "Deselect" : "Select"
+  return checked.value ? "Deselect" : "Select";
 });
 
 const actionMenuItems = ref([
@@ -108,46 +108,46 @@ const items = ref([
         name: "Container",
         query: { id: props.id, name: props.name },
       });
-    }
+    },
   },
-      {
-        label: getSelectLabel,
-        icon: "pi pi-check-square",
-        command: () => {
-          toggleCheckbox();
-        },
-      },
-      {
-        label: t("pages.repository.container.card.actions.edit"),
-        icon: "pi pi-pencil",
-        command: () => {
-          editDialogVisible.value = true;
-        },
-      },
-      {
-        label: t("pages.repository.container.card.actions.share"),
-        icon: "pi pi-share-alt",
-        command: () => {
-          openShareModal();
-        },
-      },
-      {
-        label: "Download",
-        icon: "pi pi-download",
-        command: () => {
-          downloadContainer();
-        },
-      },
-      {
-        label: t("pages.repository.container.card.actions.delete"),
-        icon: "pi pi-times",
-        command: () => {
-          toggleDeleteDialog();
-        },
-      },
+  {
+    label: getSelectLabel,
+    icon: "pi pi-check-square",
+    command: () => {
+      toggleCheckbox();
+    },
+  },
+  {
+    label: t("pages.repository.container.card.actions.edit"),
+    icon: "pi pi-pencil",
+    command: () => {
+      editDialogVisible.value = true;
+    },
+  },
+  {
+    label: t("pages.repository.container.card.actions.share"),
+    icon: "pi pi-share-alt",
+    command: () => {
+      openShareModal();
+    },
+  },
+  {
+    label: "Download",
+    icon: "pi pi-download",
+    command: () => {
+      downloadContainer();
+    },
+  },
+  {
+    label: t("pages.repository.container.card.actions.delete"),
+    icon: "pi pi-times",
+    command: () => {
+      toggleDeleteDialog();
+    },
+  },
 ]);
 
-const contextMenu = ref()
+const contextMenu = ref();
 
 const onContextMenu = (event) => {
   contextMenu.value.show(event);
@@ -173,7 +173,7 @@ function downloadContainer() {
 }
 
 function updateSelection(toggle: boolean) {
-  console.log(toggle)
+  console.log(toggle);
   emit("updateSelection", props.id, toggle);
 }
 
@@ -200,11 +200,11 @@ function openShareModal() {
       header: `Share "${props.name}"`,
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: props,
@@ -212,7 +212,7 @@ function openShareModal() {
       emit("refresh");
     },
   });
-  console.log()
+  console.log();
   /*  toast.add({
     severity: "info",
     summary: t(
@@ -280,12 +280,10 @@ function select(doSelect: boolean) {
   checked.value = doSelect;
 }
 
-function toggleCheckbox(){
-  checked.value = !checked.value
-  updateSelection(checked.value)
+function toggleCheckbox() {
+  checked.value = !checked.value;
+  updateSelection(checked.value);
 }
-
-
 
 defineExpose({
   select,
@@ -294,17 +292,49 @@ defineExpose({
 <template>
   <Toast position="bottom-right" group="download-toast">
     <template #container="{ message, closeCallback }">
-      <div class="flex items-center w-full p-4 rounded-lg shadow bg-surface-200/50 dark:bg-surface-700/50 backdrop-md" role="alert">
-        <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8">
-          <ProgressSpinner class="w-4 h-4" strokeWidth="8" fill="transparent"
-                           animationDuration=".5s" aria-label="Download Spinner" />
+      <div
+        class="backdrop-md flex w-full items-center rounded-lg bg-surface-200/50 p-4 shadow dark:bg-surface-700/50"
+        role="alert"
+      >
+        <div
+          class="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center"
+        >
+          <ProgressSpinner
+            class="h-4 w-4"
+            strokeWidth="8"
+            fill="transparent"
+            animationDuration=".5s"
+            aria-label="Download Spinner"
+          />
           <span class="sr-only">Fire icon</span>
         </div>
-        <div class="ms-3 text-sm text-surface-800 dark:text-surface-100 font-normal">{{ message.summary }}</div>
-        <button @click="closeCallback" type="button" class="ms-auto -mx-1.5 -my-1.5 text-surface-800 hover:text-surface-950 rounded-lg focus:ring-2 focus:ring-surface-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-surface-200 dark:hover:text-white dark:hover:bg-gray-800" data-dismiss-target="#toast-default" aria-label="Close">
+        <div
+          class="ms-3 text-sm font-normal text-surface-800 dark:text-surface-100"
+        >
+          {{ message.summary }}
+        </div>
+        <button
+          @click="closeCallback"
+          type="button"
+          class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg p-1.5 text-surface-800 hover:bg-gray-100 hover:text-surface-950 focus:ring-2 focus:ring-surface-300 dark:text-surface-200 dark:hover:bg-gray-800 dark:hover:text-white"
+          data-dismiss-target="#toast-default"
+          aria-label="Close"
+        >
           <span class="sr-only">Close</span>
-          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          <svg
+            class="h-3 w-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
           </svg>
         </button>
       </div>
@@ -412,12 +442,15 @@ defineExpose({
           :class="{
             'text-red-500 group-hover:text-white': item.label === 'Delete',
           }"
-        >{{ item.label }}</span
+          >{{ item.label }}</span
         >
       </a>
     </template>
   </ContextMenu>
-  <div class="grid grid-cols-1 justify-self-center" @contextmenu="onContextMenu">
+  <div
+    class="grid grid-cols-1 justify-self-center"
+    @contextmenu="onContextMenu"
+  >
     <div
       class="shadow-xs group relative m-2 grid h-64 w-64 cursor-pointer rounded-md bg-clip-border text-surface-700 hover:bg-primary-100 hover:dark:bg-surface-800"
       :class="[
@@ -446,7 +479,7 @@ defineExpose({
           />
           <div class="flex space-x-2">
             <button
-              class="bg-primary-600 p-2 rounded-sm font-semibold text-white hover:bg-primary-800"
+              class="rounded-sm bg-primary-600 p-2 font-semibold text-white hover:bg-primary-800"
               @click="openShareModal"
             >
               {{ t("pages.repository.container.card.button.share") }}
@@ -466,30 +499,35 @@ defineExpose({
               :model="actionMenuItems"
               :popup="true"
               @blur="actionMenuBlurred"
-            >    <template #item="{ item, props }">
-              <a
-                v-ripple
-                class="group flex items-center"
-                :class="{
-          'rounded-md hover:bg-red-500 hover:text-white':
-            item.label === 'Delete',
-        }"
-                v-bind="props.action"
-              >
-        <span
-          :class="[
-            item.icon,
-            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
-          ]"
-        />
-                <span
+            >
+              <template #item="{ item, props }">
+                <a
+                  v-ripple
+                  class="group flex items-center"
                   :class="{
-            'text-red-500 group-hover:text-white': item.label === 'Delete',
-          }"
-                >{{ item.label }}</span
+                    'rounded-md hover:bg-red-500 hover:text-white':
+                      item.label === 'Delete',
+                  }"
+                  v-bind="props.action"
                 >
-              </a>
-            </template>
+                  <span
+                    :class="[
+                      item.icon,
+                      {
+                        'text-red-500 group-hover:text-white':
+                          item.label === 'Delete',
+                      },
+                    ]"
+                  />
+                  <span
+                    :class="{
+                      'text-red-500 group-hover:text-white':
+                        item.label === 'Delete',
+                    }"
+                    >{{ item.label }}</span
+                  >
+                </a>
+              </template>
             </Menu>
           </div>
         </div>

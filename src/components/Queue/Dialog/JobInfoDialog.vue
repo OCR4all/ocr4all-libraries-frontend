@@ -5,52 +5,50 @@ import { useDialog } from "primevue/usedialog";
 
 const dialogRef = inject("dialogRef");
 const logViewer = defineAsyncComponent(
-  () =>
-    import(
-      "@/components/Queue/Dialog/LogViewer.vue"
-      ),
+  () => import("@/components/Queue/Dialog/LogViewer.vue"),
 );
 
-const job: Ref<IJob | undefined> = ref()
+const job: Ref<IJob | undefined> = ref();
 
-const expandedRows = ref()
+const expandedRows = ref();
 
-const dialog = useDialog()
+const dialog = useDialog();
 
 onMounted(async () => {
-  await useCustomFetch(
-    `/job/entity/${dialogRef.value.data.id}`,
-  ).get().json().then((response) => {
-    job.value = [response.data.value]
-    console.log(job.value)
-  });
+  await useCustomFetch(`/job/entity/${dialogRef.value.data.id}`)
+    .get()
+    .json()
+    .then((response) => {
+      job.value = [response.data.value];
+      console.log(job.value);
+    });
 });
 
-function openLogDialog(text: string, type: string){
+function openLogDialog(text: string, type: string) {
   dialog.open(logViewer, {
     props: {
       header: type,
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: {
-      text: text
+      text: text,
     },
   });
 }
 
 function getSeverity(severity: string): string {
-  switch(severity){
+  switch (severity) {
     case "completed":
-      return "success"
+      return "success";
     case "interrupted":
-      return "warn"
+      return "warn";
   }
 }
 </script>
@@ -77,48 +75,55 @@ function getSeverity(severity: string): string {
               <i
                 class="pi"
                 :class="{
-              'pi-check-circle text-green-500':
-                data.completed === true,
-              'pi-times-circle text-red-400':
-                data.completed !== true,
-            }"
+                  'pi-check-circle text-green-500': data.completed === true,
+                  'pi-times-circle text-red-400': data.completed !== true,
+                }"
               ></i>
             </template>
           </Column>
           <Column field="progress" header="Progress"></Column>
           <Column field="service-provider-id" header="Service Provider">
             <template #body="{ data }">
-              <Tag v-if="data['service-provider-id']" :value="data['service-provider-id']" />
+              <Tag
+                v-if="data['service-provider-id']"
+                :value="data['service-provider-id']"
+              />
             </template>
           </Column>
           <Column field="note" header="Note">
             <template #body="{ data }">
-              <Button v-if="data['note']" @click="openLogDialog(data['note'], 'Note')" severity="contrast">
+              <Button
+                v-if="data['note']"
+                @click="openLogDialog(data['note'], 'Note')"
+                severity="contrast"
+              >
                 View
               </Button>
-              <p v-else>
-                Empty
-              </p>
+              <p v-else>Empty</p>
             </template>
           </Column>
           <Column field="standard-error" header="Error Log">
             <template #body="{ data }">
-              <Button v-if="data['standard-error']" @click="openLogDialog(data['standard-error'], 'Error Log')" severity="contrast">
+              <Button
+                v-if="data['standard-error']"
+                @click="openLogDialog(data['standard-error'], 'Error Log')"
+                severity="contrast"
+              >
                 View
               </Button>
-              <p v-else>
-                Empty
-              </p>
+              <p v-else>Empty</p>
             </template>
           </Column>
           <Column field="standard-output" header="Output Log">
             <template #body="{ data }">
-              <Button v-if="data['standard-error']" @click="openLogDialog(data['standard-output'], 'Output Log')" severity="contrast">
+              <Button
+                v-if="data['standard-error']"
+                @click="openLogDialog(data['standard-output'], 'Output Log')"
+                severity="contrast"
+              >
                 View
               </Button>
-              <p v-else>
-                Empty
-              </p>
+              <p v-else>Empty</p>
             </template>
           </Column>
         </DataTable>

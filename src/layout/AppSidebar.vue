@@ -3,8 +3,8 @@ import { useUiStore } from "@/stores/ui.store";
 import { mainNavigation, adminNavigation } from "@/layout/Sidebar";
 import { SidebarMode } from "@/layout/Layout";
 
-import AnimatedCogIcon from "~icons/line-md/cog-loop"
-import CogIcon from "~icons/line-md/cog"
+import AnimatedCogIcon from "~icons/line-md/cog-loop";
+import CogIcon from "~icons/line-md/cog";
 
 const props = defineProps<{
   mode: SidebarMode;

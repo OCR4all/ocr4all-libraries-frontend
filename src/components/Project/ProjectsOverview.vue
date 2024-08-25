@@ -22,11 +22,11 @@ const deleteDialog = defineAsyncComponent(
 );
 
 const shareDialog = defineAsyncComponent(
-    () => import("@/components/Project/Project/Dialog/ShareDialog.vue"),
+  () => import("@/components/Project/Project/Dialog/ShareDialog.vue"),
 );
 const router = useRouter();
 
-import IconCreate from "~icons/gridicons/create"
+import IconCreate from "~icons/gridicons/create";
 import { useDialog } from "primevue/usedialog";
 import { useToast } from "primevue/usetoast";
 const dialog = useDialog();
@@ -34,25 +34,25 @@ const dialog = useDialog();
 const loading = ref(true);
 const isRefetching = ref(false);
 
-const toast = useToast()
+const toast = useToast();
 
 async function refetch() {
   isRefetching.value = true;
   const { isFetching, error, data } = await useCustomFetch(`/project/list`)
     .get()
     .json();
-  if(error.value){
+  if (error.value) {
     toast.add({
       severity: "error",
       summary: "Error",
       detail: error.value,
       life: 3000,
       group: "general",
-    })
-  }else{
+    });
+  } else {
     projects.value = data.value;
 
-    console.log(projects.value)
+    console.log(projects.value);
   }
   loading.value = isFetching.value;
   setTimeout(function () {
@@ -114,11 +114,11 @@ const toggle = (event: Event, data) => {
                 header: "Edit Project",
                 modal: true,
                 style: {
-                  width: '70vw',
+                  width: "70vw",
                 },
-                breakpoints:{
-                  '960px': '80vw',
-                  '640px': '90vw'
+                breakpoints: {
+                  "960px": "80vw",
+                  "640px": "90vw",
                 },
               },
               data: data,
@@ -137,11 +137,11 @@ const toggle = (event: Event, data) => {
                 header: "Delete Project",
                 modal: true,
                 style: {
-                  width: '70vw',
+                  width: "70vw",
                 },
-                breakpoints:{
-                  '960px': '80vw',
-                  '640px': '90vw'
+                breakpoints: {
+                  "960px": "80vw",
+                  "640px": "90vw",
                 },
               },
               data: data,
@@ -176,11 +176,11 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
             header: "Edit Project",
             modal: true,
             style: {
-              width: '70vw',
+              width: "70vw",
             },
-            breakpoints:{
-              '960px': '80vw',
-              '640px': '90vw'
+            breakpoints: {
+              "960px": "80vw",
+              "640px": "90vw",
             },
           },
           data: event.data,
@@ -199,11 +199,11 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
             header: `Share ${event.data.name}`,
             modal: true,
             style: {
-              width: '75vw',
+              width: "75vw",
             },
-            breakpoints:{
-              '960px': '80vw',
-              '640px': '90vw'
+            breakpoints: {
+              "960px": "80vw",
+              "640px": "90vw",
             },
           },
           data: event.data,
@@ -222,11 +222,11 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
             header: "Delete Project",
             modal: true,
             style: {
-              width: '70vw',
+              width: "70vw",
             },
-            breakpoints:{
-              '960px': '80vw',
-              '640px': '90vw'
+            breakpoints: {
+              "960px": "80vw",
+              "640px": "90vw",
             },
           },
           data: event.data,
@@ -241,13 +241,13 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
 };
 
 const keywords = computed(() => {
-  if(projects.value){
-    return projects.value.flatMap(item =>
-        item.keywords ? item.keywords.map(keyword => ({ name: keyword })) : []
+  if (projects.value) {
+    return projects.value.flatMap((item) =>
+      item.keywords ? item.keywords.map((keyword) => ({ name: keyword })) : [],
     );
   }
-  return []
-})
+  return [];
+});
 
 refetch();
 </script>
@@ -304,170 +304,178 @@ refetch();
       </a>
     </template>
   </Menu>
-    <ComponentContainer spaced>
-      <Toolbar>
-        <template #start>
-            <Button v-tooltip.top="$t('pages.projects.overview.toolbar.new')" text @click="router.push('/project/new')">
-              <IconCreate class="text-black dark:text-white" />
-            </Button>
-          <Button v-tooltip.top="$t('pages.projects.overview.toolbar.import')" text @click="router.push('/project/import')">
-            <i class="pi pi-upload text-black dark:text-white" />
-          </Button>
-        </template>
+  <ComponentContainer spaced>
+    <Toolbar>
+      <template #start>
+        <Button
+          v-tooltip.top="$t('pages.projects.overview.toolbar.new')"
+          text
+          @click="router.push('/project/new')"
+        >
+          <IconCreate class="text-black dark:text-white" />
+        </Button>
+        <Button
+          v-tooltip.top="$t('pages.projects.overview.toolbar.import')"
+          text
+          @click="router.push('/project/import')"
+        >
+          <i class="pi pi-upload text-black dark:text-white" />
+        </Button>
+      </template>
 
-        <template #end>
-          <button
-              v-tooltip.left="'Refresh'"
-              :disabled="isRefetching === true"
-              @click="refetch"
-          >
-            <ArrowPathIcon
-                :class="{ 'animate-spin': isRefetching }"
-                class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-200 hover:dark:text-white"
-            />
-          </button>
-          <IconField>
-            <InputIcon>
-              <i class="pi pi-search" />
-            </InputIcon>
-            <InputText
-                v-model="filters['global'].value"
-                :placeholder="
-                    $t('pages.projects.overview.table.search.placeholder')
-                  "
-            />
-          </IconField>
-        </template>
-      </Toolbar>
-      <DataTable
-        v-model:filters="filters"
-        :value="projects"
-        :paginator="true"
-        :rows="10"
-        :loading="loading"
-        scrollable
-        context-menu
-        filter-display="row"
-        :global-filter-fields="['name', 'state', 'keywords']"
-        sort-field="tracking.updated"
-        :sort-order="-1"
-        :row-hover="true"
-        paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        :rows-per-page-options="[10, 25, 50]"
-        @row-contextmenu="onRowContextMenu"
+      <template #end>
+        <button
+          v-tooltip.left="'Refresh'"
+          :disabled="isRefetching === true"
+          @click="refetch"
+        >
+          <ArrowPathIcon
+            :class="{ 'animate-spin': isRefetching }"
+            class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-200 hover:dark:text-white"
+          />
+        </button>
+        <IconField>
+          <InputIcon>
+            <i class="pi pi-search" />
+          </InputIcon>
+          <InputText
+            v-model="filters['global'].value"
+            :placeholder="
+              $t('pages.projects.overview.table.search.placeholder')
+            "
+          />
+        </IconField>
+      </template>
+    </Toolbar>
+    <DataTable
+      v-model:filters="filters"
+      :value="projects"
+      :paginator="true"
+      :rows="10"
+      :loading="loading"
+      scrollable
+      context-menu
+      filter-display="row"
+      :global-filter-fields="['name', 'state', 'keywords']"
+      sort-field="tracking.updated"
+      :sort-order="-1"
+      :row-hover="true"
+      paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+      :rows-per-page-options="[10, 25, 50]"
+      @row-contextmenu="onRowContextMenu"
+    >
+      <template #empty>
+        <span class="text-primary-950 dark:text-primary-50">{{
+          $t("pages.projects.overview.table.empty")
+        }}</span>
+      </template>
+      <template #loading>
+        <DefaultSpinner />
+      </template>
+      <Column
+        field="name"
+        class="max-w-xs"
+        :header="$t('pages.projects.overview.table.columns.project')"
+        :sortable="true"
       >
-        <template #empty>
-          <span class="text-primary-950 dark:text-primary-50">{{
-            $t("pages.projects.overview.table.empty")
-          }}</span>
+        <template #body="{ data }">
+          <p
+            class="cursor-pointer truncate hover:underline"
+            @click="router.push(`/project/${data.id}/view`)"
+          >
+            {{ data.name }}
+          </p>
         </template>
-        <template #loading>
-          <DefaultSpinner />
+      </Column>
+      <Column
+        field="description"
+        :header="$t('pages.projects.overview.table.columns.description')"
+      >
+        <template #body="slotProps">
+          <p class="max-w-[10rem] truncate">
+            {{ slotProps.data.description }}
+          </p>
         </template>
-        <Column
-          field="name"
-          class="max-w-xs"
-          :header="$t('pages.projects.overview.table.columns.project')"
-          :sortable="true"
-        >
-          <template #body="{ data }">
-            <p
-              class="cursor-pointer hover:underline truncate"
-              @click="router.push(`/project/${data.id}/view`)"
-            >
-              {{ data.name }}
-            </p>
-          </template>
-        </Column>
-        <Column
-          field="description"
-          :header="$t('pages.projects.overview.table.columns.description')"
-        >
-          <template #body="slotProps">
-            <p class="max-w-[10rem] truncate">
-              {{ slotProps.data.description }}
-            </p>
-          </template>
-        </Column>
-        <Column
-          field="state"
-          :header="$t('pages.projects.overview.table.columns.state')"
-        >
-          <template #body="{ data }">
-            <Tag :value="data.state" :severity="getSeverity(data.state)" />
-          </template>
-          <template #filter="{ filterModel, filterCallback }">
-            <Select
-              v-model="filterModel.value"
-              :options="states"
-              placeholder="Select State"
-              :show-clear="true"
-              @change="filterCallback()"
-            >
-              <template #option="slotProps">
-                <Tag
-                  :value="slotProps.option"
-                  :severity="getSeverity(slotProps.option)"
-                />
-              </template>
-            </Select>
-          </template>
-        </Column>
-        <Column
-          :sortable="true"
-          :header="$t('pages.projects.overview.table.columns.keywords')"
-        >
-          <template #body="slotProps">
-            <div class="flex gap-1">
+      </Column>
+      <Column
+        field="state"
+        :header="$t('pages.projects.overview.table.columns.state')"
+      >
+        <template #body="{ data }">
+          <Tag :value="data.state" :severity="getSeverity(data.state)" />
+        </template>
+        <template #filter="{ filterModel, filterCallback }">
+          <Select
+            v-model="filterModel.value"
+            :options="states"
+            placeholder="Select State"
+            :show-clear="true"
+            @change="filterCallback()"
+          >
+            <template #option="slotProps">
               <Tag
-                v-for="keyword in slotProps.data.keywords"
-                :key="keyword.name"
-                :value="keyword"
+                :value="slotProps.option"
+                :severity="getSeverity(slotProps.option)"
               />
-            </div>
-          </template>
-        </Column>
-        <Column
-          field="tracking.created"
-          :header="$t('pages.projects.overview.table.columns.created')"
-          :sortable="true"
-        >
-          <template #body="slotProps">
-            <UseTimeAgo
-              v-slot="{ timeAgo }"
-              :time="Date.parse(slotProps.data.tracking.created)"
-            >
-              {{ timeAgo }}
-            </UseTimeAgo>
-          </template>
-        </Column>
-        <Column
-          field="tracking.updated"
-          :header="$t('pages.projects.overview.table.columns.last-updated')"
-          :sortable="true"
-        >
-          <template #body="slotProps">
-            <UseTimeAgo
-              v-slot="{ timeAgo }"
-              :time="Date.parse(slotProps.data.tracking.updated)"
-            >
-              {{ timeAgo }}
-            </UseTimeAgo>
-          </template>
-        </Column>
-        <Column :exportable="false" style="min-width: 8rem">
-          <template #body="{ data }">
-            <div class="space-y-2">
-              <Button
-                  type="button"
-                  icon="pi pi-ellipsis-v"
-                  text
-                  severity="secondary"
-                  @click="toggle($event, data)"
-              />
-            </div>
-          </template>
-        </Column>
-      </DataTable>
-    </ComponentContainer>
+            </template>
+          </Select>
+        </template>
+      </Column>
+      <Column
+        :sortable="true"
+        :header="$t('pages.projects.overview.table.columns.keywords')"
+      >
+        <template #body="slotProps">
+          <div class="flex gap-1">
+            <Tag
+              v-for="keyword in slotProps.data.keywords"
+              :key="keyword.name"
+              :value="keyword"
+            />
+          </div>
+        </template>
+      </Column>
+      <Column
+        field="tracking.created"
+        :header="$t('pages.projects.overview.table.columns.created')"
+        :sortable="true"
+      >
+        <template #body="slotProps">
+          <UseTimeAgo
+            v-slot="{ timeAgo }"
+            :time="Date.parse(slotProps.data.tracking.created)"
+          >
+            {{ timeAgo }}
+          </UseTimeAgo>
+        </template>
+      </Column>
+      <Column
+        field="tracking.updated"
+        :header="$t('pages.projects.overview.table.columns.last-updated')"
+        :sortable="true"
+      >
+        <template #body="slotProps">
+          <UseTimeAgo
+            v-slot="{ timeAgo }"
+            :time="Date.parse(slotProps.data.tracking.updated)"
+          >
+            {{ timeAgo }}
+          </UseTimeAgo>
+        </template>
+      </Column>
+      <Column :exportable="false" style="min-width: 8rem">
+        <template #body="{ data }">
+          <div class="space-y-2">
+            <Button
+              type="button"
+              icon="pi pi-ellipsis-v"
+              text
+              severity="secondary"
+              @click="toggle($event, data)"
+            />
+          </div>
+        </template>
+      </Column>
+    </DataTable>
+  </ComponentContainer>
 </template>

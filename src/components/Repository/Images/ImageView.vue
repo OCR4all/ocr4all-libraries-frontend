@@ -11,12 +11,12 @@ import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { FilterMatchMode } from "@primevue/core/api";
 
-import IconCreate from "~icons/gridicons/create"
+import IconCreate from "~icons/gridicons/create";
 
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
-const dialog = useDialog()
+const dialog = useDialog();
 
 import { useConfirm } from "primevue/useconfirm";
 const confirm = useConfirm();
@@ -31,7 +31,7 @@ import { IContainer } from "@/components/Project/project.interfaces";
 import ShareDialog from "@/components/Repository/Images/Container/Dialog/ShareDialog.vue";
 import { useDialog } from "primevue/usedialog";
 import ProgressSpinner from "primevue/progressspinner";
-import {useI18n} from "vue-i18n";
+import { useI18n } from "vue-i18n";
 
 const router: Router = useRouter();
 
@@ -65,19 +65,19 @@ async function listContainers() {
   useCustomFetch("/repository/container/list")
     .json()
     .then((response) => {
-      if(response.error.value){
+      if (response.error.value) {
         toast.add({
           severity: "error",
           summary: "Error",
           detail: response.error.value,
           life: 3000,
           group: "general",
-        })
-      }else if(response.data.value){
-        const data: IContainer[] = response.data.value
-        containers.value = data.filter(function (container: IContainer){
-          return container.right !== null
-        })
+        });
+      } else if (response.data.value) {
+        const data: IContainer[] = response.data.value;
+        containers.value = data.filter(function (container: IContainer) {
+          return container.right !== null;
+        });
       }
     });
 }
@@ -124,7 +124,7 @@ const toggle = (event: Event, data) => {
           label: "Delete",
           icon: "pi pi-trash",
           command: () => {
-            confirmDelete(data.id)
+            confirmDelete(data.id);
           },
         },
       ],
@@ -148,7 +148,7 @@ async function createContainer() {
 }
 
 async function deleteContainers() {
-  if(selectedContainers.value !== undefined){
+  if (selectedContainers.value !== undefined) {
     for (const container of selectedContainers.value) {
       await deleteContainer(container.id);
     }
@@ -165,28 +165,26 @@ async function deleteContainers() {
 
 const confirmDelete = (id: string) => {
   confirm.require({
-    message: 'Do you want to delete this project?',
-    header: 'Danger Zone',
-    icon: 'pi pi-info-circle',
+    message: "Do you want to delete this project?",
+    header: "Danger Zone",
+    icon: "pi pi-info-circle",
     position: "bottom",
-    rejectLabel: 'Cancel',
+    rejectLabel: "Cancel",
     rejectProps: {
-      label: 'Cancel',
-      severity: 'secondary',
-      outlined: true
+      label: "Cancel",
+      severity: "secondary",
+      outlined: true,
     },
     acceptProps: {
-      label: 'Delete',
-      severity: 'danger'
+      label: "Delete",
+      severity: "danger",
     },
     accept: () => {
-      deleteContainer(id)
+      deleteContainer(id);
     },
-    reject: () => {
-
-    }
+    reject: () => {},
   });
-}
+};
 
 async function deleteContainer(id: string) {
   useCustomFetch(`/repository/container/remove?id=${id}`).then(() => {
@@ -199,7 +197,11 @@ function updateSelection(selectedContainer: string, add: boolean) {
   const container = containers.value.find((entry: IContainer) => {
     return entry.id === selectedContainer;
   });
-  if (selectedContainers.value !== undefined && !add && selectedContainers.value.indexOf(container) != -1) {
+  if (
+    selectedContainers.value !== undefined &&
+    !add &&
+    selectedContainers.value.indexOf(container) != -1
+  ) {
     selectedContainers.value.splice(
       selectedContainers.value.indexOf(container),
       1,
@@ -216,7 +218,7 @@ const toggleCreateContainerPanel = (event: Event) => {
 const selectedContainers: Ref<IContainer[] | undefined> = ref([]);
 const filters: Ref = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  keywords: { value: null, matchMode: FilterMatchMode.IN }
+  keywords: { value: null, matchMode: FilterMatchMode.IN },
 });
 
 const deleteDialogVisible = ref(false);
@@ -307,7 +309,7 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
       label: "Delete",
       icon: "pi pi-trash",
       command: () => {
-        confirmDelete(event.data.id)
+        confirmDelete(event.data.id);
       },
     },
   ];
@@ -320,11 +322,11 @@ function openShareModal(data: IContainer) {
       header: `Share ${name.value}`,
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: data,
@@ -339,7 +341,7 @@ function downloadContainer(container: IContainer) {
     severity: "info",
     summary: "Preparing download",
     group: "download-toast",
-  })
+  });
   useCustomFetch(`/repository/container/folio/zip/${container.id}`)
     .blob()
     .then((response) => {
@@ -352,24 +354,54 @@ function downloadContainer(container: IContainer) {
       toast.removeGroup("download-toast");
     });
 }
-
-
 </script>
 <template>
   <ConfirmDialog />
   <Toast position="bottom-right" group="download-toast">
     <template #container="{ message, closeCallback }">
-      <div class="flex items-center w-full p-4 rounded-lg shadow bg-surface-200/50 dark:bg-surface-700/50 backdrop-md" role="alert">
-        <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8">
-          <ProgressSpinner class="w-4 h-4" strokeWidth="8" fill="transparent"
-                           animationDuration=".5s" aria-label="Download Spinner" />
+      <div
+        class="backdrop-md flex w-full items-center rounded-lg bg-surface-200/50 p-4 shadow dark:bg-surface-700/50"
+        role="alert"
+      >
+        <div
+          class="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center"
+        >
+          <ProgressSpinner
+            class="h-4 w-4"
+            strokeWidth="8"
+            fill="transparent"
+            animationDuration=".5s"
+            aria-label="Download Spinner"
+          />
           <span class="sr-only">Fire icon</span>
         </div>
-        <div class="ms-3 text-sm text-surface-800 dark:text-surface-100 font-normal">{{ message.summary }}</div>
-        <button @click="closeCallback" type="button" class="ms-auto -mx-1.5 -my-1.5 text-surface-800 hover:text-surface-950 rounded-lg focus:ring-2 focus:ring-surface-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-surface-200 dark:hover:text-white dark:hover:bg-gray-800" data-dismiss-target="#toast-default" aria-label="Close">
+        <div
+          class="ms-3 text-sm font-normal text-surface-800 dark:text-surface-100"
+        >
+          {{ message.summary }}
+        </div>
+        <button
+          @click="closeCallback"
+          type="button"
+          class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg p-1.5 text-surface-800 hover:bg-gray-100 hover:text-surface-950 focus:ring-2 focus:ring-surface-300 dark:text-surface-200 dark:hover:bg-gray-800 dark:hover:text-white"
+          data-dismiss-target="#toast-default"
+          aria-label="Close"
+        >
           <span class="sr-only">Close</span>
-          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          <svg
+            class="h-3 w-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
           </svg>
         </button>
       </div>
@@ -508,35 +540,45 @@ function downloadContainer(container: IContainer) {
     <Toolbar>
       <template #start>
         <div class="flex">
-          <Button v-tooltip.top="$t('pages.repository.overview.toolbar.button.create')" @click="toggleCreateContainerPanel" text>
+          <Button
+            v-tooltip.top="
+              $t('pages.repository.overview.toolbar.button.create')
+            "
+            @click="toggleCreateContainerPanel"
+            text
+          >
             <IconCreate class="text-black dark:text-white" />
           </Button>
           <Popover ref="createContainerPanel">
             <div class="flex space-x-1">
               <InputText v-model="newContainerName" />
               <Button
-                  icon="pi pi-check"
-                  severity="info"
-                  class="mr-2 w-fit"
-                  @click="createContainer"
+                icon="pi pi-check"
+                severity="info"
+                class="mr-2 w-fit"
+                @click="createContainer"
               />
             </div>
           </Popover>
-          <Button v-tooltip.top="$t('pages.repository.overview.toolbar.button.delete')" icon="pi pi-trash" @click="toggleDeleteDialog" :disabled="!selectedContainers || !selectedContainers.length" severity="danger" text />
+          <Button
+            v-tooltip.top="
+              $t('pages.repository.overview.toolbar.button.delete')
+            "
+            icon="pi pi-trash"
+            @click="toggleDeleteDialog"
+            :disabled="!selectedContainers || !selectedContainers.length"
+            severity="danger"
+            text
+          />
         </div>
       </template>
-      <template #center>
-
-      </template>
+      <template #center> </template>
       <template #end>
         <IconField>
           <InputIcon>
             <i class="pi pi-search" />
           </InputIcon>
-          <InputText
-              v-model="filters['global'].value"
-              placeholder="Search"
-          />
+          <InputText v-model="filters['global'].value" placeholder="Search" />
         </IconField>
       </template>
     </Toolbar>
@@ -547,10 +589,7 @@ function downloadContainer(container: IContainer) {
         </template>
       </SelectButton>
     </div>
-    <DataView
-      :value="containers"
-      :layout="layout"
-    >
+    <DataView :value="containers" :layout="layout">
       <template #list="slotProps">
         <DataTable
           ref="containerDataTable"
@@ -648,7 +687,13 @@ function downloadContainer(container: IContainer) {
               </div>
             </template>
             <template #filter="{ filterModel }">
-              <MultiSelect v-model="filterModel.value" :options="[{name: 'test'}]" optionLabel="name" filter placeholder="Any">
+              <MultiSelect
+                v-model="filterModel.value"
+                :options="[{ name: 'test' }]"
+                optionLabel="name"
+                filter
+                placeholder="Any"
+              >
                 <template #option="slotProps">
                   {{ filterModel.value }}
                   <div class="flex items-center gap-2">
@@ -680,7 +725,7 @@ function downloadContainer(container: IContainer) {
           class="grid grid-flow-row-dense grid-cols-1 justify-items-start gap-x-2 gap-y-3 @[550px]/content:grid-cols-2 @[850px]/content:grid-cols-3 @[1050px]/content:grid-cols-4 @[1400px]/content:grid-cols-5"
         >
           <ContainerCard
-            v-for="(item) in items"
+            v-for="item in items"
             v-bind="item"
             :key="item.id"
             :ref="setContainerCardsRef"

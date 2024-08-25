@@ -133,7 +133,7 @@ function replaceCategories(category: string) {
     case "Text recognition and optimization":
       return "Text Recognition";
     case "Long-term preservation":
-      return "Format Conversion"
+      return "Format Conversion";
     default:
       return category;
   }

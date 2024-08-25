@@ -30,8 +30,8 @@ function createDataset(values, { setErrors }) {
     v-model="data"
     type="form"
     :submit-attrs="{
-          inputClass: 'formkit-submit-btn',
-        }"
+      inputClass: 'formkit-submit-btn',
+    }"
     @submit="createDataset"
   >
     <FormKitSchema :schema="schema" :data="data" />

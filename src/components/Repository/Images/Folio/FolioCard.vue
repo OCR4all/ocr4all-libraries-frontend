@@ -10,10 +10,7 @@ import Toast from "primevue/toast";
 
 import { useToast } from "primevue/usetoast";
 const ImageEditor = defineAsyncComponent(
-  () =>
-    import(
-      "@/components/Repository/Images/ImageEditor.vue"
-      ),
+  () => import("@/components/Repository/Images/ImageEditor.vue"),
 );
 import { useDialog } from "primevue/usedialog";
 const toast = useToast();
@@ -31,8 +28,8 @@ const props = defineProps<{
   containerId?: string;
 }>();
 
-const thumb = ref()
-const detail = ref()
+const thumb = ref();
+const detail = ref();
 
 const emit = defineEmits(["refresh", "updateSelection"]);
 
@@ -133,21 +130,21 @@ function openImageEditor() {
       header: "Edit Image",
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: {
       container: props.containerId,
-      id: props.id
+      id: props.id,
     },
     onClose: () => {
-      console.log("closed")
-    }
-  })
+      console.log("closed");
+    },
+  });
 }
 async function deleteFolio() {
   await useCustomFetch(
@@ -256,7 +253,11 @@ defineExpose({
       >
         <Image v-if="thumb" alt="Image" preview>
           <template #previewicon>
-            <i class="pi pi-search" style="padding: 100%" @click="loadDetail"></i>
+            <i
+              class="pi pi-search"
+              style="padding: 100%"
+              @click="loadDetail"
+            ></i>
           </template>
           <template #image>
             <img

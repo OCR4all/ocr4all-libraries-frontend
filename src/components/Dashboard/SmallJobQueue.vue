@@ -58,7 +58,7 @@ const getSeverity = (entry) => {
 </script>
 
 <template>
-   <DataTable
+  <DataTable
     :value="jobs"
     stripedRows
     :loading="loading"

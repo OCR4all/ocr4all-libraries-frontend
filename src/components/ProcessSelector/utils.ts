@@ -1,20 +1,23 @@
 interface IItem {
-  type: string,
-  description: null | string,
-  value: string,
-  selected: boolean,
-  disabled: boolean
+  type: string;
+  description: null | string;
+  value: string;
+  selected: boolean;
+  disabled: boolean;
 }
 
-function collectSelection(items: IItem[], multiple: boolean): null | string | string[] {
-  const selection = []
-  for(const item of items){
-    if(item.selected){
-      selection.push(item.value)
+function collectSelection(
+  items: IItem[],
+  multiple: boolean,
+): null | string | string[] {
+  const selection = [];
+  for (const item of items) {
+    if (item.selected) {
+      selection.push(item.value);
     }
   }
-  if(selection.length === 0) return null
-  return multiple ? selection : selection[0]
+  if (selection.length === 0) return null;
+  return multiple ? selection : selection[0];
 }
 
 export function buildProcessorSchema(data, grid: number = 1) {
@@ -55,7 +58,7 @@ export function buildProcessorSchema(data, grid: number = 1) {
         });
         break;
       case "select":
-        if(entry["multiple-options"]){
+        if (entry["multiple-options"]) {
           processorSchema.push({
             $formkit: "primeMultiSelect",
             id: entry.argument,
@@ -69,7 +72,7 @@ export function buildProcessorSchema(data, grid: number = 1) {
             optionValue: "value",
             options: entry.items,
           });
-        }else{
+        } else {
           processorSchema.push({
             $formkit: "primeSelect",
             id: entry.argument,

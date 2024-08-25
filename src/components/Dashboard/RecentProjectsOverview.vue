@@ -81,8 +81,7 @@ refetch();
         :header="
           $t('pages.dashboard.components.recent-projects.columns.project')
         "
-        ></Column
-      >
+      ></Column>
       <Column
         field="tracking.updated"
         :header="

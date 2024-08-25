@@ -5,7 +5,7 @@ const store = useSandboxCreationStore();
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import ProgressBar from "primevue/progressbar";
-import {IQueue} from "@/components/Queue/queue.interfaces";
+import { IQueue } from "@/components/Queue/queue.interfaces";
 
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
@@ -19,7 +19,8 @@ const isImportingImages = ref(false);
 const isWorkflowRunning = ref(false);
 const isWorkflowFinished = ref(false);
 
-const SANDBOX_LAUNCHER = "de.uniwuerzburg.zpd.ocr4all.application.core.spi.launcher.provider.SandboxNormalizedLauncher"
+const SANDBOX_LAUNCHER =
+  "de.uniwuerzburg.zpd.ocr4all.application.core.spi.launcher.provider.SandboxNormalizedLauncher";
 
 async function refetch() {
   useCustomFetch(`/workflow/list`)
@@ -52,9 +53,9 @@ async function checkImageJob(startedJob: number) {
       )
         .get()
         .json();
-      const queue: IQueue = data.value
+      const queue: IQueue = data.value;
       for (const job of Object.values(queue.done)) {
-        console.log(job)
+        console.log(job);
         if (job.id === startedJob && job.state == "completed") {
           clearInterval(jobInterval);
           isImportingImages.value = false;
@@ -90,7 +91,7 @@ async function checkWorkflowJob(startedJob: number) {
       )
         .get()
         .json();
-      const queue: IQueue = data.value
+      const queue: IQueue = data.value;
       for (const job of Object.values(queue.done)) {
         if (job.id === startedJob && job.state == "completed") {
           jobStatus.value = "Done";
@@ -139,16 +140,21 @@ async function launchWorkflow() {
   isRunning.value = false;
 }
 
-const mode = ref("Workflow")
-const options = ref(["Workflow", "Processor"])
+const mode = ref("Workflow");
+const options = ref(["Workflow", "Processor"]);
 </script>
 <template>
   <section
     v-if="!isRunning && !isWorkflowFinished"
-    class="flex flex-col items-center justify-center dark:text-surface-100 space-y-10"
+    class="flex flex-col items-center justify-center space-y-10 dark:text-surface-100"
   >
     <div class="card flex justify-center">
-      <SelectButton v-model="mode" :options="options" :allowEmpty="false" aria-labelledby="basic" />
+      <SelectButton
+        v-model="mode"
+        :options="options"
+        :allowEmpty="false"
+        aria-labelledby="basic"
+      />
     </div>
     <section v-if="mode === 'Workflow'">
       <h2
@@ -161,7 +167,9 @@ const options = ref(["Workflow", "Processor"])
       >
         {{ $t("pages.projects.sandbox.workflow.directive") }}
       </h2>
-      <div class="border border-surface-200 dark:border-surface-700 rounded-xl p-2">
+      <div
+        class="rounded-xl border border-surface-200 p-2 dark:border-surface-700"
+      >
         <WorkflowChooser />
       </div>
     </section>

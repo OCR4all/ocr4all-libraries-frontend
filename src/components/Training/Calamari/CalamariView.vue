@@ -20,8 +20,8 @@ uiStore.breadcrumb = [
 ];
 
 function run() {
-  const data = datasets.value.getDatasets()
-  console.log(datasets.value.getDatasets())
+  const data = datasets.value.getDatasets();
+  console.log(datasets.value.getDatasets());
 
   // const dataset = {
   //   "collections": [

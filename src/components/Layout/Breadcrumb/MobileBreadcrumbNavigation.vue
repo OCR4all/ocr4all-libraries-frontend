@@ -6,10 +6,10 @@ const store = useUiStore();
 <template>
   <nav
     v-if="store.breadcrumb && store.breadcrumb.length > 1"
-    class="flex lg:hidden justify-center mx-6 mb-6 overflow-x-auto"
+    class="mx-6 mb-6 flex justify-center overflow-x-auto lg:hidden"
     aria-label="Breadcrumb"
   >
-    <ol class="flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+    <ol class="flex items-center space-x-1 rtl:space-x-reverse md:space-x-2">
       <li
         v-for="(item, index) in store.breadcrumb"
         :key="item.label"
@@ -41,7 +41,7 @@ const store = useUiStore();
               ? 'font-semibold'
               : 'font-medium',
           ]"
-        >{{ item.label }}</RouterLink
+          >{{ item.label }}</RouterLink
         >
         <p
           v-else

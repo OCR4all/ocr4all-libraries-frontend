@@ -6,13 +6,13 @@ import {
   CpuChipIcon,
 } from "@heroicons/vue/24/outline";
 
-import IconDashboard from "~icons/heroicons/home"
-import IconRepository from "~icons/material-symbols/home-storage-rounded"
-import IconProject from "~icons/heroicons/squares-2x2"
-import IconNodeflow from "~icons/hugeicons/flow-square"
-import IconQueue from "~icons/heroicons/queue-list"
-import IconTraining from "~icons/carbon/machine-learning-model"
-import IconEvaluation from "~icons/carbon/compare"
+import IconDashboard from "~icons/heroicons/home";
+import IconRepository from "~icons/material-symbols/home-storage-rounded";
+import IconProject from "~icons/heroicons/squares-2x2";
+import IconNodeflow from "~icons/hugeicons/flow-square";
+import IconQueue from "~icons/heroicons/queue-list";
+import IconTraining from "~icons/carbon/machine-learning-model";
+import IconEvaluation from "~icons/carbon/compare";
 
 import { FunctionalComponent, HTMLAttributes, VNodeProps } from "vue";
 

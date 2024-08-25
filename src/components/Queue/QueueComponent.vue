@@ -1,16 +1,9 @@
 <script setup lang="ts">
 import { UseTimeAgo } from "@vueuse/components";
-import {
-  ArrowPathIcon,
-  StopIcon,
-  XMarkIcon,
-} from "@heroicons/vue/24/outline";
+import { ArrowPathIcon, StopIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 
 const jobInfoDialog = defineAsyncComponent(
-  () =>
-    import(
-      "@/components/Queue/Dialog/JobInfoDialog.vue"
-      ),
+  () => import("@/components/Queue/Dialog/JobInfoDialog.vue"),
 );
 
 import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
@@ -21,9 +14,9 @@ import Toast from "primevue/toast";
 import Button from "primevue/button";
 import ProgressBar from "primevue/progressbar";
 import { FilterMatchMode } from "@primevue/core/api";
-import IconExpunge from "~icons/ant-design/clear-outlined"
+import IconExpunge from "~icons/ant-design/clear-outlined";
 
-const dialog = useDialog()
+const dialog = useDialog();
 
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
@@ -79,32 +72,32 @@ async function refetch() {
   )
     .get()
     .json();
-  if(error.value) {
+  if (error.value) {
     toast.add({
       severity: "error",
       summary: t("pages.login.toasts.login.error.summary"),
       detail: error.value,
       life: 3000,
       group: "general",
-    })
-  }else{
-    const queue: IQueue = data.value
+    });
+  } else {
+    const queue: IQueue = data.value;
     const _jobs: IJob[] = [];
     for (const entries of Object.values(queue)) {
       for (const job of entries) {
         _jobs.push(job);
       }
-  }
-  loading.value = isFetching.value;
-  setTimeout(function () {
-    isRefetching.value = isFetching.value;
-  }, 500);
-  jobs.value = _jobs;
+    }
+    loading.value = isFetching.value;
+    setTimeout(function () {
+      isRefetching.value = isFetching.value;
+    }, 500);
+    jobs.value = _jobs;
   }
 }
 
 function calculateProgress(data) {
-  return data.state === "completed" ? 100 : data.journal.progress * 100
+  return data.state === "completed" ? 100 : data.journal.progress * 100;
 }
 
 refetch();
@@ -157,8 +150,8 @@ async function removeJob(job: string) {
     });
 }
 
-const items = ref([])
-const menu = ref()
+const items = ref([]);
+const menu = ref();
 
 const toggle = (event, data) => {
   items.value = [
@@ -168,7 +161,7 @@ const toggle = (event, data) => {
         {
           label: "Info",
           icon: "pi pi-info-circle",
-          command: () => openInfoDialog(data)
+          command: () => openInfoDialog(data),
         },
       ],
     },
@@ -182,23 +175,23 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
     {
       label: "Info",
       icon: "pi pi-info-circle",
-      command: () => openInfoDialog(event.data)
+      command: () => openInfoDialog(event.data),
     },
   ];
   contextMenu.value.show(event.originalEvent);
 };
 
-function openInfoDialog(data){
+function openInfoDialog(data) {
   dialog.open(jobInfoDialog, {
     props: {
       header: "Job Information",
       modal: true,
       style: {
-        width: '75vw',
+        width: "75vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: data,
@@ -208,9 +201,7 @@ function openInfoDialog(data){
   });
 }
 
-onUnmounted(() => {
-
-})
+onUnmounted(() => {});
 </script>
 
 <template>
@@ -235,7 +226,7 @@ onUnmounted(() => {
           :class="{
             'text-red-500 group-hover:text-white': item.label === 'Delete',
           }"
-        >{{ item.label }}</span
+          >{{ item.label }}</span
         >
       </a>
     </template>
@@ -261,7 +252,7 @@ onUnmounted(() => {
           :class="{
             'text-red-500 group-hover:text-white': item.label === 'Delete',
           }"
-        >{{ item.label }}</span
+          >{{ item.label }}</span
         >
       </a>
     </template>
@@ -269,20 +260,25 @@ onUnmounted(() => {
   <ComponentContainer spaced>
     <Toolbar>
       <template #start>
-        <Button v-tooltip.top="'Expunge queue'" severity="danger" @click="expungeJobs" text>
+        <Button
+          v-tooltip.top="'Expunge queue'"
+          severity="danger"
+          @click="expungeJobs"
+          text
+        >
           <IconExpunge />
         </Button>
       </template>
 
       <template #end>
         <button
-            v-tooltip.left="'Refresh'"
-            :disabled="isRefetching === true"
-            @click="refetch"
+          v-tooltip.left="'Refresh'"
+          :disabled="isRefetching === true"
+          @click="refetch"
         >
           <ArrowPathIcon
-              :class="{ 'animate-spin': isRefetching }"
-              class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-200 hover:dark:text-white"
+            :class="{ 'animate-spin': isRefetching }"
+            class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-200 hover:dark:text-white"
           />
         </button>
         <IconField>
@@ -290,8 +286,8 @@ onUnmounted(() => {
             <i class="pi pi-search" />
           </InputIcon>
           <InputText
-              v-model="filters['global'].value"
-              :placeholder="$t('pages.queue.table.search.placeholder')"
+            v-model="filters['global'].value"
+            :placeholder="$t('pages.queue.table.search.placeholder')"
           />
         </IconField>
       </template>
@@ -410,11 +406,11 @@ onUnmounted(() => {
         <template #body="{ data }">
           <div class="space-y-2">
             <Button
-                type="button"
-                icon="pi pi-ellipsis-v"
-                text
-                severity="secondary"
-                @click="toggle($event, data)"
+              type="button"
+              icon="pi pi-ellipsis-v"
+              text
+              severity="secondary"
+              @click="toggle($event, data)"
             />
           </div>
         </template>

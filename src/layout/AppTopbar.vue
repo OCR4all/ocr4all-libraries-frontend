@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAuthStore } from "@/stores/auth.store";
-import IconBars from "~icons/heroicons/bars-3-center-left-16-solid"
+import IconBars from "~icons/heroicons/bars-3-center-left-16-solid";
 const authStore = useAuthStore();
 
 const router = useRouter();

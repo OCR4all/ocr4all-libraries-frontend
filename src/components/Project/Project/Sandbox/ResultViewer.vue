@@ -13,16 +13,19 @@ import { useUiStore } from "@/stores/ui.store";
 import { useDialog } from "primevue/usedialog";
 import { useAuthStore } from "@/stores/auth.store";
 
-import IconUnlock from "~icons/fluent/lock-open-28-filled"
-import IconStart from "~icons/fluent/play-circle-28-filled"
-import IconAddToDataset from "~icons/fluent/stack-add-24-filled"
-import IconExport from "~icons/fluent/arrow-download-20-filled"
+import IconUnlock from "~icons/fluent/lock-open-28-filled";
+import IconStart from "~icons/fluent/play-circle-28-filled";
+import IconAddToDataset from "~icons/fluent/stack-add-24-filled";
+import IconExport from "~icons/fluent/arrow-download-20-filled";
 import IconLarex from "~icons/fluent/notebook-eye-20-filled";
-import IconInformation from "~icons/fluent/info-32-filled"
+import IconInformation from "~icons/fluent/info-32-filled";
 
-import {IEnrichedNode, INode} from "@/components/Project/Project/Sandbox/resultviewer.interface";
+import {
+  IEnrichedNode,
+  INode,
+} from "@/components/Project/Project/Sandbox/resultviewer.interface";
 
-const authStore = useAuthStore()
+const authStore = useAuthStore();
 
 const processorDialog = defineAsyncComponent(
   () =>
@@ -31,12 +34,16 @@ const processorDialog = defineAsyncComponent(
 
 const exportDialog = defineAsyncComponent(
   () =>
-    import("@/components/Project/Project/Sandbox/Dialog/ExportSnapshotDialog.vue"),
+    import(
+      "@/components/Project/Project/Sandbox/Dialog/ExportSnapshotDialog.vue"
+    ),
 );
 
 const processorInformationDialog = defineAsyncComponent(
   () =>
-    import("@/components/Project/Project/Sandbox/Dialog/ProcessorInformationDialog.vue"),
+    import(
+      "@/components/Project/Project/Sandbox/Dialog/ProcessorInformationDialog.vue"
+    ),
 );
 
 const router = useRouter();
@@ -54,7 +61,8 @@ interface ITrack {
   [key: string]: boolean;
 }
 
-const LAREX_LAUNCHER_SPI = "de.uniwuerzburg.zpd.ocr4all.application.core.spi.postcorrection.provider.LAREXLauncher"
+const LAREX_LAUNCHER_SPI =
+  "de.uniwuerzburg.zpd.ocr4all.application.core.spi.postcorrection.provider.LAREXLauncher";
 
 const isGeneratingSandbox = ref(false);
 const isReady = ref(false);
@@ -80,28 +88,28 @@ const LAREX_LABEL = "LAREX launcher default";
 
 const dialog = useDialog();
 
-function convertSelectionToTrack(selection: ITrack){
-  if(Object.keys(selection)[0].length == 0) return []
+function convertSelectionToTrack(selection: ITrack) {
+  if (Object.keys(selection)[0].length == 0) return [];
   return Object.keys(selection)[0]
     .split(",")
-    .map(function(item) {
+    .map(function (item) {
       return parseInt(item, 10);
-    })
+    });
 }
 
 function openProcessorDialog(snapshot: ITrack) {
-  const key = convertSelectionToTrack(snapshot)
+  const key = convertSelectionToTrack(snapshot);
 
   dialog.open(processorDialog, {
     props: {
       header: "Run processor",
       modal: true,
       style: {
-        width: '75vw',
+        width: "75vw",
       },
-      breakpoints:{
-        '960px': '75vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "75vw",
+        "640px": "90vw",
       },
     },
     data: {
@@ -128,55 +136,65 @@ const showSandboxGenerationToast = () => {
 
 async function collectSnapshotInformation(data: INode) {
   const payload = {
-    track: data.snapshot.track
-  }
-  useCustomFetch(`/snapshot/entity/${project}/${sandbox}`).post(payload).json().then((response) => {
-    selectedSnapshotLock.value = response.data.value.configuration.lock != null
-    selectedSnapshotInformation.value = response.data.value.configuration;
-  })
+    track: data.snapshot.track,
+  };
+  useCustomFetch(`/snapshot/entity/${project}/${sandbox}`)
+    .post(payload)
+    .json()
+    .then((response) => {
+      selectedSnapshotLock.value =
+        response.data.value.configuration.lock != null;
+      selectedSnapshotInformation.value = response.data.value.configuration;
+    });
   /*selectedSnapshotProcessors.value = JSON.parse(data.parameter)*/
 }
 
-async function unlockSnapshot(track: ITrack){
+async function unlockSnapshot(track: ITrack) {
   const payload = {
     track: convertSelectionToTrack(track),
     source: "unlockSnapshot",
-    description : `${authStore.user} unlocked the snapshot`
-  }
-  useCustomFetch(`/snapshot/unlock/${project}/${sandbox}`).post(payload).json().then((response) => {
-    if(!response.error.value){
-      toast.add({
-        severity: "success",
-        summary: "Success",
-        detail: "Snapshot unlocked",
-        life: 3000,
-        group: "general",
-      });
-      selectedSnapshotLock.value = false
-    }
-  })
+    description: `${authStore.user} unlocked the snapshot`,
+  };
+  useCustomFetch(`/snapshot/unlock/${project}/${sandbox}`)
+    .post(payload)
+    .json()
+    .then((response) => {
+      if (!response.error.value) {
+        toast.add({
+          severity: "success",
+          summary: "Success",
+          detail: "Snapshot unlocked",
+          life: 3000,
+          group: "general",
+        });
+        selectedSnapshotLock.value = false;
+      }
+    });
 }
 
-async function lockSnapshot(track: ITrack){
+async function lockSnapshot(track: ITrack) {
   const payload = {
     track: track,
     source: "unlockSnapshot",
-    description : `${authStore.user} unlocked the snapshot`
-  }
-  useCustomFetch(`/snapshot/lock/${project}/${sandbox}`).post(payload).json().then((response) => {
-    if(!response.error.value){
-      refetch()
-    }
-  })
+    description: `${authStore.user} unlocked the snapshot`,
+  };
+  useCustomFetch(`/snapshot/lock/${project}/${sandbox}`)
+    .post(payload)
+    .json()
+    .then((response) => {
+      if (!response.error.value) {
+        refetch();
+      }
+    });
 }
 
 function enrichData(node: INode) {
-  const current = node as IEnrichedNode
-  current.label = node.snapshot.configuration.label
-  current.type = node.snapshot.configuration["type-label"]
-  current.key = node.snapshot.track
+  const current = node as IEnrichedNode;
+  current.label = node.snapshot.configuration.label;
+  current.type = node.snapshot.configuration["type-label"];
+  current.key = node.snapshot.track;
   if (node.children && node.children.length > 0) {
-    node.children.forEach(child => enrichData(child));
+    node.children.forEach((child) => enrichData(child));
   }
 }
 
@@ -186,13 +204,13 @@ async function refetch() {
   )
     .get()
     .json();
-  enrichData(data.value)
-  nodes.value = data.value
+  enrichData(data.value);
+  nodes.value = data.value;
 }
 
 function getSnapshotFromSelection(selection: ITrack): IEnrichedNode {
-  if(Object.keys(selection)[0].length == 0) return nodes.value
-  const key = convertSelectionToTrack(selection)
+  if (Object.keys(selection)[0].length == 0) return nodes.value;
+  const key = convertSelectionToTrack(selection);
   return useFindNestedObject(nodes, "key", key);
 }
 
@@ -252,23 +270,20 @@ async function generateSandbox(selection: ITrack) {
   const fileMap = {};
   const mimeMap = {};
 
-  let files = null
+  let files = null;
 
   /* ToDo: Bug that prevents LAREX from working; backend (?) */
-  await useCustomFetch(
-    `/snapshot/file/${project}/${sandbox}`,
-  ).post(
-    {
-      track: createdTrack.value
-    }
-  ).json(
+  await useCustomFetch(`/snapshot/file/${project}/${sandbox}`)
+    .post({
+      track: createdTrack.value,
+    })
+    .json()
+    .then((response) => {
+      console.log(response.data.value);
+      files = response.data.value;
+    });
 
-  ).then((response) => {
-    console.log(response.data.value)
-    files = response.data.value
-  });
-
-  console.log(files)
+  console.log(files);
 
   const lookupMap = {};
   for (const file of files) {
@@ -294,26 +309,26 @@ async function generateSandbox(selection: ITrack) {
 }
 
 function getTagClasses(type: string): string {
-  switch(type){
+  switch (type) {
     case "Launcher":
-      return "!bg-surface-100 !text-surface-900"
+      return "!bg-surface-100 !text-surface-900";
     case "Preprocessing":
-      return "!bg-lime-100 !text-surface-900"
+      return "!bg-lime-100 !text-surface-900";
     case "Layout Analysis":
-      return "!bg-teal-100 !text-surface-900"
+      return "!bg-teal-100 !text-surface-900";
     case "Text Recognition":
-      return "!bg-indigo-100 !text-surface-900"
+      return "!bg-indigo-100 !text-surface-900";
     case "Format Conversion":
-      return "!bg-violet-100 !text-surface-900"
+      return "!bg-violet-100 !text-surface-900";
     case "Postcorrection":
-      return "!bg-sky-100 !text-surface-900"
+      return "!bg-sky-100 !text-surface-900";
     default:
-      return ""
+      return "";
   }
 }
 
 async function addToDataset(selection: ITrack) {
-  const key = convertSelectionToTrack(selection)
+  const key = convertSelectionToTrack(selection);
   const payload = {
     track: key,
     "collection-id": "string",
@@ -326,9 +341,7 @@ async function addToDataset(selection: ITrack) {
 
 function hasLarexView(selection: ITrack): boolean {
   const snapshot = getSnapshotFromSelection(selection);
-  return snapshot.children
-    .map((entry) => entry.label)
-    .includes(LAREX_LABEL);
+  return snapshot.children.map((entry) => entry.label).includes(LAREX_LABEL);
 }
 
 function openProcessorInformationDialog(information: unknown) {
@@ -337,17 +350,17 @@ function openProcessorInformationDialog(information: unknown) {
       header: "Processor information",
       modal: true,
       style: {
-        width: '75vw',
+        width: "75vw",
       },
-      breakpoints:{
-        '960px': '75vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "75vw",
+        "640px": "90vw",
       },
     },
     data: {
       information: selectedSnapshotInformation.value,
-      processors: selectedSnapshotProcessors.value
-    }
+      processors: selectedSnapshotProcessors.value,
+    },
   });
 }
 
@@ -362,11 +375,11 @@ function openExportSnapshotDialog(snapshot: ITrack) {
       header: "Export snapshot",
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: {
@@ -428,63 +441,63 @@ const actionDock = ref({
       root: {
         borderColor: "{surface.200}",
         itemPadding: "0px",
-      }
+      },
     },
     dark: {
       root: {
         borderColor: "{surface.600}",
         itemPadding: "0px",
       },
-    }
-  }
+    },
+  },
 });
 
 const items = computed(() => {
-  if(Object.keys(selection.value).length === 0) {
-    return []
-  }else{
+  if (Object.keys(selection.value).length === 0) {
+    return [];
+  } else {
     return [
       {
-        label:  "LAREX",
+        label: "LAREX",
         icon: IconLarex,
         visible: !hasLarexView(selection.value),
         disabled: false,
         command: () => {
-          generateSandbox(selection.value)
-        }
+          generateSandbox(selection.value);
+        },
       },
       {
-        label: 'Unlock Snapshot',
+        label: "Unlock Snapshot",
         visible: selectedSnapshotLock.value,
         disabled: false,
         icon: IconUnlock,
         command: () => {
-          unlockSnapshot(selection.value)
-        }
+          unlockSnapshot(selection.value);
+        },
       },
       {
-        label: 'Run Processor',
+        label: "Run Processor",
         visible: true,
         disabled: selectedSnapshotLock.value,
         icon: IconStart,
         command: () => {
-          openProcessorDialog(selection.value)
-        }
+          openProcessorDialog(selection.value);
+        },
       },
       {
-        label: 'Add to dataset',
+        label: "Add to dataset",
         visible: true,
         disabled: false,
-        icon: IconAddToDataset
+        icon: IconAddToDataset,
       },
       {
-        label: 'Export',
+        label: "Export",
         icon: IconExport,
         visible: true,
         disabled: false,
         command: () => {
-          openExportSnapshotDialog(selection.value)
-        }
+          openExportSnapshotDialog(selection.value);
+        },
       },
       {
         label: "Processor Information",
@@ -492,13 +505,12 @@ const items = computed(() => {
         disabled: false,
         icon: IconInformation,
         command: () => {
-          openProcessorInformationDialog(selectedSnapshotInformation.value)
-        }
-      }
-    ]
+          openProcessorInformationDialog(selectedSnapshotInformation.value);
+        },
+      },
+    ];
   }
-})
-
+});
 </script>
 <template>
   <Toast
@@ -568,13 +580,27 @@ const items = computed(() => {
       </section>
     </template>
   </Toast>
-  <Dock class="lg:mb-4 !z-50" v-show="Object.entries(selection).length > 0" :model="items" :dt="actionDock" :pt="{
-    listContainer: 'backdrop-blur-sm !rounded-0 lg:!rounded-xl'
-  }">
+  <Dock
+    class="!z-50 lg:mb-4"
+    v-show="Object.entries(selection).length > 0"
+    :model="items"
+    :dt="actionDock"
+    :pt="{
+      listContainer: 'backdrop-blur-sm !rounded-0 lg:!rounded-xl',
+    }"
+  >
     <template #item="{ item }">
       <div v-show="item.visible" class="flex flex-col lg:p-2">
-        <Button :disabled="item.disabled" v-tooltip.top="item.label" @click="item.command" text>
-          <component :is="item.icon" class="self-center dark:text-surface-100 text-surface-800 w-8 h-8" />
+        <Button
+          :disabled="item.disabled"
+          v-tooltip.top="item.label"
+          @click="item.command"
+          text
+        >
+          <component
+            :is="item.icon"
+            class="h-8 w-8 self-center text-surface-800 dark:text-surface-100"
+          />
         </Button>
       </div>
     </template>
@@ -600,10 +626,18 @@ const items = computed(() => {
           >
             <template #default="slotProps">
               <div class="flex flex-col space-y-2">
-                <span class="mb-2 font-bold self-center">
-                  {{ slotProps.node.label.replace("LAREX launcher default", "LAREX") }}
+                <span class="mb-2 self-center font-bold">
+                  {{
+                    slotProps.node.label.replace(
+                      "LAREX launcher default",
+                      "LAREX",
+                    )
+                  }}
                 </span>
-                <Tag :value="slotProps.node.type" :class="getTagClasses(slotProps.node.type)"></Tag>
+                <Tag
+                  :value="slotProps.node.type"
+                  :class="getTagClasses(slotProps.node.type)"
+                ></Tag>
               </div>
             </template>
           </OrganizationChart>
@@ -612,6 +646,4 @@ const items = computed(() => {
     </div>
   </div>
 </template>
-<style>
-
-</style>
+<style></style>

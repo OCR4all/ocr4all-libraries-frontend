@@ -77,7 +77,7 @@ const onExpand = (node) => {
           )
             .get()
             .blob();
-/*          const detailImgFetch = await useCustomFetch(
+          /*          const detailImgFetch = await useCustomFetch(
             `/repository/container/folio/derivative/best/${node.key}?id=${key}`,
           )
             .get()

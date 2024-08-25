@@ -13,7 +13,7 @@ import router from "./router";
 import { createHead } from "@unhead/vue";
 const head = createHead();
 
-import '@sfxcode/formkit-primevue/dist/sass/formkit-primevue.scss'
+import "@sfxcode/formkit-primevue/dist/sass/formkit-primevue.scss";
 
 import { VueQueryPlugin } from "@tanstack/vue-query";
 // PrimeVue imports
@@ -224,7 +224,7 @@ app.component("PanelMenu", PanelMenu);
 app.component("Password", Password);
 app.component("PickList", PickList);
 app.component("ProgressBar", ProgressBar);
-app.component("ProgressSpinner", ProgressSpinner)
+app.component("ProgressSpinner", ProgressSpinner);
 app.component("RadioButton", RadioButton);
 app.component("Rating", Rating);
 app.component("Select", Select);

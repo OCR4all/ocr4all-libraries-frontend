@@ -9,23 +9,23 @@ const processor =
 const data = ref();
 const schema = ref([]);
 
-const registry = ref()
+const registry = ref();
 
 useCustomFetch(`/spi/entity/${processor}`)
   .get()
   .json()
   .then((response) => {
     buildProcessorFormSchema(response.data.value, 2);
-    registry.value = buildRegistry(response.data.value)
+    registry.value = buildRegistry(response.data.value);
   });
 
-function buildRegistry(data){
-  const registry = {}
-  for(const entry of data.entries){
-    registry[entry.argument] = entry.type
+function buildRegistry(data) {
+  const registry = {};
+  for (const entry of data.entries) {
+    registry[entry.argument] = entry.type;
   }
 
-  return registry
+  return registry;
 }
 
 function buildProcessorFormSchema(data, cols: number) {
@@ -39,9 +39,9 @@ function getParameters() {
   const selects = [];
   const strings = [];
 
-  for(const [key, value] of Object.entries(data.value)){
-    const processorType = registry.value[key]
-    if(value){
+  for (const [key, value] of Object.entries(data.value)) {
+    const processorType = registry.value[key];
+    if (value) {
       switch (processorType) {
         case "boolean":
           booleans.push({
@@ -81,8 +81,8 @@ function getParameters() {
     decimals: decimals,
     integers: integers,
     selects: selects,
-    strings: strings
-  }
+    strings: strings,
+  };
 }
 
 defineExpose({
@@ -96,8 +96,8 @@ defineExpose({
     v-model="data"
     type="form"
     :submit-attrs="{
-          inputClass: 'formkit-submit-btn',
-        }"
+      inputClass: 'formkit-submit-btn',
+    }"
     :actions="false"
   >
     <FormKitSchema :schema="schema" :data="data" />

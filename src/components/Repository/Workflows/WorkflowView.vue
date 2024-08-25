@@ -12,7 +12,7 @@ import { useNodeFlowStore } from "@/stores/nodeflow.store";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useDialog } from "primevue/usedialog";
 import { UseTimeAgo } from "@vueuse/components";
-import IconCreate from "~icons/gridicons/create"
+import IconCreate from "~icons/gridicons/create";
 
 import { FilterMatchMode } from "@primevue/core/api";
 
@@ -134,11 +134,11 @@ function openDeleteDialog(data) {
       header: "Delete Workflow",
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: {
@@ -156,11 +156,11 @@ function openEditDialog(data) {
       header: "Edit Workflow",
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: data,
@@ -278,7 +278,11 @@ refetch();
   <ComponentContainer spaced>
     <Toolbar>
       <template #start>
-        <Button v-tooltip.top="$t('pages.workflows.toolbar.new')" text @click="router.push('/nodeflow')">
+        <Button
+          v-tooltip.top="$t('pages.workflows.toolbar.new')"
+          text
+          @click="router.push('/nodeflow')"
+        >
           <IconCreate class="text-black dark:text-white" />
         </Button>
       </template>
@@ -286,18 +290,15 @@ refetch();
         <div class="flex">
           <button :disabled="isRefetching === true" @click="refetch">
             <ArrowPathIcon
-                :class="{ 'animate-spin': isRefetching }"
-                class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
+              :class="{ 'animate-spin': isRefetching }"
+              class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
             />
           </button>
           <IconField>
             <InputIcon>
               <i class="pi pi-search" />
             </InputIcon>
-            <InputText
-                v-model="filters['global'].value"
-                placeholder="Search"
-            />
+            <InputText v-model="filters['global'].value" placeholder="Search" />
           </IconField>
         </div>
       </template>

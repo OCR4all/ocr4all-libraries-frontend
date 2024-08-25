@@ -32,8 +32,8 @@ const filters: Ref = ref({
 
 const dialog = useDialog();
 
-import IconAnalytics from "~icons/carbon/data-analytics"
-import IconCreate from "~icons/gridicons/create"
+import IconAnalytics from "~icons/carbon/data-analytics";
+import IconCreate from "~icons/gridicons/create";
 
 const isRefetching: Ref<boolean> = ref(false);
 const datasets: Ref<ICollectionSet[]> = ref([]);
@@ -50,40 +50,40 @@ async function downloadDataset(data: ICollectionSet) {
   useCustomFetch(`/data/collection/set/zip/${data.id}`)
     .blob()
     .then((response) => {
-      if(response.data.value){
+      if (response.data.value) {
         const url = window.URL.createObjectURL(new Blob([response.data.value]));
         const link = document.createElement("a");
         link.href = url;
         link.setAttribute("download", `${data.name}.zip`);
         document.body.appendChild(link);
         link.click();
-      }else {
+      } else {
         toast.add({
           severity: "error",
           summary: "Error",
           detail: "Couldn't create export.",
           life: 3000,
           group: "general",
-        })
+        });
       }
       toast.removeGroup("download-toast");
     });
 }
 
 async function getCodec(datasets) {
-  const datasetPayload = []
-  for(const dataset of datasets) {
-    const files = []
-    console.log(dataset)
+  const datasetPayload = [];
+  for (const dataset of datasets) {
+    const files = [];
+    console.log(dataset);
   }
-/*    for(const set of selectedSets.value){
+  /*    for(const set of selectedSets.value){
       const xml = set.files.find(file => {
         return file["content-type"] === "application/xml"
       })
       if(xml) files.push(xml.name)*/
-/*    }
+  /*    }
   }*/
-/*  const payload = {
+  /*  const payload = {
     "datasets": [
       {
         "id": dataset,
@@ -109,7 +109,7 @@ async function refetch() {
   )
     .get()
     .json();
-  if(error.value){
+  if (error.value) {
     toast.add({
       severity: "error",
       summary: "Error",
@@ -117,10 +117,10 @@ async function refetch() {
       life: 3000,
       group: "general",
     });
-  }else{
-    datasets.value = data.value.filter(function (container: IContainer){
-      return container.right !== null
-    })
+  } else {
+    datasets.value = data.value.filter(function (container: IContainer) {
+      return container.right !== null;
+    });
   }
   setTimeout(function () {
     isRefetching.value = isFetching.value;
@@ -134,28 +134,28 @@ const menu = ref();
 
 const toggle = (event, data) => {
   items.value = [
-        {
-          label: "Edit",
-          icon: "pi pi-pencil",
-          command: () => {
-            openEditDialog(data);
-          },
-        },
-        {
-          label: "Download",
-          icon: "pi pi-download",
-          command: () => {
-            downloadDataset(data);
-          },
-        },
-        {
-          label: "Delete",
-          icon: "pi pi-trash",
-          command: () => {
-            openDeleteDialog([data]);
-          },
-        },
-      ]
+    {
+      label: "Edit",
+      icon: "pi pi-pencil",
+      command: () => {
+        openEditDialog(data);
+      },
+    },
+    {
+      label: "Download",
+      icon: "pi pi-download",
+      command: () => {
+        downloadDataset(data);
+      },
+    },
+    {
+      label: "Delete",
+      icon: "pi pi-trash",
+      command: () => {
+        openDeleteDialog([data]);
+      },
+    },
+  ];
   menu.value.toggle(event);
 };
 const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
@@ -198,11 +198,11 @@ function openDeleteDialog(data: ICollectionSet) {
       header: "Delete Dataset",
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: data,
@@ -218,11 +218,11 @@ function openCreateDialog() {
       header: "Create Dataset",
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     onClose: () => {
@@ -237,11 +237,11 @@ function openEditDialog(data: ICollectionSet) {
       header: "Edit Dataset",
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: {
@@ -258,17 +258,49 @@ const contextMenu = ref();
 <template>
   <Toast position="bottom-right" group="download-toast">
     <template #container="{ message, closeCallback }">
-      <div class="flex items-center w-full p-4 rounded-lg shadow bg-surface-200/50 dark:bg-surface-700/50 backdrop-md" role="alert">
-        <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8">
-          <ProgressSpinner class="w-4 h-4" strokeWidth="8" fill="transparent"
-                           animationDuration=".5s" aria-label="Download Spinner" />
+      <div
+        class="backdrop-md flex w-full items-center rounded-lg bg-surface-200/50 p-4 shadow dark:bg-surface-700/50"
+        role="alert"
+      >
+        <div
+          class="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center"
+        >
+          <ProgressSpinner
+            class="h-4 w-4"
+            strokeWidth="8"
+            fill="transparent"
+            animationDuration=".5s"
+            aria-label="Download Spinner"
+          />
           <span class="sr-only">Fire icon</span>
         </div>
-        <div class="ms-3 text-sm text-surface-800 dark:text-surface-100 font-normal">{{ message.summary }}</div>
-        <button @click="closeCallback" type="button" class="ms-auto -mx-1.5 -my-1.5 text-surface-800 hover:text-surface-950 rounded-lg focus:ring-2 focus:ring-surface-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-surface-200 dark:hover:text-white dark:hover:bg-gray-800" data-dismiss-target="#toast-default" aria-label="Close">
+        <div
+          class="ms-3 text-sm font-normal text-surface-800 dark:text-surface-100"
+        >
+          {{ message.summary }}
+        </div>
+        <button
+          @click="closeCallback"
+          type="button"
+          class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg p-1.5 text-surface-800 hover:bg-gray-100 hover:text-surface-950 focus:ring-2 focus:ring-surface-300 dark:text-surface-200 dark:hover:bg-gray-800 dark:hover:text-white"
+          data-dismiss-target="#toast-default"
+          aria-label="Close"
+        >
           <span class="sr-only">Close</span>
-          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          <svg
+            class="h-3 w-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
           </svg>
         </button>
       </div>
@@ -329,23 +361,36 @@ const contextMenu = ref();
   <ComponentContainer spaced>
     <Toolbar>
       <template #start>
-        <Button v-tooltip.top="$t('pages.repository.overview.toolbar.button.create')" @click="openCreateDialog" text>
+        <Button
+          v-tooltip.top="$t('pages.repository.overview.toolbar.button.create')"
+          @click="openCreateDialog"
+          text
+        >
           <IconCreate class="text-black dark:text-white" />
         </Button>
-        <Button v-tooltip.top="'Analyze Codec'" @click="getCodec(selectedDatasets)" :disabled="!selectedDatasets || !selectedDatasets.length" text>
+        <Button
+          v-tooltip.top="'Analyze Codec'"
+          @click="getCodec(selectedDatasets)"
+          :disabled="!selectedDatasets || !selectedDatasets.length"
+          text
+        >
           <IconAnalytics class="text-black dark:text-white" />
         </Button>
-        <Button v-tooltip.top="$t('pages.repository.overview.toolbar.button.delete')" :disabled="!selectedDatasets || !selectedDatasets.length" icon="pi pi-trash" @click="openDeleteDialog(selectedDatasets)" severity="danger" text />
+        <Button
+          v-tooltip.top="$t('pages.repository.overview.toolbar.button.delete')"
+          :disabled="!selectedDatasets || !selectedDatasets.length"
+          icon="pi pi-trash"
+          @click="openDeleteDialog(selectedDatasets)"
+          severity="danger"
+          text
+        />
       </template>
       <template #end>
         <IconField>
           <InputIcon>
             <i class="pi pi-search" />
           </InputIcon>
-          <InputText
-              v-model="filters['global'].value"
-              placeholder="Search"
-          />
+          <InputText v-model="filters['global'].value" placeholder="Search" />
         </IconField>
       </template>
     </Toolbar>
@@ -440,11 +485,11 @@ const contextMenu = ref();
         <template #body="{ data }">
           <div class="space-y-2">
             <Button
-                type="button"
-                icon="pi pi-ellipsis-v"
-                text
-                severity="secondary"
-                @click="toggle($event, data)"
+              type="button"
+              icon="pi pi-ellipsis-v"
+              text
+              severity="secondary"
+              @click="toggle($event, data)"
             />
           </div>
         </template>

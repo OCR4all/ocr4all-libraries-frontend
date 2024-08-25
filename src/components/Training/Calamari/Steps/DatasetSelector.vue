@@ -15,7 +15,7 @@ onMounted(() => {
   useCustomFetch("/data/collection/list")
     .json()
     .then((response) => {
-      console.log(response.data.value)
+      console.log(response.data.value);
       for (const entry of response.data.value) {
         nodes.value.push({
           key: entry.id,
@@ -46,7 +46,7 @@ const onExpand = (node) => {
     useCustomFetch(`/data/collection/set/list/${node.key}`)
       .json()
       .then(async (response) => {
-        console.log(response.data.value)
+        console.log(response.data.value);
         const children = [];
         for (const set of response.data.value) {
           const key = set.id;
@@ -79,8 +79,8 @@ const filters = ref({
 async function getDatasets() {
   const registry = {};
   const selection = [];
-  console.log(nodes.value)
-  console.log(selectedSets.value)
+  console.log(nodes.value);
+  console.log(selectedSets.value);
   for (const [key, value] of Object.entries(selectedSets.value)) {
     if (value.checked === true) {
       const { data, error } = await useCustomFetch(

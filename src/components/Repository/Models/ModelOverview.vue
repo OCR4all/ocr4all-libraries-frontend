@@ -1,49 +1,46 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
-import DataTable, {DataTableRowContextMenuEvent} from "primevue/datatable";
-import {IContainer} from "@/components/Project/project.interfaces";
+import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
+import { IContainer } from "@/components/Project/project.interfaces";
 import ShareDialog from "@/components/Repository/Images/Container/Dialog/ShareDialog.vue";
 import Column from "primevue/column";
 import Button from "primevue/button";
 
-import IconCreate from "~icons/gridicons/create"
+import IconCreate from "~icons/gridicons/create";
 
 const EditModelDialog = defineAsyncComponent(
-    () =>
-        import(
-            "@/components/Repository/Models/Dialog/EditModelDialog.vue"
-            ),
+  () => import("@/components/Repository/Models/Dialog/EditModelDialog.vue"),
 );
 
 const ShareModelDialog = defineAsyncComponent(
-    () =>
-        import(
-            "@/components/Repository/Models/Dialog/ShareModelDialog.vue"
-            ),
+  () => import("@/components/Repository/Models/Dialog/ShareModelDialog.vue"),
 );
 
-const dialog = useDialog()
+const dialog = useDialog();
 
-const models = ref()
+const models = ref();
 
 import { useConfirm } from "primevue/useconfirm";
-import {useToast} from "primevue/usetoast";
+import { useToast } from "primevue/usetoast";
 import Toast from "primevue/toast";
 import ProgressSpinner from "primevue/progressspinner";
-import {useDialog} from "primevue/usedialog";
+import { useDialog } from "primevue/usedialog";
 import InputText from "primevue/inputtext";
-import {FilterMatchMode} from "@primevue/core/api";
+import { FilterMatchMode } from "@primevue/core/api";
 const confirm = useConfirm();
 const toast = useToast();
 
-async function fetch(){
-  useCustomFetch("/assemble/model/list").get().json().then((response) => {
-    models.value = response.data.value
-    console.log(models.value)
-  })
+async function fetch() {
+  useCustomFetch("/assemble/model/list")
+    .get()
+    .json()
+    .then((response) => {
+      models.value = response.data.value;
+      console.log(models.value);
+    });
 }
 
-fetch()
+fetch();
 
 const items = ref();
 const menu = ref();
@@ -85,7 +82,7 @@ const toggle = (event: Event, data) => {
           label: "Delete",
           icon: "pi pi-trash",
           command: () => {
-            confirmDelete(data.id)
+            confirmDelete(data.id);
           },
         },
       ],
@@ -101,16 +98,16 @@ function downloadModel(model: IModel) {
     group: "download-toast",
   });
   useCustomFetch(`/assemble/model/zip/${model.id}`)
-      .blob()
-      .then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response.data.value]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", `${model.name}.zip`);
-        document.body.appendChild(link);
-        link.click();
-        toast.removeGroup("download-toast");
-      });
+    .blob()
+    .then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data.value]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${model.name}.zip`);
+      document.body.appendChild(link);
+      link.click();
+      toast.removeGroup("download-toast");
+    });
 }
 
 const contextMenu = ref();
@@ -148,77 +145,75 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
       label: "Delete",
       icon: "pi pi-trash",
       command: () => {
-        confirmDelete(event.data.id)
+        confirmDelete(event.data.id);
       },
     },
   ];
   contextMenu.value.show(event.originalEvent);
 };
 
-function openEditDialog(data: IModel){
+function openEditDialog(data: IModel) {
   dialog.open(EditModelDialog, {
     props: {
       header: `Share "${data.name}"`,
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: data,
     onClose: () => {
-      fetch()
+      fetch();
     },
   });
 }
 
-function openShareDialog(data: IModel){
+function openShareDialog(data: IModel) {
   dialog.open(ShareModelDialog, {
     props: {
       header: `Share "${data.name}"`,
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: data,
     onClose: () => {
-      fetch()
+      fetch();
     },
   });
 }
 
 const confirmDelete = (id: string) => {
   confirm.require({
-    message: 'Do you want to delete this model?',
-    header: 'Danger Zone',
-    icon: 'pi pi-info-circle',
+    message: "Do you want to delete this model?",
+    header: "Danger Zone",
+    icon: "pi pi-info-circle",
     position: "bottom",
-    rejectLabel: 'Cancel',
+    rejectLabel: "Cancel",
     rejectProps: {
-      label: 'Cancel',
-      severity: 'secondary',
-      outlined: true
+      label: "Cancel",
+      severity: "secondary",
+      outlined: true,
     },
     acceptProps: {
-      label: 'Delete',
-      severity: 'danger'
+      label: "Delete",
+      severity: "danger",
     },
     accept: () => {
-      deleteModel(id)
+      deleteModel(id);
     },
-    reject: () => {
-
-    }
+    reject: () => {},
   });
-}
+};
 
 async function deleteModel(id: string) {
   useCustomFetch(`/assemble/model/remove?id=${id}`).then((response) => {
@@ -239,7 +234,7 @@ async function deleteModel(id: string) {
         group: "general",
       });
     }
-    fetch()
+    fetch();
   });
 }
 
@@ -264,11 +259,11 @@ function openShareModal(data: IContainer) {
       header: `Share ${name.value}`,
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: data,
@@ -279,13 +274,13 @@ function openShareModal(data: IContainer) {
 }
 
 function getSeverity(state: string): string {
-  switch(state){
+  switch (state) {
     case "interrupted":
-      return "danger"
+      return "danger";
     case "canceled":
-      return "secondary"
+      return "secondary";
     case "completed":
-        return "success"
+      return "success";
   }
 }
 
@@ -293,23 +288,55 @@ const filters: Ref = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
-const selectedModels = ref([])
+const selectedModels = ref([]);
 </script>
 <template>
   <ConfirmDialog />
   <Toast position="bottom-right" group="download-toast">
     <template #container="{ message, closeCallback }">
-      <div class="flex items-center w-full p-4 rounded-lg shadow bg-surface-200/50 dark:bg-surface-700/50 backdrop-md" role="alert">
-        <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8">
-          <ProgressSpinner class="w-4 h-4" strokeWidth="8" fill="transparent"
-                           animationDuration=".5s" aria-label="Download Spinner" />
+      <div
+        class="backdrop-md flex w-full items-center rounded-lg bg-surface-200/50 p-4 shadow dark:bg-surface-700/50"
+        role="alert"
+      >
+        <div
+          class="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center"
+        >
+          <ProgressSpinner
+            class="h-4 w-4"
+            strokeWidth="8"
+            fill="transparent"
+            animationDuration=".5s"
+            aria-label="Download Spinner"
+          />
           <span class="sr-only">Fire icon</span>
         </div>
-        <div class="ms-3 text-sm text-surface-800 dark:text-surface-100 font-normal">{{ message.summary }}</div>
-        <button @click="closeCallback" type="button" class="ms-auto -mx-1.5 -my-1.5 text-surface-800 hover:text-surface-950 rounded-lg focus:ring-2 focus:ring-surface-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-surface-200 dark:hover:text-white dark:hover:bg-gray-800" data-dismiss-target="#toast-default" aria-label="Close">
+        <div
+          class="ms-3 text-sm font-normal text-surface-800 dark:text-surface-100"
+        >
+          {{ message.summary }}
+        </div>
+        <button
+          @click="closeCallback"
+          type="button"
+          class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg p-1.5 text-surface-800 hover:bg-gray-100 hover:text-surface-950 focus:ring-2 focus:ring-surface-300 dark:text-surface-200 dark:hover:bg-gray-800 dark:hover:text-white"
+          data-dismiss-target="#toast-default"
+          aria-label="Close"
+        >
           <span class="sr-only">Close</span>
-          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          <svg
+            class="h-3 w-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
           </svg>
         </button>
       </div>
@@ -318,25 +345,25 @@ const selectedModels = ref([])
   <ContextMenu ref="contextMenu" :model="items">
     <template #item="{ item, props }">
       <a
-          v-ripple
-          class="group flex items-center"
-          :class="{
+        v-ripple
+        class="group flex items-center"
+        :class="{
           'rounded-md hover:bg-red-500 hover:text-white':
             item.label === 'Delete',
         }"
-          v-bind="props.action"
+        v-bind="props.action"
       >
         <span
-            :class="[
+          :class="[
             item.icon,
             { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
           ]"
         />
         <span
-            :class="{
+          :class="{
             'text-red-500 group-hover:text-white': item.label === 'Delete',
           }"
-        >{{ item.label }}</span
+          >{{ item.label }}</span
         >
       </a>
     </template>
@@ -344,25 +371,25 @@ const selectedModels = ref([])
   <Menu ref="menu" :model="items" :popup="true">
     <template #item="{ item, props }">
       <a
-          v-ripple
-          class="group flex items-center"
-          :class="{
+        v-ripple
+        class="group flex items-center"
+        :class="{
           'rounded-md hover:bg-red-500 hover:text-white':
             item.label === 'Delete',
         }"
-          v-bind="props.action"
+        v-bind="props.action"
       >
         <span
-            :class="[
+          :class="[
             item.icon,
             { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
           ]"
         />
         <span
-            :class="{
+          :class="{
             'text-red-500 group-hover:text-white': item.label === 'Delete',
           }"
-        >{{ item.label }}</span
+          >{{ item.label }}</span
         >
       </a>
     </template>
@@ -374,26 +401,34 @@ const selectedModels = ref([])
           <Button text>
             <IconCreate class="text-black dark:text-white" />
           </Button>
-          <Button icon="pi pi-trash" @click="confirmDelete" :disabled="selectedModels.length == 0" severity="danger" text />
+          <Button
+            icon="pi pi-trash"
+            @click="confirmDelete"
+            :disabled="selectedModels.length == 0"
+            severity="danger"
+            text
+          />
         </template>
         <template #end>
           <IconField>
             <InputIcon>
               <i class="pi pi-search" />
             </InputIcon>
-            <InputText
-                v-model="filters['global'].value"
-                placeholder="Search"
-            />
+            <InputText v-model="filters['global'].value" placeholder="Search" />
           </IconField>
         </template>
       </Toolbar>
-      <DataTable :value="models" contextMenu
-                 @rowContextmenu="onRowContextMenu" v-model:selection="selectedModels" :filters="filters">
+      <DataTable
+        :value="models"
+        contextMenu
+        @rowContextmenu="onRowContextMenu"
+        v-model:selection="selectedModels"
+        :filters="filters"
+      >
         <Column
-            selection-mode="multiple"
-            style="width: 3rem"
-            :exportable="false"
+          selection-mode="multiple"
+          style="width: 3rem"
+          :exportable="false"
         ></Column>
         <Column field="name" header="Name"></Column>
         <Column field="engine.type" header="Engine">
@@ -404,13 +439,21 @@ const selectedModels = ref([])
         <Column field="description" header="Description"></Column>
         <Column field="engine.state" header="State">
           <template #body="{ data }">
-            <Tag v-if="data.engine" :value="data.engine.state" :severity="getSeverity(data.engine.state)" />
+            <Tag
+              v-if="data.engine"
+              :value="data.engine.state"
+              :severity="getSeverity(data.engine.state)"
+            />
           </template>
         </Column>
         <Column field="keywords" header="Keywords">
           <template #body="{ data }">
             <div class="flex flex-col space-y-1">
-              <Tag v-for="keyword of data.keywords" :key="keyword" :value="keyword" />
+              <Tag
+                v-for="keyword of data.keywords"
+                :key="keyword"
+                :value="keyword"
+              />
             </div>
           </template>
         </Column>
@@ -418,11 +461,11 @@ const selectedModels = ref([])
           <template #body="{ data }">
             <div class="space-y-2">
               <Button
-                  type="button"
-                  icon="pi pi-ellipsis-v"
-                  text
-                  severity="secondary"
-                  @click="toggle($event, data)"
+                type="button"
+                icon="pi pi-ellipsis-v"
+                text
+                severity="secondary"
+                @click="toggle($event, data)"
               />
             </div>
           </template>

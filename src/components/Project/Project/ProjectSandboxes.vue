@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import {
-  ArrowPathIcon,
-} from "@heroicons/vue/24/outline";
-import IconCreate from "~icons/gridicons/create"
+import { ArrowPathIcon } from "@heroicons/vue/24/outline";
+import IconCreate from "~icons/gridicons/create";
 
 import { UseTimeAgo } from "@vueuse/components";
 
@@ -37,7 +35,7 @@ const selectedSandbox = ref();
 
 const isDeleteDialogVisible = ref(false);
 
-const loading = ref(true)
+const loading = ref(true);
 
 const store = useSandboxCreationStore();
 
@@ -90,8 +88,8 @@ async function refetch() {
     });
 }
 
-console.log(loading.value)
-refetch().then(() => loading.value = false);
+console.log(loading.value);
+refetch().then(() => (loading.value = false));
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -303,7 +301,11 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   <ComponentContainer spaced>
     <Toolbar>
       <template #start>
-        <Button v-tooltip.top="$t('pages.projects.sandbox.results.toolbar.new')" @click="createSandbox()" text>
+        <Button
+          v-tooltip.top="$t('pages.projects.sandbox.results.toolbar.new')"
+          @click="createSandbox()"
+          text
+        >
           <IconCreate class="text-black dark:text-white" />
         </Button>
       </template>
@@ -311,19 +313,19 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
         <div class="flex space-x-2">
           <button v-tooltip="'Refresh'" @click="refetch">
             <ArrowPathIcon
-                :disabled="isRefetching"
-                :class="{ 'animate-spin': isRefetching }"
-                class="inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-300 dark:hover:text-white"
+              :disabled="isRefetching"
+              :class="{ 'animate-spin': isRefetching }"
+              class="inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-300 dark:hover:text-white"
             />
           </button>
           <span class="p-input-icon-left">
-              <InputText
-                  v-model="filters['global'].value"
-                  :placeholder="
-                  $t('pages.projects.sandbox.results.table.search.placeholder')
-                "
-              />
-            </span>
+            <InputText
+              v-model="filters['global'].value"
+              :placeholder="
+                $t('pages.projects.sandbox.results.table.search.placeholder')
+              "
+            />
+          </span>
         </div>
       </template>
     </Toolbar>
@@ -341,8 +343,12 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
     >
       <template #loading>
         <ProgressSpinner
-style="width: 50px; height: 50px" stroke-width="8" fill="transparent"
-                         animation-duration=".5s" aria-label="Custom ProgressSpinner" />
+          style="width: 50px; height: 50px"
+          stroke-width="8"
+          fill="transparent"
+          animation-duration=".5s"
+          aria-label="Custom ProgressSpinner"
+        />
       </template>
       <template #empty>
         <span class="text-primary-950 dark:text-primary-50">{{
@@ -395,11 +401,11 @@ style="width: 50px; height: 50px" stroke-width="8" fill="transparent"
         <template #body="{ data }">
           <div class="space-y-2">
             <Button
-                type="button"
-                icon="pi pi-ellipsis-v"
-                text
-                severity="secondary"
-                @click="toggle($event, data)"
+              type="button"
+              icon="pi pi-ellipsis-v"
+              text
+              severity="secondary"
+              @click="toggle($event, data)"
             />
           </div>
         </template>

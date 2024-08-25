@@ -3,59 +3,59 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import { buildProcessorSchema } from "@/components/ProcessSelector/utils";
 
 interface IPremise {
-  state: string,
-  message: string | null
+  state: string;
+  message: string | null;
 }
 
 interface IItem {
-  type: string,
-  description: string | null,
-  value: string,
-  selected: boolean,
-  disabled: boolean
+  type: string;
+  description: string | null;
+  value: string;
+  selected: boolean;
+  disabled: boolean;
 }
 
 interface IEntry {
-  type: string,
-  label: string,
-  argument: string,
-  value: string | null,
-  description: string,
-  placeholder: string | null,
-  disabled: boolean
+  type: string;
+  label: string;
+  argument: string;
+  value: string | null;
+  description: string;
+  placeholder: string | null;
+  disabled: boolean;
 }
 
 interface ISelectEntry extends IEntry {
-  items: IItem[]
-  "multiple-options": boolean
+  items: IItem[];
+  "multiple-options": boolean;
 }
 
 interface IDecimalEntry extends IEntry {
-  step: number | null,
-  minimum: number | null,
-  maximum: number | null,
-  unit: string | null,
+  step: number | null;
+  minimum: number | null;
+  maximum: number | null;
+  unit: string | null;
 }
 
 interface IProcessor {
-  type: string,
-  id: string,
-  provider: string,
-  language: string,
-  name: string,
-  version: number,
-  description: string,
-  categories: string[],
-  steps: string[],
-  icon: string | null,
-  premise: IPremise,
-  entries: IEntry[]
+  type: string;
+  id: string;
+  provider: string;
+  language: string;
+  name: string;
+  version: number;
+  description: string;
+  categories: string[];
+  steps: string[];
+  icon: string | null;
+  premise: IPremise;
+  entries: IEntry[];
 }
 
 const nodes = ref([]);
 
 function structureData(data) {
-  let categories = Object.groupBy(data, item => item["type-label"]);
+  let categories = Object.groupBy(data, (item) => item["type-label"]);
 
   for (const [key, value] of Object.entries(categories)) {
     const node = {
@@ -72,7 +72,7 @@ function structureData(data) {
         data: {
           label: child.name,
           ...child,
-        }
+        },
       });
     }
     nodes.value.push(node);
@@ -83,7 +83,7 @@ useCustomFetch("/spi/list/workflow")
   .get()
   .json()
   .then((data) => {
-    structureData(data.data.value)
+    structureData(data.data.value);
   });
 
 const expandedKeys = ref({});
@@ -123,9 +123,9 @@ const processorFormSchema = ref();
 const formData = ref();
 
 function get() {
-  const registry = {}
-  for(const entry of selectedProcessor.value.entries){
-    registry[entry.label] = entry.type
+  const registry = {};
+  for (const entry of selectedProcessor.value.entries) {
+    registry[entry.label] = entry.type;
   }
 
   const booleans = [];
@@ -134,9 +134,9 @@ function get() {
   const selects = [];
   const strings = [];
 
-  for(const [key, value] of Object.entries(formData.value)){
-    const processorType = registry[key]
-    if(value){
+  for (const [key, value] of Object.entries(formData.value)) {
+    const processorType = registry[key];
+    if (value) {
       switch (processorType) {
         case "boolean":
           booleans.push({
@@ -182,8 +182,8 @@ function get() {
 
   return {
     processor: selectedProcessor.value,
-    parameters: parameters
-  }
+    parameters: parameters,
+  };
 }
 
 function buildProcessorFormSchema(data, cols: number) {
@@ -204,8 +204,8 @@ const filters = ref({});
 const emit = defineEmits(["submit"]);
 
 defineExpose({
-  get
-})
+  get,
+});
 </script>
 <template>
   <Dialog v-model:visible="processorDialogVisible" modal header="Run Processor">
@@ -250,27 +250,46 @@ defineExpose({
     </template>
     <Column field="label" header="Label" expander style="min-width: 12rem">
       <template #filter>
-        <InputText v-model="filters['name']" type="text" placeholder="Filter by label" />
+        <InputText
+          v-model="filters['name']"
+          type="text"
+          placeholder="Filter by label"
+        />
       </template>
     </Column>
     <Column field="steps" header="Steps" style="min-width: 12rem">
       <template #filter>
-        <InputText v-model="filters['size']" type="text" placeholder="Filter by step" />
+        <InputText
+          v-model="filters['size']"
+          type="text"
+          placeholder="Filter by step"
+        />
       </template>
       <template #body="slotProps">
         <div class="flex flex-col space-y-2">
-          <Tag v-for="step of slotProps.node.data.steps" :key="step" :value="step" />
+          <Tag
+            v-for="step of slotProps.node.data.steps"
+            :key="step"
+            :value="step"
+          />
         </div>
       </template>
     </Column>
     <Column field="description" header="Description" style="min-width: 12rem">
       <template #filter>
-        <InputText v-model="filters['type']" type="text" placeholder="Filter by description" />
+        <InputText
+          v-model="filters['type']"
+          type="text"
+          placeholder="Filter by description"
+        />
       </template>
     </Column>
     <Column>
       <template #body="slotProps">
-        <Button v-if="slotProps.node.data.type !== 'category'" @click="openProcessor(slotProps.node.data)">
+        <Button
+          v-if="slotProps.node.data.type !== 'category'"
+          @click="openProcessor(slotProps.node.data)"
+        >
           Select
         </Button>
       </template>

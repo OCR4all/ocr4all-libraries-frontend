@@ -3,20 +3,20 @@ import { Cropper } from "vue-advanced-cropper";
 import "vue-advanced-cropper/dist/style.css";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
-import IconFlipHorizontal from "~icons/fluent/flip-horizontal-24-regular"
-import IconFlipVertical from "~icons/fluent/flip-vertical-24-filled"
-import IconRotateRight from "~icons/fluent/arrow-rotate-clockwise-16-filled"
-import IconRotateLeft from "~icons/fluent/arrow-rotate-counterclockwise-24-filled"
+import IconFlipHorizontal from "~icons/fluent/flip-horizontal-24-regular";
+import IconFlipVertical from "~icons/fluent/flip-vertical-24-filled";
+import IconRotateRight from "~icons/fluent/arrow-rotate-clockwise-16-filled";
+import IconRotateLeft from "~icons/fluent/arrow-rotate-counterclockwise-24-filled";
 
 const dialogRef = inject("dialogRef");
 
-const image = ref()
+const image = ref();
 
-const isLoading = ref(true)
+const isLoading = ref(true);
 
 onMounted(() => {
-  const container = dialogRef.value.data.container
-  const folio = dialogRef.value.data.id
+  const container = dialogRef.value.data.container;
+  const folio = dialogRef.value.data.id;
 
   useCustomFetch(
     `/repository/container/folio/derivative/best/${container}?id=${folio}`,
@@ -26,7 +26,7 @@ onMounted(() => {
     .then((response) => {
       image.value = {
         src: useObjectUrl(response.data.value),
-        type: "image/png"
+        type: "image/png",
       };
     });
 });
@@ -39,7 +39,7 @@ const cropImage = () => {
     const newTab = window.open();
     if (newTab && canvas) {
       newTab.document.body.innerHTML = `<img src="${canvas.toDataURL(
-        image.value.type
+        image.value.type,
       )}"></img>`;
     }
   }
@@ -59,7 +59,7 @@ function rotate(angle) {
 </script>
 
 <template>
-  <div :class="{isLoading : 'hidden'}">
+  <div :class="{ isLoading: 'hidden' }">
     <Toolbar>
       <template #start>
         <div class="flex space-x-2">
@@ -87,7 +87,8 @@ function rotate(angle) {
       ref="cropper"
       class="cropper"
       :src="image.src"
-      @ready="isLoading = false" />
+      @ready="isLoading = false"
+    />
   </div>
   <div v-if="isLoading">
     <Skeleton size="100vh"></Skeleton>
@@ -112,11 +113,10 @@ function rotate(angle) {
     margin-right: 10px;
   }
   &:hover {
-    background: #2F2F2F;
+    background: #2f2f2f;
   }
   input {
     display: none;
   }
 }
 </style>
-

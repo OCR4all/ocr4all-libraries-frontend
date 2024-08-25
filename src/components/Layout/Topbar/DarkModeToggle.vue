@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SunIcon from "~icons/line-md/moon-to-sunny-outline-transition";
-import MoonIcon from "~icons/line-md/moon-filled"
+import MoonIcon from "~icons/line-md/moon-filled";
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);

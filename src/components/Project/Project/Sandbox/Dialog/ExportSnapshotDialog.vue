@@ -11,9 +11,9 @@ const track = ref();
 const data = ref({
   includeImages: false,
   normalizeFilenames: true,
-})
+});
 
-const schema = exportSnapshotSchema
+const schema = exportSnapshotSchema;
 
 onMounted(() => {
   project.value = dialogRef.value.data.project;
@@ -25,9 +25,9 @@ async function submitExportSnapshot(values, { setErrors }) {
   const payload = {
     track: track.value,
     "normalize-filenames": values.normalizeFilenames,
-    "source-images": values.includeImages
+    "source-images": values.includeImages,
   };
-  console.log(values)
+  console.log(values);
   useCustomFetch(`/snapshot/export/${project.value}/${sandbox.value}`)
     .post(payload)
     .blob()
@@ -41,8 +41,8 @@ async function submitExportSnapshot(values, { setErrors }) {
       );
       document.body.appendChild(link);
       link.click();
-      dialogRef.value.close()
-    })
+      dialogRef.value.close();
+    });
 }
 </script>
 <template>
@@ -52,8 +52,8 @@ async function submitExportSnapshot(values, { setErrors }) {
     v-model="data"
     type="form"
     :submit-attrs="{
-          inputClass: 'formkit-submit-btn',
-        }"
+      inputClass: 'formkit-submit-btn',
+    }"
     @submit="submitExportSnapshot"
   >
     <FormKitSchema :schema="schema" :data="data" />

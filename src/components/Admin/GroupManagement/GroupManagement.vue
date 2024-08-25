@@ -7,8 +7,8 @@ import Tag from "primevue/tag";
 import Column from "primevue/column";
 import Button from "primevue/button";
 import { FilterMatchMode } from "@primevue/core/api";
-import IconAddGroup from "~icons/fluent-mdl2/add-group"
-import IconDeleteGroup from "~icons/ant-design/usergroup-delete-outlined"
+import IconAddGroup from "~icons/fluent-mdl2/add-group";
+import IconDeleteGroup from "~icons/ant-design/usergroup-delete-outlined";
 
 const createGroupDialog = defineAsyncComponent(
   () =>
@@ -29,8 +29,8 @@ const deleteGroupDialog = defineAsyncComponent(
 
 const dialog = useDialog();
 
-const items = ref([])
-const menu = ref()
+const items = ref([]);
+const menu = ref();
 
 const toggle = (event, data) => {
   items.value = [
@@ -40,12 +40,12 @@ const toggle = (event, data) => {
         {
           label: "Edit",
           icon: "pi pi-pencil",
-          command: () => openEditGroupDialog(data)
+          command: () => openEditGroupDialog(data),
         },
         {
           label: "Delete",
           icon: "pi pi-trash",
-          command: () => openDeleteGroupDialog(data)
+          command: () => openDeleteGroupDialog(data),
         },
       ],
     },
@@ -59,12 +59,12 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
     {
       label: "Edit",
       icon: "pi pi-pencil",
-      command: () => openEditGroupDialog(event.data)
+      command: () => openEditGroupDialog(event.data),
     },
     {
       label: "Delete",
       icon: "pi pi-trash",
-      command: () => openDeleteGroupDialog(event.data)
+      command: () => openDeleteGroupDialog(event.data),
     },
   ];
   contextMenu.value.show(event.originalEvent);
@@ -114,11 +114,11 @@ function openNewGroupDialog() {
       header: "Create Group",
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     onClose: () => {
@@ -133,11 +133,11 @@ function openEditGroupDialog(data) {
       header: "Edit Group",
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: {
@@ -154,11 +154,11 @@ function openDeleteGroupDialog(data: any) {
       header: i18n.t("admin.user-management.dialog.delete.single.header"),
       modal: true,
       style: {
-        width: '70vw',
+        width: "70vw",
       },
-      breakpoints:{
-        '960px': '80vw',
-        '640px': '90vw'
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
       },
     },
     data: {
@@ -193,7 +193,7 @@ refetch();
           :class="{
             'text-red-500 group-hover:text-white': item.label === 'Delete',
           }"
-        >{{ item.label }}</span
+          >{{ item.label }}</span
         >
       </a>
     </template>
@@ -219,7 +219,7 @@ refetch();
           :class="{
             'text-red-500 group-hover:text-white': item.label === 'Delete',
           }"
-        >{{ item.label }}</span
+          >{{ item.label }}</span
         >
       </a>
     </template>
@@ -227,10 +227,21 @@ refetch();
   <ComponentContainer spaced>
     <Toolbar class="mb-4">
       <template #start>
-        <Button v-tooltip.top="'Create Group'" severity="primary" text @click="openNewGroupDialog">
+        <Button
+          v-tooltip.top="'Create Group'"
+          severity="primary"
+          text
+          @click="openNewGroupDialog"
+        >
           <IconAddGroup class="text-black dark:text-white" />
         </Button>
-        <Button v-tooltip.top="'Remove Groups'" severity="danger" text :disabled="!selectedGroups || !selectedGroups.length" @click="openDeleteGroupDialog(selectedGroups)">
+        <Button
+          v-tooltip.top="'Remove Groups'"
+          severity="danger"
+          text
+          :disabled="!selectedGroups || !selectedGroups.length"
+          @click="openDeleteGroupDialog(selectedGroups)"
+        >
           <IconDeleteGroup />
         </Button>
       </template>
@@ -239,10 +250,7 @@ refetch();
           <InputIcon>
             <i class="pi pi-search" />
           </InputIcon>
-          <InputText
-              v-model="filters['global'].value"
-              placeholder="Search"
-          />
+          <InputText v-model="filters['global'].value" placeholder="Search" />
         </IconField>
       </template>
     </Toolbar>

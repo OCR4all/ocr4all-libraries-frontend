@@ -12,25 +12,25 @@ import InputText from "primevue/inputtext";
 const store = useSandboxCreationStore();
 
 interface IDerivative {
-  width: number,
-  height: number
+  width: number;
+  height: number;
 }
 
 interface IDerivatives {
-  thumbnail: IDerivative,
-  detail: IDerivative,
-  best: IDerivative
+  thumbnail: IDerivative;
+  detail: IDerivative;
+  best: IDerivative;
 }
 
 interface IFolio {
-  date: string,
-  derivatives: IDerivatives,
-  user: string,
-  keywords: string[],
-  id: string,
-  name: string,
-  format: string
-  pageXMLType: null | string
+  date: string;
+  derivatives: IDerivatives;
+  user: string;
+  keywords: string[];
+  id: string;
+  name: string;
+  format: string;
+  pageXMLType: null | string;
 }
 
 const router = useRouter();
@@ -39,23 +39,23 @@ const project = router.currentRoute.value.params.project;
 const folios = ref([]);
 const selectedFolios: Ref<IFolio[]> = ref([]);
 
-const imageMap = ref(new Map())
+const imageMap = ref(new Map());
 
 async function importImages() {
-  if(selectedFolios.value) {
-    store.selectedImages = Array.from(selectedFolios.value.map((folio) => folio.id));
+  if (selectedFolios.value) {
+    store.selectedImages = Array.from(
+      selectedFolios.value.map((folio) => folio.id),
+    );
     emit("next");
   }
 }
 
 async function loadDetail(id: string) {
-  await useCustomFetch(
-    `/project/folio/derivative/best/${project}?id=${id}`,
-  )
+  await useCustomFetch(`/project/folio/derivative/best/${project}?id=${id}`)
     .get()
     .blob()
     .then((blob) => {
-      console.log(blob)
+      console.log(blob);
       imageMap.value.get(id).detail = useObjectUrl(blob.data.value);
     });
 }
@@ -72,18 +72,17 @@ for (const folio of folioData.data.value) {
     .then((blob) => {
       imageMap.value.set(folio.id, {
         thumbnail: useObjectUrl(blob.data.value),
-        detail: null
-      })
+        detail: null,
+      });
     });
 }
-folios.value = folioData.data.value
+folios.value = folioData.data.value;
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   name: { value: null, matchMode: FilterMatchMode.EQUALS },
   keywords: { value: null, matchMode: FilterMatchMode.IN },
 });
-
 </script>
 
 <template>
@@ -100,8 +99,17 @@ const filters = ref({
     >
       {{ $t("pages.projects.sandbox.images.directive") }}
     </h2>
-    <div class="border border-surface-200 dark:border-surface-700 rounded-xl p-2">
-      <DataTable :value="folios" v-model:selection="selectedFolios" v-model:filters="filters" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]">
+    <div
+      class="rounded-xl border border-surface-200 p-2 dark:border-surface-700"
+    >
+      <DataTable
+        :value="folios"
+        v-model:selection="selectedFolios"
+        v-model:filters="filters"
+        paginator
+        :rows="5"
+        :rowsPerPageOptions="[5, 10, 20, 50]"
+      >
         <template #header>
           <Fluid>
             <IconField>
@@ -118,13 +126,26 @@ const filters = ref({
           <template #body="{ data }">
             <Image v-if="imageMap.get(data.id)" :alt="data.name" preview>
               <template #previewicon>
-                <i class="pi pi-search" style="padding: 100%" @click="loadDetail(data.id)"></i>
+                <i
+                  class="pi pi-search"
+                  style="padding: 100%"
+                  @click="loadDetail(data.id)"
+                ></i>
               </template>
               <template #image>
-                <img :src="imageMap.get(data.id).thumbnail" width="40" alt="image" />
+                <img
+                  :src="imageMap.get(data.id).thumbnail"
+                  width="40"
+                  alt="image"
+                />
               </template>
               <template #preview="slotProps">
-                <img :src="imageMap.get(data.id).detail" class="max-h-screen" alt="preview" :style="slotProps.style" />
+                <img
+                  :src="imageMap.get(data.id).detail"
+                  class="max-h-screen"
+                  alt="preview"
+                  :style="slotProps.style"
+                />
               </template>
             </Image>
             <Skeleton v-else height="2rem"></Skeleton>
@@ -133,7 +154,6 @@ const filters = ref({
         <Column sortable field="name" header="Name"></Column>
         <Column field="keywords" header="Keywords"></Column>
       </DataTable>
-
     </div>
     <button
       :disabled="selectedFolios.length === 0"

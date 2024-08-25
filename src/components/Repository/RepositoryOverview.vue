@@ -28,7 +28,7 @@ if (
 
 const options = ref(["Images", "Datasets", "Models", "Workflows"]);
 
-const uiStore = useUiStore()
+const uiStore = useUiStore();
 uiStore.breadcrumb = [
   {
     label: "Repository",
