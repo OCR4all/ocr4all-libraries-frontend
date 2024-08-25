@@ -51,6 +51,9 @@ async function submitExportSnapshot(values, { setErrors }) {
     ref="form"
     v-model="data"
     type="form"
+    :submit-attrs="{
+          inputClass: 'formkit-submit-btn',
+        }"
     @submit="submitExportSnapshot"
   >
     <FormKitSchema :schema="schema" :data="data" />

@@ -26,6 +26,9 @@ import InputText from "primevue/inputtext";
 import Tag from "primevue/tag";
 import { useDialog } from "primevue/usedialog";
 
+import IconCreateUser from "~icons/prime/user-plus"
+import IconDeleteUser from "~icons/prime/user-minus"
+
 const dialog = useDialog();
 
 import { useUiStore } from "@/stores/ui.store";
@@ -221,11 +224,28 @@ refetch();
       </a>
     </template>
   </Menu>
-  <div class="px-4 pb-6 space-y-1">
-    <h1 class="text-2xl font-semibold">Users</h1>
-    <h3 class="text-md text-surface-700 dark:text-surface-300">Manage users</h3>
-  </div>
-  <ComponentContainer border>
+  <ComponentContainer spaced>
+    <Toolbar>
+      <template #start>
+        <Button severity="primary" v-tooltip.top="$t('admin.user-management.table.toolbar.add-user')" @click="openNewUserDialog" text>
+          <IconCreateUser class="text-black dark:text-white" />
+        </Button>
+        <Button severity="danger" v-tooltip.top="$t('admin.user-management.table.toolbar.delete-user')" @click="openDeleteDialog(selectedUsers)" :disabled="!selectedUsers || !selectedUsers.length" text>
+          <IconDeleteUser />
+        </Button>
+      </template>
+      <template #end>
+        <IconField>
+          <InputIcon>
+            <i class="pi pi-search" />
+          </InputIcon>
+          <InputText
+              v-model="filters['global'].value"
+              placeholder="Search"
+          />
+        </IconField>
+      </template>
+    </Toolbar>
       <DataTable
         ref="dt"
         scrollable
@@ -240,22 +260,6 @@ refetch();
         :rowsPerPageOptions="[5, 10, 25]"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
       >
-        <template #header>
-          <div class="align-items-center flex flex-wrap justify-between gap-2">
-            <IconField>
-              <InputIcon class="pi pi-search" />
-              <InputText
-                v-model="filters['global'].value"
-                placeholder="Login or name"
-              />
-            </IconField>
-            <div class="flex space-x-2">
-              <Button severity="primary" :label="$t('admin.user-management.table.toolbar.add-user')" @click="openNewUserDialog" />
-              <Button severity="danger" :label="$t('admin.user-management.table.toolbar.delete-user')" @click="openDeleteDialog(selectedUsers)" :disabled="!selectedUsers || !selectedUsers.length" />
-            </div>
-          </div>
-        </template>
-
         <Column
           selectionMode="multiple"
           style="width: 3rem"

@@ -83,7 +83,7 @@ await useCustomFetch("/administration/provider/overview")
   </div>
   <div class="flex flex-col gap-y-2">
     <h1 class="text-2xl font-bold text-surface-900 dark:text-surface-0">
-      Information
+      Instance Information
     </h1>
     <InstanceOverview />
   </div>

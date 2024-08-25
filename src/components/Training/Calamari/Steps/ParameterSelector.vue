@@ -95,6 +95,9 @@ defineExpose({
     ref="parameterForm"
     v-model="data"
     type="form"
+    :submit-attrs="{
+          inputClass: 'formkit-submit-btn',
+        }"
     :actions="false"
   >
     <FormKitSchema :schema="schema" :data="data" />

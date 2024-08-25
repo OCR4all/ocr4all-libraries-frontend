@@ -4,6 +4,7 @@ import { useDialog } from "primevue/usedialog";
 import { FilterMatchMode } from "@primevue/core/api";
 import { useUiStore } from "@/stores/ui.store";
 import ComponentContainer from "@/components/Layout/ComponentContainer.vue";
+import {DataTableRowContextMenuEvent} from "primevue/datatable";
 
 const dialog = useDialog();
 const journalDialog = defineAsyncComponent(
@@ -194,18 +195,98 @@ function toggleMenu(event) {
   menu.value.toggle(event);
 }
 
+const contextMenu = ref();
+const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
+  items.value = [
+    {
+      label: "Restart",
+      icon: "pi pi-refresh",
+      command: () => {
+        executeProviderAction(selectedProviders.value, "restart");
+      },
+    },
+    {
+      label: "Start",
+      icon: "pi pi-play",
+      command: () => {
+        executeProviderAction(selectedProviders.value, "start");
+      },
+    },
+    {
+      label: "Stop",
+      icon: "pi pi-stop",
+      command: () => {
+        executeProviderAction(selectedProviders.value, "stop");
+      },
+    },
+  ];
+  contextMenu.value.show(event.originalEvent);
+};
+
 getProviders();
 </script>
 <template>
   <Menu ref="menu" :model="items" :popup="true" />
   <Menu ref="providerMenu" :model="providerItems" :popup="true" />
-  <ComponentContainer>
+  <ContextMenu ref="contextMenu" :model="items">
+    <template #item="{ item, props }">
+      <a
+          v-ripple
+          class="group flex items-center"
+          :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+          v-bind="props.action"
+      >
+        <span
+            :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+            :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+        >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </ContextMenu>
+  <ComponentContainer spaced>
+    <Toolbar>
+      <template #start>
+        <Button
+            icon="pi pi-ellipsis-v text-black dark:text-white"
+            severity="contrast"
+            :disabled="selectedProviders.length === 0"
+            text
+            rounded
+            aria-label="Filter"
+            @click="toggleMenu($event)"
+        />
+    </template>
+    <template #end>
+      <Button icon="pi pi-refresh text-black dark:text-white" text rounded @click="getProviders" />
+      <IconField>
+        <InputIcon>
+          <i class="pi pi-search" />
+        </InputIcon>
+        <InputText
+            v-model="filters['global'].value"
+            placeholder="Search"
+        />
+      </IconField>
+    </template>
+    </Toolbar>
     <DataTable
       v-model:filters="filters"
       v-model:selection="selectedProviders"
       scrollable
       striped-rows
       :value="nodes"
+      @row-contextmenu="onRowContextMenu"
       :global-filter-fields="[
         'name',
         'provider',
@@ -217,32 +298,6 @@ getProviders();
       :rows="5"
       :rows-per-page-options="[5, 10, 20, 50]"
     >
-      <template #header>
-        <div class="flex flex-wrap items-center justify-between gap-2">
-          <span class="text-xl font-bold">Providers</span>
-          <div class="flex gap-2">
-            <IconField>
-              <InputIcon>
-                <i class="pi pi-search" />
-              </InputIcon>
-              <InputText
-                v-model="filters['global'].value"
-                placeholder="Search"
-              />
-            </IconField>
-            <Button icon="pi pi-refresh" text rounded @click="getProviders" />
-            <Button
-              icon="pi pi-ellipsis-v"
-              severity="contrast"
-              :disabled="selectedProviders.length === 0"
-              text
-              rounded
-              aria-label="Filter"
-              @click="toggleMenu($event)"
-            />
-          </div>
-        </div>
-      </template>
       <Column selection-mode="multiple" header-style="width: 3rem"></Column>
       <Column field="name" header="Name"></Column>
       <Column field="provider" header="Provider"></Column>
@@ -300,6 +355,7 @@ getProviders();
         <template #body="{ data }">
           <Button
             icon="pi pi-ellipsis-v"
+            class="text-black dark:text-white"
             severity="contrast"
             text
             rounded

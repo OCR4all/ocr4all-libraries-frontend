@@ -7,6 +7,8 @@ import Tag from "primevue/tag";
 import Column from "primevue/column";
 import Button from "primevue/button";
 import { FilterMatchMode } from "@primevue/core/api";
+import IconAddGroup from "~icons/fluent-mdl2/add-group"
+import IconDeleteGroup from "~icons/ant-design/usergroup-delete-outlined"
 
 const createGroupDialog = defineAsyncComponent(
   () =>
@@ -222,30 +224,28 @@ refetch();
       </a>
     </template>
   </Menu>
-  <Toolbar class="mb-4">
-    <template #start>
-      <div class="my-2 space-x-2">
-        <ActionButton
-          rounded
-          type="primary"
-          size="large"
-          @click="openNewGroupDialog"
-        >
-          Create Group
-        </ActionButton>
-        <ActionButton
-          rounded
-          type="delete"
-          size="large"
-          :disabled="!selectedGroups || !selectedGroups.length"
-          @click="openDeleteGroupDialog(selectedGroups)"
-        >
-          Delete Group
-        </ActionButton>
-      </div>
-    </template>
-  </Toolbar>
-  <ComponentContainer>
+  <ComponentContainer spaced>
+    <Toolbar class="mb-4">
+      <template #start>
+        <Button v-tooltip.top="'Create Group'" severity="primary" text @click="openNewGroupDialog">
+          <IconAddGroup class="text-black dark:text-white" />
+        </Button>
+        <Button v-tooltip.top="'Remove Groups'" severity="danger" text :disabled="!selectedGroups || !selectedGroups.length" @click="openDeleteGroupDialog(selectedGroups)">
+          <IconDeleteGroup />
+        </Button>
+      </template>
+      <template #end>
+        <IconField>
+          <InputIcon>
+            <i class="pi pi-search" />
+          </InputIcon>
+          <InputText
+              v-model="filters['global'].value"
+              placeholder="Search"
+          />
+        </IconField>
+      </template>
+    </Toolbar>
     <DataTable
       ref="dt"
       scrollable
@@ -260,15 +260,6 @@ refetch();
       :rowsPerPageOptions="[5, 10, 25]"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
     >
-      <template #header>
-        <div class="align-items-center flex flex-wrap justify-between gap-2">
-          <span class="text-xl font-bold"> Group management </span>
-          <InputText
-            v-model="filters['global'].value"
-            :placeholder="$t('admin.user-management.table.search-placeholder')"
-          />
-        </div>
-      </template>
       <Column
         selectionMode="multiple"
         style="width: 3rem"

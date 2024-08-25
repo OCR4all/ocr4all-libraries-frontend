@@ -30,6 +30,9 @@ function submitPasswordChange(values, { setErrors }) {
       ref="passwordForm"
       v-model="data"
       type="form"
+      :submit-attrs="{
+          inputClass: 'formkit-submit-btn',
+        }"
       submit-label="Save all"
       @submit="submitPasswordChange"
     >

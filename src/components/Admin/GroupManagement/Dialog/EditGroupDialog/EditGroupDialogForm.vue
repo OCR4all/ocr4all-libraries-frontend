@@ -39,7 +39,7 @@ async function submitGroupChanges(values, { setErrors }) {
     v-model="data"
     type="form"
     :submit-attrs="{
-      inputClass: 'p-button p-component',
+      inputClass: 'formkit-submit-btn',
     }"
     @submit="submitGroupChanges"
   >

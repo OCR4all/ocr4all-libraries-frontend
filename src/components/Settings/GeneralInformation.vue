@@ -50,6 +50,9 @@ async function updateGeneralInformation(values, { setErrors }) {
       v-model="data"
       type="form"
       submit-label="Save all"
+      :submit-attrs="{
+          inputClass: 'formkit-submit-btn',
+        }"
       @submit="updateGeneralInformation"
     >
       <FormKitSchema :schema="schema" :data="data" />

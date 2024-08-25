@@ -113,6 +113,7 @@ declare module 'vue' {
     StatsCard: typeof import('./src/components/Dashboard/StatsCard.vue')['default']
     SystemCard: typeof import('./src/components/Admin/InstanceOverview/Cards/SystemCard.vue')['default']
     TrainingOverview: typeof import('./src/components/Training/TrainingOverview.vue')['default']
+    UploadSetDialog: typeof import('./src/components/Repository/Datasets/Dialog/UploadSetDialog.vue')['default']
     UserDropdown: typeof import('./src/components/Layout/Topbar/UserDropdown.vue')['default']
     UserInfo: typeof import('./src/components/Settings/UserInfo.vue')['default']
     UserManagementView: typeof import('./src/components/Admin/UserManagement/UserManagementView.vue')['default']

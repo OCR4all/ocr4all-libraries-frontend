@@ -290,10 +290,15 @@ refetch();
                 class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
             />
           </button>
-          <InputText
-              v-model="filters['global'].value"
-              :placeholder="$t('pages.workflows.table.search.placeholder')"
-          />
+          <IconField>
+            <InputIcon>
+              <i class="pi pi-search" />
+            </InputIcon>
+            <InputText
+                v-model="filters['global'].value"
+                placeholder="Search"
+            />
+          </IconField>
         </div>
       </template>
     </Toolbar>

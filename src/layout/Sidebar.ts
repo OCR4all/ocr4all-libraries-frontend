@@ -1,10 +1,4 @@
 import {
-  AcademicCapIcon,
-  CubeTransparentIcon,
-  HomeIcon,
-  QueueListIcon,
-  ServerIcon,
-  Squares2X2Icon,
   UsersIcon,
   UserGroupIcon,
   ViewfinderCircleIcon,

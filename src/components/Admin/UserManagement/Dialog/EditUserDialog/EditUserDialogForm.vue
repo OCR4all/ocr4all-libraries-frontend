@@ -74,8 +74,8 @@ function submitGroupChange() {}
           v-model="profileData"
           type="form"
           :submit-attrs="{
-            inputClass: 'p-button p-component',
-          }"
+      inputClass: 'formkit-submit-btn',
+    }"
           @submit="submitProfileChanges"
         >
           <FormKitSchema :schema="profileSchema" :data="profileData" />
@@ -88,7 +88,7 @@ function submitGroupChange() {}
           v-model="passwordData"
           type="form"
           :submit-attrs="{
-            inputClass: 'p-button p-component',
+            inputClass: 'formkit-submit-btn',
           }"
           @submit="submitPasswordChange"
         >
@@ -102,7 +102,7 @@ function submitGroupChange() {}
           v-model="groupData"
           type="form"
           :submit-attrs="{
-            inputClass: 'p-button p-component',
+            inputClass: 'formkit-submit-btn',
           }"
           @submit="submitGroupChange"
         >

@@ -42,6 +42,9 @@ async function updateWorkflow(values, { setErrors }) {
     ref="form"
     v-model="data"
     type="form"
+    :submit-attrs="{
+          inputClass: 'formkit-submit-btn',
+        }"
     @submit="updateWorkflow"
   >
     <FormKitSchema :schema="schema" :data="data" />

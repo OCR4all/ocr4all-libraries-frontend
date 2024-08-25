@@ -230,6 +230,9 @@ defineExpose({
         ref="processorForm"
         v-model="formData"
         type="form"
+        :submit-attrs="{
+          inputClass: 'formkit-submit-btn',
+        }"
         @submit="emit('submit')"
       >
         <FormKitSchema :schema="processorFormSchema" :data="formData" />

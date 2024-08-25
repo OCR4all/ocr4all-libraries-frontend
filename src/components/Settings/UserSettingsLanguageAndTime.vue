@@ -46,8 +46,8 @@ function updateLanguageAndTime(values, { setErrors }) {
       type="form"
       submit-label="Save all"
       :submit-attrs="{
-        inputClass: '',
-      }"
+          inputClass: 'formkit-submit-btn',
+        }"
       @submit="updateLanguageAndTime"
     >
       <FormKitSchema :schema="schema" :data="data" />

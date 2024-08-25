@@ -57,6 +57,9 @@ async function submitProjectInformationChange(values, { setErrors }) {
     ref="form"
     v-model="data"
     type="form"
+    :submit-attrs="{
+          inputClass: 'formkit-submit-btn',
+        }"
     @submit="submitProjectInformationChange"
   >
     <FormKitSchema :schema="schema" :data="data" />

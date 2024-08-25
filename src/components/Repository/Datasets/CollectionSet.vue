@@ -2,8 +2,6 @@
 import { LocationQueryValue, Router } from "vue-router";
 import { useUiStore } from "@/stores/ui.store";
 import { useCustomFetch } from "@/composables/useCustomFetch";
-import FileUpload, { FileUploadUploaderEvent } from "primevue/fileupload";
-import axios from "axios";
 import Button from "primevue/button";
 import { useI18n } from "vue-i18n";
 import { Store } from "pinia";
@@ -33,6 +31,10 @@ const deleteDatasetDialog = defineAsyncComponent(
   () => import("@/components/Repository/Datasets/Dialog/DeleteDataset.vue")
 )
 
+const uploadSetDialog = defineAsyncComponent(
+    () => import("@/components/Repository/Datasets/Dialog/UploadSetDialog.vue")
+)
+
 const codecDialog = defineAsyncComponent(
   () =>
     import(
@@ -51,9 +53,6 @@ import { Ref } from "vue";
 const dialog = useDialog();
 
 const { t } = useI18n();
-
-const config: Store = useConfigStore();
-const auth: Store = useAuthStore();
 
 const router: Router = useRouter();
 const dataset: LocationQueryValue | LocationQueryValue[] =
@@ -76,18 +75,27 @@ uiStore.breadcrumb = [
   },
 ];
 
-const showUploadToast = () => {
-  if (!uploadToastVisible.value) {
-    toast.add({
-      summary: t(
-        "pages.repository.container.overview.toast.upload.headless.summary",
-      ),
-      group: "headless",
-    });
-    uploadToastVisible.value = true;
-    progress.value = 0;
-  }
-};
+function openUploadDialog(){
+  dialog.open(uploadSetDialog, {
+    props: {
+      header: "Upload additional datasets",
+      modal: true,
+      style: {
+        width: '70vw',
+      },
+      breakpoints:{
+        '960px': '80vw',
+        '640px': '90vw'
+      },
+    },
+    data: {
+      collection: dataset,
+    },
+    onClose: () => {
+      refresh();
+    },
+  });
+}
 
 const sets: Ref<ISet[]> = ref([]);
 
@@ -107,45 +115,6 @@ useHead({
   templateParams: { separator: "|", siteName: "OCR4all" },
   bodyAttrs: { class: { overflow: true } },
 });
-
-const uploadToastVisible = ref(false);
-const progress = ref(0);
-
-const fileUpload = ref();
-const uploader = async function customUploader(event: FileUploadUploaderEvent) {
-  const formData = new FormData();
-
-  const filesToHandle = Array.isArray(event.files)
-    ? event.files
-    : [event.files];
-  for (const file of filesToHandle) {
-    // Add Mime Type validation
-    formData.append("files", file);
-  }
-  showUploadToast();
-  axios.defaults.timeout = 100000;
-  axios
-    .post(`${config.baseUrl}/data/collection/set/upload/${dataset}`, formData, {
-      headers: {
-        Authorization: `Bearer ${auth.token}`,
-        "Content-Type": "multipart/form-data",
-      },
-      onUploadProgress: function (progressEvent) {
-        progress.value = parseInt(
-          String(Math.round((progressEvent.loaded / progressEvent.total) * 100)),
-        );
-      },
-    })
-    .then(function () {
-      fileUpload.value.clear();
-      fileUpload.value.uploadedFileCount = 0;
-      refresh();
-      hideUploadToast();
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-};
 
 function openEditDialog(data: ISet) {
   dialog.open(editSetDialog, {
@@ -274,26 +243,6 @@ const toggle = (event, data: ISet) => {
     },
   ];
   menu.value.toggle(event);
-};
-
-const hideUploadToast = () => {
-  //code before the pause
-  setTimeout(function () {
-    toast.removeGroup("headless");
-    uploadToastVisible.value = false;
-    progress.value = 0;
-    toast.add({
-      severity: "success",
-      summary: t(
-        "pages.repository.container.overview.toast.upload.success.detail",
-      ),
-      detail: t(
-        "pages.repository.container.overview.toast.upload.success.summary",
-      ),
-      life: 3000,
-      group: "general",
-    });
-  }, 2000);
 };
 
 async function openSet(data: ISet) {
@@ -497,29 +446,9 @@ refresh();
   <ComponentContainer spaced>
     <Toolbar class="mb-4">
       <template #start>
-        <Button v-tooltip.top="$t('pages.repository.container.overview.toolbar.button.file-upload')" icon="pi pi-trash" @click="toggleUploadDialog" text>
+        <Button v-tooltip.top="$t('pages.repository.container.overview.toolbar.button.file-upload')" icon="pi pi-trash" @click="openUploadDialog" text>
           <IconUpload class="text-black dark:text-white" />
         </Button>
-<!--          <FileUpload-->
-<!--              ref="fileUpload"-->
-<!--              name="folioUpload[]"-->
-<!--              :choose-label="-->
-<!--          t('pages.repository.container.overview.toolbar.button.file-upload')-->
-<!--        "-->
-<!--              mode="basic"-->
-<!--              :auto="true"-->
-<!--              :custom-upload="true"-->
-<!--              :multiple="true"-->
-<!--              :pt="{-->
-<!--          chooseButton: {-->
-<!--            class:-->
-<!--              'rounded-md flex bg-primary-600 p-4 text-white cursor-pointer',-->
-<!--          },-->
-<!--        }"-->
-<!--              :max-file-size="1000000000"-->
-<!--              @uploader="uploader"-->
-<!--          >-->
-<!--          </FileUpload>-->
         <Button v-tooltip.top="'Analyze Codec'" @click="getCodec" :disabled="!selectedSets || !selectedSets.length" text>
           <IconAnalytics class="text-black dark:text-white" />
         </Button>
