@@ -375,9 +375,10 @@ function openExportSnapshotDialog(snapshot: ITrack) {
       header: "Export snapshot",
       modal: true,
       style: {
-        width: "70vw",
+        width: "25vw",
       },
       breakpoints: {
+        "1500px": "30vw",
         "960px": "80vw",
         "640px": "90vw",
       },

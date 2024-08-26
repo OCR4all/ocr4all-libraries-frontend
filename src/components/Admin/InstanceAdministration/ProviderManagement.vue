@@ -257,15 +257,15 @@ getProviders();
   <ComponentContainer spaced>
     <Toolbar>
       <template #start>
-        <Button
-          icon="pi pi-ellipsis-v text-black dark:text-white"
-          severity="contrast"
-          :disabled="selectedProviders.length === 0"
-          text
-          rounded
-          aria-label="Filter"
-          @click="toggleMenu($event)"
-        />
+        <Button v-tooltip.top="'Restart'" severity="contrast" :disabled="selectedProviders.length === 0" text @click="executeProviderAction(selectedProviders, 'restart');">
+          <i class="pi pi-refresh text-black dark:text-white" />
+        </Button>
+        <Button v-tooltip.top="'Start'" severity="contrast" :disabled="selectedProviders.length === 0" text @click="executeProviderAction(selectedProviders, 'start')">
+          <i class="pi pi-play text-black dark:text-white" />
+        </Button>
+        <Button v-tooltip.top="'Stop'" severity="contrast" :disabled="selectedProviders.length === 0" text @click="executeProviderAction(selectedProviders, 'stop')">
+          <i class="pi pi-stop text-black dark:text-white" />
+        </Button>
       </template>
       <template #end>
         <Button

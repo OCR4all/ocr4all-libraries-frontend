@@ -103,11 +103,10 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
   axios.defaults.timeout = 3600000;
   axios
     .post(
-      `${config.baseUrl}/repository/container/folio/upload/${container}?job=Uploading images to ${containerName}`,
+      `/repository/container/folio/upload/${container}?job=Uploading images to ${containerName}`,
       formData,
       {
         headers: {
-          Authorization: `Bearer ${auth.token}`,
           "Content-Type": "multipart/form-data",
         },
         onUploadProgress: function (progressEvent) {

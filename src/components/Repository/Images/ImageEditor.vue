@@ -7,6 +7,7 @@ import IconFlipHorizontal from "~icons/fluent/flip-horizontal-24-regular";
 import IconFlipVertical from "~icons/fluent/flip-vertical-24-filled";
 import IconRotateRight from "~icons/fluent/arrow-rotate-clockwise-16-filled";
 import IconRotateLeft from "~icons/fluent/arrow-rotate-counterclockwise-24-filled";
+import IconSave from "~icons/fluent/save-16-regular";
 
 const dialogRef = inject("dialogRef");
 
@@ -63,23 +64,25 @@ function rotate(angle) {
     <Toolbar>
       <template #start>
         <div class="flex space-x-2">
-          <Button @click="flip(true, false)">
-            <IconFlipHorizontal />
+          <Button v-tooltip.top="'Flip horizontally'" @click="flip(true, false)" text>
+            <IconFlipHorizontal class="text-black dark:text-white" />
           </Button>
-          <Button @click="flip(false, true)">
-            <IconFlipVertical />
+          <Button v-tooltip.top="'Flip vertically'" @click="flip(false, true)" text>
+            <IconFlipVertical class="text-black dark:text-white" />
           </Button>
-          <Button @click="rotate(90)">
-            <IconRotateRight />
+          <Button v-tooltip.top="'Rotate clockwise'" @click="rotate(90)" text>
+            <IconRotateRight class="text-black dark:text-white" />
           </Button>
-          <Button @click="rotate(-90)">
-            <IconRotateLeft />
+          <Button v-tooltip.top="'Rotate counter clockwise'" @click="rotate(-90)" text>
+            <IconRotateLeft class="text-black dark:text-white" />
           </Button>
         </div>
       </template>
 
       <template #end>
-        <Button @click="save" label="Save"></Button>
+        <Button v-tooltip.top="'Save'" @click="save" label="Save" text>
+          <IconSave class="text-black dark:text-white" />
+        </Button>
       </template>
     </Toolbar>
     <Cropper
