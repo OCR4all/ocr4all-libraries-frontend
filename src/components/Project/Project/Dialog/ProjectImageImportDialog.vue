@@ -12,7 +12,6 @@ const imageSelector = ref()
 
 onMounted(() => {
   project.value = dialogRef.value.data;
-  console.log(project.value)
 });
 
 const isLoading = ref(false)
@@ -62,12 +61,13 @@ async function importFolios() {
 <template>
   <div class="grid grid-cols-1 justify-center">
     <ImageSelector ref="imageSelector" />
-    <Button v-if="imageSelector" :disabled="Object.keys(imageSelector.selectedFolios).length === 0" @click="importFolios">
-      <div class="flex space-x-2">
-        {{ isLoading }}
-        <IconImageImport class="text-white self-center" />
-        <p class="text-white">Import</p>
-      </div>
-    </Button>
+    <div class="place-self-center ">
+      <Button v-if="imageSelector" :disabled="Object.keys(imageSelector.selectedFolios).length === 0" @click="importFolios">
+        <div class="flex space-x-2">
+          <IconImageImport class="text-white self-center" />
+          <p class="text-white">Import</p>
+        </div>
+      </Button>
+    </div>
   </div>
 </template>

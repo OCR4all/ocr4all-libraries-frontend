@@ -12,8 +12,6 @@ const project = router.currentRoute.value.params.project;
 
 const workflows = ref();
 
-const selectedWorkflow = ref();
-
 const isRunning = ref(false);
 const isImportingImages = ref(false);
 const isWorkflowRunning = ref(false);
@@ -32,11 +30,7 @@ async function refetch() {
 }
 refetch();
 
-async function createSandbox() {
-  const sandboxName = `${selectedWorkflow.value.label}_${new Date()
-    .toISOString()
-    .slice(0, -8)
-    .replace(":", "-")}`;
+async function createSandbox(sandboxName: string) {
   const { isFetching, error, data } = await useCustomFetch(
     `/sandbox/create/${project}?id=${sandboxName}`,
   )
@@ -119,13 +113,60 @@ async function checkWorkflowJob(startedJob: number) {
 const workflowProgress = ref(0);
 const jobStatus = ref("Scheduled");
 
-async function launchWorkflow() {
+const processorSelector = ref()
+
+interface IWorkflow {
+  date: string,
+  user: string,
+  id: string,
+  updated: string,
+  label: string,
+  description: string,
+  "update-user": string
+}
+
+async function runProcessor() {
+  const processor = processorSelector.value.get();
+
   isRunning.value = true;
-  await createSandbox();
+  await createSandbox(`${processor.processor.name}_${new Date().toISOString().slice(0, -8).replace(":", "-")}`);
+  await importImages();
+
+  const url = `/spi/${processor.processor.type}/schedule/${project}/${store.sandboxId}`;
+
+  const payload = {
+    id: processor.processor.id,
+    label: processor.processor.label,
+    description: `Run ${processor.processor.label} on ${store.sandboxId}`,
+    "job-short-description": `Run ${processor.processor.label} on ${store.sandboxId}`,
+    "parent-snapshot": {
+      track: [],
+    },
+    ...processor.parameters,
+  };
+
+  const { isFetching, error, data } = await useCustomFetch(url)
+      .post(payload)
+      .json()
+
+  isWorkflowRunning.value = true;
+  const startedJob = data.value["job-id"];
+  await checkWorkflowJob(startedJob);
+  isRunning.value = false;
+}
+
+async function launchWorkflow(workflow: IWorkflow) {
+  isRunning.value = true;
+
+  const sandboxName = `${workflow.label}_${new Date()
+      .toISOString()
+      .slice(0, -8)
+      .replace(":", "-")}`;
+  await createSandbox(sandboxName);
   await importImages();
 
   const { isFetching, error, data } = await useCustomFetch(
-    `/workflow/schedule/${project}/${store.sandboxId}/${selectedWorkflow.value.id}`,
+    `/workflow/schedule/${project}/${store.sandboxId}/${workflow.id}`,
   )
     .post({
       "job-short-description": `${project}_${store.sandboxId}`,
@@ -146,9 +187,9 @@ const options = ref(["Workflow", "Processor"]);
 <template>
   <section
     v-if="!isRunning && !isWorkflowFinished"
-    class="flex flex-col items-center justify-center space-y-10 dark:text-surface-100"
+    class="grid px-20 items-center space-y-10 dark:text-surface-100"
   >
-    <div class="card flex justify-center">
+    <div class="flex justify-center">
       <SelectButton
         v-model="mode"
         :options="options"
@@ -167,11 +208,7 @@ const options = ref(["Workflow", "Processor"]);
       >
         {{ $t("pages.projects.sandbox.workflow.directive") }}
       </h2>
-      <div
-        class="rounded-xl border border-surface-200 p-2 dark:border-surface-700"
-      >
-        <WorkflowChooser />
-      </div>
+      <WorkflowChooser @run="launchWorkflow" />
     </section>
     <section v-else-if="mode === 'Processor'">
       <h2
@@ -184,6 +221,7 @@ const options = ref(["Workflow", "Processor"]);
       >
         Select which processor should be used to run on the images
       </h2>
+      <ProcessorSelector ref="processorSelector" @submit="runProcessor" />
     </section>
   </section>
   <section

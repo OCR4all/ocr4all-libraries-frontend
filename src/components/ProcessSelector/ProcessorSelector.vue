@@ -230,6 +230,7 @@ defineExpose({
         ref="processorForm"
         v-model="formData"
         type="form"
+        submit-label="Run"
         :submit-attrs="{
           inputClass: 'formkit-submit-btn',
         }"
@@ -239,60 +240,64 @@ defineExpose({
       </FormKit>
     </div>
   </Dialog>
-  <TreeTable :value="nodes" :filters="filters">
-    <template #header>
-      <div class="flex justify-end">
+  <ComponentContainer spaced internal>
+    <Toolbar>
+      <template #end>
         <IconField>
           <InputIcon class="pi pi-search" />
-          <InputText v-model="filters['global']" placeholder="Global Search" />
+          <InputText v-model="filters['global']" placeholder="Search" />
         </IconField>
-      </div>
-    </template>
-    <Column field="label" header="Label" expander style="min-width: 12rem">
-      <template #filter>
-        <InputText
-          v-model="filters['name']"
-          type="text"
-          placeholder="Filter by label"
-        />
       </template>
-    </Column>
-    <Column field="steps" header="Steps" style="min-width: 12rem">
-      <template #filter>
-        <InputText
-          v-model="filters['size']"
-          type="text"
-          placeholder="Filter by step"
-        />
-      </template>
-      <template #body="slotProps">
-        <div class="flex flex-col space-y-2">
-          <Tag
-            v-for="step of slotProps.node.data.steps"
-            :key="step"
-            :value="step"
+    </Toolbar>
+    <TreeTable :value="nodes" :filters="filters">
+      <Column field="label" header="Label" expander style="min-width: 12rem">
+        <template #body="slotProps">
+          <p
+              v-if="slotProps.node.data.type !== 'category'"
+              class="hover:underline cursor-pointer"
+              @click="openProcessor(slotProps.node.data)"
+          >
+            {{ slotProps.node.data.label }}
+          </p>
+          <p v-else>
+            {{ slotProps.node.data.label }}
+          </p>
+        </template>
+        <template #filter>
+          <InputText
+              v-model="filters['name']"
+              type="text"
+              placeholder="Filter by label"
           />
-        </div>
-      </template>
-    </Column>
-    <Column field="description" header="Description" style="min-width: 12rem">
-      <template #filter>
-        <InputText
-          v-model="filters['type']"
-          type="text"
-          placeholder="Filter by description"
-        />
-      </template>
-    </Column>
-    <Column>
-      <template #body="slotProps">
-        <Button
-          v-if="slotProps.node.data.type !== 'category'"
-          @click="openProcessor(slotProps.node.data)"
-        >
-          Select
-        </Button>
-      </template>
-    </Column>
-  </TreeTable>
+        </template>
+      </Column>
+      <Column field="steps" header="Steps" style="min-width: 12rem">
+        <template #filter>
+          <InputText
+              v-model="filters['size']"
+              type="text"
+              placeholder="Filter by step"
+          />
+        </template>
+        <template #body="slotProps">
+          <div class="flex flex-col space-y-2">
+            <Tag
+                v-for="step of slotProps.node.data.steps"
+                :key="step"
+                :value="step"
+            />
+          </div>
+        </template>
+      </Column>
+      <Column field="description" header="Description" style="min-width: 12rem">
+        <template #filter>
+          <InputText
+              v-model="filters['type']"
+              type="text"
+              placeholder="Filter by description"
+          />
+        </template>
+      </Column>
+    </TreeTable>
+  </ComponentContainer>
 </template>

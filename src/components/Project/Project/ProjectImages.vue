@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useToast } from "primevue/usetoast";
-
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import Toolbar from "primevue/toolbar";
 import ImageCard from "@/components/Project/Project/ImageCard.vue";
@@ -58,6 +56,8 @@ function openImageImportDialog(){
     props: {
       header: "Import Images",
       modal: true,
+      maximizable: true,
+      maximizeIcon: "pi pi-window-maximize",
       style: {
         width: "70vw",
       },
