@@ -45,6 +45,7 @@ declare module 'vue' {
     EditDialog: typeof import('./src/components/Project/Project/Dialog/EditDialog.vue')['default']
     EditGroupDialogForm: typeof import('./src/components/Admin/GroupManagement/Dialog/EditGroupDialog/EditGroupDialogForm.vue')['default']
     EditModelDialog: typeof import('./src/components/Repository/Models/Dialog/EditModelDialog.vue')['default']
+    EditSandboxDialog: typeof import('./src/components/Project/Project/Sandbox/Dialog/EditSandboxDialog.vue')['default']
     EditSet: typeof import('./src/components/Repository/Datasets/Dialog/EditSet.vue')['default']
     EditUserDialogForm: typeof import('./src/components/Admin/UserManagement/Dialog/EditUserDialog/EditUserDialogForm.vue')['default']
     ExportSnapshotDialog: typeof import('./src/components/Project/Project/Sandbox/Dialog/ExportSnapshotDialog.vue')['default']

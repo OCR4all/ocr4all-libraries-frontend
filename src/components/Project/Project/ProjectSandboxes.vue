@@ -20,10 +20,20 @@ import ProgressBar from "primevue/progressbar";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
 import { useToast } from "primevue/usetoast";
+
+const editSandboxDialog = defineAsyncComponent(
+  () =>
+    import(
+      "@/components/Project/Project/Sandbox/Dialog/EditSandboxDialog.vue"
+      ),
+);
 const toast = useToast();
 
 import { useI18n } from "vue-i18n";
+import { useDialog } from "primevue/usedialog";
 const { t } = useI18n();
+
+const dialog = useDialog()
 
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
@@ -53,6 +63,13 @@ const toggle = (event, data) => {
           icon: "pi pi-eye",
           command: () => {
             router.push(`/project/${project}/result/${data.id}`);
+          },
+        },
+        {
+          label: "Edit",
+          icon: "pi pi-pencil",
+          command: () => {
+            openSandboxEditDialog(data);
           },
         },
         {
@@ -88,7 +105,6 @@ async function refetch() {
     });
 }
 
-console.log(loading.value);
 refetch().then(() => (loading.value = false));
 
 const filters = ref({
@@ -105,14 +121,45 @@ function toggleDeleteDialog(id) {
   isDeleteDialogVisible.value = true;
 }
 
-const getColor = (entry) => {
+const getStateStyle = (entry) => {
   switch (entry) {
     case "secured":
-      return { background: "#1A56DB", color: "white" };
+      return "!bg-blue-600 !text-blue-100"
+    case "paused":
+      return "!bg-zinc-600 !text-zinc-100"
+    case "closed":
+      return "!bg-red-600 !text-red-100"
+    case "canceled":
+      return "!bg-yellow-600 !text-yellow-100"
+    case "active":
+      return "!bg-green-600 !text-green-100"
     default:
       return null;
   }
 };
+
+function openSandboxEditDialog(data){
+  dialog.open(editSandboxDialog, {
+    props: {
+      header: "Edit Result Metadata",
+      modal: true,
+      style: {
+        width: "75vw",
+      },
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
+      },
+    },
+    data: {
+      sandbox: data,
+      project: project
+    },
+    onClose: () => {
+      refetch();
+    },
+  })
+}
 
 async function removeResults() {
   useCustomFetch(`/sandbox/remove/${project}?id=${selectedSandbox.value}`)
@@ -154,6 +201,13 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
       icon: "pi pi-eye",
       command: () => {
         router.push(`/project/${project}/result/${event.data.id}`);
+      },
+    },
+    {
+      label: "Edit",
+      icon: "pi pi-pencil",
+      command: () => {
+        openSandboxEditDialog(event.data);
       },
     },
     {
@@ -373,6 +427,17 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
         :header="$t('pages.projects.sandbox.results.table.columns.description')"
       ></Column>
       <Column
+        field="keywords"
+        :sortable="true"
+        :header="'Keywords'"
+        :show-filter-menu="false"
+        :filter-menu-style="{ width: '14rem' }"
+      >
+        <template #body="{ data }">
+          <Tag v-for="keyword of data.keywords" :key="keyword" :value="keyword"  />
+        </template>
+      </Column>
+      <Column
         field="state"
         :sortable="true"
         :header="$t('pages.projects.sandbox.results.table.columns.state')"
@@ -380,7 +445,7 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
         :filter-menu-style="{ width: '14rem' }"
       >
         <template #body="{ data }">
-          <Tag :value="data.state" :style="getColor(data.state)" />
+          <Tag :value="data.state" :class="getStateStyle(data.state)" />
         </template>
       </Column>
       <Column
