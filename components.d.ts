@@ -86,6 +86,7 @@ declare module 'vue' {
     ProjectCreationImageSelection: typeof import('./src/components/Project/Create/ProjectCreationImageSelection.vue')['default']
     ProjectCreationMetadata: typeof import('./src/components/Project/Create/ProjectCreationMetadata.vue')['default']
     ProjectCreationNameChooser: typeof import('./src/components/Project/Create/ProjectCreationNameChooser.vue')['default']
+    ProjectImageImportDialog: typeof import('./src/components/Project/Project/Dialog/ProjectImageImportDialog.vue')['default']
     ProjectImages: typeof import('./src/components/Project/Project/ProjectImages.vue')['default']
     ProjectInformation: typeof import('./src/components/Project/Project/ProjectInformation.vue')['default']
     ProjectSandboxes: typeof import('./src/components/Project/Project/ProjectSandboxes.vue')['default']

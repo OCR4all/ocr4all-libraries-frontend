@@ -87,6 +87,7 @@ const filters = ref({
 
 <template>
   <section
+    v-if="folios.length > 0"
     class="flex flex-col items-center justify-center dark:text-surface-100"
   >
     <h2
@@ -162,5 +163,15 @@ const filters = ref({
     >
       Select
     </button>
+  </section>
+  <section v-else>
+    <h2
+      class="mb-8 text-center text-lg font-bold text-surface-700 dark:text-surface-200 sm:text-lg md:text-lg"
+    >
+      Project has no image associated yet.
+    </h2>
+    <Button>
+      Import Images
+    </Button>
   </section>
 </template>

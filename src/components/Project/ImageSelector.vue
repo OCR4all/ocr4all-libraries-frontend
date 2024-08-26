@@ -8,9 +8,8 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import Image from "primevue/image";
 import Chip from "primevue/chip";
 import Skeleton from "primevue/skeleton";
-const emit = defineEmits(["import-folios"]);
 
-function importFolios() {
+function get() {
   const registry = {};
   const selection = [];
   for (const [key, value] of Object.entries(selectedFolios.value)) {
@@ -31,7 +30,7 @@ function importFolios() {
       }
     }
   }
-  emit("import-folios", registry);
+  return registry
 }
 
 onMounted(() => {
@@ -61,7 +60,7 @@ const rows = ref(10);
 const loading = ref(false);
 const totalRecords = ref(0);
 const onExpand = (node) => {
-  const isChecked = !!(
+  const isChecked = (
     selectedFolios.value && Object.keys(selectedFolios.value).includes(node.key)
   );
   if (!node.children) {
@@ -72,11 +71,11 @@ const onExpand = (node) => {
         const children = [];
         for (const folio of response.data.value) {
           const key = folio.id;
-          const thumbnailImgFetch = await useCustomFetch(
+/*          const thumbnailImgFetch = await useCustomFetch(
             `/repository/container/folio/derivative/thumbnail/${node.key}?id=${key}`,
           )
             .get()
-            .blob();
+            .blob();*/
           /*          const detailImgFetch = await useCustomFetch(
             `/repository/container/folio/derivative/best/${node.key}?id=${key}`,
           )
@@ -87,7 +86,7 @@ const onExpand = (node) => {
             data: {
               name: folio.name,
               type: "folio",
-              thumbnail: useObjectUrl(thumbnailImgFetch.data.value),
+              thumbnail: null,
               detail: null,
               keywords: folio.keywords,
             },
@@ -105,20 +104,36 @@ const onExpand = (node) => {
   }
 };
 
-const selectedFolios = ref();
+const selectedFolios = ref({});
+
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
+
+defineExpose({
+  selectedFolios,
+  get
+})
 </script>
 <template>
-  <div class="card justify-content-center grid space-y-2 pb-8">
+  <ComponentContainer spaced internal>
+    <Toolbar>
+      <template #end>
+        <IconField>
+          <InputIcon>
+            <i class="pi pi-search" />
+          </InputIcon>
+          <InputText v-model="filters['global'].value" placeholder="Search" />
+        </IconField>
+      </template>
+    </Toolbar>
     <TreeTable
       :value="nodes"
       :lazy="true"
       :paginator="true"
       :rows="rows"
       :loading="loading"
-      v-model:filters="filters"
+      :filters="filters"
       filter-display="row"
       :globalFilterFields="['name']"
       :total-records="totalRecords"
@@ -128,12 +143,6 @@ const filters = ref({
       scrollHeight="400px"
       @node-expand="onExpand"
     >
-      <template #header>
-        <InputText
-          v-model="filters['global'].value"
-          :placeholder="$t('pages.projects.overview.table.search.placeholder')"
-        />
-      </template>
       <Column field="name" header="Name" expander></Column>
       <Column field="thumbnail" header="Image">
         <template #body="slotProps">
@@ -180,17 +189,10 @@ const filters = ref({
           <Chip
             v-for="keyword of slotProps.node.data.keywords"
             :key="keyword"
-            >{{ keyword }}</Chip
+          >{{ keyword }}</Chip
           >
         </template>
       </Column>
     </TreeTable>
-    <button
-      @click="importFolios"
-      class="w-64 justify-self-center bg-primary-500 p-2 font-semibold text-surface-50 hover:bg-primary-600 disabled:bg-primary-200"
-      :disabled="!selectedFolios"
-    >
-      Import
-    </button>
-  </div>
+  </ComponentContainer>
 </template>

@@ -2,27 +2,51 @@
 import { useProjectCreationStore } from "@/stores/projectCreation.store";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
+import IconImageImport from "~icons/lucide/image-plus";
+import { useToast } from "primevue/usetoast";
 
 const router = useRouter();
+const toast = useToast()
 
 const store = useProjectCreationStore();
 
-async function importFolios(data) {
-  for (const [key, value] of Object.entries(data)) {
+const isLoading = ref(false)
+
+const imageSelector = ref()
+
+async function importFolios() {
+  const selection = imageSelector.value.get()
+  const requests = []
+
+  for (const [key, value] of Object.entries(selection)) {
     if (value === true) {
-      await useCustomFetch(
+      requests.push(useCustomFetch(
         `/project/folio/import/all/${store.projectId}?id=${key}`,
-      ).get();
+      ).json)
     } else if (value.length > 0) {
       const payload = {
         ids: value,
       };
-      await useCustomFetch(
+      requests.push(useCustomFetch(
         `/project/folio/import/list/${store.projectId}?id=${key}`,
-      ).post(payload);
+      ).post(payload).json)
     }
   }
-  await router.push(`/project/${store.projectId}/view`);
+  isLoading.value = true
+  try{
+    Promise.all(requests).then(async (response) => {
+      await router.push(`/project/${store.projectId}/view`);
+    })
+  }catch(error){
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: "Folios couldn't get imported",
+      life: 3000,
+      group: "general",
+    });
+    await router.push(`/project/${store.projectId}/view`);
+  }
 }
 </script>
 
@@ -36,5 +60,15 @@ async function importFolios(data) {
       {{ $t("pages.projects.new.components.images.directive") }}
     </h2>
   </div>
-  <ImageSelector @import-folios="importFolios" />
+  <div class="grid grid-cols-1 justify-center gap-y-4">
+    <ImageSelector ref="imageSelector" />
+    <div class="place-self-center">
+      <Button v-if="imageSelector" :disabled="Object.keys(imageSelector.selectedFolios).length === 0" @click="importFolios">
+        <div class="flex space-x-2">
+          <IconImageImport class="text-white self-center" />
+          <p class="text-white">Import</p>
+        </div>
+      </Button>
+    </div>
+  </div>
 </template>
