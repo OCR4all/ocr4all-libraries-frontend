@@ -187,11 +187,11 @@ function openInfoDialog(data) {
       header: "Job Information",
       modal: true,
       style: {
-        width: "75vw",
+        width: "85vw",
       },
       breakpoints: {
-        "960px": "80vw",
-        "640px": "90vw",
+        "960px": "90vw",
+        "640px": "95vw",
       },
     },
     data: data,
