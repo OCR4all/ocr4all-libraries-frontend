@@ -8,14 +8,16 @@ const toast = useToast();
 
 const schema = workflowSchema;
 const data = ref();
+const originalLabel = ref()
 
 onMounted(() => {
+  originalLabel.value = dialogRef.value.data.label
   data.value = dialogRef.value.data;
 });
 
 async function updateWorkflow(values, { setErrors }) {
   const { data } = await useCustomFetch(`/workflow/list`).get().json();
-  if (data.value.map((workflow) => workflow.label).includes(values.label)) {
+  if (originalLabel.value != values.label && data.value.map((workflow) => workflow.label).includes(values.label)) {
     setErrors({
       label: "Sorry, this label is already taken.",
     });
@@ -30,6 +32,13 @@ async function updateWorkflow(values, { setErrors }) {
         if (response.error.value) {
           setErrors(["Something went wrong.", "Please try again later."]);
         } else {
+          toast.add({
+            severity: "success",
+            summary: "Success",
+            detail: "Workflow metadata updated",
+            life: 3000,
+            group: "general",
+          });
           dialogRef.value.close();
         }
       });
@@ -42,6 +51,7 @@ async function updateWorkflow(values, { setErrors }) {
     ref="form"
     v-model="data"
     type="form"
+    submit-label="Save"
     :submit-attrs="{
       inputClass: 'formkit-submit-btn',
     }"
