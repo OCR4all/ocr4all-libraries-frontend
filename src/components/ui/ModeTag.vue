@@ -17,7 +17,7 @@ function toggle(event: Event) {
 }
 
 function openAdminPanel() {
-  router.push("/admin")
+  router.push({name: "Admin"})
 }
 
 function openProMode() {
@@ -29,11 +29,11 @@ function openProMode() {
     class="align-center cursor-pointer flex gap-x-2 rounded bg-blue-100 px-2.5 py-2 text-sm font-bold text-surface-700 dark:bg-blue-900 dark:text-surface-100"
     @click="toggle"
   >
-    <div v-if="mode === 'pro'" class="flex space-x-2">
+    <div v-if="props.mode === 'pro'" class="flex space-x-2">
       <IconPro class="self-center" />
       <p class="self-center">Pro</p>
     </div>
-    <div v-else-if="mode === 'admin'" class="flex space-x-2">
+    <div v-else-if="props.mode === 'admin'" class="flex space-x-2">
       <IconAdmin class="self-center" />
       <p class="self-center">Administration</p>
     </div>
@@ -47,13 +47,13 @@ function openProMode() {
           <Tag value="Coming soon" />
         </div>
       </Button>
-      <Button v-show="mode !== 'pro'" severity="primary" text @click="openProMode">
+      <Button v-show="props.mode !== 'pro'" severity="primary" text @click="openProMode()">
         <div class="flex w-full text-black dark:text-white justify-start space-x-2">
           <IconPro class="self-center" />
           <p class="self-center">Pro</p>
         </div>
       </Button>
-      <Button v-show="mode !== 'admin' && authStore.isAdmin" severity="primary" text @click="openAdminPanel">
+      <Button v-show="props.mode !== 'admin' && authStore.isAdmin" severity="primary" text @click="openAdminPanel()">
         <div class="flex w-full text-black dark:text-white justify-start space-x-2">
           <IconAdmin class="self-center" />
           <p class="self-center">Administration</p>

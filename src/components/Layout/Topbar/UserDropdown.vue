@@ -35,7 +35,7 @@ function openSettings() {
 }
 
 function openAdminDashboard() {
-  router.push("/admin");
+  router.push({name: "Admin"})
 }
 function logout() {
   authStore.logout();

@@ -3,6 +3,9 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import { IJob } from "@/components/Queue/queue.interfaces";
 import { useDialog } from "primevue/usedialog";
 
+import IconEmpty from "~icons/ph/empty-light"
+import IconOpen from "~icons/fluent/open-16-regular"
+
 const dialogRef = inject("dialogRef");
 const logViewer = defineAsyncComponent(
   () => import("@/components/Queue/Dialog/LogViewer.vue"),
@@ -87,6 +90,7 @@ function getSeverity(severity: string): string {
               <Tag
                 v-if="data['service-provider-id']"
                 :value="data['service-provider-id']"
+                class="!text-white"
               />
             </template>
           </Column>
@@ -96,10 +100,13 @@ function getSeverity(severity: string): string {
                 v-if="data['note']"
                 @click="openLogDialog(data['note'], 'Note')"
                 severity="contrast"
+                text
               >
-                View
+                <IconOpen class="text-white dark:text-white" />
               </Button>
-              <p v-else>Empty</p>
+              <p v-else>
+                <IconEmpty class="text-black dark:text-white" />
+              </p>
             </template>
           </Column>
           <Column field="standard-error" header="Error Log">
@@ -108,10 +115,13 @@ function getSeverity(severity: string): string {
                 v-if="data['standard-error']"
                 @click="openLogDialog(data['standard-error'], 'Error Log')"
                 severity="contrast"
+                text
               >
-                View
+                <IconOpen class="text-white dark:text-white" />
               </Button>
-              <p v-else>Empty</p>
+              <p v-else>
+                <IconEmpty class="text-black dark:text-white" />
+              </p>
             </template>
           </Column>
           <Column field="standard-output" header="Output Log">
@@ -120,10 +130,13 @@ function getSeverity(severity: string): string {
                 v-if="data['standard-error']"
                 @click="openLogDialog(data['standard-output'], 'Output Log')"
                 severity="contrast"
+                text
               >
-                View
+                <IconOpen class="text-white dark:text-white" />
               </Button>
-              <p v-else>Empty</p>
+              <p v-else>
+                <IconEmpty class="text-black dark:text-white" />
+              </p>
             </template>
           </Column>
         </DataTable>
