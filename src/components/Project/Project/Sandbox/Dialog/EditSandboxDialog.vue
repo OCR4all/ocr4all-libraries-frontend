@@ -14,7 +14,6 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
 onMounted(() => {
-  console.log(dialogRef.value)
   data.value = dialogRef.value.data.sandbox;
   project.value = dialogRef.value.data.project
 });

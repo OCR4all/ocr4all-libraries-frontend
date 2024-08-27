@@ -46,6 +46,13 @@ const processorInformationDialog = defineAsyncComponent(
     ),
 );
 
+const addToDatasetDialog = defineAsyncComponent(
+  () =>
+    import(
+      "@/components/Project/Project/Sandbox/Dialog/AddToDatasetDialog.vue"
+      ),
+);
+
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
 const sandbox = router.currentRoute.value.params.sandbox;
@@ -146,7 +153,6 @@ async function collectSnapshotInformation(data: INode) {
         response.data.value.configuration.lock != null;
       selectedSnapshotInformation.value = response.data.value.configuration;
     });
-  /*selectedSnapshotProcessors.value = JSON.parse(data.parameter)*/
 }
 
 async function unlockSnapshot(track: ITrack) {
@@ -172,6 +178,8 @@ async function unlockSnapshot(track: ITrack) {
     });
 }
 
+/* TODO: Locking Snapshots isn't supported by the backend yet.
+    Remove or wait for backend implementation. */
 async function lockSnapshot(track: ITrack) {
   const payload = {
     track: track,
@@ -311,17 +319,17 @@ async function generateSandbox(selection: ITrack) {
 function getTagClasses(type: string): string {
   switch (type) {
     case "Launcher":
-      return "!bg-surface-100 !text-surface-900";
+      return "!bg-surface-200 !text-surface-900";
     case "Preprocessing":
-      return "!bg-lime-100 !text-surface-900";
+      return "!bg-lime-100 dark:!bg-lime-200 !text-lime-900";
     case "Layout Analysis":
-      return "!bg-teal-100 !text-surface-900";
+      return "!bg-orange-100 dark:!bg-orange-200 !text-orange-900";
     case "Text Recognition":
-      return "!bg-indigo-100 !text-surface-900";
+      return "!bg-blue-100 dark:!bg-blue-200 !text-blue-900";
     case "Format Conversion":
-      return "!bg-violet-100 !text-surface-900";
+      return "!bg-violet-100 dark:!bg-violet-200 !text-violet-900";
     case "Postcorrection":
-      return "!bg-sky-100 !text-surface-900";
+      return "!bg-green-100 dark:!bg-green-200 !text-green-900";
     default:
       return "";
   }
@@ -347,7 +355,7 @@ function hasLarexView(selection: ITrack): boolean {
 function openProcessorInformationDialog(information: unknown) {
   dialog.open(processorInformationDialog, {
     props: {
-      header: "Processor information",
+      header: "Information",
       modal: true,
       style: {
         width: "75vw",
@@ -359,7 +367,6 @@ function openProcessorInformationDialog(information: unknown) {
     },
     data: {
       information: selectedSnapshotInformation.value,
-      processors: selectedSnapshotProcessors.value,
     },
   });
 }
@@ -388,6 +395,27 @@ function openExportSnapshotDialog(snapshot: ITrack) {
       sandbox: sandbox,
       track: key,
     },
+    onClose: () => {
+      refetch();
+    },
+  });
+}
+
+
+function openAddToDatasetDialog(snapshot: ITrack) {
+  dialog.open(addToDatasetDialog, {
+    props: {
+      header: "Add to dataset",
+      modal: true,
+      style: {
+        width: "75vw",
+      },
+      breakpoints: {
+        "960px": "75vw",
+        "640px": "90vw",
+      },
+    },
+    data: snapshot,
     onClose: () => {
       refetch();
     },
@@ -490,6 +518,9 @@ const items = computed(() => {
         visible: true,
         disabled: false,
         icon: IconAddToDataset,
+        command: () => {
+          openAddToDatasetDialog(selection.value)
+        }
       },
       {
         label: "Export",
@@ -501,7 +532,7 @@ const items = computed(() => {
         },
       },
       {
-        label: "Processor Information",
+        label: "Information",
         visible: true,
         disabled: false,
         icon: IconInformation,
