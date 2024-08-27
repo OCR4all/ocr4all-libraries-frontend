@@ -11,6 +11,13 @@ const toast = useToast();
 const uploadToastVisible = ref(false);
 const progress = ref(0);
 
+const dataset = ref()
+
+const dialogRef = inject("dialogRef");
+onMounted(() => {
+  dataset.value = dialogRef.value.data;
+});
+
 const showUploadToast = () => {
   if (!uploadToastVisible.value) {
     toast.add({
@@ -36,9 +43,8 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
     formData.append("files", file);
   }
   showUploadToast();
-  axios.defaults.timeout = 100000;
   axios
-    .post(`data/collection/set/upload/${dataset}`, formData, {
+    .post(`data/collection/set/upload/${dataset.value.collection}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -53,32 +59,11 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
     .then(function () {
       fileUpload.value.clear();
       fileUpload.value.uploadedFileCount = 0;
-      refresh();
-      hideUploadToast();
+/*      dialogRef.value.close()*/
     })
     .catch(function (error) {
       console.log(error);
     });
-};
-
-const hideUploadToast = () => {
-  //code before the pause
-  setTimeout(function () {
-    toast.removeGroup("headless");
-    uploadToastVisible.value = false;
-    progress.value = 0;
-    toast.add({
-      severity: "success",
-      summary: t(
-        "pages.repository.container.overview.toast.upload.success.detail",
-      ),
-      detail: t(
-        "pages.repository.container.overview.toast.upload.success.summary",
-      ),
-      life: 3000,
-      group: "general",
-    });
-  }, 2000);
 };
 
 const totalSize = ref(0);

@@ -5,6 +5,10 @@ const authStore = useAuthStore();
 
 const router = useRouter();
 
+const props = defineProps<{
+  mode: string
+}>();
+
 defineEmits(["toggle-sidebar-mobile"]);
 </script>
 
@@ -33,8 +37,7 @@ defineEmits(["toggle-sidebar-mobile"]);
       <BreadcrumbNavigation />
     </div>
     <div class="flex gap-x-0.5">
-      <ModeTag />
-      <InstanceTag />
+      <ModeTag :mode="props.mode" />
       <NotificationDropdown />
       <DarkModeToggle />
       <div class="self-center" v-show="authStore.user">

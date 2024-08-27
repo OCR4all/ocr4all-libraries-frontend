@@ -16,7 +16,7 @@ await useCustomFetch("/administration/overview")
 </script>
 <template>
   <div class="grid items-start gap-4 lg:grid-cols-2">
-    <div>
+    <div class="grid gap-y-4 lg:gap-y-0">
       <ComponentContainer>
         <ApplicationCard :data="information.application" />
       </ComponentContainer>
@@ -24,7 +24,7 @@ await useCustomFetch("/administration/overview")
         <WorkspaceCard :workspace="information.workspace" />
       </ComponentContainer>
     </div>
-    <div>
+    <div class="grid gap-y-4 lg:gap-y-0">
       <ComponentContainer>
         <FilesystemCard
           :exchange="information.exchange"

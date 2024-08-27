@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import axios from "axios";
 
 import router from "@/router";
 
@@ -29,6 +30,7 @@ export const useAuthStore = defineStore("auth", () => {
       user.value = data.value.username;
       token.value = data.value.token;
       authority.value = data.value.authority;
+      axios.defaults.headers.common = { Authorization: `Bearer ${token.valuw}`}
       await router.push(returnUrl || "/");
     } else {
       throw Error;

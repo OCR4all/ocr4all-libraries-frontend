@@ -86,6 +86,17 @@ function openUploadDialog() {
       collection: dataset,
     },
     onClose: () => {
+      toast.add({
+        severity: "success",
+        summary: t(
+          "pages.repository.container.overview.toast.upload.success.detail",
+        ),
+        detail: t(
+          "pages.repository.container.overview.toast.upload.success.summary",
+        ),
+        life: 3000,
+        group: "general",
+      });
       refresh();
     },
   });

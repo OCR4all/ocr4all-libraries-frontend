@@ -27,7 +27,7 @@ function toggleSidebarMobile() {
       <main
         class="flex-1 justify-center overflow-x-auto bg-surface-100 shadow-md dark:bg-surface-950 lg:m-2 lg:rounded-md lg:bg-surface-0 lg:dark:bg-surface-900"
       >
-        <AppTopbar @toggle-sidebar-mobile="toggleSidebarMobile" />
+        <AppTopbar @toggle-sidebar-mobile="toggleSidebarMobile" mode="admin" />
         <div
           class="h-[calc(100vh-5rem)] w-full overflow-y-auto rounded-b-2xl"
           :class="{ 'p-8': props.padded }"
