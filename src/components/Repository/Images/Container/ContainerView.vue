@@ -404,7 +404,7 @@ refresh();
             />
           </div>
           <div
-            class="grid grid-cols-1 content-center justify-center gap-x-2 gap-y-3 @[550px]/content:grid-cols-2 @[800px]/content:grid-cols-3 @[1050px]/content:grid-cols-4"
+            class="grid grid-cols-1 content-center justify-center gap-x-2 gap-y-3 @[650px]/content:grid-cols-2 @[950px]/content:grid-cols-3 @[1350px]/content:grid-cols-4"
           >
             <div v-for="(item, index) in slotProps.items" :key="index">
               <FolioCard

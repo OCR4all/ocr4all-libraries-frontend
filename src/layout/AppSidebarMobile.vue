@@ -42,7 +42,7 @@ defineExpose({
             src="/img/logo.svg"
             class="h-12 w-12 cursor-pointer"
             alt="OCR4all logo"
-            @click="router.push({ name: 'Dashboard' })"
+            @click="router.push({ name: 'Pro' })"
           />
           <span>
             <Button type="button" text @click="closeCallback">

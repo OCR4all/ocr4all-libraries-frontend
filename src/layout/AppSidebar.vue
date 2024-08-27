@@ -38,7 +38,7 @@ const maximized = computed(() => !uiStore.sidebarMinimized);
         src="/img/logo.svg"
         class="h-12 w-12 cursor-pointer"
         alt="OCR4all logo"
-        @click="router.push({ name: 'Dashboard' })"
+        @click="router.push({ name: 'Pro' })"
       />
       <SidebarToggle />
     </div>

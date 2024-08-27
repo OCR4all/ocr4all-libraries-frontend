@@ -21,7 +21,7 @@ function openAdminPanel() {
 }
 
 function openProMode() {
-  router.push({ name: "Dashboard" })
+  router.push({ name: "Pro" })
 }
 </script>
 <template>

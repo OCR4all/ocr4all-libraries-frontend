@@ -11,6 +11,11 @@ const routes = [
     component: () => import("@/pages/DashboardPage.vue"),
   },
   {
+    path: "/pro",
+    name: "Pro",
+    redirect: "/",
+  },
+  {
     path: "/queue",
     name: "Queue",
     component: () => import("@/pages/QueuePage.vue"),

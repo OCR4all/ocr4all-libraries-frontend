@@ -10,11 +10,6 @@ export const datasetSchema = ref([
     validation: "required",
   },
   {
-    $formkit: "primeTextarea",
-    name: "description",
-    label: "Description",
-  },
-  {
     $formkit: "primeAutoComplete",
     name: "keywords",
     multiple: true,

@@ -21,7 +21,7 @@ defineEmits(["toggle-sidebar-mobile"]);
         src="/img/logo.svg"
         class="h-10 w-10 cursor-pointer"
         alt="OCR4all logo"
-        @click="router.push({ name: 'Dashboard' })"
+        @click="router.push({ name: 'Pro' })"
       />
       <button
         v-tooltip="'Toggle Sidebar'"

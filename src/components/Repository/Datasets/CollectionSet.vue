@@ -37,8 +37,8 @@ const codecDialog = defineAsyncComponent(
 );
 
 import IconAnalytics from "~icons/carbon/data-analytics";
-import IconUpload from "~icons/carbon/upload";
-import IconDownload from "~icons/carbon/download";
+import IconUpload from "~icons/fluent/arrow-upload-24-filled";
+import IconDownload from "~icons/fluent/arrow-download-24-filled";
 import { useDialog } from "primevue/usedialog";
 import Toast from "primevue/toast";
 import Toolbar from "primevue/toolbar";
@@ -491,7 +491,7 @@ refresh();
         >
           <IconUpload class="text-black dark:text-white" />
         </Button>
-        <Button v-tooltip.top="'Export'" @click="downloadDataset" text>
+        <Button v-tooltip.top="'Download'" @click="downloadDataset" text>
           <IconDownload class="text-black dark:text-white" />
         </Button>
         <Button
@@ -598,12 +598,6 @@ refresh();
                 >
               </div>
             </template>
-          </Column>
-          <Column
-            field="description"
-            :header="$t('pages.projects.overview.table.columns.description')"
-            :sortable="true"
-          >
           </Column>
           <Column
             field="date"
