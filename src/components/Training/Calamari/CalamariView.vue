@@ -2,6 +2,8 @@
 import { useUiStore } from "@/stores/ui.store";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
+import IconNext from "~icons/fluent/next-16-filled"
+
 const datasets = ref();
 const parameters = ref();
 
@@ -77,15 +79,19 @@ function run() {
 }
 </script>
 <template>
-  <Button label="Run" @click="run" />
   <ComponentContainer>
     <Stepper value="1">
       <StepItem value="1">
         <Step>Dataset</Step>
         <StepPanel v-slot="{ activateCallback }">
           <DatasetSelector ref="datasets" />
-          <div class="py-6">
-            <Button label="Next" @click="activateCallback('2')" />
+          <div class="py-6 flex">
+            <Button @click="activateCallback('2')">
+              <div class="flex space-x-4">
+                <IconNext class="text-white self-center" />
+                <p class="text-white self-center">Next</p>
+              </div>
+            </Button>
           </div>
         </StepPanel>
       </StepItem>
@@ -99,14 +105,24 @@ function run() {
               severity="secondary"
               @click="activateCallback('1')"
             />
-            <Button label="Next" @click="activateCallback('3')" />
+            <Button @click="activateCallback('3')">
+              <div class="flex space-x-4">
+                <IconNext class="text-white self-center" />
+                <p class="text-white self-center">Next</p>
+              </div>
+            </Button>
           </div>
         </StepPanel>
       </StepItem>
       <StepItem value="3">
         <Step>Run</Step>
         <StepPanel v-slot="{ activateCallback }">
-          <Button label="Launch" @click="run" />
+          <Button @click="run">
+            <div class="flex space-x-4">
+              <IconNext class="text-white self-center" />
+              <p class="text-white self-center">Run</p>
+            </div>
+          </Button>
           <div class="py-6">
             <Button
               label="Back"
