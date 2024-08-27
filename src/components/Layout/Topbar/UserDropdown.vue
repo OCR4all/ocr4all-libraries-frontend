@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import {
-  UserIcon,
-  Cog8ToothIcon,
-  QuestionMarkCircleIcon,
-  ArrowLeftStartOnRectangleIcon,
-} from "@heroicons/vue/24/outline";
+import IconAdmin from "~icons/eos-icons/admin-outlined"
+import IconCog from "~icons/line-md/cog";
+import IconDocumentation from "~icons/oui/documentation"
+import IconLogout from "~icons/solar/logout-2-outline"
 
 interface IUserDropdownEntry {
   action: () => void;
@@ -25,11 +23,11 @@ const op = ref();
 const user: RemovableRef<object> = ref();
 
 const profileItems: IUserDropdownEntry[] = [
-  { action: openSettings, label: "Settings", icon: Cog8ToothIcon },
+  { action: openSettings, label: "Settings", icon: IconCog },
 ];
 
 const adminItems: IUserDropdownEntry[] = [
-  { action: openAdminDashboard, label: "Admin", icon: UserIcon },
+  { action: openAdminDashboard, label: "Admin", icon: IconAdmin },
 ];
 
 function openSettings() {
@@ -108,14 +106,14 @@ const toggle = (event) => {
         href="https://www.ocr4all.org"
         target="_blank"
       >
-        <QuestionMarkCircleIcon class="h-6 w-6" />
+        <IconDocumentation class="h-6 w-6" />
         <span class="mx-1">Documentation</span>
       </a>
       <button
-        class="my-1 flex transform items-center rounded-md px-3 py-2 text-sm capitalize text-gray-600 transition-colors duration-300 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+        class="my-1 flex transform items-center rounded-md px-3 py-2 text-sm capitalize text-red-600 transition-colors duration-300 hover:bg-red-600 hover:text-white"
         @click="logout"
       >
-        <ArrowLeftStartOnRectangleIcon class="h-6 w-6" />
+        <IconLogout class="h-6 w-6" />
         <span class="mx-1">Sign Out</span>
       </button>
     </div>

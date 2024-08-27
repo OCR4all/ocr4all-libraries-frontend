@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BellIcon } from "@heroicons/vue/24/solid";
+import IconBell from "~icons/heroicons/bell";
 import Popover from "primevue/popover";
 
 const notificationPanel: Ref<typeof Popover | undefined> = ref();
@@ -13,7 +13,7 @@ const toggle = (event: Event) => {
     class="self-align-middle group flex px-2 text-sm hover:rounded-md hover:bg-surface-200/50 dark:hover:bg-surface-800/50"
   >
     <button class="text-center" @click="toggle">
-      <BellIcon
+      <IconBell
         aria-hidden="true"
         class="h-6 w-6 flex-shrink-0 text-surface-500 transition duration-75 group-hover:text-surface-700 dark:text-surface-400 dark:group-hover:text-white"
       />

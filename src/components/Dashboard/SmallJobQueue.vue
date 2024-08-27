@@ -5,12 +5,12 @@ import DefaultSpinner from "@/components/Layout/utils/DefaultSpinner.vue";
 
 import { UseTimeAgo } from "@vueuse/components";
 
-import { ArrowPathIcon, ArrowUpOnSquareIcon } from "@heroicons/vue/24/outline";
+import IconOpen from "~icons/heroicons/arrow-up-on-square"
+import IconRefresh from "~icons/heroicons/arrow-path"
 
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Tag from "primevue/tag";
-import Toast from "primevue/toast";
 
 const router = useRouter();
 
@@ -85,7 +85,7 @@ const getSeverity = (entry) => {
             :disabled="isRefetching === true"
             @click="refetch"
           >
-            <ArrowPathIcon
+            <IconRefresh
               :class="{ 'animate-spin': isRefetching }"
               class="mr-2 h-6 w-6 text-surface-500 hover:text-black dark:text-surface-200 dark:hover:text-white"
             />
@@ -94,7 +94,7 @@ const getSeverity = (entry) => {
             v-tooltip.left="'Open job queue'"
             @click="router.push('/queue')"
           >
-            <ArrowUpOnSquareIcon
+            <IconOpen
               class="h-6 w-6 text-surface-500 hover:cursor-pointer hover:text-black dark:text-surface-200 dark:hover:text-white"
             />
           </button>

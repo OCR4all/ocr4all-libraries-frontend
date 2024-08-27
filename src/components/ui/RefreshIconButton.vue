@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowPathIcon } from "@heroicons/vue/24/outline";
+import IconRefresh from "~icons/heroicons/arrow-path"
 
 const emit = defineEmits(["refresh"]);
 
@@ -14,7 +14,7 @@ defineProps<{
     :disabled="isRefetching"
     @click="emit('refresh')"
   >
-    <ArrowPathIcon
+    <IconRefresh
       :class="{ 'animate-spin': isRefetching }"
       class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-200 hover:dark:text-white"
     />

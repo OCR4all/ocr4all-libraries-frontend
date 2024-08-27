@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Bars3CenterLeftIcon } from "@heroicons/vue/24/outline";
 import { useUiStore } from "@/stores/ui.store";
+
+import IconToggle from "~icons/heroicons/bars-3-center-left"
 
 const uiStore = useUiStore();
 
@@ -16,6 +17,6 @@ function toggleSidebar() {
     value="Open sidebar"
     @click="toggleSidebar"
   >
-    <Bars3CenterLeftIcon class="h-8 w-8" />
+    <IconToggle class="h-8 w-8" />
   </button>
 </template>

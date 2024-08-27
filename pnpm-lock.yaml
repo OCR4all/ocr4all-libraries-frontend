@@ -20,9 +20,6 @@ importers:
       '@formkit/vue':
         specifier: ^1.6.5
         version: 1.6.5(tailwindcss@3.3.6)(vue@3.4.27(typescript@5.3.3))
-      '@heroicons/vue':
-        specifier: ^2.1.5
-        version: 2.1.5(vue@3.4.27(typescript@5.3.3))
       '@primevue/core':
         specifier: 4.0.0-beta.5
         version: 4.0.0-beta.5(vue@3.4.27(typescript@5.3.3))
@@ -944,11 +941,6 @@ packages:
 
   '@hapi/topo@5.1.0':
     resolution: {integrity: sha512-foQZKJig7Ob0BMAYBfcJk8d77QtOe7Wo4ox7ff1lQYoNNAb6jwcY1ncdoy2e9wQZzvNy7ODZCYJkK8kzmcAnAg==}
-
-  '@heroicons/vue@2.1.5':
-    resolution: {integrity: sha512-IpqR72sFqFs55kyKfFS7tN+Ww6odFNeH/7UxycIOrlVYfj4WUGAdzQtLBnJspucSeqWFQsKM0g0YrgU655BEfA==}
-    peerDependencies:
-      vue: '>= 3'
 
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -4875,10 +4867,6 @@ snapshots:
   '@hapi/topo@5.1.0':
     dependencies:
       '@hapi/hoek': 9.3.0
-
-  '@heroicons/vue@2.1.5(vue@3.4.27(typescript@5.3.3))':
-    dependencies:
-      vue: 3.4.27(typescript@5.3.3)
 
   '@humanwhocodes/config-array@0.11.14':
     dependencies:

@@ -3,7 +3,7 @@ import DefaultSpinner from "@/components/Layout/utils/DefaultSpinner.vue";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
-import { ArrowPathIcon, ArrowUpOnSquareIcon } from "@heroicons/vue/24/outline";
+import IconOpen from "~icons/heroicons/arrow-up-on-square"
 
 import { UseTimeAgo } from "@vueuse/components";
 
@@ -67,7 +67,7 @@ refetch();
               v-tooltip.left="'Open project overview'"
               @click="router.push('/project/overview')"
             >
-              <ArrowUpOnSquareIcon
+              <IconOpen
                 data-tooltip-target="tooltip-project-overview"
                 class="h-6 w-6 text-surface-500 hover:cursor-pointer hover:text-black dark:text-surface-200 dark:hover:text-white"
               />

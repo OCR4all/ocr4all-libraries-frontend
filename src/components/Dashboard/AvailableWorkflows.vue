@@ -4,11 +4,10 @@ import DefaultSpinner from "@/components/Layout/utils/DefaultSpinner.vue";
 
 import { UseTimeAgo } from "@vueuse/components";
 
-import { ArrowPathIcon, ArrowUpOnSquareIcon } from "@heroicons/vue/24/outline";
+import IconOpen from "~icons/heroicons/arrow-up-on-square"
 
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
-import Toast from "primevue/toast";
 
 import { Router } from "vue-router";
 const router: Router = useRouter();
@@ -59,7 +58,7 @@ refetch();
               :disabled="isRefetching === true"
               @click="refetch"
             >
-              <ArrowPathIcon
+              <IconRefresh
                 :class="{ 'animate-spin': isRefetching }"
                 class="mr-2 h-6 w-6 text-surface-500 hover:text-black dark:text-surface-200 dark:hover:text-white"
               />
@@ -73,7 +72,7 @@ refetch();
                 })
               "
             >
-              <ArrowUpOnSquareIcon
+              <IconOpen
                 data-tooltip-target="tooltip-project-overview"
                 class="h-6 w-6 text-surface-500 hover:cursor-pointer hover:text-black dark:text-surface-200 dark:hover:text-white"
               />

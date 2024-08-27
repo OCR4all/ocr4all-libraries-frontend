@@ -6,7 +6,7 @@ import Toolbar from "primevue/toolbar";
 import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
 
-import { ArrowPathIcon } from "@heroicons/vue/24/outline";
+import IconRefresh from "~icons/heroicons/arrow-path"
 
 import { UseTimeAgo } from "@vueuse/components";
 
@@ -329,7 +329,7 @@ refetch();
           :disabled="isRefetching === true"
           @click="refetch"
         >
-          <ArrowPathIcon
+          <IconRefresh
             :class="{ 'animate-spin': isRefetching }"
             class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-200 hover:dark:text-white"
           />

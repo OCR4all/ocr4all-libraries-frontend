@@ -16,7 +16,7 @@ import IconCreate from "~icons/gridicons/create";
 
 import { FilterMatchMode } from "@primevue/core/api";
 
-import { ArrowPathIcon } from "@heroicons/vue/24/outline";
+import IconRefresh from "~icons/heroicons/arrow-path"
 
 import { Router } from "vue-router";
 
@@ -289,7 +289,7 @@ refetch();
       <template #end>
         <div class="flex">
           <button :disabled="isRefetching === true" @click="refetch">
-            <ArrowPathIcon
+            <IconRefresh
               :class="{ 'animate-spin': isRefetching }"
               class="mr-2 inline h-6 w-6 text-surface-800 hover:text-black dark:text-surface-200 dark:hover:text-white"
             />

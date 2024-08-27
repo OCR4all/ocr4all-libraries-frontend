@@ -22,7 +22,6 @@
     "@formkit/core": "^1.6.5",
     "@formkit/i18n": "^1.6.5",
     "@formkit/vue": "^1.6.5",
-    "@heroicons/vue": "^2.1.5",
     "@primevue/core": "4.0.0-beta.5",
     "@primevue/themes": "4.0.0-rc.2",
     "@tanstack/vue-query": "^5.52.0",

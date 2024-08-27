@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Cog6ToothIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+import IconSettings from "~icons/heroicons/cog-6-tooth"
+import IconClose from "~icons/heroicons/x-mark"
 
 import { adminNavigation, mainNavigation } from "@/layout/Sidebar";
 import { useUiStore } from "@/stores/ui.store";
@@ -80,7 +81,7 @@ defineExpose({
               to="/settings"
               class="group flex items-center justify-center space-x-4 rounded-md px-4 py-2.5 text-surface-900 hover:bg-surface-200 dark:text-white dark:hover:bg-surface-800"
             >
-              <Cog6ToothIcon class="h-6 w-6" />
+              <IconSettings class="h-6 w-6" />
             </router-link>
           </div>
         </div>
@@ -96,7 +97,7 @@ defineExpose({
         class="absolute right-2 top-2 flex h-10 w-10 items-center justify-center rounded-md hover:ring-2 hover:ring-surface-300 focus:outline-none focus:ring-2 focus:ring-surface-600"
         @click="toggleSidebarMobile"
       >
-        <XMarkIcon class="h-5 w-5 text-surface-800 dark:text-white" />
+        <IconClose class="h-5 w-5 text-surface-800 dark:text-white" />
       </button>
       <div class="px-6 pb-4 pt-4">
         <img src="/img/logo.svg" class="h-9 w-48" alt="OCR4all logo" />

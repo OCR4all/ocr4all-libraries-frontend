@@ -1,11 +1,3 @@
-import {
-  UsersIcon,
-  UserGroupIcon,
-  ViewfinderCircleIcon,
-  InformationCircleIcon,
-  CpuChipIcon,
-} from "@heroicons/vue/24/outline";
-
 import IconDashboard from "~icons/heroicons/home";
 import IconRepository from "~icons/material-symbols/home-storage-outline";
 import IconProject from "~icons/heroicons/squares-2x2";
@@ -13,6 +5,12 @@ import IconNodeflow from "~icons/hugeicons/flow-square";
 import IconQueue from "~icons/heroicons/queue-list";
 import IconTraining from "~icons/carbon/machine-learning-model";
 import IconEvaluation from "~icons/carbon/compare";
+
+import IconInformation from "~icons/heroicons/information-circle"
+import IconUsers from "~icons/heroicons/users"
+import IconGroups from "~icons/heroicons/user-group"
+import IconCpu from "~icons/heroicons/cpu-chip"
+import IconViewfinder from "~icons/heroicons/viewfinder-circle"
 
 import { FunctionalComponent, HTMLAttributes, VNodeProps } from "vue";
 
@@ -87,26 +85,26 @@ export const adminNavigation: navigationEntry[] = [
   {
     to: "/admin/overview",
     label: "nav.sidebar.links.admin.overview",
-    icon: InformationCircleIcon,
+    icon: IconInformation,
   },
   {
     to: "/admin/users",
     label: "nav.sidebar.links.admin.users",
-    icon: UsersIcon,
+    icon: IconUsers,
   },
   {
     to: "/admin/groups",
     label: "nav.sidebar.links.admin.groups",
-    icon: UserGroupIcon,
+    icon: IconGroups,
   },
   {
     to: "/admin/providers",
     label: "nav.sidebar.links.admin.providers",
-    icon: CpuChipIcon,
+    icon: IconCpu,
   },
   {
     to: "/admin/ocrdapi",
     label: "nav.sidebar.links.admin.ocrdapi",
-    icon: ViewfinderCircleIcon,
+    icon: IconViewfinder,
   },
 ];

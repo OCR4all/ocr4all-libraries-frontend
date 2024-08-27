@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { UseTimeAgo } from "@vueuse/components";
-import { ArrowPathIcon, StopIcon, XMarkIcon } from "@heroicons/vue/24/outline";
+
+import IconRefresh from "~icons/heroicons/arrow-path"
+import IconStop from "~icons/heroicons/stop"
+import IconTrash from "~icons/heroicons/trash"
 
 const jobInfoDialog = defineAsyncComponent(
   () => import("@/components/Queue/Dialog/JobInfoDialog.vue"),
@@ -10,7 +13,6 @@ import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
 import Column from "primevue/column";
 import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
-import Toast from "primevue/toast";
 import Button from "primevue/button";
 import ProgressBar from "primevue/progressbar";
 import { FilterMatchMode } from "@primevue/core/api";
@@ -28,7 +30,6 @@ import { Ref } from "vue";
 import { useDialog } from "primevue/usedialog";
 import { useLocalDateFormat } from "@/composables/useLocalDateFormat";
 import Toolbar from "primevue/toolbar";
-import DialogLoadingSkeleton from "@/components/Layout/Dialog/DialogLoadingSkeleton.vue";
 const toast = useToast();
 
 const loading: Ref<boolean> = ref(true);
@@ -49,7 +50,7 @@ const states: Ref<string[]> = ref([
 
 const jobs: Ref<IJob[] | undefined> = ref();
 
-const getColor = (entry: string): string => {
+const getColor = (entry: string): { background: string, color: string } | undefined  => {
   switch (entry) {
     case "scheduled":
       return { background: "#76A9FA", color: "white" };
@@ -62,7 +63,6 @@ const getColor = (entry: string): string => {
     case "completed":
       return { background: "#046C4E", color: "white" };
     default:
-      return null;
   }
 };
 async function refetch() {
@@ -276,7 +276,7 @@ onUnmounted(() => {});
           :disabled="isRefetching === true"
           @click="refetch"
         >
-          <ArrowPathIcon
+          <IconRefresh
             :class="{ 'animate-spin': isRefetching }"
             class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-200 hover:dark:text-white"
           />
@@ -320,7 +320,7 @@ onUnmounted(() => {});
               class="mr-2 inline-flex items-center rounded-md bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
               @click="cancelJob(slotProps.data.id)"
             >
-              <StopIcon class="h-6 w-6 text-white" />
+              <IconStop class="h-6 w-6 text-white" />
             </button>
             <button
               :disabled="
@@ -330,7 +330,7 @@ onUnmounted(() => {});
               class="mr-2 inline-flex items-center rounded-md bg-red-700 p-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 disabled:bg-red-200 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 dark:disabled:bg-red-400"
               @click="removeJob(slotProps.data.id)"
             >
-              <XMarkIcon class="h-6 w-6 text-white" />
+              <IconTrash class="h-6 w-6 text-white" />
             </button>
           </span>
         </template>

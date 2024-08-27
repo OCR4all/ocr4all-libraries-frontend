@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowPathIcon } from "@heroicons/vue/24/outline";
+import IconRefresh from "~icons/heroicons/arrow-path"
 import IconCreate from "~icons/gridicons/create";
 
 import { UseTimeAgo } from "@vueuse/components";
@@ -366,7 +366,7 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
       <template #end>
         <div class="flex space-x-2">
           <button v-tooltip="'Refresh'" @click="refetch">
-            <ArrowPathIcon
+            <IconRefresh
               :disabled="isRefetching"
               :class="{ 'animate-spin': isRefetching }"
               class="inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-300 dark:hover:text-white"
