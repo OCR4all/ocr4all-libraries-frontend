@@ -1,10 +1,8 @@
-<script setup>
+<script setup lang="ts">
 import { EditorComponent, useBaklava } from "baklavajs";
 import "@/assets/css/nodeflow-theme.css";
 
-import Toast from "primevue/toast";
 import Dialog from "primevue/dialog";
-import Dropdown from "primevue/dropdown";
 import { useToast } from "primevue/usetoast";
 import InlineMessage from "primevue/inlinemessage";
 import InputText from "primevue/inputtext";
@@ -23,6 +21,8 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 
 import { useI18n } from "vue-i18n";
 import { useUiStore } from "@/stores/ui.store";
+import IconLoad from "~icons/uis/upload-alt"
+
 const { t } = useI18n();
 
 const toast = useToast();
@@ -34,7 +34,7 @@ baklava.settings.enableMinimap = true;
 baklava.settings.palette.enabled = false;
 baklava.settings.sidebar.resizable = true;
 baklava.settings.nodes.resizable = true;
-baklava.settings.contextMenu.enabled = true;
+baklava.settings.contextMenu.enabled = false;
 
 const editor = baklava.editor;
 const palette = ref();
@@ -167,9 +167,20 @@ async function saveWorkflow() {
   }
 }
 
-async function loadWorkflow() {
+interface IWorkflow {
+  date: string,
+  user: string,
+  id: string,
+  updated: string,
+  label: string,
+  description: string,
+  "update-user": string
+}
+
+async function loadWorkflow(workflow: IWorkflow) {
+  console.log(workflow)
   const { isFetching, error, data } = await useCustomFetch(
-    `/workflow/pull/${selectedWorkflow.value.id}`,
+    `/workflow/pull/${workflow.id}`,
   )
     .get()
     .json();
@@ -189,7 +200,7 @@ async function loadWorkflow() {
         label: "NodeFlow",
       },
       {
-        label: selectedWorkflow.value.label,
+        label: workflow.label,
       },
     ];
     toast.add({
@@ -233,64 +244,23 @@ function zoomOut() {
 function togglePalette() {
   palette.value.toggleVisibility();
 }
+
+const editorEl = ref()
+
+const { isFullscreen, toggle } = useFullscreen(editorEl)
+
+provide("fullscreen", isFullscreen)
 </script>
 
 <template>
-  <EditorComponent id="editor" :view-model="baklava">
-    <template #toolbar>
-      <CToolbar
-        @new="newGraph"
-        @load="openLoadDialog"
-        @save="openSaveDialog"
-        @zoom-in="zoomIn"
-        @zoom-out="zoomOut"
-        @rate-workflow="rateWorkflow"
-        @toggle-palette="togglePalette"
-      />
-    </template>
-    <template #sidebar>
-      <CSidebar />
-    </template>
-    <template #palette>
-      <CPalette ref="palette" />
-    </template>
-  </EditorComponent>
   <Dialog
     v-model:visible="isLoadDialogVisible"
     modal
     header="Load Workflow"
-    :style="{ width: '50vw' }"
+    :style="{ width: '95vw' }"
   >
     <div class="space-y-5">
-      <Select
-        v-model="selectedWorkflow"
-        :options="availableWorkflows"
-        option-label="label"
-        filter
-        placeholder="Select a Workflow"
-        class="md:w-14rem w-full"
-      >
-        <template #value="slotProps">
-          <div v-if="slotProps.value" class="align-items-center flex">
-            <div>{{ slotProps.value.label }}</div>
-          </div>
-          <span v-else>
-            {{ slotProps.placeholder }}
-          </span>
-        </template>
-        <template #option="slotProps">
-          <div class="align-items-center flex">
-            <div>{{ slotProps.option.label }}</div>
-          </div>
-        </template>
-      </Select>
-      <button
-        type="button"
-        class="mb-2 mr-2 rounded-md bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        @click="loadWorkflow"
-      >
-        Load
-      </button>
+      <WorkflowChooser label="Load" :icon="IconLoad" @submit="loadWorkflow" />
     </div>
   </Dialog>
   <Dialog
@@ -305,11 +275,11 @@ function togglePalette() {
           <label
             for="text"
             class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-            >Name*</label
+          >Name*</label
           >
           <InputText v-model="workflowName" type="text" />
           <InlineMessage v-show="!labelEntered"
-            >A workflow name is required</InlineMessage
+          >A workflow name is required</InlineMessage
           >
         </div>
 
@@ -317,7 +287,7 @@ function togglePalette() {
           <label
             for="last-name"
             class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-            >Description</label
+          >Description</label
           >
           <InputText v-model="workflowDescription" type="text" />
         </div>
@@ -357,4 +327,24 @@ function togglePalette() {
       </button>
     </div>
   </Dialog>
+  <EditorComponent id="editor" ref="editorEl" :view-model="baklava">
+    <template #toolbar>
+      <CToolbar
+        @new="newGraph"
+        @load="openLoadDialog"
+        @save="openSaveDialog"
+        @zoom-in="zoomIn"
+        @zoom-out="zoomOut"
+        @rate-workflow="rateWorkflow"
+        @toggle-palette="togglePalette"
+        @toggle-fullscreen="toggle"
+      />
+    </template>
+    <template #sidebar>
+      <CSidebar />
+    </template>
+    <template #palette>
+      <CPalette ref="palette" />
+    </template>
+  </EditorComponent>
 </template>

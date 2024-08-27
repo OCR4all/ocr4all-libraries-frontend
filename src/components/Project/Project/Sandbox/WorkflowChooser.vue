@@ -4,11 +4,15 @@ import { UseTimeAgo } from "@vueuse/components";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { FilterMatchMode } from "@primevue/core/api";
 import InputText from "primevue/inputtext";
-import IconStart from "~icons/codicon/debug-start"
 
 const workflows = ref([]);
 const loading = ref(true);
 const isRefetching = ref(true);
+
+const props = defineProps<{
+  label?: string;
+  icon?: unknown;
+}>();
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -27,7 +31,7 @@ async function refetch() {
     });
 }
 
-const emit = defineEmits(["run"]);
+const emit = defineEmits(["submit"]);
 
 const selectedWorkflow = ref();
 
@@ -103,10 +107,10 @@ refetch();
       </Column>
     </DataTable>
     <div class="flex justify-center">
-      <Button :disabled="!selectedWorkflow" @click="emit('run', selectedWorkflow)">
+      <Button :disabled="!selectedWorkflow" @click="emit('submit', selectedWorkflow)">
         <div class="flex space-x-2">
-          <IconStart class="text-white self-center" />
-          <p class="text-white">Run</p>
+          <component v-show="props.icon" :is="props.icon" class="text-white self-center" />
+          <p class="text-white">{{ props.label ? props.label : "Submit" }}</p>
         </div>
       </Button>
     </div>

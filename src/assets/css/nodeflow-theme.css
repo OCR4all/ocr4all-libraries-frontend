@@ -612,10 +612,9 @@
   position: absolute;
   right: 0;
   top: 60px;
-  width: 250px;
-  height: calc(100% - 60px);
+  height: calc(100% - 100px);
   z-index: 10;
-  padding: 2rem;
+  padding: 1rem;
   overflow-y: auto;
   background: var(--baklava-node-palette-background);
 }

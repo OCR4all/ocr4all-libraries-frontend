@@ -17,6 +17,8 @@ const isImportingImages = ref(false);
 const isWorkflowRunning = ref(false);
 const isWorkflowFinished = ref(false);
 
+import IconStart from "~icons/codicon/debug-start"
+
 const SANDBOX_LAUNCHER =
   "de.uniwuerzburg.zpd.ocr4all.application.core.spi.launcher.provider.SandboxNormalizedLauncher";
 
@@ -208,7 +210,7 @@ const options = ref(["Workflow", "Processor"]);
       >
         {{ $t("pages.projects.sandbox.workflow.directive") }}
       </h2>
-      <WorkflowChooser @run="launchWorkflow" />
+      <WorkflowChooser label="Run" :icon="IconStart" @submit="launchWorkflow" />
     </section>
     <section v-else-if="mode === 'Processor'">
       <h2

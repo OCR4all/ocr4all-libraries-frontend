@@ -139,19 +139,11 @@ const { x, y, isOutside } = useMouseInElement(palette);
 </script>
 
 <template>
-  <transition
-    enter-active-class="transform transition ease-in-out duration-200"
-    enter-from-class="translate-x-full"
-    enter-to-class="translate-x-0"
-    leave-active-class="transform transition ease-in-out duration-200  "
-    leave-from-class="translate-x-0"
-    leave-to-class="translate-x-full"
-  >
-    <div v-show="visible" ref="palette" class="overflow-scroll-y h-full">
+  <div v-show="visible" ref="palette" class="overflow-scroll-y h-full">
       <div
-        class="baklava-node-palette !w-96 !opacity-95 dark:!bg-zinc-800 dark:!opacity-95"
+        class="baklava-node-palette !m-5 !rounded-xl !w-96 !bg-surface-0 dark:!bg-surface-900 !border !border-surface-200 dark:!border-surface-700"
       >
-        <h1 class="pb-5 text-center text-xl font-bold text-surface-0">
+        <h1 class="pb-5 text-center text-xl font-bold text-surface-800 dark:text-surface-100">
           {{ $t("pages.nodeflow.palette.processors") }}
         </h1>
         <Tree
@@ -185,5 +177,4 @@ const { x, y, isOutside } = useMouseInElement(palette);
         </div>
       </transition>
     </div>
-  </transition>
 </template>
