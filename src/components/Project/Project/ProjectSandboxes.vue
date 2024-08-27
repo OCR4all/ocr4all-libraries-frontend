@@ -360,7 +360,7 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
           @click="createSandbox()"
           text
         >
-          <IconCreate class="text-black dark:text-white" />
+          <IconCreate class="text-black dark:text-white" :class="{ 'animate-pulse' : sandboxes.length === 0 }" />
         </Button>
       </template>
       <template #end>
