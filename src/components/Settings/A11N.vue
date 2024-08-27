@@ -1,33 +1,95 @@
 <script setup lang="ts">
 import { setFontSize } from "@/utils/a11n"
 
-const value = useStorage("/ocr4all/frontend/ui/a11n/font-size", {
+const fontScaling = useStorage("ocr4all/frontend/a11n/font-size", {
   name: "Medium",
   value: "14px",
 });
-const options = ref([
+
+const fontScalingOptions = ref([
   { name: "Small", value: "12px" },
   { name: "Medium", value: "14px" },
   { name: "Large", value: "16px" },
   { name: "Extra Large", value: "20px" },
 ]);
 
-watch(value, (newValue) => {
-  setFontSize(newValue.value)
+const highContrast = useStorage("/ocr4all/frontend/a11n/high-contrast", {
+  name: "Deactivated",
+  value: "deactivated"
+});
+
+const highContrastOptions = ref([
+  { name: "Deactivated", value: "deactivated" },
+  { name: "Activated", value: "activated" },
+]);
+
+const font = useStorage("/ocr4all/frontend/a11n/font", {
+  name: "Regular",
+  value: "regular"
+});
+
+const fontOptions = ref([
+  { name: "Regular", value: "regular" },
+  { name: "Dyslexia", value: "dyslexia" },
+]);
+
+const grayScale = useStorage("/ocr4all/frontend/a11n/grayscale", {
+  name: "Deactivated",
+  value: "deactivated"
+});
+
+const grayScaleOptions = ref([
+  { name: "Deactivated", value: "deactivated" },
+  { name: "Activated", value: "activated" },
+]);
+
+
+watch(fontScaling, (newValue) => {
+  setFontSize(JSON.stringify(newValue.value))
 });
 </script>
 <template>
   <div
-    class="flex h-full flex-1 flex-col space-y-4 rounded-md border bg-white p-5 dark:border-surface-800 dark:bg-surface-900"
+      class="flex h-full flex-1 flex-col space-y-4 rounded-md border bg-white p-5 dark:border-surface-800 dark:bg-surface-900"
   >
     <h1 class="text-xl font-bold text-black dark:text-white">Accessibility</h1>
-    <h2 class="text-sm font-bold text-black dark:text-white">Font Scaling</h2>
-    <SelectButton
-      v-model="value"
-      :options="options"
-      optionLabel="name"
-      :allow-empty="false"
-      aria-labelledby="multiple"
-    />
+    <div class="grid grid-cols-2 gap-4">
+      <div class="flex flex-col space-y-2">
+        <h2 class="text-sm font-bold text-black dark:text-white">Font Scaling</h2>
+        <SelectButton
+            v-model="fontScaling"
+            :options="fontScalingOptions"
+            option-label="Font Scaling"
+            :allow-empty="false"
+        />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <h2 class="text-sm font-bold text-black dark:text-white">High Contrast</h2>
+        <SelectButton
+            v-model="highContrast"
+            :options="highContrastOptions"
+            option-label="High Contrast"
+            :allow-empty="false"
+        />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <h2 class="text-sm font-bold text-black dark:text-white">Font</h2>
+        <SelectButton
+            v-model="font"
+            :options="fontOptions"
+            option-label="Font"
+            :allow-empty="false"
+        />
+      </div>
+      <div class="flex flex-col space-y-2">
+        <h2 class="text-sm font-bold text-black dark:text-white">Grayscale</h2>
+        <SelectButton
+            v-model="grayScale"
+            :options="grayScaleOptions"
+            option-label="Grayscale"
+            :allow-empty="false"
+        />
+      </div>
+    </div>
   </div>
 </template>
