@@ -17,11 +17,11 @@ function toggle(event: Event) {
 }
 
 function openAdminPanel() {
-  router.push({name: "Admin"})
+  router.push({ name: "Admin" })
 }
 
 function openProMode() {
-  router.push("/")
+  router.push({ name: "Dashboard" })
 }
 </script>
 <template>
