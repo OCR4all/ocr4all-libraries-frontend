@@ -81,7 +81,6 @@ const formFileMap = ref();
 const formMimeMap = ref();
 
 const selectedSnapshotInformation = ref();
-const selectedSnapshotProcessors = ref();
 const selectedSnapshotLock = ref();
 
 const sandboxHome = ref();
@@ -331,18 +330,6 @@ function getTagClasses(type: string): string {
   }
 }
 
-async function addToDataset(selection: ITrack) {
-  const key = convertSelectionToTrack(selection);
-  const payload = {
-    track: key,
-    "collection-id": "string",
-    keywords: true,
-  };
-  useCustomFetch(`/snapshot/collection/all/${project}/${sandbox}`)
-    .post(payload)
-    .then((response) => {});
-}
-
 function hasLarexView(selection: ITrack): boolean {
   const snapshot = getSnapshotFromSelection(selection);
   return snapshot.children.map((entry) => entry.label).includes(LAREX_LABEL);
@@ -411,7 +398,11 @@ function openAddToDatasetDialog(snapshot: ITrack) {
         "640px": "90vw",
       },
     },
-    data: snapshot,
+    data: {
+      key: convertSelectionToTrack(snapshot),
+      project: project,
+      sandbox: sandbox
+    },
     onClose: () => {
       refetch();
     },
