@@ -215,8 +215,7 @@ async function updateWorkflow() {
 }
 
 function loadWorkflow(data) {
-  store.graphId = data.id;
-  store.graphLabel = data.label;
+  store.workflow = data
   router.push("/nodeflow");
 }
 

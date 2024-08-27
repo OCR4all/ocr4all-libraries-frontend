@@ -4,9 +4,6 @@ import { useUiStore } from "@/stores/ui.store";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import Button from "primevue/button";
 import { useI18n } from "vue-i18n";
-import { Store } from "pinia";
-import { useConfigStore } from "@/stores/config.store";
-import { useAuthStore } from "@/stores/auth.store";
 import { ToastServiceMethods } from "primevue/toastservice";
 import { useToast } from "primevue/usetoast";
 import { RemovableRef } from "@vueuse/core";
@@ -102,7 +99,6 @@ async function refresh() {
     .json()
     .then((response) => {
       sets.value = response.data.value;
-      console.log(sets.value);
     });
 }
 
@@ -355,11 +351,7 @@ async function getCodec() {
             header: "Codec",
             modal: true,
             style: {
-              width: "75vw",
-            },
-            breakpoints: {
-              "960px": "80vw",
-              "640px": "90vw",
+              width: "90vw",
             },
           },
           data: {
@@ -488,6 +480,9 @@ refresh();
         >
           <IconUpload class="text-black dark:text-white" />
         </Button>
+        <Button v-tooltip.top="'Export'" @click="downloadDataset" text>
+          <IconDownload class="text-black dark:text-white" />
+        </Button>
         <Button
           v-tooltip.top="'Analyze Codec'"
           @click="getCodec"
@@ -503,9 +498,6 @@ refresh();
           severity="danger"
           text
         />
-        <Button v-tooltip.top="'Export'" @click="downloadDataset" text>
-          <IconDownload class="text-black dark:text-white" />
-        </Button>
       </template>
       <template #end>
         <IconField>

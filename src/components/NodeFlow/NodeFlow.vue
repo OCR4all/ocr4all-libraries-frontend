@@ -45,16 +45,16 @@ const nodeParameters = ref();
 const isLoadingSaveWorkflow = ref(false);
 
 editor.registerNodeType(InputNode);
+
 Promise.resolve(importNodesFromAPI()).then(async (nodes) => {
   for (const node of nodes[0]) {
     editor.registerNodeType(node.node, { category: node.category });
   }
   nodeParameters.value = nodes[1];
-  if (store.graphId) {
-    selectedWorkflow.value = { id: store.graphId, label: store.graphLabel };
-    await loadWorkflow(store.graphId).then(() => {
-      store.graphId = "";
-      store.graphLabel = "";
+  if (store.workflow) {
+    selectedWorkflow.value = { id: store.workflow.id, label: store.workflow.label };
+    await loadWorkflow(store.workflow).then(() => {
+      store.workflow = null;
     });
   } else {
     addNodeWithCoordinates(baklava, InputNode, 50, 350);
@@ -75,15 +75,25 @@ const originalWorkflowName = ref();
 const workflowDescription = ref();
 
 async function openLoadDialog() {
-  const { _isFetching, _error, data } = await useCustomFetch(`/workflow/list`)
+  const { error, data } = await useCustomFetch(`/workflow/list`)
     .get()
     .json();
-  const workflows = [];
-  for (const workflow of data.value) {
-    workflows.push({ label: workflow.label, id: workflow.id });
+  if(error.value){
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: "Couldn't retrieve workflows.",
+      life: 3000,
+      group: "general",
+    })
+  }else{
+    const workflows = [];
+    for (const workflow of data.value) {
+      workflows.push({ label: workflow.label, id: workflow.id });
+    }
+    availableWorkflows.value = workflows;
+    isLoadDialogVisible.value = true;
   }
-  availableWorkflows.value = workflows;
-  isLoadDialogVisible.value = true;
 }
 
 function newGraph() {
@@ -200,7 +210,7 @@ async function loadWorkflow(workflow: IWorkflow) {
         label: "NodeFlow",
       },
       {
-        label: workflow.label,
+        label: workflowName.value,
       },
     ];
     toast.add({

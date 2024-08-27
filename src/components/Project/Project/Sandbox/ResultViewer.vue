@@ -112,11 +112,7 @@ function openProcessorDialog(snapshot: ITrack) {
       header: "Run processor",
       modal: true,
       style: {
-        width: "75vw",
-      },
-      breakpoints: {
-        "960px": "75vw",
-        "640px": "90vw",
+        width: "95vw",
       },
     },
     data: {

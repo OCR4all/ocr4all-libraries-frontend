@@ -34,6 +34,7 @@ const dialog = useDialog();
 
 import IconAnalytics from "~icons/carbon/data-analytics";
 import IconCreate from "~icons/gridicons/create";
+import IconEvaluation from "~icons/carbon/compare";
 
 const isRefetching: Ref<boolean> = ref(false);
 const datasets: Ref<ICollectionSet[]> = ref([]);
@@ -68,6 +69,16 @@ async function downloadDataset(data: ICollectionSet) {
       }
       toast.removeGroup("download-toast");
     });
+}
+
+function evaluate(datasets) {
+  toast.add({
+    severity: "info",
+    summary: "Info",
+    detail: "Coming soon",
+    life: 3000,
+    group: "general",
+  })
 }
 
 async function getCodec(datasets) {
@@ -375,6 +386,14 @@ const contextMenu = ref();
           text
         >
           <IconAnalytics class="text-black dark:text-white" />
+        </Button>
+        <Button
+          v-tooltip.top="'Evaluate'"
+          @click="evaluate(selectedDatasets)"
+          :disabled="!selectedDatasets || !selectedDatasets.length"
+          text
+        >
+          <IconEvaluation class="text-black dark:text-white" />
         </Button>
         <Button
           v-tooltip.top="$t('pages.repository.overview.toolbar.button.delete')"

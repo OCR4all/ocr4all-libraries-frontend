@@ -102,25 +102,30 @@ const sets = ref([]);
 const datatableNodes = computed(() => {});
 </script>
 <template>
-  <div class="flex flex-col space-y-12">
-    <div class="flex justify-between">
-      <Select
-        v-model="selectedSet"
-        :options="sets"
-        sets="name"
-        placeholder="Select a Set"
-        class="w-full md:w-56"
-      />
-      <SelectButton v-model="mode" :options="options" :allow-empty="false" />
+  <ComponentContainer spaced internal>
+    <Toolbar>
+      <template #start>
+        <Select
+          v-model="selectedSet"
+          :options="sets"
+          sets="name"
+          placeholder="Select a Set"
+          class="w-full md:w-56"
+        />
+      </template>
+      <template #end>
+        <SelectButton v-model="mode" :options="options" :allow-empty="false" />
+      </template>
+    </Toolbar>
+    <div class="flex flex-col ">
+      <section v-if="mode === 'Chart'">
+        <v-chart class="chart" :option="option" autoresize />
+      </section>
+      <section v-else>
+        <DataTable :value="datatableNodes"></DataTable>
+      </section>
     </div>
-    <section v-if="mode === 'Chart'">
-      <v-chart class="chart" :option="option" autoresize />
-    </section>
-    <section v-else>
-      <DataTable :value="datatableNodes"></DataTable>
-    </section>
-  </div>
-  <!--  {{ codec.codec }}-->
+  </ComponentContainer>
 </template>
 <style scoped>
 .chart {

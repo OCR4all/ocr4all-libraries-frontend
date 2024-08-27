@@ -1,14 +1,23 @@
 import { defineStore } from "pinia";
+
+interface IWorkflow {
+  date: string,
+  user: string,
+  id: string,
+  updated: string,
+  label: string,
+  description: string,
+  "update-user": string
+}
+
 interface INodeFlowStore {
-  graphId: string;
-  graphLabel: string;
+  workflow: IWorkflow | null,
   sidebarDescriptions?: object;
 }
 export const useNodeFlowStore = defineStore({
   id: "nodeflow",
   state: (): INodeFlowStore => ({
-    graphId: "",
-    graphLabel: "",
+    workflow: null,
     sidebarDescriptions: undefined,
   }),
   actions: {},
