@@ -33,11 +33,11 @@ function toggleSidebarMobile() {
         class="flex-1 justify-center overflow-x-auto bg-surface-100 shadow-md dark:bg-surface-950 lg:m-4 lg:rounded-md lg:bg-surface-0 lg:dark:bg-surface-900"
       >
         <AppTopbar @toggle-sidebar-mobile="toggleSidebarMobile" mode="pro" />
+        <MobileBreadcrumbNavigation />
         <div
-          class="h-[calc(100vh-4rem)] w-full overflow-y-auto rounded-b-2xl lg:h-[calc(100vh-6rem)]"
+          class="h-[calc(100vh-7rem)] w-full overflow-y-auto rounded-b-2xl lg:h-[calc(100vh-6rem)]"
           :class="{ 'p-8': props.padded }"
         >
-          <MobileBreadcrumbNavigation />
           <slot />
         </div>
       </main>
