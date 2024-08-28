@@ -155,7 +155,7 @@ html {
 
 /** Baklava **/
 .baklava-input {
-  @apply dark:!placeholder-black dark:!placeholder-opacity-80;
+  @apply dark:!placeholder-surface-200;
 }
 
 /** Formkit **/
