@@ -31,7 +31,6 @@ import { IContainer } from "@/components/Project/project.interfaces";
 import ShareDialog from "@/components/Repository/Images/Container/Dialog/ShareDialog.vue";
 import { useDialog } from "primevue/usedialog";
 import ProgressSpinner from "primevue/progressspinner";
-import { useI18n } from "vue-i18n";
 
 const router: Router = useRouter();
 

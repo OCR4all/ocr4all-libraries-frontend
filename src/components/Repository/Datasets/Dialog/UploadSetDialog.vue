@@ -3,13 +3,14 @@ import FileUpload, { FileUploadUploaderEvent } from "primevue/fileupload";
 import { useI18n } from "vue-i18n";
 import axios from "axios";
 import { useToast } from "primevue/usetoast";
-import { usePrimeVue } from "primevue/config";
+import { useAuthStore } from "@/stores/auth.store";
 
 const { t } = useI18n();
 const toast = useToast();
 
 const uploadToastVisible = ref(false);
 const progress = ref(0);
+const auth = useAuthStore()
 
 const dataset = ref()
 
@@ -46,6 +47,7 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
   axios
     .post(`data/collection/set/upload/${dataset.value.collection}`, formData, {
       headers: {
+        Authorization: `Bearer ${auth.token}`,
         "Content-Type": "multipart/form-data",
       },
       onUploadProgress: function (progressEvent) {

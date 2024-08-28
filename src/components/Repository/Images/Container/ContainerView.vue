@@ -100,13 +100,15 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
     formData.append("files", file);
   }
   showUploadToast();
-  axios.defaults.timeout = 3600000;
+  axios.defaults.timeout = 3600000
+  console.log(axios.defaults.baseURL)
   axios
     .post(
       `/repository/container/folio/upload/${container}?job=Uploading images to ${containerName}`,
       formData,
       {
         headers: {
+          Authorization: `Bearer ${auth.token}`,
           "Content-Type": "multipart/form-data",
         },
         onUploadProgress: function (progressEvent) {
@@ -328,7 +330,7 @@ refresh();
   <ComponentContainer spaced>
     <Toolbar>
       <template #start>
-        <Button
+<!--        <Button
           v-tooltip.top="
             $t('pages.repository.container.overview.toolbar.button.file-upload')
           "
@@ -337,21 +339,24 @@ refresh();
           text
         >
           <IconImageUpload class="text-black dark:text-white" />
-        </Button>
-        <!--        <FileUpload-->
-        <!--            ref="fileUpload"-->
-        <!--            name="folioUpload[]"-->
-        <!--            :choose-label="-->
-        <!--          -->
-        <!--        "-->
-        <!--            :auto="true"-->
-        <!--            :custom-upload="true"-->
-        <!--            :multiple="true"-->
-        <!--            accept="image/*"-->
-        <!--            :max-file-size="1000000000"-->
-        <!--            @uploader="uploader"-->
-        <!--        >-->
-        <!--        </FileUpload>-->
+        </Button>-->
+        <FileUpload
+          ref="fileUpload"
+          name="folioUpload[]"
+          chooseIcon="pi pi-upload"
+          :auto="true"
+          :custom-upload="true"
+          :multiple="true"
+          accept="image/*"
+          :max-file-size="1000000000"
+          @uploader="uploader"
+        >
+          <template #header="{ chooseCallback }">
+            <Button text @click="chooseCallback()">
+              <IconImageUpload class="text-black dark:text-white" />
+            </Button>
+          </template>
+        </FileUpload>
         <Button
           v-tooltip.top="
             $t('pages.repository.container.overview.toolbar.button.delete')
@@ -467,7 +472,13 @@ refresh();
   </ComponentContainer>
 </template>
 <style>
-.p-fileupload-choose-button {
-  padding: 14px !important;
+.p-fileupload {
+  @apply !border-none
+}
+.p-fileupload-content {
+  @apply !hidden
+}
+.p-fileupload-header {
+  @apply !border-none
 }
 </style>

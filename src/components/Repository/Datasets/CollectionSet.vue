@@ -44,6 +44,8 @@ import Toast from "primevue/toast";
 import Toolbar from "primevue/toolbar";
 import { ISet } from "@/components/Repository/Datasets/dataset.interfaces";
 import { Ref } from "vue";
+import FileUpload, { FileUploadUploaderEvent } from "primevue/fileupload";
+import axios from "axios";
 const dialog = useDialog();
 
 const { t } = useI18n();
@@ -207,6 +209,41 @@ async function downloadDataset() {
       toast.removeGroup("download-toast");
     });
 }
+
+const uploader = async function customUploader(event: FileUploadUploaderEvent) {
+  const formData = new FormData();
+
+  const filesToHandle = Array.isArray(event.files)
+    ? event.files
+    : [event.files];
+  for (const file of filesToHandle) {
+    // Add Mime Type validation
+    formData.append("files", file);
+  }
+  showUploadToast();
+  axios
+    .post(`data/collection/set/upload/${dataset.value.collection}`, formData, {
+      headers: {
+        Authorization: `Bearer ${auth.token}`,
+        "Content-Type": "multipart/form-data",
+      },
+      onUploadProgress: function (progressEvent) {
+        progress.value = parseInt(
+          String(
+            Math.round((progressEvent.loaded / progressEvent.total) * 100),
+          ),
+        );
+      },
+    })
+    .then(function () {
+      fileUpload.value.clear();
+      fileUpload.value.uploadedFileCount = 0;
+      /*      dialogRef.value.close()*/
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
 
 const items = ref();
 const menu = ref();
@@ -481,7 +518,23 @@ refresh();
   <ComponentContainer spaced>
     <Toolbar class="mb-4">
       <template #start>
-        <Button
+        <FileUpload
+          ref="fileUpload"
+          name="folioUpload[]"
+          :auto="true"
+          :custom-upload="true"
+          :multiple="true"
+          accept="*"
+          :max-file-size="1000000000"
+          @uploader="uploader"
+        >
+          <template #header="{ chooseCallback }">
+            <Button text @click="chooseCallback()">
+              <IconUpload class="text-black dark:text-white" />
+            </Button>
+          </template>
+        </FileUpload>
+<!--        <Button
           v-tooltip.top="
             $t('pages.repository.container.overview.toolbar.button.file-upload')
           "
@@ -490,7 +543,7 @@ refresh();
           text
         >
           <IconUpload class="text-black dark:text-white" />
-        </Button>
+        </Button>-->
         <Button v-tooltip.top="'Download'" @click="downloadDataset" text>
           <IconDownload class="text-black dark:text-white" />
         </Button>
@@ -630,3 +683,14 @@ refresh();
     </DataView>
   </ComponentContainer>
 </template>
+<style>
+.p-fileupload {
+  @apply !border-none
+}
+.p-fileupload-content {
+  @apply !hidden
+}
+.p-fileupload-header {
+  @apply !border-none !p-0
+}
+</style>

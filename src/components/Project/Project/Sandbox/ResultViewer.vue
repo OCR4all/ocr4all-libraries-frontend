@@ -45,7 +45,6 @@ const processorInformationDialog = defineAsyncComponent(
       "@/components/Project/Project/Sandbox/Dialog/ProcessorInformationDialog.vue"
     ),
 );
-
 const addToDatasetDialog = defineAsyncComponent(
   () =>
     import(
@@ -270,10 +269,6 @@ async function generateSandbox(selection: ITrack) {
   sandboxHome.value = sandboxData.data.value["snapshot-synopsis"][
     "home"
   ].replace(larexLocation, "/home/books/");
-  const fileMap = {};
-  const mimeMap = {};
-
-  let files = null;
 
   /* ToDo: Bug that prevents LAREX from working; backend (?) */
   await useCustomFetch(`/snapshot/file/${project}/${sandbox}`)
@@ -282,32 +277,10 @@ async function generateSandbox(selection: ITrack) {
     })
     .json()
     .then((response) => {
-      console.log(response.data.value);
-      files = response.data.value;
+      const larexMaps = createLarexMapsFromFiles(response.data.value.files);
+      formFileMap.value = JSON.stringify(larexMaps.fileMap)
+      formMimeMap.value = JSON.stringify(larexMaps.mimeMap)
     });
-
-  console.log(files);
-
-  const lookupMap = {};
-  for (const file of files) {
-    if (file["mime-type"] === "application/vnd.prima.page+xml") {
-      lookupMap[file["image-id"]] = file["path"]
-        .split("/")
-        .splice(-1)[0]
-        .split(".")[0];
-      fileMap[file["path"].split("/").splice(-1)[0].split(".")[0]] = [];
-    }
-  }
-  for (const file of files) {
-    if (file["mime-type"] !== "application/vnd.prima.page+xml") {
-      fileMap[lookupMap[file["image-id"]]] = fileMap[
-        lookupMap[file["image-id"]]
-      ].concat([sandboxHome.value + "/" + file["path"]]);
-      mimeMap[sandboxHome.value + "/" + file["path"]] = file["mime-type"];
-    }
-  }
-  formFileMap.value = JSON.stringify(fileMap);
-  formMimeMap.value = JSON.stringify(mimeMap);
   refetch();
 }
 
@@ -467,6 +440,28 @@ const actionDock = ref({
     },
   },
 });
+
+async function createLarexMapsFromFiles(files: string[]): unknown {
+  const fileMap = {}
+  const mimeMap = {}
+
+  const { data } = await useCustomFetch(`/instance/environment`).get().json()
+  const basePath = data.value.folders.find((element) => element.type === 'projects').folder
+
+  for(const file of files){
+    const basename = file.split(".")[0]
+    if(file.endsWith(".xml")){
+      if(basename in fileMap){
+        fileMap[basename].push()
+      }else{
+
+      }
+    }
+    console.log(file)
+  }
+
+  return { fileMap: fileMap, mimeMap: mimeMap }
+}
 
 const items = computed(() => {
   if (Object.keys(selection.value).length === 0) {
