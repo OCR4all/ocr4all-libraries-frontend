@@ -288,6 +288,10 @@ function getSeverity(state: string): string {
 
 const filters: Ref = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  "engine.type": { value: null, matchMode: FilterMatchMode.CONTAINS },
+  "engine.state": { value: null, matchMode: FilterMatchMode.IN },
+  description: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
 const selectedModels = ref([]);
@@ -425,26 +429,62 @@ const selectedModels = ref([]);
         contextMenu
         @rowContextmenu="onRowContextMenu"
         v-model:selection="selectedModels"
-        :filters="filters"
+        v-model:filters="filters"
+        :globalFilterFields="['name', 'description', 'keywords', 'engine']"
+        filterDisplay="menu"
       >
         <Column
           selection-mode="multiple"
           style="width: 3rem"
           :exportable="false"
         ></Column>
-        <Column field="name" header="Name"></Column>
+        <Column field="name" header="Name">
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText
+                v-model="filterModel.value"
+                type="text"
+                @input="filterCallback()"
+                placeholder="Search by name"
+            />
+          </template>
+        </Column>
         <Column field="engine.type" header="Engine">
           <template #body="{ data }">
             <Tag v-if="data.engine" :value="data.engine.type" />
           </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText
+                v-model="filterModel.value"
+                type="text"
+                @input="filterCallback()"
+                placeholder="Search by engine"
+            />
+          </template>
         </Column>
-        <Column field="description" header="Description"></Column>
+        <Column field="description" header="Description">
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText
+                v-model="filterModel.value"
+                type="text"
+                @input="filterCallback()"
+                placeholder="Search by description"
+            />
+          </template>
+        </Column>
         <Column field="engine.state" header="State">
           <template #body="{ data }">
             <Tag
               v-if="data.engine"
               :value="data.engine.state"
               :severity="getSeverity(data.engine.state)"
+            />
+          </template>
+          <template #filter="{ filterModel, filterCallback }">
+            <InputText
+                v-model="filterModel.value"
+                type="text"
+                @input="filterCallback()"
+                placeholder="Search by state"
             />
           </template>
         </Column>

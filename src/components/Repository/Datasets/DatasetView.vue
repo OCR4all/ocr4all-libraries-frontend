@@ -30,6 +30,8 @@ const deleteDatasetDialog = defineAsyncComponent(
 
 const filters: Ref = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  description: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
 const dialog = useDialog();
@@ -419,7 +421,9 @@ const contextMenu = ref();
       ref="containerDataTable"
       v-model:selection="selectedDatasets"
       :value="datasets"
-      :filters="filters"
+      v-model:filters="filters"
+      :globalFilterFields="['name', 'description', 'keywords']"
+      filterDisplay="menu"
       context-menu
       :paginator="true"
       :rows="5"
@@ -450,6 +454,14 @@ const contextMenu = ref();
             <Skeleton width="60%" height="1rem" />
           </div>
         </template>
+        <template #filter="{ filterModel, filterCallback }">
+          <InputText
+              v-model="filterModel.value"
+              type="text"
+              @input="filterCallback()"
+              placeholder="Search by name"
+          />
+        </template>
         <template #body="{ data }">
           <p
             class="cursor-pointer hover:underline"
@@ -476,6 +488,14 @@ const contextMenu = ref();
           >
             <Skeleton width="60%" height="1rem" />
           </div>
+        </template>
+        <template #filter="{ filterModel, filterCallback }">
+          <InputText
+              v-model="filterModel.value"
+              type="text"
+              placeholder="Search by description"
+              @input="filterCallback()"
+          />
         </template>
       </Column>
       <Column
