@@ -32,9 +32,12 @@ import ShareDialog from "@/components/Repository/Images/Container/Dialog/ShareDi
 import { useDialog } from "primevue/usedialog";
 import ProgressSpinner from "primevue/progressspinner";
 
+import IconActions from "~icons/fluent/more-vertical-32-regular"
+
 const router: Router = useRouter();
 
-const containers = ref();
+const containers = ref([])
+const availableKeywords = ref()
 
 const newContainerName = ref();
 const createContainerPanel = ref();
@@ -77,6 +80,14 @@ async function listContainers() {
         containers.value = data.filter(function (container: IContainer) {
           return container.right !== null;
         });
+        const keywords = []
+        for(const container of containers.value){
+          if(container.keywords){
+            keywords.push(...container.keywords)
+          }
+        }
+        const keywordSet = new Set(keywords)
+        availableKeywords.value = Array.from(keywordSet).map(item => ({ keywords: item }))
       }
     });
 }
@@ -217,6 +228,8 @@ const toggleCreateContainerPanel = (event: Event) => {
 const selectedContainers: Ref<IContainer[] | undefined> = ref([]);
 const filters: Ref = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  description: { value: null, matchMode: FilterMatchMode.CONTAINS },
   keywords: { value: null, matchMode: FilterMatchMode.IN },
 });
 
@@ -594,7 +607,7 @@ function downloadContainer(container: IContainer) {
           ref="containerDataTable"
           v-model:selection="selectedContainers"
           :value="slotProps.items"
-          :filters="filters"
+          v-model:filters="filters"
           filterDisplay="menu"
           :globalFilterFields="['name', 'keywords']"
           contextMenu
@@ -627,6 +640,14 @@ function downloadContainer(container: IContainer) {
                 <Skeleton width="60%" height="1rem" />
               </div>
             </template>
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText
+                v-model="filterModel.value"
+                type="text"
+                @input="filterCallback()"
+                placeholder="Search by name"
+              />
+            </template>
             <template #body="{ data }">
               <p
                 class="cursor-pointer hover:underline"
@@ -653,6 +674,14 @@ function downloadContainer(container: IContainer) {
               >
                 <Skeleton width="60%" height="1rem" />
               </div>
+            </template>
+            <template #filter="{ filterModel, filterCallback }">
+              <InputText
+                v-model="filterModel.value"
+                type="text"
+                @input="filterCallback()"
+                placeholder="Search by description"
+              />
             </template>
           </Column>
           <Column
@@ -685,18 +714,18 @@ function downloadContainer(container: IContainer) {
                 >
               </div>
             </template>
-            <template #filter="{ filterModel }">
+            <template #filter="{ filterModel, filterCallback }">
               <MultiSelect
                 v-model="filterModel.value"
-                :options="[{ name: 'test' }]"
-                optionLabel="name"
+                @change="filterCallback()"
+                :options="availableKeywords"
+                optionLabel="keywords"
                 filter
                 placeholder="Any"
               >
                 <template #option="slotProps">
-                  {{ filterModel.value }}
                   <div class="flex items-center gap-2">
-                    <span>{{ slotProps.option.name }}</span>
+                    <span>{{ slotProps.option.keywords }}</span>
                   </div>
                 </template>
               </MultiSelect>
@@ -707,11 +736,11 @@ function downloadContainer(container: IContainer) {
               <div class="space-y-2">
                 <Button
                   type="button"
-                  icon="pi pi-ellipsis-v"
                   text
-                  severity="secondary"
                   @click="toggle($event, data)"
-                />
+                >
+                  <IconActions class="text-surface-900 dark:text-surface-100" />
+                </Button>
               </div>
             </template>
           </Column>

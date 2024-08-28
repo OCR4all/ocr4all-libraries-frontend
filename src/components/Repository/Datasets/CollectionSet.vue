@@ -64,6 +64,8 @@ const datasetName: LocationQueryValue | LocationQueryValue[] =
 const uploadToastVisible = ref(false);
 const progress = ref(0);
 
+import IconActions from "~icons/fluent/more-vertical-32-regular"
+
 
 const uiStore = useUiStore();
 uiStore.breadcrumb = [
@@ -810,11 +812,12 @@ refresh();
               <div class="space-y-2">
                 <Button
                   type="button"
-                  icon="pi pi-ellipsis-v"
                   text
                   severity="secondary"
                   @click="toggle($event, data)"
-                />
+                >
+                  <IconActions class="text-surface-900 dark:text-surface-100" />
+                </Button>
               </div>
             </template>
           </Column>

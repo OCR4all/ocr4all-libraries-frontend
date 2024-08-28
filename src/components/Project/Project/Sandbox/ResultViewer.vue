@@ -259,27 +259,21 @@ async function generateSandbox(selection: ITrack) {
         jobResponse.data.value.journal.steps["0"]["snapshot-track"];
     }
   }
-  const sandboxData = await useCustomFetch(
-    `/sandbox/mets/${project}?id=${sandbox}`,
+
+  const payload = {
+    track: createdTrack.value
+  }
+
+  useCustomFetch(
+    `/snapshot/mets/file/${project}/${sandbox}`,
   )
-    .get()
-    .json();
-
-  console.log(sandboxData.data.value)
-
-  /* ToDo: Bug that prevents LAREX from working; backend (?) */
-  await useCustomFetch(`/snapshot/file/${project}/${sandbox}`)
-    .post({
-      track: createdTrack.value,
-    })
+    .post(payload)
     .json()
     .then(async (response) => {
-      const larexMaps = await createLarexMapsFromFiles(response.data.value.files, createdTrack.value);
+      const larexMaps = await createLarexMapsFromFiles(response.data.value);
       formFileMap.value = JSON.stringify(larexMaps.fileMap)
-      console.log(formFileMap.value)
       formMimeMap.value = JSON.stringify(larexMaps.mimeMap)
-      console.log(formMimeMap.value)
-    });
+    })
   refetch();
 }
 
@@ -440,25 +434,29 @@ const actionDock = ref({
   },
 });
 
-async function createLarexMapsFromFiles(files: string[], track: number[]): unknown {
+async function createLarexMapsFromFiles(sets: string[]): unknown {
+  console.log(sets)
   const fileMap = {}
   const mimeMap = {}
 
-  const { data } = await useCustomFetch(`/instance/environment`).get().json()
-  const basePath = data.value.folders.find((element) => element.type === 'projects').folder.replace("/srv/ocr4all/", "/home/books/")
-  const projectPath = `${basePath}/${project}/sandboxes/${sandbox}/snapshots/derived`
-  const derivedPath = track.join("/derived/")
-  const dirPath = `${projectPath}/${derivedPath}/sandbox`
-  for(const file of files){
-    console.log(file)
-    if(!file.endsWith(".xml")){
-      const basename = file.split(".")[0]
-      const path = `${dirPath}/${file}`
-      mimeMap[`${path}`] = "image/png"
-      if(basename in fileMap){
-        fileMap[basename].push(path)
-      }else{
-        fileMap[basename] = [path]
+  const environment = await useCustomFetch(`/instance/environment`).get().json()
+  const basePath = environment.data.value.folders.find((element) => element.type === 'projects').folder.replace("/srv/ocr4all/", "/home/books/")
+  const dirPath = `${basePath}/${project}/sandboxes/${sandbox}/snapshots`
+
+  for(const set of sets){
+    for(const file of set.files){
+      if(file["mime-type"] === 'application/vnd.prima.page+xml'){
+        fileMap[file.path.split('/')[-1].split(".")[0]] = []
+      }
+    }
+  }
+
+  for(const set of sets){
+    for(const file of set.files){
+      if(file["mime-type"] !== 'application/vnd.prima.page+xml'){
+        const path = `${dirPath}/${file.path}`
+        fileMap[set.id].push(path)
+        mimeMap[`${path}`] = file["mime-type"]
       }
     }
   }

@@ -7,6 +7,7 @@ import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
 
 import IconRefresh from "~icons/heroicons/arrow-path"
+import IconActions from "~icons/fluent/more-vertical-32-regular"
 
 import { UseTimeAgo } from "@vueuse/components";
 
@@ -468,11 +469,12 @@ refetch();
           <div class="space-y-2">
             <Button
               type="button"
-              icon="pi pi-ellipsis-v"
               text
               severity="secondary"
               @click="toggle($event, data)"
-            />
+            >
+              <IconActions class="text-surface-900 dark:text-surface-100" />
+            </Button>
           </div>
         </template>
       </Column>

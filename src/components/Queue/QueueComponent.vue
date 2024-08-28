@@ -17,6 +17,7 @@ import Button from "primevue/button";
 import ProgressBar from "primevue/progressbar";
 import { FilterMatchMode } from "@primevue/core/api";
 import IconExpunge from "~icons/ant-design/clear-outlined";
+import IconActions from "~icons/fluent/more-vertical-32-regular"
 
 const dialog = useDialog();
 
@@ -407,11 +408,12 @@ onUnmounted(() => {});
           <div class="space-y-2">
             <Button
               type="button"
-              icon="pi pi-ellipsis-v"
               text
               severity="secondary"
               @click="toggle($event, data)"
-            />
+            >
+              <IconActions class="text-surface-900 dark:text-surface-100" />
+            </Button>
           </div>
         </template>
       </Column>

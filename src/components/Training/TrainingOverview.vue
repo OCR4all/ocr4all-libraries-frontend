@@ -48,7 +48,7 @@ useHead({
         class="flex-col space-y-12"
       >
         <Spotlight
-          class="group mx-auto grid grid-cols-1 items-start gap-6 @2xl/content:grid-cols-3 lg:max-w-none"
+          class="group mx-auto grid grid-cols-1 items-start gap-6 @5xl/content:grid-cols-3 lg:max-w-none"
         >
           <SpotlightCard @click="router.push('/training/calamari')">
             <div

@@ -27,13 +27,16 @@ async function run() {
   const payload = {
     id: data.processor.id,
     label: data.processor.label,
-    descriptiyon: `Run ${data.processor.label} on ${sandbox.value}`,
+    description: `Run ${data.processor.label} on ${sandbox.value}`,
     "job-short-description": `Run ${data.processor.label} on ${sandbox.value}`,
     "parent-snapshot": {
       track: track.value,
     },
     ...data.parameters,
   };
+
+  console.log(payload)
+  console.log(url)
 
   useCustomFetch(url)
     .post(payload)

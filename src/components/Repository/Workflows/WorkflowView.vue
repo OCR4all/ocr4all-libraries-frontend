@@ -13,6 +13,7 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useDialog } from "primevue/usedialog";
 import { UseTimeAgo } from "@vueuse/components";
 import IconCreate from "~icons/gridicons/create";
+import IconActions from "~icons/fluent/more-vertical-32-regular"
 
 import { FilterMatchMode } from "@primevue/core/api";
 
@@ -364,11 +365,12 @@ refetch();
           <div class="space-y-2">
             <Button
               type="button"
-              icon="pi pi-ellipsis-v"
               text
               severity="secondary"
               @click="toggle($event, data)"
-            />
+            >
+              <IconActions class="text-surface-900 dark:text-surface-100" />
+            </Button>
           </div>
         </template>
       </Column>
