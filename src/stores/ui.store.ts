@@ -19,7 +19,7 @@ export const useUiStore = defineStore("ui", () => {
     "ocr4all/store/ui/repository-dataview-layout",
     "grid",
   );
-  const breadcrumb = ref(undefined);
+  const breadcrumb: Ref<undefined | IBreadCrumbEntry[]> = ref();
   function flush() {
     breadcrumb.value = undefined;
     useHead({

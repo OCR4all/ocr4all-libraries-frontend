@@ -6,10 +6,13 @@ import AppSidebarMobile from "@/layout/AppSidebarMobile.vue";
 import { SidebarMode } from "@/layout/Layout";
 
 import DynamicDialog from "primevue/dynamicdialog";
+import { useUiStore } from "@/stores/ui.store";
 
 const props = defineProps<{
   padded?: boolean;
 }>();
+
+const store = useUiStore()
 
 const mobileSidebarRef = ref();
 
@@ -30,8 +33,11 @@ function toggleSidebarMobile() {
         <AppTopbar @toggle-sidebar-mobile="toggleSidebarMobile" mode="admin" />
         <MobileBreadcrumbNavigation />
         <div
-          class="h-[calc(100vh-7rem)] w-full overflow-y-auto rounded-b-2xl"
-          :class="{ 'p-8': props.padded }"
+          class="w-full overflow-y-auto rounded-b-2xl lg:h-[calc(100vh-6rem)]"
+          :class="[
+            props.padded ? 'p-8' : 'p-0',
+            store.breadcrumb && store.breadcrumb.length > 1 ? 'h-[calc(100vh-7rem)]' : 'h-[calc(100vh-4rem)]'
+          ]"
         >
           <slot />
         </div>
