@@ -9,6 +9,21 @@ import Image from "primevue/image";
 import Chip from "primevue/chip";
 import Skeleton from "primevue/skeleton";
 
+interface IData {
+  name: string,
+  type: string,
+  thumbnail: null | Ref<string | undefined>,
+  detail: null | Ref<string | undefined>,
+  keywords: null | string[]
+}
+
+interface INode {
+  key: string,
+  data: IData,
+  leaf: boolean
+  children: undefined | INode[]
+}
+
 function get() {
   const registry = {};
   const selection = [];
@@ -55,7 +70,7 @@ onMounted(() => {
     });
 });
 
-const nodes = ref([]);
+const nodes: Ref<INode[]> = ref([]);
 const rows = ref(10);
 const loading = ref(false);
 const totalRecords = ref(0);
@@ -71,23 +86,39 @@ const onExpand = (node) => {
         const children = [];
         for (const folio of response.data.value) {
           const key = folio.id;
-/*          const thumbnailImgFetch = await useCustomFetch(
-            `/repository/container/folio/derivative/thumbnail/${node.key}?id=${key}`,
-          )
-            .get()
-            .blob();*/
-          /*          const detailImgFetch = await useCustomFetch(
-            `/repository/container/folio/derivative/best/${node.key}?id=${key}`,
-          )
-            .get()
-            .blob();*/
           children.push({
             key: key,
             data: {
               name: folio.name,
               type: "folio",
-              thumbnail: null,
-              detail: null,
+              thumbnail: useCustomFetch(
+                `/repository/container/folio/derivative/best/${node.key}?id=${key}`,
+              )
+                .get()
+                .blob()
+                .then((response) => {
+                  const parent = nodes.value.find((elem) => elem.key === node.key)
+                  if(parent && parent.children) {
+                    const child = parent.children.find((child) => child.key === key)
+                    if(child){
+                      child.data.thumbnail = useObjectUrl(response.data)
+                    }
+                  }
+                }),
+              detail: useCustomFetch(
+                `/repository/container/folio/derivative/best/${node.key}?id=${key}`,
+              )
+                .get()
+                .blob()
+                .then((response) => {
+                  const parent = nodes.value.find((elem) => elem.key === node.key)
+                  if(parent && parent.children) {
+                    const child = parent.children.find((child) => child.key === key)
+                    if(child){
+                      child.data.detail = useObjectUrl(response.data)
+                    }
+                  }
+                }),
               keywords: folio.keywords,
             },
           });
@@ -140,13 +171,12 @@ defineExpose({
       v-model:selectionKeys="selectedFolios"
       selectionMode="checkbox"
       scrollable
-      scrollHeight="400px"
       @node-expand="onExpand"
     >
       <Column field="name" header="Name" expander></Column>
       <Column field="thumbnail" header="Image">
         <template #body="slotProps">
-          <Suspense>
+          <div v-show="slotProps.node.data.type === 'folio'">
             <Image v-if="slotProps.node.data.thumbnail" alt="Image" preview>
               <template #indicatoricon>
                 <i class="pi pi-search"></i>
@@ -167,7 +197,8 @@ defineExpose({
                 />
               </template>
             </Image>
-          </Suspense>
+            <Skeleton v-else size="4rem" />
+          </div>
         </template>
       </Column>
       <Column
