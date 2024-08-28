@@ -479,6 +479,6 @@ refresh();
   @apply !hidden
 }
 .p-fileupload-header {
-  @apply !border-none
+  @apply !border-none !p-0
 }
 </style>

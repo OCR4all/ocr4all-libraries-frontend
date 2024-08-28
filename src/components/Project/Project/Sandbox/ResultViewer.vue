@@ -260,15 +260,12 @@ async function generateSandbox(selection: ITrack) {
     }
   }
   const sandboxData = await useCustomFetch(
-    `/sandbox/entity/${project}?id=${sandbox}`,
+    `/sandbox/mets/${project}?id=${sandbox}`,
   )
     .get()
     .json();
 
-  /* Very ugly hack that should be removed when the new LAREX version is available */
-  sandboxHome.value = sandboxData.data.value["snapshot-synopsis"][
-    "home"
-  ].replace(larexLocation, "/home/books/");
+  console.log(sandboxData.data.value)
 
   /* ToDo: Bug that prevents LAREX from working; backend (?) */
   await useCustomFetch(`/snapshot/file/${project}/${sandbox}`)
@@ -276,10 +273,12 @@ async function generateSandbox(selection: ITrack) {
       track: createdTrack.value,
     })
     .json()
-    .then((response) => {
-      const larexMaps = createLarexMapsFromFiles(response.data.value.files);
+    .then(async (response) => {
+      const larexMaps = await createLarexMapsFromFiles(response.data.value.files, createdTrack.value);
       formFileMap.value = JSON.stringify(larexMaps.fileMap)
+      console.log(formFileMap.value)
       formMimeMap.value = JSON.stringify(larexMaps.mimeMap)
+      console.log(formMimeMap.value)
     });
   refetch();
 }
@@ -441,23 +440,27 @@ const actionDock = ref({
   },
 });
 
-async function createLarexMapsFromFiles(files: string[]): unknown {
+async function createLarexMapsFromFiles(files: string[], track: number[]): unknown {
   const fileMap = {}
   const mimeMap = {}
 
   const { data } = await useCustomFetch(`/instance/environment`).get().json()
-  const basePath = data.value.folders.find((element) => element.type === 'projects').folder
-
+  const basePath = data.value.folders.find((element) => element.type === 'projects').folder.replace("/srv/ocr4all/", "/home/books/")
+  const projectPath = `${basePath}/${project}/sandboxes/${sandbox}/snapshots/derived`
+  const derivedPath = track.join("/derived/")
+  const dirPath = `${projectPath}/${derivedPath}/sandbox`
   for(const file of files){
-    const basename = file.split(".")[0]
-    if(file.endsWith(".xml")){
+    console.log(file)
+    if(!file.endsWith(".xml")){
+      const basename = file.split(".")[0]
+      const path = `${dirPath}/${file}`
+      mimeMap[`${path}`] = "image/png"
       if(basename in fileMap){
-        fileMap[basename].push()
+        fileMap[basename].push(path)
       }else{
-
+        fileMap[basename] = [path]
       }
     }
-    console.log(file)
   }
 
   return { fileMap: fileMap, mimeMap: mimeMap }

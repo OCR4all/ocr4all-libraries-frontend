@@ -12,6 +12,8 @@ import { CanvasRenderer } from "echarts/renderers";
 import darkTheme from "@/assets/echarts/dark.project.json";
 import lightTheme from "@/assets/echarts/light.project.json";
 
+import IconCsv from "~icons/ph/file-csv"
+
 use([
   TooltipComponent,
   ToolboxComponent,
@@ -22,20 +24,23 @@ use([
 ]);
 
 import VChart, { THEME_KEY } from "vue-echarts";
+import Column from "primevue/column";
+import InputText from "primevue/inputtext";
 
 provide(THEME_KEY, useDark().value ? darkTheme : lightTheme);
 
 const dialogRef = inject("dialogRef");
 
+const dt = ref()
+
 const codec = ref();
 const option = ref();
 
-const mode = ref("Chart");
+const mode = ref("Table");
 const options = ref(["Chart", "Table"]);
 
 onMounted(() => {
   codec.value = dialogRef.value.data.codec;
-  console.log(codec.value);
   option.value = {
     toolbox: {
       show: true,
@@ -96,25 +101,55 @@ onMounted(() => {
   };
 });
 
+/** TODO: Implement per page codec display, needs additional input from backend **/
 const selectedSet = ref();
 const sets = ref([]);
 
-const datatableNodes = computed(() => {});
+const datatableNodes = computed(() => {
+  const nodes = []
+  if(codec.value){
+    for(const [key, value] of Object.entries(codec.value.codec)){
+      nodes.push({
+        id: key,
+        quantity: value
+      })
+    }
+  }
+  return nodes
+});
+
+const exportCSV = () => {
+  dt.value.exportCSV();
+};
+
+const filter = ref()
 </script>
 <template>
   <ComponentContainer spaced internal>
     <Toolbar>
       <template #start>
-        <Select
+<!--        <Select
           v-model="selectedSet"
           :options="sets"
           sets="name"
           placeholder="Select a Set"
           class="w-full md:w-56"
-        />
+        />-->
+        <Button v-tooltip.top="'Export CSV'" severity="primary" text @click="exportCSV($event)">
+          <IconCsv class="text-black dark:text-white" />
+        </Button>
+      </template>
+      <template #center>
+        <SelectButton v-model="mode" :options="options" :allow-empty="false" />
       </template>
       <template #end>
-        <SelectButton v-model="mode" :options="options" :allow-empty="false" />
+        <IconField>
+          <InputIcon class="pi pi-search" />
+          <InputText
+            v-model="filter"
+            placeholder="Search"
+          />
+        </IconField>
       </template>
     </Toolbar>
     <div class="flex flex-col ">
@@ -122,7 +157,18 @@ const datatableNodes = computed(() => {});
         <v-chart class="chart" :option="option" autoresize />
       </section>
       <section v-else>
-        <DataTable :value="datatableNodes"></DataTable>
+        <DataTable ref="dt" :value="datatableNodes" sortField="quantity" :sortOrder="-1">
+          <Column
+            field="id"
+            header="Character"
+            sortable
+          ></Column>
+          <Column
+            field="quantity"
+            header="Quantity"
+            sortable
+          ></Column>
+        </DataTable>
       </section>
     </div>
   </ComponentContainer>
