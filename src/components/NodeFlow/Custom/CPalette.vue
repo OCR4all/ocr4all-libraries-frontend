@@ -141,7 +141,7 @@ const { x, y, isOutside } = useMouseInElement(palette);
 <template>
   <div v-show="visible" ref="palette" class="overflow-scroll-y h-full">
       <div
-        class="baklava-node-palette !m-5 !rounded-xl !w-96 !bg-surface-0 dark:!bg-surface-900 !border !border-surface-200 dark:!border-surface-700"
+        class="baklava-node-palette !m-5 !rounded-xl !w-64 lg:!w-72 !bg-surface-0 dark:!bg-surface-900 !border !border-surface-200 dark:!border-surface-700"
       >
         <h1 class="pb-5 text-center text-xl font-bold text-surface-800 dark:text-surface-100">
           {{ $t("pages.nodeflow.palette.processors") }}
