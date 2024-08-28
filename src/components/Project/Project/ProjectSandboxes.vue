@@ -76,6 +76,13 @@ const toggle = (event, data) => {
           label: "Download",
           icon: "pi pi-download",
           command: () => {
+            downloadHistory(data.id);
+          },
+        },
+        {
+          label: "Download History",
+          icon: "pi pi-history",
+          command: () => {
             downloadSandbox(data.id);
           },
         },
@@ -194,6 +201,18 @@ async function downloadSandbox(sandbox) {
       link.click();
     });
 }
+async function downloadHistory(sandbox) {
+  useCustomFetch(`/sandbox/history/download/${project}?id=${sandbox}`)
+    .blob()
+    .then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data.value]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `${project}_${sandbox}_history.zip`);
+      document.body.appendChild(link);
+      link.click();
+    });
+}
 const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   items.value = [
     {
@@ -215,6 +234,13 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
       icon: "pi pi-download",
       command: () => {
         downloadSandbox(event.data.id);
+      },
+    },
+    {
+      label: "Download History",
+      icon: "pi pi-history",
+      command: () => {
+        downloadHistory(event.data.id);
       },
     },
     {
