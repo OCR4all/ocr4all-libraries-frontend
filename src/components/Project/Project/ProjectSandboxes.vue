@@ -116,8 +116,12 @@ async function refetch() {
 
 refetch().then(() => (loading.value = false));
 
-const filters = ref({
+const filters: Ref = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  description: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  keywords: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  state: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
 function createSandbox() {
@@ -416,8 +420,9 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
       :loading="loading"
       sort-field="tracking.updated"
       :sort-order="-1"
-      :filters="filters"
-      lazy
+      v-model:filters="filters"
+      :globalFilterFields="['name', 'description', 'keywords', 'engine']"
+      filterDisplay="menu"
       context-menu
       :row-hover="true"
       :global-filter-fields="['name', 'description', 'state']"
@@ -439,6 +444,7 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
       </template>
       <Column
         field="name"
+        sortable
         :header="$t('pages.projects.sandbox.results.table.columns.name')"
       >
         <template #body="{ data }">

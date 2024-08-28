@@ -76,39 +76,37 @@ function openImageImportDialog(){
 refresh();
 </script>
 <template>
-  <div class="@container/section">
-    <ComponentContainer spaced>
-      <Toolbar class="mb-4">
-        <template #start>
-          <Button
-            v-tooltip.top="'Import Images'"
-            text
-            @click="openImageImportDialog"
-          >
-            <IconImageImport class="text-black dark:text-white" :class="{ 'animate-pulse' : folios.length === 0 }" />
-          </Button>
-        </template>
-      </Toolbar>
-      <div
-        v-if="folios.length"
-        class="grid grid-cols-1 justify-between gap-x-2 gap-y-3 @[550px]/section:grid-cols-2 @[800px]/section:grid-cols-3 @[1050px]/section:grid-cols-4"
-      >
-        <ImageCard
-          v-for="folio in folios"
-          :key="folio.id"
-          :name="folio.name"
-          :thumb="folio.thumbnail"
-          :img="folio.img"
-          :size="folio.size"
-          :format="folio.format"
-        />
-      </div>
-      <div
-        v-else
-        class="flex flex-col items-center justify-center dark:text-surface-100"
-      >
-        {{ $t("pages.projects.project.images.no-images") }}
-      </div>
-    </ComponentContainer>
-  </div>
+  <ComponentContainer spaced>
+    <Toolbar class="mb-4">
+      <template #start>
+        <Button
+          v-tooltip.top="'Import Images'"
+          text
+          @click="openImageImportDialog"
+        >
+          <IconImageImport class="text-black dark:text-white" :class="{ 'animate-pulse' : folios.length === 0 }" />
+        </Button>
+      </template>
+    </Toolbar>
+    <div
+      v-if="folios.length"
+      class="grid grid-cols-1 justify-between gap-x-2 gap-y-3 @[700px]/content:grid-cols-2 @[1100px]/content:grid-cols-3 @[1300px]/content:grid-cols-4"
+    >
+      <ImageCard
+        v-for="folio in folios"
+        :key="folio.id"
+        :name="folio.name"
+        :thumb="folio.thumbnail"
+        :img="folio.img"
+        :size="folio.size"
+        :format="folio.format"
+      />
+    </div>
+    <div
+      v-else
+      class="flex flex-col items-center justify-center dark:text-surface-100"
+    >
+      {{ $t("pages.projects.project.images.no-images") }}
+    </div>
+  </ComponentContainer>
 </template>
