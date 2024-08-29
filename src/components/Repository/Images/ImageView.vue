@@ -33,6 +33,7 @@ import { useDialog } from "primevue/usedialog";
 import ProgressSpinner from "primevue/progressspinner";
 
 import IconActions from "~icons/fluent/more-vertical-32-regular"
+import { is } from "@formkit/i18n";
 
 const router: Router = useRouter();
 
@@ -63,6 +64,7 @@ const setContainerCardsRef = (ref) => {
   }
 };
 
+const isLoadingContainers = ref(true)
 async function listContainers() {
   useCustomFetch("/repository/container/list")
     .json()
@@ -89,6 +91,7 @@ async function listContainers() {
         const keywordSet = new Set(keywords)
         availableKeywords.value = Array.from(keywordSet).map(item => ({ keywords: item }))
       }
+      isLoadingContainers.value = false
     });
 }
 
@@ -601,7 +604,12 @@ function downloadContainer(container: IContainer) {
         </template>
       </SelectButton>
     </div>
-    <DataView :value="containers" :layout="layout">
+    <div v-if="isLoadingContainers">
+      <Fluid>
+        <Skeleton height="30rem" />
+      </Fluid>
+    </div>
+    <DataView v-else :value="containers" :layout="layout">
       <template #list="slotProps">
         <DataTable
           ref="containerDataTable"

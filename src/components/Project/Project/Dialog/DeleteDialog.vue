@@ -4,14 +4,15 @@ import { useToast } from "primevue/usetoast";
 
 const toast = useToast();
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
 import { useI18n } from "vue-i18n";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 const { t } = useI18n();
 
 async function deleteProject() {
   const { isFetching, error, data } = await useCustomFetch(
-    `/project/remove?id=${dialogRef.value.data.id}`,
+    `/project/remove?id=${dialogRef?.value.data.id}`,
   )
     .get()
     .json();
@@ -36,7 +37,7 @@ async function deleteProject() {
       group: "general",
     });
   }
-  dialogRef.value.close();
+  dialogRef?.value.close();
 }
 </script>
 <template>
@@ -46,7 +47,7 @@ async function deleteProject() {
   <button
     type="button"
     class="mb-2 mr-2 rounded-md border border-surface-300 bg-white px-5 py-2.5 text-sm font-medium text-surface-900 hover:bg-surface-100 focus:outline-none focus:ring-4 focus:ring-surface-200 dark:border-surface-600 dark:bg-surface-500 dark:text-white dark:hover:border-surface-600 dark:hover:bg-surface-700 dark:focus:ring-surface-700"
-    @click="dialogRef.close()"
+    @click="dialogRef?.close()"
   >
     {{ $t("pages.projects.project.information.modals.delete.buttons.cancel") }}
   </button>

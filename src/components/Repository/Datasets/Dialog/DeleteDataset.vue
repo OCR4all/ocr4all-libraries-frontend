@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { useToast } from "primevue/usetoast";
 
-const dialogRef = inject("dialogRef");
 import { useCustomFetch } from "@/composables/useCustomFetch";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
+
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
 const toast = useToast();
 const data = ref();
 
 onMounted(() => {
-  data.value = dialogRef.value.data;
+  data.value = dialogRef?.value.data;
 });
 
 async function deleteDataset() {
@@ -32,7 +34,7 @@ async function deleteDataset() {
             life: 3000,
             group: "general",
           });
-          dialogRef.value.close();
+          dialogRef?.value.close();
         }
       });
   }
@@ -44,7 +46,7 @@ async function deleteDataset() {
       Do you really want to delete this dataset?
     </p>
   </div>
-  <ActionButton rounded size="large" @click="dialogRef.close()">
+  <ActionButton rounded size="large" @click="dialogRef?.close()">
     <i class="pi pi-times"></i>
     {{ $t("admin.user-management.dialog.delete.footer.button.cancel") }}
   </ActionButton>

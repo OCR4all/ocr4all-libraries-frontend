@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 import { exportSnapshotSchema } from "@/components/Project/Project/Sandbox/Dialog/Schema/exportSnapshotSchema";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
 const project = ref();
 const sandbox = ref();
@@ -16,9 +17,9 @@ const data = ref({
 const schema = exportSnapshotSchema;
 
 onMounted(() => {
-  project.value = dialogRef.value.data.project;
-  sandbox.value = dialogRef.value.data.sandbox;
-  track.value = dialogRef.value.data.track;
+  project.value = dialogRef?.value.data.project;
+  sandbox.value = dialogRef?.value.data.sandbox;
+  track.value = dialogRef?.value.data.track;
 });
 
 async function submitExportSnapshot(values, { setErrors }) {
@@ -41,7 +42,7 @@ async function submitExportSnapshot(values, { setErrors }) {
       );
       document.body.appendChild(link);
       link.click();
-      dialogRef.value.close();
+      dialogRef?.value.close();
     });
 }
 </script>

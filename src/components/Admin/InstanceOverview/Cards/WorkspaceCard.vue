@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IWorkspace } from "@/components/Admin/InstanceOverview/types";
+import { IWorkspace } from "@/types/instance-overview.types";
 
 const props = defineProps<{
   workspace: IWorkspace;

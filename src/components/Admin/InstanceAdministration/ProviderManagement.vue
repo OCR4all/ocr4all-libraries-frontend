@@ -48,6 +48,8 @@ const filters = ref({
 
 const selectedProviders = ref([]);
 
+const isLoadingProviders = ref(true)
+
 async function getProviders() {
   useCustomFetch(`/administration/provider/overview`)
     .json()
@@ -60,6 +62,7 @@ async function getProviders() {
         }
       }
       nodes.value = providers;
+      isLoadingProviders.value = false
     });
 }
 
@@ -285,6 +288,7 @@ getProviders();
     <DataTable
       v-model:filters="filters"
       v-model:selection="selectedProviders"
+      :loading="isLoadingProviders"
       scrollable
       striped-rows
       :value="nodes"

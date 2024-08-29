@@ -3,7 +3,7 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import { sandboxMetadataSchema } from "@/components/Project/Project/Sandbox/Dialog/Schema/sandboxMetadataSchema";
 import { useToast } from "primevue/usetoast";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 const toast = useToast();
 
 const schema = sandboxMetadataSchema;
@@ -11,11 +11,12 @@ const data = ref();
 const project = ref()
 
 import { useI18n } from "vue-i18n";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 const { t } = useI18n();
 
 onMounted(() => {
-  data.value = dialogRef.value.data.sandbox;
-  project.value = dialogRef.value.data.project
+  data.value = dialogRef?.value.data.sandbox;
+  project.value = dialogRef?.value.data.project
 });
 
 async function submit(values, { setErrors }) {
@@ -51,7 +52,7 @@ async function submit(values, { setErrors }) {
       group: "general",
     });
   }
-  dialogRef.value.close();
+  dialogRef?.value.close();
 }
 </script>
 <template>

@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
 const data = ref([]);
 
 onMounted(() => {
-  data.value = dialogRef.value.data;
+  data.value = dialogRef?.value.data;
 });
 
 async function deleteUsers() {
@@ -17,8 +18,9 @@ async function deleteUsers() {
       .json()
       .then((response) => {
         if (response.error.value) {
+          console.error(response.error.value)
         } else {
-          dialogRef.value.close();
+          dialogRef?.value.close();
         }
       });
   }
@@ -39,7 +41,7 @@ async function deleteUsers() {
       </li>
     </ul>
   </div>
-  <ActionButton rounded size="large" @click="dialogRef.close()">
+  <ActionButton rounded size="large" @click="dialogRef?.close()">
     <i class="pi pi-times"></i>
     {{ $t("admin.user-management.dialog.delete.footer.button.cancel") }}
   </ActionButton>

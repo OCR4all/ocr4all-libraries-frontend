@@ -2,16 +2,17 @@
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useToast } from "primevue/usetoast";
 import { useI18n } from "vue-i18n";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
 const i18n = useI18n();
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 const toast = useToast();
 
 const data = ref();
 
 onMounted(() => {
-  data.value = dialogRef.value.data.data;
+  data.value = dialogRef?.value.data.data;
 });
 
 async function deleteWorkflow() {
@@ -23,7 +24,7 @@ async function deleteWorkflow() {
     life: 3000,
     group: "general",
   });
-  dialogRef.value.close();
+  dialogRef?.value.close();
 }
 </script>
 <template>

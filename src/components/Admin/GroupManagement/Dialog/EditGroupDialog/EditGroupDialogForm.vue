@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { groupSchema } from "@/components/Admin/GroupManagement/Dialog/EditGroupDialog/Schemas/groupSchema";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
 const form = ref();
 const data = ref();
@@ -10,7 +11,7 @@ const data = ref();
 const schema = groupSchema;
 
 onMounted(() => {
-  data.value = dialogRef.value.data.data;
+  data.value = dialogRef?.value.data.data;
   data.value.users = data.value.users.map((user) => user.login);
 });
 
@@ -27,7 +28,7 @@ async function submitGroupChanges(values, { setErrors }) {
       if (response.error.value) {
         setErrors(["Something went wrong.", "Please try again later."]);
       } else {
-        dialogRef.value.close();
+        dialogRef?.value.close();
       }
     });
 }

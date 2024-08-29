@@ -6,22 +6,22 @@ import Menu from "primevue/menu";
 import Checkbox from "primevue/checkbox";
 import Image from "primevue/image";
 import Dialog from "primevue/dialog";
-import Toast from "primevue/toast";
 
 import { useToast } from "primevue/usetoast";
 const ImageEditor = defineAsyncComponent(
   () => import("@/components/Repository/Images/ImageEditor.vue"),
 );
 import { useDialog } from "primevue/usedialog";
+import { ISize } from "@/types/folio.types";
 const toast = useToast();
 
 const dialog = useDialog();
 
 const props = defineProps<{
-  name?: string;
+  name: string;
   format?: string;
   keywords?: string[];
-  size?: object;
+  size: ISize;
   date?: string;
   user?: string;
   id?: string;
@@ -198,93 +198,91 @@ defineExpose({
       Delete
     </button>
   </Dialog>
-  <div class="grid grid-cols-1">
+  <div
+    class="shadow-xs group relative m-2 grid h-64 w-64 rounded-md bg-clip-border text-surface-700 hover:bg-primary-200 hover:dark:bg-surface-700"
+    :class="[
+      checked
+        ? ['bg-primary-200', 'dark:bg-surface-700']
+        : ['bg-surface-100', 'dark:bg-surface-950'],
+    ]"
+  >
     <div
-      class="shadow-xs group relative m-2 grid h-64 w-64 rounded-md bg-clip-border text-surface-700 hover:bg-primary-200 hover:dark:bg-surface-700"
-      :class="[
-        checked
-          ? ['bg-primary-200', 'dark:bg-surface-700']
-          : ['bg-surface-100', 'dark:bg-surface-950'],
-      ]"
+      class="absolute w-max group-hover:flex"
+      :class="{ hidden: !checked }"
     >
-      <div
-        class="absolute w-max group-hover:flex"
-        :class="{ hidden: !checked }"
-      >
-        <div class="flex justify-between space-x-44 p-4">
-          <Checkbox
-            v-model="checked"
-            :binary="true"
-            :pt="{
-              root: { class: 'z-50' },
-              input: {
-                class:
-                  'rounded-md peer absolute h-6 w-6 border border-solid cursor-pointer hover:bg-primary-200',
-              },
-            }"
-            @update:model-value="updateSelection"
-          />
-          <Button
-            icon="pi pi-ellipsis-v"
-            severity="secondary"
-            text
-            rounded
-            aria-haspopup="true"
-            aria-label="overlay_menu"
-            :pt="{
-              root: {
-                class:
-                  'rounded-md z-50 bg-surface-50/80 dark:bg-surface-50 p-1',
-              },
-              icon: { class: 'align-center pl-1' },
-            }"
-            @click="toggle"
-          />
-          <Menu
-            id="overlay_menu"
-            ref="actionMenu"
-            :model="actionMenuItems"
-            :popup="true"
-          />
-        </div>
-      </div>
-      <div
-        class="mx-4 mt-4 h-fit w-fit self-center justify-self-center text-surface-700"
-      >
-        <Image v-if="thumb" alt="Image" preview>
-          <template #previewicon>
-            <i
-              class="pi pi-search"
-              style="padding: 100%"
-              @click="loadDetail"
-            ></i>
-          </template>
-          <template #image>
-            <img
-              :src="thumb.value"
-              class="max-w-48 max-h-48 object-scale-down"
-              alt="image"
-            />
-          </template>
-          <template #preview="slotProps">
-            <img
-              v-if="detail"
-              :src="detail.value"
-              alt="preview"
-              class="max-h-screen"
-              :style="slotProps.style"
-              @click="slotProps.onClick"
-            />
-          </template>
-        </Image>
-        <Skeleton v-else animation="wave" size="10rem"></Skeleton>
+      <div class="flex justify-between space-x-44 p-4">
+        <Checkbox
+          v-model="checked"
+          :binary="true"
+          :pt="{
+            root: { class: 'z-50' },
+            input: {
+              class:
+                'rounded-md peer absolute h-6 w-6 border border-solid cursor-pointer hover:bg-primary-200',
+            },
+          }"
+          @update:model-value="updateSelection"
+        />
+        <Button
+          icon="pi pi-ellipsis-v"
+          severity="secondary"
+          text
+          rounded
+          aria-haspopup="true"
+          aria-label="overlay_menu"
+          :pt="{
+            root: {
+              class:
+                'rounded-md z-50 bg-surface-50/80 dark:bg-surface-50 p-1',
+            },
+            icon: { class: 'align-center pl-1' },
+          }"
+          @click="toggle"
+        />
+        <Menu
+          id="overlay_menu"
+          ref="actionMenu"
+          :model="actionMenuItems"
+          :popup="true"
+        />
       </div>
     </div>
-    <div class="mx-4 mb-4">
-      <p class="font-semibold text-black dark:text-white">{{ props.name }}</p>
-      <p class="font-light text-surface-600 dark:text-surface-300">
-        {{ format }} · {{ props.size.width }}x{{ props.size.height }}
-      </p>
+    <div
+      class="mx-4 mt-4 h-fit w-fit self-center justify-self-center text-surface-700"
+    >
+      <Image v-if="thumb" alt="Image" preview>
+        <template #previewicon>
+          <i
+            class="pi pi-search"
+            style="padding: 100%"
+            @click="loadDetail"
+          ></i>
+        </template>
+        <template #image>
+          <img
+            :src="thumb.value"
+            class="max-w-48 max-h-48 object-scale-down"
+            alt="image"
+          />
+        </template>
+        <template #preview="slotProps">
+          <img
+            v-if="detail"
+            :src="detail.value"
+            alt="preview"
+            class="max-h-screen"
+            :style="slotProps.style"
+            @click="slotProps.onClick"
+          />
+        </template>
+      </Image>
+      <Skeleton v-else animation="wave" size="10rem"></Skeleton>
     </div>
+  </div>
+  <div class="mx-4 mb-4">
+    <p class="font-semibold text-black dark:text-white">{{ props.name }}</p>
+    <p class="font-light text-surface-600 dark:text-surface-300">
+      {{ format }} · {{ props.size.width }}x{{ props.size.height }}
+    </p>
   </div>
 </template>

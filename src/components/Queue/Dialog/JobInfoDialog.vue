@@ -5,8 +5,9 @@ import { useDialog } from "primevue/usedialog";
 
 import IconEmpty from "~icons/ph/empty-light"
 import IconOpen from "~icons/fluent/open-16-regular"
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 const logViewer = defineAsyncComponent(
   () => import("@/components/Queue/Dialog/LogViewer.vue"),
 );
@@ -18,7 +19,7 @@ const expandedRows = ref();
 const dialog = useDialog();
 
 onMounted(async () => {
-  await useCustomFetch(`/job/entity/${dialogRef.value.data.id}`)
+  await useCustomFetch(`/job/entity/${dialogRef?.value.data.id}`)
     .get()
     .json()
     .then((response) => {
@@ -46,7 +47,7 @@ function openLogDialog(text: string, type: string) {
   });
 }
 
-function getSeverity(severity: string): string {
+function getSeverity(severity: string): string | undefined {
   switch (severity) {
     case "completed":
       return "success";
@@ -102,7 +103,7 @@ function getSeverity(severity: string): string {
                 severity="contrast"
                 text
               >
-                <IconOpen class="text-white dark:text-white" />
+                <IconOpen class="text-black dark:text-white" />
               </Button>
               <p v-else>
                 <IconEmpty class="text-black dark:text-white" />
@@ -117,7 +118,7 @@ function getSeverity(severity: string): string {
                 severity="contrast"
                 text
               >
-                <IconOpen class="text-white dark:text-white" />
+                <IconOpen class="text-black dark:text-white" />
               </Button>
               <p v-else>
                 <IconEmpty class="text-black dark:text-white" />
@@ -132,7 +133,7 @@ function getSeverity(severity: string): string {
                 severity="contrast"
                 text
               >
-                <IconOpen class="text-white dark:text-white" />
+                <IconOpen class="text-black dark:text-white" />
               </Button>
               <p v-else>
                 <IconEmpty class="text-black dark:text-white" />

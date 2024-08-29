@@ -1,25 +1,20 @@
 <script setup lang="ts">
 import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
 
-interface IWorkflowMetadata {
-  label: string;
-  description: string;
-  id: string;
-  date: string;
-}
 
 import { useNodeFlowStore } from "@/stores/nodeflow.store";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useDialog } from "primevue/usedialog";
 import { UseTimeAgo } from "@vueuse/components";
+
 import IconCreate from "~icons/gridicons/create";
 import IconActions from "~icons/fluent/more-vertical-32-regular"
+import IconRefresh from "~icons/heroicons/arrow-path"
 
 import { FilterMatchMode } from "@primevue/core/api";
 
-import IconRefresh from "~icons/heroicons/arrow-path"
-
 import { Router } from "vue-router";
+import { IWorkflowMetadata } from "@/types/workflow.types";
 
 import { useToast } from "primevue/usetoast";
 
@@ -50,7 +45,7 @@ const filters = ref({
 
 const labelTaken: Ref<boolean> = ref(false);
 const originalWorkflowName: Ref<string | undefined> = ref();
-const workflowMetadata: Ref<IWorkflowMetadata> = ref();
+const workflowMetadata: Ref<IWorkflowMetadata | undefined> = ref();
 
 const menu = ref();
 const items = ref();
@@ -307,11 +302,11 @@ refetch();
       </template>
     </Toolbar>
     <DataTable
+      v-model:filters="filters"
       :value="workflows"
       :paginator="true"
       :rows="10"
-      v-model:filters="filters"
-      filterDisplay="menu"
+      filter-display="menu"
       :loading="loading"
       context-menu
       :global-filter-fields="['label', 'description']"
@@ -345,8 +340,8 @@ refetch();
           <InputText
             v-model="filterModel.value"
             type="text"
-            @input="filterCallback()"
             placeholder="Search by label"
+            @input="filterCallback()"
           />
         </template>
       </Column>
@@ -361,8 +356,8 @@ refetch();
           <InputText
             v-model="filterModel.value"
             type="text"
-            @input="filterCallback()"
             placeholder="Search by description"
+            @input="filterCallback()"
           />
         </template>
       </Column>

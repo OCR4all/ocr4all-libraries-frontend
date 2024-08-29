@@ -32,12 +32,15 @@ import { FilterMatchMode } from "@primevue/core/api";
 const confirm = useConfirm();
 const toast = useToast();
 
+const isLoading = ref(true)
+
 async function fetch() {
   useCustomFetch("/assemble/model/list")
     .get()
     .json()
     .then((response) => {
       models.value = response.data.value;
+      isLoading.value = false
       console.log(models.value);
     });
 }
@@ -309,9 +312,9 @@ const selectedModels = ref([]);
         >
           <ProgressSpinner
             class="h-4 w-4"
-            strokeWidth="8"
+            stroke-width="8"
             fill="transparent"
-            animationDuration=".5s"
+            animation-duration=".5s"
             aria-label="Download Spinner"
           />
           <span class="sr-only">Fire icon</span>
@@ -322,11 +325,11 @@ const selectedModels = ref([]);
           {{ message.summary }}
         </div>
         <button
-          @click="closeCallback"
           type="button"
           class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg p-1.5 text-surface-800 hover:bg-gray-100 hover:text-surface-950 focus:ring-2 focus:ring-surface-300 dark:text-surface-200 dark:hover:bg-gray-800 dark:hover:text-white"
           data-dismiss-target="#toast-default"
           aria-label="Close"
+          @click="closeCallback"
         >
           <span class="sr-only">Close</span>
           <svg
@@ -409,10 +412,10 @@ const selectedModels = ref([]);
           </Button>
           <Button
             icon="pi pi-trash"
-            @click="confirmDelete"
             :disabled="selectedModels.length == 0"
             severity="danger"
             text
+            @click="confirmDelete"
           />
         </template>
         <template #end>
@@ -425,13 +428,14 @@ const selectedModels = ref([]);
         </template>
       </Toolbar>
       <DataTable
-        :value="models"
-        contextMenu
-        @rowContextmenu="onRowContextMenu"
-        v-model:selection="selectedModels"
         v-model:filters="filters"
-        :globalFilterFields="['name', 'description', 'keywords', 'engine']"
-        filterDisplay="menu"
+        v-model:selection="selectedModels"
+        :value="models"
+        context-menu
+        :loading="isLoading"
+        :global-filter-fields="['name', 'description', 'keywords', 'engine']"
+        filter-display="menu"
+        @row-contextmenu="onRowContextMenu"
       >
         <Column
           selection-mode="multiple"
@@ -443,8 +447,8 @@ const selectedModels = ref([]);
             <InputText
                 v-model="filterModel.value"
                 type="text"
-                @input="filterCallback()"
                 placeholder="Search by name"
+                @input="filterCallback()"
             />
           </template>
         </Column>
@@ -456,8 +460,8 @@ const selectedModels = ref([]);
             <InputText
                 v-model="filterModel.value"
                 type="text"
-                @input="filterCallback()"
                 placeholder="Search by engine"
+                @input="filterCallback()"
             />
           </template>
         </Column>
@@ -466,8 +470,8 @@ const selectedModels = ref([]);
             <InputText
                 v-model="filterModel.value"
                 type="text"
-                @input="filterCallback()"
                 placeholder="Search by description"
+                @input="filterCallback()"
             />
           </template>
         </Column>
@@ -483,8 +487,8 @@ const selectedModels = ref([]);
             <InputText
                 v-model="filterModel.value"
                 type="text"
-                @input="filterCallback()"
                 placeholder="Search by state"
+                @input="filterCallback()"
             />
           </template>
         </Column>

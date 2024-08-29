@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { datasetSchema } from "@/components/Repository/Datasets/Dialog/Schema/dataset";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 import { useCustomFetch } from "@/composables/useCustomFetch";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
 const schema = datasetSchema;
 const data = ref();
@@ -19,7 +20,7 @@ function createDataset(values, { setErrors }) {
       if (response.error.value) {
         setErrors(["Something went wrong.", "Please try again later."]);
       } else {
-        dialogRef.value.close();
+        dialogRef?.value.close();
       }
     });
 }

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useSandboxCreationStore } from "@/stores/sandboxCreation.store";
 
+import { IWorkflow } from "@/types/workflow.types";
+
 const store = useSandboxCreationStore();
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
@@ -116,16 +118,6 @@ const workflowProgress = ref(0);
 const jobStatus = ref("Scheduled");
 
 const processorSelector = ref()
-
-interface IWorkflow {
-  date: string,
-  user: string,
-  id: string,
-  updated: string,
-  label: string,
-  description: string,
-  "update-user": string
-}
 
 async function runProcessor() {
   const processor = processorSelector.value.get();

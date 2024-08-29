@@ -1,10 +1,12 @@
 <script setup lang="ts">
-const dialogRef = inject("dialogRef");
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
+
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
 const data = ref({});
 
 onMounted(() => {
-  data.value = dialogRef.value.data.information;
+  data.value = dialogRef?.value.data.information;
 });
 </script>
 <template>

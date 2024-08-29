@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { userSchema } from "@/components/Admin/UserManagement/Dialog/CreateUserDialog/Schemas/userSchema";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 import { useCustomFetch } from "@/composables/useCustomFetch";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
 const schema = userSchema;
 const data = ref();
@@ -21,7 +22,7 @@ function createUser(values, { setErrors }) {
       if (response.error.value) {
         setErrors(["Something went wrong.", "Please try again later."]);
       } else {
-        dialogRef.value.close();
+        dialogRef?.value.close();
       }
     });
 }

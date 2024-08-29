@@ -41,6 +41,7 @@ import IconCreate from "~icons/gridicons/create";
 import IconEvaluation from "~icons/carbon/compare";
 
 const isRefetching: Ref<boolean> = ref(false);
+const isLoading = ref(true)
 const datasets: Ref<ICollectionSet[]> = ref([]);
 const selectedDatasets: Ref<ICollectionSet[]> = ref([]);
 
@@ -119,27 +120,31 @@ async function getCodec(datasets) {
 
 async function refetch() {
   isRefetching.value = true;
-  const { isFetching, error, data } = await useCustomFetch(
+  useCustomFetch(
     `/data/collection/list`,
   )
     .get()
-    .json();
-  if (error.value) {
-    toast.add({
-      severity: "error",
-      summary: "Error",
-      detail: error.value,
-      life: 3000,
-      group: "general",
-    });
-  } else {
-    datasets.value = data.value.filter(function (container: IContainer) {
-      return container.right !== null;
-    });
-  }
-  setTimeout(function () {
-    isRefetching.value = isFetching.value;
-  }, 500);
+    .json()
+    .then((response) => {
+      if(response.error.value){
+        toast.add({
+          severity: "error",
+          summary: "Error",
+          detail: response.error.value,
+          life: 3000,
+          group: "general",
+        });
+      }else{
+        datasets.value = response.data.value.filter(function (container: IContainer) {
+          return container.right !== null;
+        });
+        isLoading.value = false
+      }
+      setTimeout(function () {
+        isRefetching.value = false;
+      }, 500);
+  })
+
 }
 
 await refetch();
@@ -422,6 +427,7 @@ const contextMenu = ref();
       v-model:selection="selectedDatasets"
       :value="datasets"
       v-model:filters="filters"
+      :loading="isLoading"
       :globalFilterFields="['name', 'description', 'keywords']"
       filterDisplay="menu"
       context-menu

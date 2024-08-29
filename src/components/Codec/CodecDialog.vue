@@ -26,10 +26,11 @@ use([
 import VChart, { THEME_KEY } from "vue-echarts";
 import Column from "primevue/column";
 import InputText from "primevue/inputtext";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
 provide(THEME_KEY, useDark().value ? darkTheme : lightTheme);
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
 const dt = ref()
 
@@ -40,7 +41,7 @@ const mode = ref("Table");
 const options = ref(["Chart", "Table"]);
 
 onMounted(() => {
-  codec.value = dialogRef.value.data.codec;
+  codec.value = dialogRef?.value.data.codec;
   option.value = {
     toolbox: {
       show: true,

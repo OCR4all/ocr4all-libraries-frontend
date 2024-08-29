@@ -8,7 +8,6 @@ import Toast from "primevue/toast";
 import Button from "primevue/button";
 import ProgressBar from "primevue/progressbar";
 import axios from "axios";
-import { useConfigStore } from "@/stores/config.store";
 import { useAuthStore } from "@/stores/auth.store";
 import Dialog from "primevue/dialog";
 import { LocationQueryValue, Router } from "vue-router";
@@ -18,13 +17,14 @@ import { useI18n } from "vue-i18n";
 import { useUiStore } from "@/stores/ui.store";
 import { UseTimeAgo } from "@vueuse/components";
 import { useLocalDateFormat } from "@/composables/useLocalDateFormat";
-const config: Store = useConfigStore();
 const auth: Store = useAuthStore();
 import IconImageUpload from "~icons/icon-park-outline/upload-picture";
+import Skeleton from "primevue/skeleton";
 
 const { t } = useI18n();
 
 const folios = ref();
+const isLoading = ref(true)
 
 const layout: Ref<"list" | "grid" | undefined> = ref("grid");
 const options = ref(["list", "grid"]);
@@ -83,10 +83,15 @@ const hideUploadToast = () => {
 };
 
 async function refresh() {
-  const { data } = await useCustomFetch(
+  useCustomFetch(
     `/repository/container/folio/list/${container}`,
-  ).json();
-  folios.value = data.value;
+  )
+    .get()
+    .json()
+    .then((response) => {
+      folios.value = response.data.value
+      isLoading.value = false
+    })
 }
 const fileUpload = ref();
 const uploader = async function customUploader(event: FileUploadUploaderEvent) {
@@ -330,16 +335,6 @@ refresh();
   <ComponentContainer spaced>
     <Toolbar>
       <template #start>
-<!--        <Button
-          v-tooltip.top="
-            $t('pages.repository.container.overview.toolbar.button.file-upload')
-          "
-          icon="pi pi-trash"
-          @click="toggleUploadDialog"
-          text
-        >
-          <IconImageUpload class="text-black dark:text-white" />
-        </Button>-->
         <FileUpload
           ref="fileUpload"
           name="folioUpload[]"
@@ -376,13 +371,18 @@ refresh();
         </SelectButton>
       </template>
     </Toolbar>
-    <Suspense>
+      <div v-if="isLoading">
+        <Fluid>
+          <Skeleton height="30rem" />
+        </Fluid>
+      </div>
       <DataView
+        v-else
         :value="folios"
         :layout="layout"
         paginator
         :rows="20"
-        :rowsPerPageOptions="[5, 10, 15, 20, 25]"
+        :rows-per-page-options="[5, 10, 15, 20, 25]"
       >
         <template #grid="slotProps">
           <div class="flex space-x-3">
@@ -468,7 +468,6 @@ refresh();
           </DataTable>
         </template>
       </DataView>
-    </Suspense>
   </ComponentContainer>
 </template>
 <style>

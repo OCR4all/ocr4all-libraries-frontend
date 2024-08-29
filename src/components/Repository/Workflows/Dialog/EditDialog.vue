@@ -2,8 +2,9 @@
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { workflowSchema } from "@/components/Repository/Workflows/Dialog/Schema/workflowSchema";
 import { useToast } from "primevue/usetoast";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 const toast = useToast();
 
 const schema = workflowSchema;
@@ -11,8 +12,8 @@ const data = ref();
 const originalLabel = ref()
 
 onMounted(() => {
-  originalLabel.value = dialogRef.value.data.label
-  data.value = dialogRef.value.data;
+  originalLabel.value = dialogRef?.value.data.label
+  data.value = dialogRef?.value.data;
 });
 
 async function updateWorkflow(values, { setErrors }) {
@@ -39,7 +40,7 @@ async function updateWorkflow(values, { setErrors }) {
             life: 3000,
             group: "general",
           });
-          dialogRef.value.close();
+          dialogRef?.value.close();
         }
       });
   }

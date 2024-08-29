@@ -131,7 +131,7 @@ const routes = [
       {
         path: "overview",
         name: "Admin Overview",
-        component: () => import("@/components/Admin/Overview.vue"),
+        component: () => import("@/components/Admin/AdminOverview.vue"),
       },
       {
         path: "users",

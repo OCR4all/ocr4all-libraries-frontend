@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
+import { IGroup } from "@/types/auth/group.types";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
-const data = ref([]);
+const data: Ref<IGroup[]> = ref([]);
 
 onMounted(() => {
-  data.value = dialogRef.value.data;
+  data.value = dialogRef?.value.data;
 });
 
 async function deleteGroups() {
-  for (const group of data.value.data) {
+  /** TODO: User Promise.all **/
+  for (const group of data.value) {
     await useCustomFetch(
       `/administration/security/group/remove?label=${group.label}`,
     )
@@ -18,7 +21,7 @@ async function deleteGroups() {
       .then((response) => {
         if (response.error.value) {
         } else {
-          dialogRef.value.close();
+          dialogRef?.value.close();
         }
       });
   }
@@ -31,7 +34,7 @@ async function deleteGroups() {
     </p>
     <ul class="px-4">
       <li
-        v-for="group in data.data"
+        v-for="group in data"
         :key="group.label"
         class="list-disc font-semibold text-surface-950 dark:text-surface-0"
       >
@@ -39,7 +42,7 @@ async function deleteGroups() {
       </li>
     </ul>
   </div>
-  <ActionButton rounded size="large" @click="dialogRef.close()">
+  <ActionButton rounded size="large" @click="dialogRef?.close()">
     <i class="pi pi-times"></i>
     {{ $t("admin.user-management.dialog.delete.footer.button.cancel") }}
   </ActionButton>

@@ -8,16 +8,17 @@ import IconFlipVertical from "~icons/fluent/flip-vertical-24-filled";
 import IconRotateRight from "~icons/fluent/arrow-rotate-clockwise-16-filled";
 import IconRotateLeft from "~icons/fluent/arrow-rotate-counterclockwise-24-filled";
 import IconSave from "~icons/fluent/save-16-regular";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
 const image = ref();
 
 const isLoading = ref(true);
 
 onMounted(() => {
-  const container = dialogRef.value.data.container;
-  const folio = dialogRef.value.data.id;
+  const container = dialogRef?.value.data.container;
+  const folio = dialogRef?.value.data.id;
 
   useCustomFetch(
     `/repository/container/folio/derivative/best/${container}?id=${folio}`,

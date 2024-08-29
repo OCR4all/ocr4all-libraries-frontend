@@ -24,6 +24,7 @@ import {
   IEnrichedNode,
   INode,
 } from "@/components/Project/Project/Sandbox/resultviewer.interface";
+import axios from "axios";
 
 const authStore = useAuthStore();
 
@@ -444,18 +445,18 @@ async function createLarexMapsFromFiles(sets: string[]): unknown {
   const dirPath = `${basePath}/${project}/sandboxes/${sandbox}/snapshots`
 
   for(const set of sets){
-    for(const file of set.files){
-      if(file["mime-type"] === 'application/vnd.prima.page+xml'){
-        fileMap[file.path.split('/')[-1].split(".")[0]] = []
-      }
-    }
+    const filePathParts = set.files[0].path.split('/')
+    const basename = filePathParts[filePathParts.length - 1].split(".")[0]
+    fileMap[basename] = []
   }
-
   for(const set of sets){
     for(const file of set.files){
       if(file["mime-type"] !== 'application/vnd.prima.page+xml'){
+        const filePathParts = file.path.split('/')
+        const basename = filePathParts[filePathParts.length - 1].split(".")[0]
+
         const path = `${dirPath}/${file.path}`
-        fileMap[set.id].push(path)
+        fileMap[basename].push(path)
         mimeMap[`${path}`] = file["mime-type"]
       }
     }
@@ -463,6 +464,14 @@ async function createLarexMapsFromFiles(sets: string[]): unknown {
 
   return { fileMap: fileMap, mimeMap: mimeMap }
 }
+
+axios
+  .get('http://localhost:8081/test', {
+    headers: {"Access-Control-Allow-Origin": "*"}
+  })
+  .then(response => {
+    console.log(response.data.value);
+  })
 
 const items = computed(() => {
   if (Object.keys(selection.value).length === 0) {

@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { setSchema } from "@/components/Repository/Datasets/Dialog/Schema/set";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
 const data = ref();
 const collection = ref();
 
 onMounted(() => {
-  data.value = dialogRef.value.data.set;
-  collection.value = dialogRef.value.data.collection;
+  data.value = dialogRef?.value.data.set;
+  collection.value = dialogRef?.value.data.collection;
 });
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
 const schema = setSchema;
 
@@ -31,7 +32,7 @@ function editDataset(values, { setErrors }) {
       if (response.error.value) {
         setErrors(["Something went wrong.", "Please try again later."]);
       } else {
-        dialogRef.value.close();
+        dialogRef?.value.close();
       }
     });
 }

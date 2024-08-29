@@ -1,14 +1,16 @@
 <script setup lang="ts">
-const dialogRef = inject("dialogRef");
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 import { useCustomFetch } from "@/composables/useCustomFetch";
+
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
 const data = ref();
 const collection = ref();
 
 onMounted(() => {
-  console.log(dialogRef.value.data)
-  data.value = dialogRef.value.data.data;
-  collection.value = dialogRef.value.data.collection;
+  console.log(dialogRef?.value.data)
+  data.value = dialogRef?.value.data.data;
+  collection.value = dialogRef?.value.data.collection;
   console.log(data.value)
   console.log(collection.value)
 });
@@ -22,7 +24,7 @@ function deleteDataset() {
       if (response.error.value) {
         console.log(response.error.value);
       } else {
-        dialogRef.value.close();
+        dialogRef?.value.close();
       }
     });
 }
@@ -33,7 +35,7 @@ function deleteDataset() {
       Do you really want to delete this set?
     </p>
   </div>
-  <ActionButton rounded size="large" @click="dialogRef.close()">
+  <ActionButton rounded size="large" @click="dialogRef?.close()">
     <i class="pi pi-times"></i>
     {{ $t("admin.user-management.dialog.delete.footer.button.cancel") }}
   </ActionButton>

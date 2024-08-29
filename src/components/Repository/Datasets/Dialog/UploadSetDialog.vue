@@ -4,6 +4,7 @@ import { useI18n } from "vue-i18n";
 import axios from "axios";
 import { useToast } from "primevue/usetoast";
 import { useAuthStore } from "@/stores/auth.store";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
 const { t } = useI18n();
 const toast = useToast();
@@ -14,9 +15,9 @@ const auth = useAuthStore()
 
 const dataset = ref()
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 onMounted(() => {
-  dataset.value = dialogRef.value.data;
+  dataset.value = dialogRef?.value.data;
 });
 
 const showUploadToast = () => {

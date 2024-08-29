@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { modelSchema } from "@/components/Repository/Models/Dialog/Schema/modelSchema";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
 const data = ref();
 
 onMounted(() => {
-  data.value = dialogRef.value.data;
+  data.value = dialogRef?.value.data;
 });
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
 const schema = modelSchema;
 
@@ -25,7 +26,7 @@ function editModel(values, { setErrors }) {
       if (response.error.value) {
         setErrors(["Something went wrong.", "Please try again later."]);
       } else {
-        dialogRef.value.close();
+        dialogRef?.value.close();
       }
     });
 }

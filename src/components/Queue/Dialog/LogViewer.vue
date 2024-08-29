@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import { useToast } from "primevue/usetoast";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 const logs: Ref<string> = ref("");
 const filteredLogs: Ref<string[]> = ref([]);
 
 import sanitizeHtml from 'sanitize-html';
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
 const toast = useToast();
 
 const { text, copy, copied, isSupported } = useClipboard({ logs });
 
 onMounted(() => {
-  logs.value = dialogRef.value.data.text;
+  logs.value = dialogRef?.value.data.text;
   filteredLogs.value = logs.value.split("\n");
 });
 

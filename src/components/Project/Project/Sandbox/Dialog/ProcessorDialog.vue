@@ -2,10 +2,11 @@
 import { Ref } from "vue";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useToast } from "primevue/usetoast";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
 const toast = useToast();
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
 const project: Ref<string | undefined> = ref();
 const sandbox: Ref<string | undefined> = ref();
@@ -14,9 +15,9 @@ const track: Ref<number[] | undefined> = ref();
 const processorSelector = ref();
 
 onMounted(() => {
-  project.value = dialogRef.value.data.project;
-  sandbox.value = dialogRef.value.data.sandbox;
-  track.value = dialogRef.value.data.track;
+  project.value = dialogRef?.value.data.project;
+  sandbox.value = dialogRef?.value.data.sandbox;
+  track.value = dialogRef?.value.data.track;
 });
 
 async function run() {
@@ -59,7 +60,7 @@ async function run() {
           group: "general",
         });
         processorSelector.value.processorDialogVisible = false;
-        dialogRef.value.close();
+        dialogRef?.value.close();
       }
     });
 }

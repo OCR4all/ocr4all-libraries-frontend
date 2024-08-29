@@ -10,6 +10,7 @@ declare module 'vue' {
     A11N: typeof import('./src/components/Settings/A11N.vue')['default']
     ActionButton: typeof import('./src/components/ui/ActionButton.vue')['default']
     AddToDatasetDialog: typeof import('./src/components/Project/Project/Sandbox/Dialog/AddToDatasetDialog.vue')['default']
+    AdminOverview: typeof import('./src/components/Admin/AdminOverview.vue')['default']
     AppearanceSettings: typeof import('./src/components/Settings/AppearanceSettings.vue')['default']
     ApplicationCard: typeof import('./src/components/Admin/InstanceOverview/Cards/ApplicationCard.vue')['default']
     AvailableWorkflows: typeof import('./src/components/Dashboard/AvailableWorkflows.vue')['default']

@@ -4,8 +4,9 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import { profileSchema } from "@/components/Admin/UserManagement/Dialog/EditUserDialog/Schemas/profileSchema";
 import { passwordSchema } from "@/components/Admin/UserManagement/Dialog/EditUserDialog/Schemas/passwordSchema";
 import { groupSchema } from "@/components/Admin/UserManagement/Dialog/EditUserDialog/Schemas/groupSchema";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
 const profileForm = ref();
 const passwordForm = ref();
@@ -16,8 +17,8 @@ const passwordData = ref();
 const groupData = ref();
 
 onMounted(() => {
-  profileData.value = dialogRef.value.data.data;
-  groupData.value = dialogRef.value.data.data.groups;
+  profileData.value = dialogRef?.value.data.data;
+  groupData.value = dialogRef?.value.data.data.groups;
 });
 
 async function submitProfileChanges(values, { setErrors }) {
@@ -33,7 +34,7 @@ async function submitProfileChanges(values, { setErrors }) {
       if (response.error.value) {
         setErrors(["Something went wrong.", "Please try again later."]);
       } else {
-        dialogRef.value.close();
+        dialogRef?.value.close();
       }
     });
 }
@@ -52,7 +53,7 @@ function submitPasswordChange(values, { setErrors }) {
       if (response.error.value) {
         setErrors(["Something went wrong.", "Please try again later."]);
       } else {
-        dialogRef.value.close();
+        dialogRef?.value.close();
       }
     });
 }

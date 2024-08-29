@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import type { DynamicDialogInstance } from 'primevue/dynamicdialogoptions'
 import { FilterMatchMode } from "@primevue/core/api";
 import { UseTimeAgo } from "@vueuse/components";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 const journal = ref();
 
 const filters = ref({
@@ -12,7 +13,7 @@ const filters = ref({
 });
 
 onMounted(() => {
-  journal.value = dialogRef.value.data.journal;
+  journal.value = dialogRef?.value.data.journal;
 });
 </script>
 <template>

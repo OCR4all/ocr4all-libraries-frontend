@@ -2,8 +2,9 @@
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { restructureRights, destructureRights } from "@/utils/rights";
 import SharedEntity from "@/components/Sharing/SharedEntity.vue";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
-const dialogRef = inject<Ref<DynamicDialogInstance>>("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
 const data = ref();
 

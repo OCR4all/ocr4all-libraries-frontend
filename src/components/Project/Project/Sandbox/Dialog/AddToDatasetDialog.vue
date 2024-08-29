@@ -9,8 +9,9 @@ import {FilterMatchMode} from "@primevue/core/api";
 
 import IconAddToDataset from "~icons/fluent/stack-add-24-filled";
 import {useToast} from "primevue/usetoast";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
 const key = ref()
 const project = ref()
@@ -31,8 +32,6 @@ interface IDataset {
   right: string | null
 }
 
-const toast = useToast()
-
 const datasets: Ref<IDataset[] | undefined> = ref()
 const selectedDatasets: Ref<IDataset[]> = ref([])
 
@@ -41,9 +40,9 @@ const filters: Ref = ref({
 });
 
 onMounted(() => {
-  key.value = dialogRef.value.data.key;
-  project.value = dialogRef.value.data.project;
-  sandbox.value = dialogRef.value.data.sandbox;
+  key.value = dialogRef?.value.data.key;
+  project.value = dialogRef?.value.data.project;
+  sandbox.value = dialogRef?.value.data.sandbox;
 });
 
 const { isFetching, error, data } = await useCustomFetch(

@@ -2,16 +2,17 @@
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import IconImageImport from "~icons/lucide/image-plus";
 import { useToast } from "primevue/usetoast";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
 const toast = useToast()
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
 const project = ref()
 const imageSelector = ref()
 
 onMounted(() => {
-  project.value = dialogRef.value.data;
+  project.value = dialogRef?.value.data;
 });
 
 const isLoading = ref(false)
@@ -45,7 +46,7 @@ async function importFolios() {
         life: 3000,
         group: "general",
       });
-      dialogRef.value.close()
+      dialogRef?.value.close()
     })
   }catch(error){
     toast.add({

@@ -27,12 +27,18 @@ const deleteGroupDialog = defineAsyncComponent(
     import("@/components/Admin/GroupManagement/Dialog/DeleteGroupDialog.vue"),
 );
 
+import { useI18n } from "vue-i18n";
+import { useUiStore } from "@/stores/ui.store";
+import { useDialog } from "primevue/usedialog";
+
+import { IGroup } from "@/types/auth/group.types";
+
 const dialog = useDialog();
 
-const items = ref([]);
+const items: Ref = ref([]);
 const menu = ref();
 
-const toggle = (event, data) => {
+const toggle = (event: Event, data) => {
   items.value = [
     {
       label: "Actions",
@@ -87,24 +93,23 @@ useHead({
   templateParams: { separator: "|", siteName: "OCR4all" },
   bodyAttrs: { class: { overflow: true } },
 });
-
-import { useI18n } from "vue-i18n";
-import { useUiStore } from "@/stores/ui.store";
-import { useDialog } from "primevue/usedialog";
 const i18n = useI18n();
 
-const groups = ref();
-const selectedGroups = ref();
+const groups: Ref<IGroup[]> = ref([]);
+const selectedGroups: Ref<IGroup[]> = ref([]);
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
+
+const isLoading = ref(true)
 
 async function refetch() {
   useCustomFetch(`/administration/security/group/list`)
     .json()
     .then((response) => {
       groups.value = response.data.value;
+      isLoading.value = false
     });
 }
 
@@ -127,7 +132,7 @@ function openNewGroupDialog() {
   });
 }
 
-function openEditGroupDialog(data) {
+function openEditGroupDialog(data: IGroup) {
   dialog.open(editGroupDialog, {
     props: {
       header: "Edit Group",
@@ -148,7 +153,7 @@ function openEditGroupDialog(data) {
     },
   });
 }
-function openDeleteGroupDialog(data: any) {
+function openDeleteGroupDialog(data: IGroup[]) {
   dialog.open(deleteGroupDialog, {
     props: {
       header: i18n.t("admin.user-management.dialog.delete.single.header"),
@@ -161,9 +166,7 @@ function openDeleteGroupDialog(data: any) {
         "640px": "90vw",
       },
     },
-    data: {
-      data,
-    },
+    data: data,
     onClose: () => {
       refetch();
     },
@@ -256,6 +259,7 @@ refetch();
     </Toolbar>
     <DataTable
       ref="dt"
+      :loading="isLoading"
       scrollable
       :value="groups"
       v-model:selection="selectedGroups"

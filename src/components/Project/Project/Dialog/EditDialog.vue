@@ -3,17 +3,18 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import { projectInformationSchema } from "@/components/Project/Project/Dialog/Schemas/projectInformationSchema";
 import { useToast } from "primevue/usetoast";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 const toast = useToast();
 
 const schema = projectInformationSchema;
 const data = ref();
 
 import { useI18n } from "vue-i18n";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 const { t } = useI18n();
 
 onMounted(() => {
-  data.value = dialogRef.value.data;
+  data.value = dialogRef?.value.data;
 });
 
 async function submitProjectInformationChange(values, { setErrors }) {
@@ -48,7 +49,7 @@ async function submitProjectInformationChange(values, { setErrors }) {
       group: "general",
     });
   }
-  dialogRef.value.close();
+  dialogRef?.value.close();
 }
 </script>
 <template>

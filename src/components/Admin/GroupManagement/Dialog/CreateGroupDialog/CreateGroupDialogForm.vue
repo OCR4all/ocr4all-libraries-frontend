@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { groupSchema } from "@/components/Admin/GroupManagement/Dialog/CreateGroupDialog/Schemas/groupSchema";
 
-const dialogRef = inject("dialogRef");
+const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 import { useCustomFetch } from "@/composables/useCustomFetch";
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
 const schema = groupSchema;
 const data = ref();
@@ -20,7 +21,7 @@ function createGroup(values, { setErrors }) {
       if (response.error.value) {
         setErrors(["Something went wrong.", "Please try again later."]);
       } else {
-        dialogRef.value.close();
+        dialogRef?.value.close();
       }
     });
 }

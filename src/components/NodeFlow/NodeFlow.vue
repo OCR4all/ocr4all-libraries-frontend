@@ -6,6 +6,7 @@ import Dialog from "primevue/dialog";
 import { useToast } from "primevue/usetoast";
 import InlineMessage from "primevue/inlinemessage";
 import InputText from "primevue/inputtext";
+import { IWorkflow } from "@/types/workflow.types";
 
 import CToolbar from "@/components/NodeFlow/Custom/CToolbar.vue";
 import CPalette from "@/components/NodeFlow/Custom/CPalette.vue";
@@ -175,16 +176,6 @@ async function saveWorkflow() {
       isSaveDialogVisible.value = false;
     }
   }
-}
-
-interface IWorkflow {
-  date: string,
-  user: string,
-  id: string,
-  updated: string,
-  label: string,
-  description: string,
-  "update-user": string
 }
 
 async function loadWorkflow(workflow: IWorkflow) {
