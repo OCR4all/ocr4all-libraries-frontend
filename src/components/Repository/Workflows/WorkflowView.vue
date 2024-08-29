@@ -32,6 +32,7 @@ const deleteWorkflowDialog = defineAsyncComponent(
 
 import { useI18n } from "vue-i18n";
 import Button from "primevue/button";
+import InputText from "primevue/inputtext";
 const { t } = useI18n();
 
 const toast = useToast();
@@ -43,6 +44,8 @@ const router: Router = useRouter();
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  label: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  description: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
 const labelTaken: Ref<boolean> = ref(false);
@@ -307,8 +310,9 @@ refetch();
       :value="workflows"
       :paginator="true"
       :rows="10"
+      v-model:filters="filters"
+      filterDisplay="menu"
       :loading="loading"
-      :filters="filters"
       context-menu
       :global-filter-fields="['label', 'description']"
       sort-field="date"
@@ -337,6 +341,14 @@ refetch();
             {{ data.label }}
           </p>
         </template>
+        <template #filter="{ filterModel, filterCallback }">
+          <InputText
+            v-model="filterModel.value"
+            type="text"
+            @input="filterCallback()"
+            placeholder="Search by label"
+          />
+        </template>
       </Column>
       <Column
         field="description"
@@ -344,6 +356,14 @@ refetch();
       >
         <template #body="slotProps">
           <p class="max-w-xs truncate">{{ slotProps.data.description }}</p>
+        </template>
+        <template #filter="{ filterModel, filterCallback }">
+          <InputText
+            v-model="filterModel.value"
+            type="text"
+            @input="filterCallback()"
+            placeholder="Search by description"
+          />
         </template>
       </Column>
       <Column
