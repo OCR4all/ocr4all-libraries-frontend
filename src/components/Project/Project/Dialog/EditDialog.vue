@@ -28,7 +28,7 @@ async function submitProjectInformationChange(values, { setErrors }) {
   const { isFetching, error, data } = await useCustomFetch(`/project/update`)
     .post(payload)
     .json();
-  if (!error) {
+  if (!error.value) {
     toast.add({
       severity: "success",
       summary: t(

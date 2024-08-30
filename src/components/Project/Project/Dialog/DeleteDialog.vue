@@ -16,7 +16,7 @@ async function deleteProject() {
   )
     .get()
     .json();
-  if (!error) {
+  if (!error.value) {
     toast.add({
       severity: "success",
       summary: t(
