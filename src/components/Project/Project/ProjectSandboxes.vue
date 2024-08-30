@@ -78,14 +78,14 @@ const toggle = (event, data) => {
           label: "Download",
           icon: "pi pi-download",
           command: () => {
-            downloadHistory(data.id);
+            downloadSandbox(data.id);
           },
         },
         {
           label: "Download History",
           icon: "pi pi-history",
           command: () => {
-            downloadSandbox(data.id);
+            downloadHistory(data.id);
           },
         },
         {
