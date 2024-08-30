@@ -36,9 +36,6 @@ async function run() {
     ...data.parameters,
   };
 
-  console.log(payload)
-  console.log(url)
-
   useCustomFetch(url)
     .post(payload)
     .json()
@@ -52,6 +49,7 @@ async function run() {
           group: "general",
         });
       } else {
+        const jobId = response.data.value["job-id"]
         toast.add({
           severity: "success",
           summary: "Success",
@@ -60,7 +58,7 @@ async function run() {
           group: "general",
         });
         processorSelector.value.processorDialogVisible = false;
-        dialogRef?.value.close();
+        dialogRef?.value.close(jobId);
       }
     });
 }

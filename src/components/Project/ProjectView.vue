@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import Toast from "primevue/toast";
-
 import Images from "@/components/Project/Project/ProjectImages.vue";
 import Information from "@/components/Project/Project/ProjectInformation.vue";
 import Results from "@/components/Project/Project/ProjectSandboxes.vue";

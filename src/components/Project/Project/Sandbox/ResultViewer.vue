@@ -25,6 +25,7 @@ import {
   INode,
 } from "@/components/Project/Project/Sandbox/resultviewer.interface";
 import axios from "axios";
+import DefaultSpinner from "@/components/Layout/utils/DefaultSpinner.vue";
 
 const authStore = useAuthStore();
 
@@ -83,7 +84,6 @@ const formMimeMap = ref();
 const selectedSnapshotInformation = ref();
 const selectedSnapshotLock = ref();
 
-const sandboxHome = ref();
 const createdTrack = ref();
 
 const nodes = ref();
@@ -119,7 +119,13 @@ function openProcessorDialog(snapshot: ITrack) {
       sandbox: sandbox,
       track: key,
     },
-    onClose: () => {
+    onClose: (data: unknown) => {
+      toast.add({
+        severity: "info",
+        summary: "Processor is running",
+        detail: data.data,
+        group: "job",
+      })
       refetch();
     },
   });
@@ -376,6 +382,38 @@ function openAddToDatasetDialog(snapshot: ITrack) {
   });
 }
 
+const scheduledJobs: Ref<number[]> = ref([])
+const runningJobs: Ref<number[]> = ref([])
+const finishedJobs: Ref<number[]> = ref([])
+
+const { pause, resume, isActive } = useIntervalFn(() => {
+  useCustomFetch(
+    `/job/overview/domain`,
+  )
+    .get()
+    .json()
+    .then((response) => {
+      const jobMap = response.data.value
+      const scheduled = []
+      for(const entry of jobMap["scheduled"]){
+        scheduled.push(entry.id)
+      }
+      scheduledJobs.value = scheduled
+
+      const running = []
+      for(const entry of jobMap["running"]){
+        running.push(entry.id)
+      }
+      runningJobs.value = running
+
+      const finished = []
+      for(const entry of jobMap["done"]){
+        finished.push(entry.id)
+      }
+      finishedJobs.value = finished
+    })
+}, 1000)
+
 async function checkJob(startedJob: number) {
   return await new Promise((resolve) => {
     const jobInterval = setInterval(async () => {
@@ -465,14 +503,6 @@ async function createLarexMapsFromFiles(sets: string[]): unknown {
   return { fileMap: fileMap, mimeMap: mimeMap }
 }
 
-axios
-  .get('http://localhost:8081/test', {
-    headers: {"Access-Control-Allow-Origin": "*"}
-  })
-  .then(response => {
-    console.log(response.data.value);
-  })
-
 const items = computed(() => {
   if (Object.keys(selection.value).length === 0) {
     return [];
@@ -538,6 +568,44 @@ const items = computed(() => {
 </script>
 <template>
   <Toast
+    position="bottom-right"
+    group="job"
+  >
+    <template #container="{ message, closeCallback }">
+      <section
+        class="grid w-full justify-center gap-3 border bg-surface-100/70 p-3 backdrop-blur-sm dark:border-surface-600 dark:bg-surface-800/80"
+        style="border-radius: 10px"
+      >
+        <div v-if="scheduledJobs.includes(message.detail)" class="flex flex-col justify-center w-full gap-3 justify-self-center">
+          <p
+            class="m-0 text-base font-semibold text-primary-950 dark:text-primary-0"
+          >
+            Processor job is scheduled!
+          </p>
+          <ProgressBar mode="indeterminate" style="height: 6px"></ProgressBar>
+        </div>
+        <div v-else-if="runningJobs.includes(message.detail)" class="flex flex-col justify-center w-full gap-3 justify-self-center">
+          <p
+            class="m-0 text-base font-semibold text-primary-950 dark:text-primary-0"
+          >
+            Processor job is running!
+          </p>
+          <ProgressBar mode="indeterminate" style="height: 6px"></ProgressBar>
+        </div>
+        <div v-else-if="finishedJobs.includes(message.detail)" class="flex flex-col justify-center w-full gap-3 justify-self-center">
+          <p
+            class="m-0 text-base font-semibold text-primary-950 dark:text-primary-0"
+          >
+            Processor job is finished!
+          </p>
+          <Button severity="contrast" @click="closeCallback">
+            Close
+          </Button>
+        </div>
+      </section>
+    </template>
+  </Toast>
+  <Toast
     position="top-center"
     group="headless"
     @close="sandboxGenerationToastVisible = false"
@@ -563,7 +631,7 @@ const items = computed(() => {
           style="height: 6px"
         ></ProgressBar>
         <form
-          v-show="isReady"
+          v-show="isReady && !isGeneratingSandbox"
           id="larexForm"
           class="justify-self-center"
           :action="larexURL"
@@ -586,20 +654,23 @@ const items = computed(() => {
           <input id="customFlag" value="" type="hidden" name="customFlag" />
           <input id="customFolder" value="" type="hidden" name="customFolder" />
           <input id="modes" value="" type="hidden" name="modes" />
-          <button
-            type="submit"
-            name="action"
-            class="rounded-md bg-primary-600 p-2 text-surface-50 hover:bg-primary-800"
-            @click="closeCallback"
-          >
-            Open
-          </button>
-          <Button
-            label="Close"
-            text
-            class="px-2 py-1"
-            @click="closeCallback"
-          ></Button>
+          <div class="flex space-x-4">
+            <Button
+              type="submit"
+              severity="contrast"
+              name="action"
+              class="rounded-md bg-primary-600 p-2 text-surface-50 hover:bg-primary-800"
+              @click="closeCallback"
+            >
+              Open
+            </Button>
+            <Button
+              label="Close"
+              severity="secondary"
+              class="px-2 py-1"
+              @click="closeCallback"
+            ></Button>
+          </div>
         </form>
       </section>
     </template>
