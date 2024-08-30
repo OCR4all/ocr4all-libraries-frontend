@@ -42,11 +42,6 @@ const grayScaleOptions = ref([
   { name: "Deactivated", value: "deactivated" },
   { name: "Activated", value: "activated" },
 ]);
-
-
-watch(fontScaling, (newValue) => {
-  setFontSize(JSON.stringify(newValue.value))
-});
 </script>
 <template>
   <div
@@ -59,7 +54,7 @@ watch(fontScaling, (newValue) => {
         <SelectButton
             v-model="fontScaling"
             :options="fontScalingOptions"
-            option-label="Font Scaling"
+            option-label="name"
             :allow-empty="false"
         />
       </div>
@@ -68,7 +63,7 @@ watch(fontScaling, (newValue) => {
         <SelectButton
             v-model="highContrast"
             :options="highContrastOptions"
-            option-label="High Contrast"
+            option-label="name"
             :allow-empty="false"
         />
       </div>
@@ -77,7 +72,7 @@ watch(fontScaling, (newValue) => {
         <SelectButton
             v-model="font"
             :options="fontOptions"
-            option-label="Font"
+            option-label="name"
             :allow-empty="false"
         />
       </div>
@@ -86,7 +81,7 @@ watch(fontScaling, (newValue) => {
         <SelectButton
             v-model="grayScale"
             :options="grayScaleOptions"
-            option-label="Grayscale"
+            option-label="name"
             :allow-empty="false"
         />
       </div>
