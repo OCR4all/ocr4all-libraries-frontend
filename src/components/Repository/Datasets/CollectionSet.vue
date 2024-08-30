@@ -508,10 +508,7 @@ refresh();
           <p
             class="m-0 text-base font-semibold text-surface-0 dark:text-primary-0"
           >
-            {{ message.summary }}
-          </p>
-          <p class="m-0 text-base text-primary-950 dark:text-primary-0">
-            Sets were uploaded
+            Uploading your dataset
           </p>
         </div>
         <div v-if="progress < 100" class="w-full">

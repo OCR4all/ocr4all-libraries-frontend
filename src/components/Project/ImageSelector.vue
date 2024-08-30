@@ -71,7 +71,7 @@ onMounted(() => {
 });
 
 const nodes: Ref<INode[]> = ref([]);
-const rows = ref(10);
+const rows = ref(15);
 const loading = ref(false);
 const totalRecords = ref(0);
 const onExpand = (node) => {
