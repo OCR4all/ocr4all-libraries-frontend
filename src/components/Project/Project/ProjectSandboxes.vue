@@ -196,6 +196,12 @@ async function removeResults() {
 }
 const downloadSandboxToastVisible = ref();
 async function downloadSandbox(sandbox) {
+  downloadSandboxToastVisible.value = true
+  toast.add({
+    severity: "info",
+    summary: "Download is prepared",
+    group: "headless",
+  });
   useCustomFetch(`/sandbox/zip/${project}?id=${sandbox}`)
     .blob()
     .then((response) => {
@@ -205,6 +211,8 @@ async function downloadSandbox(sandbox) {
       link.setAttribute("download", `${project}_${sandbox}.zip`);
       document.body.appendChild(link);
       link.click();
+      toast.removeGroup("headless");
+      downloadSandboxToastVisible.value = false
     });
 }
 async function downloadHistory(sandbox) {
@@ -285,15 +293,18 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
           </p>
         </div>
         <div class="flex gap-2 justify-self-center">
-          <ProgressBar mode="indeterminate" style="height: 6px"></ProgressBar>
+          <ProgressSpinner
+            style="width: 50px; height: 50px"
+            stroke-width="8"
+            fill="transparent"
+            animation-duration=".5s"
+            aria-label="Custom ProgressSpinner"
+          />
         </div>
-        <div class="mb-3 flex gap-3 justify-self-center">
-          <Button
-            label="Close"
-            text
-            class="px-2 py-1"
-            @click="closeCallback"
-          ></Button>
+        <div class="mb-4 flex justify-center gap-4">
+          <Button label="Cancel" size="small" @click="closeCallback">
+            <p class="font-semibold text-white">Cancel</p>
+          </Button>
         </div>
       </section>
     </template>
