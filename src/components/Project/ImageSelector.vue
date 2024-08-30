@@ -177,27 +177,31 @@ defineExpose({
       <Column field="thumbnail" header="Image">
         <template #body="slotProps">
           <div v-show="slotProps.node.data.type === 'folio'">
-            <Image v-if="slotProps.node.data.thumbnail" alt="Image" preview>
-              <template #indicatoricon>
-                <i class="pi pi-search"></i>
-              </template>
-              <template #image>
-                <img
-                  :src="slotProps.node.data.thumbnail"
-                  class="max-w-24 max-h-24 object-scale-down"
-                  alt="image"
-                />
-              </template>
-              <template #preview="props">
-                <img
-                  :src="slotProps.node.data.detail"
-                  alt="preview"
-                  :style="props.style"
-                  @click="props.onClick"
-                />
-              </template>
-            </Image>
-            <Skeleton v-else size="4rem" />
+            <div v-if="typeof slotProps.node.data.thumbnail === 'object'">
+              <Skeleton size="4rem" />
+            </div>
+            <div v-else>
+              <Image v-if="slotProps.node.data.thumbnail" alt="Image" preview>
+                <template #indicatoricon>
+                  <i class="pi pi-search"></i>
+                </template>
+                <template #image>
+                  <img
+                    :src="slotProps.node.data.thumbnail"
+                    class="max-w-24 max-h-24 object-scale-down"
+                    alt="image"
+                  />
+                </template>
+                <template #preview="props">
+                  <img
+                    :src="slotProps.node.data.detail"
+                    alt="preview"
+                    :style="props.style"
+                    @click="props.onClick"
+                  />
+                </template>
+              </Image>
+            </div>
           </div>
         </template>
       </Column>

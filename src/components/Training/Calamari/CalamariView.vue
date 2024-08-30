@@ -3,6 +3,7 @@ import { useUiStore } from "@/stores/ui.store";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
 import IconNext from "~icons/fluent/next-16-filled"
+import { useToast } from "primevue/usetoast";
 
 const datasets = ref();
 const parameters = ref();
@@ -21,9 +22,17 @@ uiStore.breadcrumb = [
   },
 ];
 
+const toast = useToast()
+
 function run() {
-  const data = datasets.value.getDatasets();
-  console.log(datasets.value.getDatasets());
+  toast.add({
+    severity: "success",
+    summary: "Success",
+    detail: "Training scheduled",
+    life: 3000,
+    group: "general",
+  });
+  /* const data = datasets.value.getDatasets(); */
 
   // const dataset = {
   //   "collections": [
@@ -117,18 +126,18 @@ function run() {
       <StepItem value="3">
         <Step>Run</Step>
         <StepPanel v-slot="{ activateCallback }">
-          <Button @click="run">
-            <div class="flex space-x-4">
-              <IconNext class="text-white self-center" />
-              <p class="text-white self-center">Run</p>
-            </div>
-          </Button>
-          <div class="py-6">
+          <div class="flex space-x-4">
             <Button
               label="Back"
               severity="secondary"
               @click="activateCallback('2')"
             />
+            <Button @click="run">
+              <div class="flex space-x-4">
+                <IconNext class="text-white self-center" />
+                <p class="text-white self-center">Start training</p>
+              </div>
+            </Button>
           </div>
         </StepPanel>
       </StepItem>

@@ -85,7 +85,7 @@ useHead({
                     Line based ATR Engine based on OCRopy.
                   </p>
                 </div>
-                <Button><p class="text-white">Open</p></Button
+                <Button severity="contrast">Open</Button
                 >
               </div>
             </div>
