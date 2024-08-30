@@ -20,35 +20,7 @@ async function refresh() {
     .get()
     .json();
 
-  if(folioData.data.value){
-    for (const folio of folioData.data.value) {
-      await fetchImages(folio);
-    }
-  }
-}
-
-async function fetchImages(folio) {
-  const thumbnailBlob = await useCustomFetch(
-    `/project/folio/derivative/thumbnail/${project}?id=${folio.id}`,
-  )
-    .get()
-    .blob();
-  const thumbnail = useObjectUrl(thumbnailBlob.data.value);
-
-  const imageBlob = await useCustomFetch(
-    `/project/folio/derivative/best/${project}?id=${folio.id}`,
-  )
-    .get()
-    .blob();
-  const image = useObjectUrl(imageBlob.data.value);
-  folios.value.push({
-    name: folio.name,
-    id: folio.id,
-    size: folio.size,
-    format: folio.format,
-    img: image,
-    thumbnail: thumbnail,
-  });
+  folios.value = folioData.data.value
 }
 
 function openImageImportDialog(){
@@ -95,11 +67,11 @@ refresh();
       <ImageCard
         v-for="folio in folios"
         :key="folio.id"
+        :id="folio.id"
         :name="folio.name"
-        :thumb="folio.thumbnail"
-        :img="folio.img"
         :size="folio.size"
         :format="folio.format"
+        :projectId="project"
       />
     </div>
     <div

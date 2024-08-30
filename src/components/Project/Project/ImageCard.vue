@@ -1,15 +1,39 @@
-w
 <script setup lang="ts">
 import Image from "primevue/image";
 import Skeleton from "primevue/skeleton";
+import { useCustomFetch } from "@/composables/useCustomFetch";
 
 const props = defineProps<{
+  id: string;
   name?: string;
-  thumb?: string;
-  img?: string;
   format?: string;
   size?: object;
+  projectId: string;
 }>();
+
+const thumb = ref();
+const detail = ref();
+
+console.log(`/project/folio/derivative/thumbnail/${props.projectId}?id=${props.id}`)
+useCustomFetch(
+  `/project/folio/derivative/thumbnail/${props.projectId}?id=${props.id}`,
+)
+  .get()
+  .blob()
+  .then((response) => {
+    thumb.value = useObjectUrl(response.data.value);
+  });
+
+async function loadDetail() {
+  useCustomFetch(
+    `/project/folio/derivative/best/${props.projectId}?id=${props.id}`,
+  )
+    .get()
+    .blob()
+    .then((response) => {
+      detail.value = useObjectUrl(response.data.value);
+    });
+}
 </script>
 <template>
   <div class="grid grid-cols-1 justify-self-center">
@@ -19,20 +43,25 @@ const props = defineProps<{
       <div
         class="mx-4 mt-4 h-fit w-fit self-center justify-self-center text-surface-700"
       >
-        <Image v-if="props.img" alt="Image" preview>
-          <template #indicatoricon>
-            <i class="pi pi-search"></i>
+        <Image v-if="thumb" alt="Image" preview>
+          <template #previewicon>
+            <i
+              class="pi pi-search"
+              style="padding: 100%"
+              @click="loadDetail"
+            ></i>
           </template>
           <template #image>
             <img
-              :src="props.thumb"
+              :src="thumb.value"
               class="max-w-48 max-h-48 object-scale-down"
               alt="image"
             />
           </template>
           <template #preview="slotProps">
             <img
-              :src="props.img"
+              v-if="detail"
+              :src="detail.value"
               alt="preview"
               class="max-h-screen"
               :style="slotProps.style"
