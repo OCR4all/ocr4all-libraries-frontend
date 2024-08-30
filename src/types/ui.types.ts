@@ -5,7 +5,8 @@ export interface IContextMenuItem {
 }
 
 export interface IMenuItems {
-  label: string,
+  label: string
+  icon?: string
   items: IMenuItem[]
 }
 

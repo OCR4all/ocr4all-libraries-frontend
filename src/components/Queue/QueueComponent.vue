@@ -1,4 +1,4 @@
-<script setup lang="ts">
+  <script setup lang="ts">
 import { UseTimeAgo } from "@vueuse/components";
 
 import IconRefresh from "~icons/heroicons/arrow-path"
@@ -31,6 +31,8 @@ import { Ref } from "vue";
 import { useDialog } from "primevue/usedialog";
 import { useLocalDateFormat } from "@/composables/useLocalDateFormat";
 import Toolbar from "primevue/toolbar";
+import { IMenuItem, IMenuItems } from "@/types/ui.types";
+import { useConfirm } from "primevue/useconfirm";
 const toast = useToast();
 
 const loading: Ref<boolean> = ref(true);
@@ -103,9 +105,13 @@ function calculateProgress(data) {
 
 refetch();
 
-setInterval(function () {
+const { pause } = useIntervalFn(function () {
   refetch();
 }, 5000);
+
+onUnmounted(() => {
+  pause
+})
 async function cancelJob(id: string) {
   const data = await useCustomFetch(`/job/cancel/${id}`).get().json();
   await refetch().then(() => {
@@ -151,7 +157,7 @@ async function removeJob(job: string) {
     });
 }
 
-const items = ref([]);
+const items: Ref<IMenuItems[]> = ref([]);
 const menu = ref();
 
 const toggle = (event, data) => {
@@ -202,10 +208,38 @@ function openInfoDialog(data) {
   });
 }
 
+const confirm = useConfirm()
+const router = useRouter()
+
+function goToResult(project: string, sandbox: string){
+  confirm.require({
+    message: 'Open Result View?',
+    header: 'Confirmation',
+    icon: 'pi pi-exclamation-triangle',
+    position: "bottom",
+    rejectProps: {
+      label: 'Cancel',
+      severity: 'secondary',
+      outlined: true
+    },
+    acceptProps: {
+      label: 'Save'
+    },
+    accept: () => {
+      console.log(`/project/${project}/result/${sandbox}`)
+      router.push(`/project/${project}/result/${sandbox}`)
+    },
+    reject: () => {
+
+    }
+  });
+}
+
 onUnmounted(() => {});
 </script>
 
 <template>
+  <ConfirmDialog />
   <ContextMenu ref="contextMenu" :model="items">
     <template #item="{ item, props }">
       <a
@@ -344,7 +378,16 @@ onUnmounted(() => {});
       <Column
         field="description"
         :header="$t('pages.queue.table.columns.description')"
-      ></Column>
+      >
+        <template #body="{ data }">
+          <div v-if="data && data.state ==='completed' && data.process && data.process['project-id'] && data.process['sandbox-id']">
+            <p class="hover:underline cursor-pointer" @click="goToResult(data.process['project-id'], data.process['sandbox-id'])"> {{ data.description }}</p>
+          </div>
+          <p v-else>
+            {{ data.description }}
+          </p>
+        </template>
+      </Column>
       <Column
         field="state"
         :sortable="true"
