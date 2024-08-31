@@ -13,16 +13,6 @@ const fontScalingOptions = ref([
   { name: "Extra Large", value: "20px" },
 ]);
 
-const highContrast = useStorage("/ocr4all/frontend/a11n/high-contrast", {
-  name: "Deactivated",
-  value: "deactivated"
-});
-
-const highContrastOptions = ref([
-  { name: "Deactivated", value: "deactivated" },
-  { name: "Activated", value: "activated" },
-]);
-
 const font = useStorage("/ocr4all/frontend/a11n/font", {
   name: "Regular",
   value: "regular"
@@ -59,15 +49,6 @@ watch(grayScale, async (newGrayscaleValue, _) => {
         <SelectButton
             v-model="fontScaling"
             :options="fontScalingOptions"
-            option-label="name"
-            :allow-empty="false"
-        />
-      </div>
-      <div class="flex flex-col space-y-2">
-        <h2 class="text-sm font-bold text-black dark:text-white">High Contrast</h2>
-        <SelectButton
-            v-model="highContrast"
-            :options="highContrastOptions"
             option-label="name"
             :allow-empty="false"
         />
