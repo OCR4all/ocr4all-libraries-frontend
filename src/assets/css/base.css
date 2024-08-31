@@ -10,6 +10,8 @@
     --font-family: "Inter var", sans-serif;
     --font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 
+    --grayscale-filter: grayscale(0);
+
     --main-0: 255 255 255;
     --main-50: 238 242 255;
     --main-100: 225 232 254;
@@ -68,6 +70,7 @@
 
 html {
   font-size: var(--base-font-size);
+  filter: var(--grayscale-filter);
 }
 
 /** Keyframes **/
