@@ -27,8 +27,8 @@ importers:
         specifier: 4.0.0-rc.2
         version: 4.0.0-rc.2(@primeuix/styled@0.0.5)
       '@tanstack/vue-query':
-        specifier: ^5.52.2
-        version: 5.52.2(vue@3.4.27(typescript@5.3.3))
+        specifier: ^5.53.1
+        version: 5.53.1(vue@3.4.27(typescript@5.3.3))
       '@types/chroma-js':
         specifier: ^2.4.4
         version: 2.4.4
@@ -42,8 +42,8 @@ importers:
         specifier: ^11.0.3
         version: 11.0.3(vue@3.4.27(typescript@5.3.3))
       axios:
-        specifier: ^1.7.5
-        version: 1.7.5
+        specifier: ^1.7.6
+        version: 1.7.6
       baklavajs:
         specifier: ^2.4.5
         version: 2.4.5
@@ -91,8 +91,8 @@ importers:
         version: 4.2.5(vue@3.4.27(typescript@5.3.3))
     devDependencies:
       '@iconify/json':
-        specifier: ^2.2.241
-        version: 2.2.241
+        specifier: ^2.2.242
+        version: 2.2.242
       '@intlify/unplugin-vue-i18n':
         specifier: ^4.0.0
         version: 4.0.0(rollup@4.18.0)(vue-i18n@9.8.0(vue@3.4.27(typescript@5.3.3)))
@@ -106,8 +106,8 @@ importers:
         specifier: 1.40.1
         version: 1.40.1
       '@sfxcode/formkit-primevue':
-        specifier: ^2.4.4
-        version: 2.4.4(tailwindcss@3.3.6)(vue@3.4.27(typescript@5.3.3))
+        specifier: ^2.4.5
+        version: 2.4.5(tailwindcss@3.3.6)(vue@3.4.27(typescript@5.3.3))
       '@tailwindcss/aspect-ratio':
         specifier: 0.4.2
         version: 0.4.2(tailwindcss@3.3.6)
@@ -953,8 +953,8 @@ packages:
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
 
-  '@iconify/json@2.2.241':
-    resolution: {integrity: sha512-zpeIjmIrTjl0ra6BYTYDfoK/hXn++xT5Hllc87K5SQwnqKs9RJeToSBzjF1gAsrxia+ilkhtGCcqbFF0ppDXiw==}
+  '@iconify/json@2.2.242':
+    resolution: {integrity: sha512-cS6eYdx1C1GhqaZm25ztH5yoghCaTXGJBeseUkS259GxxX9obtGLLk0yy+twxpNCD5/F9gjbgxh46BjNWsHtwg==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -974,8 +974,8 @@ packages:
       vue-i18n:
         optional: true
 
-  '@intlify/core-base@9.13.1':
-    resolution: {integrity: sha512-+bcQRkJO9pcX8d0gel9ZNfrzU22sZFSA0WVhfXrf5jdJOS24a+Bp8pozuS9sBI9Hk/tGz83pgKfmqcn/Ci7/8w==}
+  '@intlify/core-base@9.14.0':
+    resolution: {integrity: sha512-zJn0imh9HIsZZUtt9v8T16PeVstPv6bP2YzlrYJwoF8F30gs4brZBwW2KK6EI5WYKFi3NeqX6+UU4gniz5TkGg==}
     engines: {node: '>= 16'}
 
   '@intlify/core-base@9.8.0':
@@ -986,12 +986,20 @@ packages:
     resolution: {integrity: sha512-SKsVa4ajYGBVm7sHMXd5qX70O2XXjm55zdZB3VeMFCvQyvLew/dLvq3MqnaIsTMF1VkkOb9Ttr6tHcMlyPDL9w==}
     engines: {node: '>= 16'}
 
+  '@intlify/message-compiler@9.14.0':
+    resolution: {integrity: sha512-sXNsoMI0YsipSXW8SR75drmVK56tnJHoYbPXUv2Cf9lz6FzvwsosFm6JtC1oQZI/kU+n7qx0qRrEWkeYFTgETA==}
+    engines: {node: '>= 16'}
+
   '@intlify/message-compiler@9.8.0':
     resolution: {integrity: sha512-McnYWhcoYmDJvssVu6QGR0shqlkJuL1HHdi5lK7fNqvQqRYaQ4lSLjYmZxwc8tRNMdIe9/KUKfyPxU9M6yCtNQ==}
     engines: {node: '>= 16'}
 
   '@intlify/shared@9.13.1':
     resolution: {integrity: sha512-u3b6BKGhE6j/JeRU6C/RL2FgyJfy6LakbtfeVF8fJXURpZZTzfh3e05J0bu0XPw447Q6/WUp3C4ajv4TMS4YsQ==}
+    engines: {node: '>= 16'}
+
+  '@intlify/shared@9.14.0':
+    resolution: {integrity: sha512-r+N8KRQL7LgN1TMTs1A2svfuAU0J94Wu9wWdJVJqYsoMMLIeJxrPjazihfHpmJqfgZq0ah3Y9Q4pgWV2O90Fyg==}
     engines: {node: '>= 16'}
 
   '@intlify/shared@9.8.0':
@@ -1119,21 +1127,11 @@ packages:
     peerDependencies:
       vue: ^3.0.0
 
-  '@primevue/core@4.0.4':
-    resolution: {integrity: sha512-xGD2hNYL4WLnkWuoxIjMIqEXiydYpFovDuCMHMWRl3yb/AFJcHpyZpUlgZ2HnJydA5ZsLS00sGsPHEoV5u2M8A==}
-    engines: {node: '>=12.11.0'}
-    peerDependencies:
-      vue: ^3.0.0
-
   '@primevue/core@4.0.5':
     resolution: {integrity: sha512-DUCslDA93eUOVW0A1I3yoZgRLI4zmI2++loZQXbUF5jaXCwKiAza14+iyUU+cWH27VSq+jQnCEP9QJtPZiJJ0w==}
     engines: {node: '>=12.11.0'}
     peerDependencies:
       vue: ^3.0.0
-
-  '@primevue/icons@4.0.4':
-    resolution: {integrity: sha512-eHOuO5jIv/qb3mpo3m1qpDKJxw/B8ZFpAcsKxV4uWhAXkxWo/afmykGO38PVabKc3SSai8bq1zFVXPA1w0cg9g==}
-    engines: {node: '>=12.11.0'}
 
   '@primevue/icons@4.0.5':
     resolution: {integrity: sha512-ZxR9W1wlAE2fTtUhrHyeMx5t0jNyAgxDcHPm0cNXpX8q1XF95rSM/qb48QKXIBDBrJ/xs57BcyCNADP/VDPY4g==}
@@ -1238,8 +1236,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@sfxcode/formkit-primevue@2.4.4':
-    resolution: {integrity: sha512-9BQ2tM3BQ5etNEOhbWO1g86SHD+m/Brc2+7hi0M8VWHG6cMV9fEmtZ5Kf9rFCmbbMJBTX6JDga1HjOvT69FEeA==}
+  '@sfxcode/formkit-primevue@2.4.5':
+    resolution: {integrity: sha512-BPBRb/AkWSyAy6VaxtyOvbDDVkDg1eb1No/5VfkvD2cNLP+x/z27NVB1NodzcDFd4o2Qse9bq/2i3YW6MKewBg==}
     peerDependencies:
       vue: ^3.4.0
 
@@ -1284,11 +1282,11 @@ packages:
     resolution: {integrity: sha512-PnVV3d2poenUM31ZbZi/yXkBu3J7kd5k2u51CGwwNojag451AjTH9N6n41yjXz2fpLeewleyLBmNS6+HcGDlXw==}
     engines: {node: '>=12'}
 
-  '@tanstack/query-core@5.52.2':
-    resolution: {integrity: sha512-9vvbFecK4A0nDnrc/ks41e3UHONF1DAnGz8Tgbxkl59QcvKWmc0ewhYuIKRh8NC4ja5LTHT9EH16KHbn2AIYWA==}
+  '@tanstack/query-core@5.53.1':
+    resolution: {integrity: sha512-mvLG7s4Zy3Yvc2LsKm8BVafbmPrsReKgqwhmp4XKVmRW9us3KbWRqu3qBBfhVavcUUEHfNK7PvpTchvQpVdFpw==}
 
-  '@tanstack/vue-query@5.52.2':
-    resolution: {integrity: sha512-AWEKGFrU5ssRbQzl0AUWoa3bejut57gjmXGstDOuPtua4nsJ9swzFMEjYowjskCEtmIW+exG/WHyebpEmF5DrA==}
+  '@tanstack/vue-query@5.53.1':
+    resolution: {integrity: sha512-BrNiIWn+KbEWGrhf/ccbLnfhprdb51ddupvR9QTnwMbuVvK9VE5BIxdsoNqCNb8reHWk8UuAPoh30RvjNpmabA==}
     peerDependencies:
       '@vue/composition-api': ^1.1.2
       vue: ^2.6.0 || ^3.3.0
@@ -1641,8 +1639,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axios@1.7.5:
-    resolution: {integrity: sha512-fZu86yCo+svH3uqJ/yTdQ0QHpQu5oL+/QE+QPSv6BZSkDAoky9vytxp7u5qk83OJFS3kEBcesWni9WTZAv3tSw==}
+  axios@1.7.6:
+    resolution: {integrity: sha512-Ekur6XDwhnJ5RgOCaxFnXyqlPALI3rVeukZMwOdfghW7/wGz784BYKiQq+QD8NPcr91KRo30KfHOchyijwWw7g==}
 
   baklavajs@2.4.5:
     resolution: {integrity: sha512-YC2xLY3Uh8Ms/JnfqNqadxdSY61SnayrnsIzwI34dfvbEi3xKzlEw502bg/+x/jYsJgcbr2h7phoQnnOCBXqfw==}
@@ -3444,10 +3442,6 @@ packages:
   primeicons@7.0.0:
     resolution: {integrity: sha512-jK3Et9UzwzTsd6tzl2RmwrVY/b8raJ3QZLzoDACj+oTJ0oX7L9Hy+XnVwgo4QVKlKpnP/Ur13SXV/pVh4LzaDw==}
 
-  primevue@4.0.4:
-    resolution: {integrity: sha512-1moEddbczJ1+yEyfeYQk3xOQB64iCjjM//f+HSXs6YrKVVC0QjPFx9XPNXrr2JjHlp+6D7EpPZtsmcrfA9jWkA==}
-    engines: {node: '>=12.11.0'}
-
   primevue@4.0.5:
     resolution: {integrity: sha512-MALszGIZ5SnEQy1XeZLBFhpMXQ1OS7D1U7H+l/JAX5U46RQ1vufo7NAiWbbV5/ADjPGw4uLplqMQxujkksNY2g==}
     engines: {node: '>=12.11.0'}
@@ -4177,8 +4171,8 @@ packages:
     peerDependencies:
       eslint: '>=6.0.0'
 
-  vue-i18n@9.13.1:
-    resolution: {integrity: sha512-mh0GIxx0wPtPlcB1q4k277y0iKgo25xmDPWioVVYanjPufDBpvu5ySTjP5wOrSvlYQ2m1xI+CFhGdauv/61uQg==}
+  vue-i18n@9.14.0:
+    resolution: {integrity: sha512-LxmpRuCt2rI8gqU+kxeflRZMQn4D5+4M3oP3PWZdowW/ePJraHqhF7p4CuaME52mUxdw3Mmy2yAUKgfZYgCRjA==}
     engines: {node: '>= 16'}
     peerDependencies:
       vue: ^3.0.0
@@ -4891,7 +4885,7 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.3': {}
 
-  '@iconify/json@2.2.241':
+  '@iconify/json@2.2.242':
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.2
@@ -4924,10 +4918,10 @@ snapshots:
     optionalDependencies:
       vue-i18n: 9.8.0(vue@3.4.27(typescript@5.3.3))
 
-  '@intlify/core-base@9.13.1':
+  '@intlify/core-base@9.14.0':
     dependencies:
-      '@intlify/message-compiler': 9.13.1
-      '@intlify/shared': 9.13.1
+      '@intlify/message-compiler': 9.14.0
+      '@intlify/shared': 9.14.0
 
   '@intlify/core-base@9.8.0':
     dependencies:
@@ -4939,12 +4933,19 @@ snapshots:
       '@intlify/shared': 9.13.1
       source-map-js: 1.2.0
 
+  '@intlify/message-compiler@9.14.0':
+    dependencies:
+      '@intlify/shared': 9.14.0
+      source-map-js: 1.2.0
+
   '@intlify/message-compiler@9.8.0':
     dependencies:
       '@intlify/shared': 9.8.0
       source-map-js: 1.2.0
 
   '@intlify/shared@9.13.1': {}
+
+  '@intlify/shared@9.14.0': {}
 
   '@intlify/shared@9.8.0': {}
 
@@ -5096,24 +5097,11 @@ snapshots:
       '@primevue/themes': 4.0.0-beta.5
       vue: 3.4.27(typescript@5.3.3)
 
-  '@primevue/core@4.0.4(vue@3.4.27(typescript@5.3.3))':
-    dependencies:
-      '@primeuix/styled': 0.0.5
-      '@primeuix/utils': 0.0.5
-      vue: 3.4.27(typescript@5.3.3)
-
   '@primevue/core@4.0.5(vue@3.4.27(typescript@5.3.3))':
     dependencies:
       '@primeuix/styled': 0.0.5
       '@primeuix/utils': 0.0.5
       vue: 3.4.27(typescript@5.3.3)
-
-  '@primevue/icons@4.0.4(vue@3.4.27(typescript@5.3.3))':
-    dependencies:
-      '@primeuix/utils': 0.0.5
-      '@primevue/core': 4.0.4(vue@3.4.27(typescript@5.3.3))
-    transitivePeerDependencies:
-      - vue
 
   '@primevue/icons@4.0.5(vue@3.4.27(typescript@5.3.3))':
     dependencies:
@@ -5184,17 +5172,17 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.18.0':
     optional: true
 
-  '@sfxcode/formkit-primevue@2.4.4(tailwindcss@3.3.6)(vue@3.4.27(typescript@5.3.3))':
+  '@sfxcode/formkit-primevue@2.4.5(tailwindcss@3.3.6)(vue@3.4.27(typescript@5.3.3))':
     dependencies:
       '@formkit/addons': 1.6.5
       '@formkit/drag-and-drop': 0.1.6
       '@formkit/i18n': 1.6.5
       '@formkit/vue': 1.6.5(tailwindcss@3.3.6)(vue@3.4.27(typescript@5.3.3))
       primeicons: 7.0.0
-      primevue: 4.0.4(vue@3.4.27(typescript@5.3.3))
+      primevue: 4.0.5(vue@3.4.27(typescript@5.3.3))
       uuid: 10.0.0
       vue: 3.4.27(typescript@5.3.3)
-      vue-i18n: 9.13.1(vue@3.4.27(typescript@5.3.3))
+      vue-i18n: 9.14.0(vue@3.4.27(typescript@5.3.3))
     transitivePeerDependencies:
       - tailwindcss
       - unocss
@@ -5239,12 +5227,12 @@ snapshots:
     dependencies:
       remove-accents: 0.5.0
 
-  '@tanstack/query-core@5.52.2': {}
+  '@tanstack/query-core@5.53.1': {}
 
-  '@tanstack/vue-query@5.52.2(vue@3.4.27(typescript@5.3.3))':
+  '@tanstack/vue-query@5.53.1(vue@3.4.27(typescript@5.3.3))':
     dependencies:
       '@tanstack/match-sorter-utils': 8.15.1
-      '@tanstack/query-core': 5.52.2
+      '@tanstack/query-core': 5.53.1
       '@vue/devtools-api': 6.6.3
       vue: 3.4.27(typescript@5.3.3)
       vue-demi: 0.14.10(vue@3.4.27(typescript@5.3.3))
@@ -5722,7 +5710,7 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.0.0
 
-  axios@1.7.5:
+  axios@1.7.6:
     dependencies:
       follow-redirects: 1.15.6
       form-data: 4.0.0
@@ -7626,15 +7614,6 @@ snapshots:
 
   primeicons@7.0.0: {}
 
-  primevue@4.0.4(vue@3.4.27(typescript@5.3.3)):
-    dependencies:
-      '@primeuix/styled': 0.0.5
-      '@primeuix/utils': 0.0.5
-      '@primevue/core': 4.0.4(vue@3.4.27(typescript@5.3.3))
-      '@primevue/icons': 4.0.4(vue@3.4.27(typescript@5.3.3))
-    transitivePeerDependencies:
-      - vue
-
   primevue@4.0.5(vue@3.4.27(typescript@5.3.3)):
     dependencies:
       '@primeuix/styled': 0.0.5
@@ -8449,10 +8428,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vue-i18n@9.13.1(vue@3.4.27(typescript@5.3.3)):
+  vue-i18n@9.14.0(vue@3.4.27(typescript@5.3.3)):
     dependencies:
-      '@intlify/core-base': 9.13.1
-      '@intlify/shared': 9.13.1
+      '@intlify/core-base': 9.14.0
+      '@intlify/shared': 9.14.0
       '@vue/devtools-api': 6.6.3
       vue: 3.4.27(typescript@5.3.3)
 
@@ -8485,7 +8464,7 @@ snapshots:
 
   wait-on@7.2.0:
     dependencies:
-      axios: 1.7.5
+      axios: 1.7.6
       joi: 17.13.1
       lodash: 4.17.21
       minimist: 1.2.8
