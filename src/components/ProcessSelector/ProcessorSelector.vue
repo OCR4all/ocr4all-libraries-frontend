@@ -2,60 +2,13 @@
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { buildProcessorSchema } from "@/components/ProcessSelector/utils";
 
-interface IPremise {
-  state: string;
-  message: string | null;
-}
-
-interface IItem {
-  type: string;
-  description: string | null;
-  value: string;
-  selected: boolean;
-  disabled: boolean;
-}
-
-interface IEntry {
-  type: string;
-  label: string;
-  argument: string;
-  value: string | null;
-  description: string;
-  placeholder: string | null;
-  disabled: boolean;
-}
-
-interface ISelectEntry extends IEntry {
-  items: IItem[];
-  "multiple-options": boolean;
-}
-
-interface IDecimalEntry extends IEntry {
-  step: number | null;
-  minimum: number | null;
-  maximum: number | null;
-  unit: string | null;
-}
-
-interface IProcessor {
-  type: string;
-  id: string;
-  provider: string;
-  language: string;
-  name: string;
-  version: number;
-  description: string;
-  categories: string[];
-  steps: string[];
-  icon: string | null;
-  premise: IPremise;
-  entries: IEntry[];
-}
+import { IProcessor } from "@/types/processor.types"
 
 const nodes = ref([]);
 const isLoading = ref(true)
 
-function structureData(data) {
+function structureData(data: IProcessor[]) {
+  console.log(data)
   let categories = Object.groupBy(data, (item) => item["type-label"]);
 
   for (const [key, value] of Object.entries(categories)) {
@@ -189,11 +142,13 @@ function get() {
 }
 
 function buildProcessorFormSchema(data, cols: number) {
+  console.log(data)
   const schema = buildProcessorSchema(data, cols);
   processorFormSchema.value = schema;
 }
 
 function openProcessor(data) {
+  console.log(data)
   selectedProcessor.value = data;
   buildProcessorFormSchema(data, 3);
   processorDialogVisible.value = true;

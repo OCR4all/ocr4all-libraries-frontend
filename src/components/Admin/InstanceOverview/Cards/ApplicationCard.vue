@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IApplication } from "@/components/Admin/InstanceOverview/types";
+import { IApplication } from "@/types/instance-overview.types";
 
 const props = defineProps<{
   data: IApplication;

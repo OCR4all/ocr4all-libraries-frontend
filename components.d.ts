@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     A11N: typeof import('./src/components/Settings/A11N.vue')['default']
+    A11Y: typeof import('./src/components/Settings/A11Y.vue')['default']
     ActionButton: typeof import('./src/components/ui/ActionButton.vue')['default']
     AddToDatasetDialog: typeof import('./src/components/Project/Project/Sandbox/Dialog/AddToDatasetDialog.vue')['default']
     AdminOverview: typeof import('./src/components/Admin/AdminOverview.vue')['default']
