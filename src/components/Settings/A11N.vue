@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { setFontSize } from "@/utils/a11n"
+import { setFontSize, setGrayscale } from "@/utils/a11n";
 
 const fontScaling = useStorage("ocr4all/frontend/a11n/font-size", {
   name: "Medium",
@@ -33,15 +33,20 @@ const fontOptions = ref([
   { name: "Dyslexia", value: "dyslexia" },
 ]);
 
-const grayScale = useStorage("/ocr4all/frontend/a11n/grayscale", {
-  name: "Deactivated",
-  value: "deactivated"
-});
+const grayScale = useStorage("/ocr4all/frontend/a11n/grayscale", {"name":"Deactivated","value":"grayscale(0)"});
 
 const grayScaleOptions = ref([
-  { name: "Deactivated", value: "deactivated" },
-  { name: "Activated", value: "activated" },
+  { name: "Deactivated", value: "grayscale(0)" },
+  { name: "Activated", value: "grayscale(100%)" },
 ]);
+
+watch(fontScaling, async (newFonzSize, _) => {
+  setFontSize(newFonzSize)
+})
+
+watch(grayScale, async (newGrayscaleValue, _) => {
+  setGrayscale(newGrayscaleValue)
+})
 </script>
 <template>
   <div
