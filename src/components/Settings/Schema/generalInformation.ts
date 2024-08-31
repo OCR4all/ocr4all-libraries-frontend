@@ -3,7 +3,7 @@ export const generalInformation = ref([
     $el: "div",
     if: "true",
     attrs: {
-      class: "grid grid-cols-1 sm:grid-cols-2",
+      class: "grid grid-cols-1 sm:grid-cols-2 gap-x-4",
     },
     children: [
       {
