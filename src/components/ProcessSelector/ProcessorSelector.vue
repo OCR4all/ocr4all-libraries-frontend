@@ -53,6 +53,7 @@ interface IProcessor {
 }
 
 const nodes = ref([]);
+const isLoading = ref(true)
 
 function structureData(data) {
   let categories = Object.groupBy(data, (item) => item["type-label"]);
@@ -84,6 +85,7 @@ useCustomFetch("/spi/list/workflow")
   .json()
   .then((data) => {
     structureData(data.data.value);
+    isLoading.value = false
   });
 
 const expandedKeys = ref({});
@@ -249,7 +251,7 @@ defineExpose({
         </IconField>
       </template>
     </Toolbar>
-    <TreeTable :value="nodes" :filters="filters">
+    <TreeTable :value="nodes" :filters="filters" :loading="isLoading">
       <Column field="label" header="Label" expander style="min-width: 12rem">
         <template #body="slotProps">
           <p
