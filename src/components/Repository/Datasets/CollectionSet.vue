@@ -247,13 +247,8 @@ async function openInLarex(){
   formFileMap.value = JSON.stringify(fileMap)
   formMimeMap.value = JSON.stringify(mimeMap)
 
-  /* TODO: Prevent race condition from firing Form before values are set. There are probably better ways to do this. */
-  const { start } = useTimeoutFn(() => {
-    larexForm.value.submit()
-  }, 10)
-
-  start()
-
+  await nextTick()
+  larexForm.value.submit()
 }
 
 async function downloadDataset() {

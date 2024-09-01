@@ -24,8 +24,6 @@ import {
   IEnrichedNode,
   INode,
 } from "@/components/Project/Project/Sandbox/resultviewer.interface";
-import axios from "axios";
-import DefaultSpinner from "@/components/Layout/utils/DefaultSpinner.vue";
 
 const authStore = useAuthStore();
 
@@ -60,8 +58,9 @@ const sandbox = router.currentRoute.value.params.sandbox;
 
 const toast = useToast();
 
-const larexLocation = import.meta.env.VITE_PROJECT_LOCATION;
 const larexURL = import.meta.env.VITE_LAREX_URL;
+
+const larexForm = ref()
 
 const { t } = useI18n();
 
@@ -73,7 +72,6 @@ const LAREX_LAUNCHER_SPI =
   "de.uniwuerzburg.zpd.ocr4all.application.core.spi.postcorrection.provider.LAREXLauncher";
 
 const isGeneratingSandbox = ref(false);
-const isReady = ref(false);
 
 const selectedSnapshot: Ref<INode | undefined> = ref();
 const selection: Ref<ITrack> = ref({});
@@ -120,12 +118,14 @@ function openProcessorDialog(snapshot: ITrack) {
       track: key,
     },
     onClose: (data: unknown) => {
-      toast.add({
-        severity: "info",
-        summary: "Processor is running",
-        detail: data.data,
-        group: "job",
-      })
+      if(data.data){
+        toast.add({
+          severity: "info",
+          summary: "Processor is running",
+          detail: data.data,
+          group: "job",
+        })
+      }
       refetch();
     },
   });
@@ -225,12 +225,11 @@ function getSnapshotFromSelection(selection: ITrack): IEnrichedNode {
 
 async function generateSandbox(selection: ITrack) {
   const snapshotData = getSnapshotFromSelection(selection);
-  showSandboxGenerationToast();
   if (snapshotData.label === LAREX_LABEL) {
     createdTrack.value = snapshotData.key;
-    isGeneratingSandbox.value = false;
-    isReady.value = true;
   } else {
+    isGeneratingSandbox.value = true;
+    showSandboxGenerationToast();
     selectedSnapshot.value = snapshotData;
     const payload = {
       id: LAREX_LAUNCHER_SPI,
@@ -256,7 +255,6 @@ async function generateSandbox(selection: ITrack) {
         group: "general",
       });
     } else {
-      isGeneratingSandbox.value = true;
       const startedJob = data.value["job-id"];
       await checkJob(startedJob);
       const jobResponse = await useCustomFetch(`job/entity/${startedJob}`)
@@ -267,6 +265,7 @@ async function generateSandbox(selection: ITrack) {
     }
   }
 
+  console.log("I'm here")
   const payload = {
     track: createdTrack.value
   }
@@ -277,11 +276,18 @@ async function generateSandbox(selection: ITrack) {
     .post(payload)
     .json()
     .then(async (response) => {
+      console.log("I'm here now")
       const larexMaps = await createLarexMapsFromFiles(response.data.value);
       formFileMap.value = JSON.stringify(larexMaps.fileMap)
       formMimeMap.value = JSON.stringify(larexMaps.mimeMap)
+      await nextTick()
+      console.log("Submit it")
+      await larexForm.value.submit()
+      console.log("Submitted??")
+
+      toast.removeGroup("headless")
+      refetch();
     })
-  refetch();
 }
 
 function getTagClasses(type: string): string {
@@ -426,7 +432,6 @@ async function checkJob(startedJob: number) {
         if (job.id === startedJob && job.state == "completed") {
           clearInterval(jobInterval);
           isGeneratingSandbox.value = false;
-          isReady.value = true;
           resolve(true);
         }
       }
@@ -474,7 +479,6 @@ const actionDock = ref({
 });
 
 async function createLarexMapsFromFiles(sets: string[]): unknown {
-  console.log(sets)
   const fileMap = {}
   const mimeMap = {}
 
@@ -630,48 +634,6 @@ const items = computed(() => {
           mode="indeterminate"
           style="height: 6px"
         ></ProgressBar>
-        <form
-          v-show="isReady && !isGeneratingSandbox"
-          id="larexForm"
-          class="justify-self-center"
-          :action="larexURL"
-          method="POST"
-          target="_blank"
-        >
-          <input
-            id="fileMap"
-            v-model="formFileMap"
-            type="hidden"
-            name="fileMap"
-          />
-          <input
-            id="mimeMap"
-            v-model="formMimeMap"
-            type="hidden"
-            name="mimeMap"
-          />
-          <input id="metsFilePath" value="" type="hidden" name="metsFilePath" />
-          <input id="customFlag" value="" type="hidden" name="customFlag" />
-          <input id="customFolder" value="" type="hidden" name="customFolder" />
-          <input id="modes" value="" type="hidden" name="modes" />
-          <div class="flex space-x-4">
-            <Button
-              type="submit"
-              severity="contrast"
-              name="action"
-              class="rounded-md bg-primary-600 p-2 text-surface-50 hover:bg-primary-800"
-              @click="closeCallback"
-            >
-              Open
-            </Button>
-            <Button
-              label="Close"
-              severity="secondary"
-              class="px-2 py-1"
-              @click="closeCallback"
-            ></Button>
-          </div>
-        </form>
       </section>
     </template>
   </Toast>
@@ -740,5 +702,30 @@ const items = computed(() => {
       </section>
     </div>
   </div>
+  <form
+    id="larexForm"
+    ref="larexForm"
+    class="justify-self-center hidden"
+    :action="larexURL"
+    method="POST"
+    target="_blank"
+  >
+    <input
+      id="fileMap"
+      v-model="formFileMap"
+      type="hidden"
+      name="fileMap"
+    />
+    <input
+      id="mimeMap"
+      v-model="formMimeMap"
+      type="hidden"
+      name="mimeMap"
+    />
+    <input id="metsFilePath" value="" type="hidden" name="metsFilePath" />
+    <input id="customFlag" value="" type="hidden" name="customFlag" />
+    <input id="customFolder" value="" type="hidden" name="customFolder" />
+    <input id="modes" value="" type="hidden" name="modes" />
+  </form>
 </template>
 <style></style>
