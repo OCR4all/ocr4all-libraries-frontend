@@ -479,7 +479,7 @@ defineExpose({
           />
           <div class="flex space-x-2">
             <button
-              class="rounded-sm bg-primary-600 p-2 font-semibold text-white hover:bg-primary-800"
+              class="rounded-md bg-primary-600 p-2 font-semibold text-white hover:bg-primary-800"
               @click="openShareModal"
             >
               {{ t("pages.repository.container.card.button.share") }}
