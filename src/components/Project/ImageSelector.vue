@@ -74,7 +74,7 @@ const nodes: Ref<INode[]> = ref([]);
 const rows = ref(15);
 const loading = ref(false);
 const totalRecords = ref(0);
-const onExpand = (node) => {
+const onExpand = (node: INode) => {
   const isChecked = (
     selectedFolios.value && Object.keys(selectedFolios.value).includes(node.key)
   );
@@ -120,6 +120,7 @@ const onExpand = (node) => {
                   }
                 }),
               keywords: folio.keywords,
+              leaf: true,
             },
           });
           if (isChecked) {
@@ -159,6 +160,7 @@ defineExpose({
       </template>
     </Toolbar>
     <TreeTable
+      v-model:selectionKeys="selectedFolios"
       :value="nodes"
       :lazy="true"
       :paginator="true"
@@ -166,10 +168,9 @@ defineExpose({
       :loading="loading"
       :filters="filters"
       filter-display="row"
-      :globalFilterFields="['name']"
+      :global-filter-fields="['name']"
       :total-records="totalRecords"
-      v-model:selectionKeys="selectedFolios"
-      selectionMode="checkbox"
+      selection-mode="checkbox"
       scrollable
       @node-expand="onExpand"
     >
