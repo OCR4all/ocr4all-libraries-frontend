@@ -3,6 +3,25 @@ interface IEntry {
     value: string
 }
 
+export function setFont(entry: IEntry) {
+    useStorage("ocr4all/frontend/a11n/font", entry)
+    document.documentElement.style.setProperty(
+        "--font-family",
+        entry.value,
+    );
+}
+
+export function setFontFromStorage() {
+    const size = useStorage("ocr4all/frontend/a11n/font", {
+        name: "Regular",
+        value: "Inter var"
+    })
+    document.documentElement.style.setProperty(
+        "--font-family",
+        size.value.value,
+    );
+}
+
 export function setFontSize(entry: IEntry) {
     useStorage("ocr4all/frontend/a11n/font-size", entry)
     document.documentElement.style.setProperty(

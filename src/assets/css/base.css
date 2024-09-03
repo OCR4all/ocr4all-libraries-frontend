@@ -4,10 +4,14 @@
 
 @layer base {
   :root {
-    font-family: "Inter var", sans-serif;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    font-variation-settings: normal;
-    --font-family: "Inter var", sans-serif;
+    @font-face {
+      font-family: 'Open Dyslexic';
+      font-style: normal;
+      font-weight: 400;
+      src: url("../fonts/OpenDyslexic-Regular.woff2") format('woff2');
+    }
+
+    --font-family: "Inter var";
     --font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 
     --grayscale-filter: grayscale(0);
@@ -70,6 +74,11 @@
 
 html {
   font-size: var(--base-font-size);
+
+  font-family: var(--font-family), sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  font-variation-settings: normal;
+
   filter: var(--grayscale-filter);
 }
 

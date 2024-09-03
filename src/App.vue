@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { setPrimaryColorsFromStorage } from "@/utils/colors";
-import {setFontSizeFromStorage} from "@/utils/a11n";
+import {setFontFromStorage, setFontSizeFromStorage, setGrayscaleFromStorage} from "@/utils/a11n";
 
 setPrimaryColorsFromStorage();
 setFontSizeFromStorage()
+setGrayscaleFromStorage()
+setFontFromStorage()
 </script>
 
 <template>

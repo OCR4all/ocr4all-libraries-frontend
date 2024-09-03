@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { setFontSize, setGrayscale } from "@/utils/a11n";
+import {setFont, setFontSize, setGrayscale} from "@/utils/a11n";
 
 const fontScaling = useStorage("ocr4all/frontend/a11n/font-size", {
   name: "Medium",
@@ -13,17 +13,17 @@ const fontScalingOptions = ref([
   { name: "Extra Large", value: "20px" },
 ]);
 
-const font = useStorage("/ocr4all/frontend/a11n/font", {
+const font = useStorage("ocr4all/frontend/a11n/font", {
   name: "Regular",
-  value: "regular"
+  value: "Inter var"
 });
 
 const fontOptions = ref([
-  { name: "Regular", value: "regular" },
-  { name: "Dyslexia", value: "dyslexia" },
+  { name: "Regular", value: "Inter var" },
+  { name: "Dyslexia", value: "Open Dyslexic" },
 ]);
 
-const grayScale = useStorage("/ocr4all/frontend/a11n/grayscale", {"name":"Deactivated","value":"grayscale(0)"});
+const grayScale = useStorage("ocr4all/frontend/a11n/grayscale", {"name":"Deactivated","value":"grayscale(0)"});
 
 const grayScaleOptions = ref([
   { name: "Deactivated", value: "grayscale(0)" },
@@ -36,6 +36,10 @@ watch(fontScaling, async (newFonzSize, _) => {
 
 watch(grayScale, async (newGrayscaleValue, _) => {
   setGrayscale(newGrayscaleValue)
+})
+
+watch(font, async (newFont, _) => {
+  setFont(newFont)
 })
 </script>
 <template>
@@ -58,7 +62,6 @@ watch(grayScale, async (newGrayscaleValue, _) => {
         <SelectButton
             v-model="font"
             :options="fontOptions"
-            disabled
             option-label="name"
             :allow-empty="false"
         />
