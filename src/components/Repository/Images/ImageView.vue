@@ -194,6 +194,13 @@ const confirmDelete = (id: string) => {
     },
     accept: () => {
       deleteContainer(id);
+      toast.add({
+        severity: "success",
+        summary: "Success",
+        detail: "Project successfully deleted.",
+        life: 3000,
+        group: "general",
+      });
     },
     reject: () => {},
   });
@@ -616,7 +623,7 @@ function downloadContainer(container: IContainer) {
           v-model:selection="selectedContainers"
           :value="slotProps.items"
           v-model:filters="filters"
-          filterDisplay="menu"
+          filterDisplay="row"
           :globalFilterFields="['name', 'keywords']"
           contextMenu
           @rowContextmenu="onRowContextMenu"
