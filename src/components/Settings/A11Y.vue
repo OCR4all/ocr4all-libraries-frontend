@@ -58,6 +58,7 @@ watch(grayScale, async (newGrayscaleValue, _) => {
         <SelectButton
             v-model="font"
             :options="fontOptions"
+            disabled
             option-label="name"
             :allow-empty="false"
         />
