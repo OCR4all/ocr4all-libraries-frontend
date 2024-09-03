@@ -189,6 +189,7 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
 };
 
 function openInfoDialog(data) {
+  console.debug(data)
   dialog.open(jobInfoDialog, {
     props: {
       header: "Job Information",
@@ -226,7 +227,6 @@ function goToResult(project: string, sandbox: string){
       label: 'Save'
     },
     accept: () => {
-      console.log(`/project/${project}/result/${sandbox}`)
       router.push(`/project/${project}/result/${sandbox}`)
     },
     reject: () => {
