@@ -118,6 +118,7 @@ async function executeProviderAction(data: any, action: string) {
     );
   }
 
+
   await Promise.all(promises);
   await getProviders();
 }
@@ -166,60 +167,35 @@ function toggleProviderMenu(event: Event, data: any) {
   providerMenu.value.toggle(event);
 }
 
-function toggleMenu(event) {
-  items.value = [
-    {
-      label: "Actions",
-      items: [
-        {
-          label: "Restart",
-          icon: "pi pi-refresh",
-          command: () => {
-            executeProviderAction(selectedProviders.value, "restart");
-          },
-        },
-        {
-          label: "Start",
-          icon: "pi pi-play",
-          command: () => {
-            executeProviderAction(selectedProviders.value, "start");
-          },
-        },
-        {
-          label: "Stop",
-          icon: "pi pi-stop",
-          command: () => {
-            executeProviderAction(selectedProviders.value, "stop");
-          },
-        },
-      ],
-    },
-  ];
-  menu.value.toggle(event);
-}
-
 const contextMenu = ref();
 const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   items.value = [
     {
+      label: "Journal",
+      icon: "pi pi-book",
+      command: () => {
+        showJournal(event.data);
+      },
+    },
+    {
       label: "Restart",
       icon: "pi pi-refresh",
       command: () => {
-        executeProviderAction(selectedProviders.value, "restart");
+        executeProviderAction([event.data], "restart");
       },
     },
     {
       label: "Start",
       icon: "pi pi-play",
       command: () => {
-        executeProviderAction(selectedProviders.value, "start");
+        executeProviderAction([event.data], "start");
       },
     },
     {
       label: "Stop",
       icon: "pi pi-stop",
       command: () => {
-        executeProviderAction(selectedProviders.value, "stop");
+        executeProviderAction([event.data], "stop");
       },
     },
   ];
