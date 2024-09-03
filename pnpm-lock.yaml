@@ -27,14 +27,14 @@ importers:
         specifier: 4.0.0-rc.2
         version: 4.0.0-rc.2(@primeuix/styled@0.0.5)
       '@tanstack/vue-query':
-        specifier: ^5.53.1
-        version: 5.53.1(vue@3.4.27(typescript@5.3.3))
+        specifier: ^5.53.3
+        version: 5.53.3(vue@3.4.27(typescript@5.3.3))
       '@types/chroma-js':
         specifier: ^2.4.4
         version: 2.4.4
       '@unhead/vue':
-        specifier: ^1.10.0
-        version: 1.10.0(vue@3.4.27(typescript@5.3.3))
+        specifier: ^1.10.4
+        version: 1.10.4(vue@3.4.27(typescript@5.3.3))
       '@vee-validate/i18n':
         specifier: ^4.13.2
         version: 4.13.2
@@ -42,8 +42,8 @@ importers:
         specifier: ^11.0.3
         version: 11.0.3(vue@3.4.27(typescript@5.3.3))
       axios:
-        specifier: ^1.7.6
-        version: 1.7.6
+        specifier: ^1.7.7
+        version: 1.7.7
       baklavajs:
         specifier: ^2.4.5
         version: 2.4.5
@@ -91,8 +91,8 @@ importers:
         version: 4.2.5(vue@3.4.27(typescript@5.3.3))
     devDependencies:
       '@iconify/json':
-        specifier: ^2.2.242
-        version: 2.2.242
+        specifier: ^2.2.243
+        version: 2.2.243
       '@intlify/unplugin-vue-i18n':
         specifier: ^4.0.0
         version: 4.0.0(rollup@4.18.0)(vue-i18n@9.8.0(vue@3.4.27(typescript@5.3.3)))
@@ -106,8 +106,8 @@ importers:
         specifier: 1.40.1
         version: 1.40.1
       '@sfxcode/formkit-primevue':
-        specifier: ^2.4.5
-        version: 2.4.5(tailwindcss@3.3.6)(vue@3.4.27(typescript@5.3.3))
+        specifier: ^2.4.6
+        version: 2.4.6(tailwindcss@3.3.6)(vue@3.4.27(typescript@5.3.3))
       '@tailwindcss/aspect-ratio':
         specifier: 0.4.2
         version: 0.4.2(tailwindcss@3.3.6)
@@ -953,8 +953,8 @@ packages:
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
 
-  '@iconify/json@2.2.242':
-    resolution: {integrity: sha512-cS6eYdx1C1GhqaZm25ztH5yoghCaTXGJBeseUkS259GxxX9obtGLLk0yy+twxpNCD5/F9gjbgxh46BjNWsHtwg==}
+  '@iconify/json@2.2.243':
+    resolution: {integrity: sha512-92pXEKdjDmH8sV3fZwJTxifKpJtp3ie8KD7oCqHRJh/Z+CoGm3bzDcK5UnWs5G5EDbu00kYVcSGM4jRnY9HgGQ==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -1236,8 +1236,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@sfxcode/formkit-primevue@2.4.5':
-    resolution: {integrity: sha512-BPBRb/AkWSyAy6VaxtyOvbDDVkDg1eb1No/5VfkvD2cNLP+x/z27NVB1NodzcDFd4o2Qse9bq/2i3YW6MKewBg==}
+  '@sfxcode/formkit-primevue@2.4.6':
+    resolution: {integrity: sha512-6D/5gtDBX/t8RPIXCQDGdnfUGlcDlC1Ey9zrJbLWRIVgRJ4SdDgTogL4520+yJqFZSbWTHTOQBu1ILnGEWzXXg==}
     peerDependencies:
       vue: ^3.4.0
 
@@ -1282,11 +1282,11 @@ packages:
     resolution: {integrity: sha512-PnVV3d2poenUM31ZbZi/yXkBu3J7kd5k2u51CGwwNojag451AjTH9N6n41yjXz2fpLeewleyLBmNS6+HcGDlXw==}
     engines: {node: '>=12'}
 
-  '@tanstack/query-core@5.53.1':
-    resolution: {integrity: sha512-mvLG7s4Zy3Yvc2LsKm8BVafbmPrsReKgqwhmp4XKVmRW9us3KbWRqu3qBBfhVavcUUEHfNK7PvpTchvQpVdFpw==}
+  '@tanstack/query-core@5.53.3':
+    resolution: {integrity: sha512-ZfjAgd7NpqDx0e4aYBt7EmS2enbulPrJwowTy+mayRE93WUUH+sIYHun1TdRjpGwDPMNNZ5D6goh7n3CwoO+HA==}
 
-  '@tanstack/vue-query@5.53.1':
-    resolution: {integrity: sha512-BrNiIWn+KbEWGrhf/ccbLnfhprdb51ddupvR9QTnwMbuVvK9VE5BIxdsoNqCNb8reHWk8UuAPoh30RvjNpmabA==}
+  '@tanstack/vue-query@5.53.3':
+    resolution: {integrity: sha512-OAlI1RXsF9gj8cEK4Irlmfq9sBB01I8Iczher+p7ax0ND9L/iz2XtBrrpD3WD6k/OAoiCjMxHPAv1loFXm8e4w==}
     peerDependencies:
       '@vue/composition-api': ^1.1.2
       vue: ^2.6.0 || ^3.3.0
@@ -1386,17 +1386,17 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  '@unhead/dom@1.10.0':
-    resolution: {integrity: sha512-LdgtOlyMHOyuQNsUKM+1d8ViiiY4LxjCPJlgUU/5CwgqeRYf4LWFu8oRMQfSQVTusbPwwvr3MolM9iTUu2I4BQ==}
+  '@unhead/dom@1.10.4':
+    resolution: {integrity: sha512-ehMy9k6efo4GTLmiP27wCtywWYdiggrP3m7h6kD/d1uhfORH3yCgsd4yXQnmDoSbsMyX6GlY5DBzy5bnYPp/Xw==}
 
-  '@unhead/schema@1.10.0':
-    resolution: {integrity: sha512-hmgkFdLzm/VPLAXBF89Iry4Wz/6FpHMfMKCnAdihAt1Ublsi04RrA0hQuAiuGG2CZiKL4VCxtmV++UXj/kyakA==}
+  '@unhead/schema@1.10.4':
+    resolution: {integrity: sha512-nX9sJgKPy2t4GHB9ky/vkMLbYqXl9Num5NZToTr0rKrIGkshzHhUrbn/EiHreIjcGI1eIpu+edniCDIwGTJgmw==}
 
-  '@unhead/shared@1.10.0':
-    resolution: {integrity: sha512-Lv7pP0AoWJy+YaiWd4kGD+TK78ahPUwnIRx6YCC6FjPmE0KCqooeDS4HbInYaklLlEMQZislXyIwLczK2DTWiw==}
+  '@unhead/shared@1.10.4':
+    resolution: {integrity: sha512-C5wsps9i/XCBObMVQUrbXPvZG17a/e5yL0IsxpICaT4QSiZAj9v7JrNQ5WpM5JOZVMKRI5MYRdafNDw3iSmqZg==}
 
-  '@unhead/vue@1.10.0':
-    resolution: {integrity: sha512-Cv9BViaOwCBdXy3bsTvJ10Rs808FSSq/ZfeBXzOjOxt08sbubf6Mr5opBdOlv/i1bzyFVIAqe5ABmrhC9mB80w==}
+  '@unhead/vue@1.10.4':
+    resolution: {integrity: sha512-Q45F/KOvDeitc8GkfkPY45V8Dmw1m1b9A/aHM5A2BwRV8GyoRV+HRWVw5h02e0AO1TsICvcW8tI90qeCM2oGSA==}
     peerDependencies:
       vue: '>=2.7 || >=3'
 
@@ -1639,8 +1639,8 @@ packages:
     resolution: {integrity: sha512-wvUjBtSGN7+7SjNpq/9M2Tg350UZD3q62IFZLbRAR1bSMlCo1ZaeW+BJ+D090e4hIIZLBcTDWe4Mh4jvUDajzQ==}
     engines: {node: '>= 0.4'}
 
-  axios@1.7.6:
-    resolution: {integrity: sha512-Ekur6XDwhnJ5RgOCaxFnXyqlPALI3rVeukZMwOdfghW7/wGz784BYKiQq+QD8NPcr91KRo30KfHOchyijwWw7g==}
+  axios@1.7.7:
+    resolution: {integrity: sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==}
 
   baklavajs@2.4.5:
     resolution: {integrity: sha512-YC2xLY3Uh8Ms/JnfqNqadxdSY61SnayrnsIzwI34dfvbEi3xKzlEw502bg/+x/jYsJgcbr2h7phoQnnOCBXqfw==}
@@ -3897,8 +3897,8 @@ packages:
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  unhead@1.10.0:
-    resolution: {integrity: sha512-nv75Hvhu0asuD/rbP6b3tSRJUltxmThq/iZU5rLCGEkCqTkFk7ruQGNk+TRtx/RCYqL0R/IzIY9aqvhNOGe3mg==}
+  unhead@1.10.4:
+    resolution: {integrity: sha512-qKiYhgZ4IuDbylP409cdwK/8WEIi5cOSIBei/OXzxFs4uxiTZHSSa8NC1qPu2kooxHqxyoXGBw8ARms9zOsbxw==}
 
   unimport@3.7.2:
     resolution: {integrity: sha512-91mxcZTadgXyj3lFWmrGT8GyoRHWuE5fqPOjg5RVtF6vj+OfM5G6WCzXjuYtSgELE5ggB34RY4oiCSEP8I3AHw==}
@@ -4885,7 +4885,7 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.3': {}
 
-  '@iconify/json@2.2.242':
+  '@iconify/json@2.2.243':
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.2
@@ -5172,7 +5172,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.18.0':
     optional: true
 
-  '@sfxcode/formkit-primevue@2.4.5(tailwindcss@3.3.6)(vue@3.4.27(typescript@5.3.3))':
+  '@sfxcode/formkit-primevue@2.4.6(tailwindcss@3.3.6)(vue@3.4.27(typescript@5.3.3))':
     dependencies:
       '@formkit/addons': 1.6.5
       '@formkit/drag-and-drop': 0.1.6
@@ -5227,12 +5227,12 @@ snapshots:
     dependencies:
       remove-accents: 0.5.0
 
-  '@tanstack/query-core@5.53.1': {}
+  '@tanstack/query-core@5.53.3': {}
 
-  '@tanstack/vue-query@5.53.1(vue@3.4.27(typescript@5.3.3))':
+  '@tanstack/vue-query@5.53.3(vue@3.4.27(typescript@5.3.3))':
     dependencies:
       '@tanstack/match-sorter-utils': 8.15.1
-      '@tanstack/query-core': 5.53.1
+      '@tanstack/query-core': 5.53.3
       '@vue/devtools-api': 6.6.3
       vue: 3.4.27(typescript@5.3.3)
       vue-demi: 0.14.10(vue@3.4.27(typescript@5.3.3))
@@ -5348,26 +5348,26 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@unhead/dom@1.10.0':
+  '@unhead/dom@1.10.4':
     dependencies:
-      '@unhead/schema': 1.10.0
-      '@unhead/shared': 1.10.0
+      '@unhead/schema': 1.10.4
+      '@unhead/shared': 1.10.4
 
-  '@unhead/schema@1.10.0':
+  '@unhead/schema@1.10.4':
     dependencies:
       hookable: 5.5.3
       zhead: 2.2.4
 
-  '@unhead/shared@1.10.0':
+  '@unhead/shared@1.10.4':
     dependencies:
-      '@unhead/schema': 1.10.0
+      '@unhead/schema': 1.10.4
 
-  '@unhead/vue@1.10.0(vue@3.4.27(typescript@5.3.3))':
+  '@unhead/vue@1.10.4(vue@3.4.27(typescript@5.3.3))':
     dependencies:
-      '@unhead/schema': 1.10.0
-      '@unhead/shared': 1.10.0
+      '@unhead/schema': 1.10.4
+      '@unhead/shared': 1.10.4
       hookable: 5.5.3
-      unhead: 1.10.0
+      unhead: 1.10.4
       vue: 3.4.27(typescript@5.3.3)
 
   '@vee-validate/i18n@4.13.2': {}
@@ -5710,7 +5710,7 @@ snapshots:
     dependencies:
       possible-typed-array-names: 1.0.0
 
-  axios@1.7.6:
+  axios@1.7.7:
     dependencies:
       follow-redirects: 1.15.6
       form-data: 4.0.0
@@ -8134,11 +8134,11 @@ snapshots:
 
   undici-types@5.26.5: {}
 
-  unhead@1.10.0:
+  unhead@1.10.4:
     dependencies:
-      '@unhead/dom': 1.10.0
-      '@unhead/schema': 1.10.0
-      '@unhead/shared': 1.10.0
+      '@unhead/dom': 1.10.4
+      '@unhead/schema': 1.10.4
+      '@unhead/shared': 1.10.4
       hookable: 5.5.3
 
   unimport@3.7.2(rollup@4.18.0):
@@ -8464,7 +8464,7 @@ snapshots:
 
   wait-on@7.2.0:
     dependencies:
-      axios: 1.7.6
+      axios: 1.7.7
       joi: 17.13.1
       lodash: 4.17.21
       minimist: 1.2.8
