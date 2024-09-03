@@ -429,7 +429,7 @@ const contextMenu = ref();
       v-model:filters="filters"
       :loading="isLoading"
       :globalFilterFields="['name', 'description', 'keywords']"
-      filterDisplay="menu"
+      filterDisplay="row"
       context-menu
       :paginator="true"
       :rows="5"

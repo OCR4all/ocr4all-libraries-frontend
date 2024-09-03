@@ -306,7 +306,7 @@ refetch();
       :value="workflows"
       :paginator="true"
       :rows="10"
-      filter-display="menu"
+      filter-display="row"
       :loading="loading"
       context-menu
       :global-filter-fields="['label', 'description']"

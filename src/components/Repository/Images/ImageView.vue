@@ -692,10 +692,10 @@ function downloadContainer(container: IContainer) {
             </template>
             <template #filter="{ filterModel, filterCallback }">
               <InputText
-                v-model="filterModel.value"
-                type="text"
-                @input="filterCallback()"
-                placeholder="Search by description"
+                  v-model="filterModel.value"
+                  type="text"
+                  placeholder="Search by name"
+                  @input="filterCallback()"
               />
             </template>
           </Column>

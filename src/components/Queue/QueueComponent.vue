@@ -31,7 +31,7 @@ import { Ref } from "vue";
 import { useDialog } from "primevue/usedialog";
 import { useLocalDateFormat } from "@/composables/useLocalDateFormat";
 import Toolbar from "primevue/toolbar";
-import { IMenuItem, IMenuItems } from "@/types/ui.types";
+import { IMenuItems } from "@/types/ui.types";
 import { useConfirm } from "primevue/useconfirm";
 const toast = useToast();
 
@@ -40,6 +40,8 @@ const isRefetching: Ref<boolean> = ref(false);
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  description: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  id: { value: null, matchMode: FilterMatchMode.EQUALS },
   state: { value: null, matchMode: FilterMatchMode.EQUALS },
 });
 
@@ -374,7 +376,16 @@ onUnmounted(() => {});
         field="id"
         :sortable="true"
         :header="$t('pages.queue.table.columns.id')"
-      ></Column>
+      >
+        <template #filter="{ filterModel, filterCallback }">
+          <InputText
+              v-model="filterModel.value"
+              type="text"
+              @input="filterCallback()"
+              placeholder="Search by id"
+          />
+        </template>
+      </Column>
       <Column
         field="description"
         :header="$t('pages.queue.table.columns.description')"
@@ -386,6 +397,14 @@ onUnmounted(() => {});
           <p v-else>
             {{ data.description }}
           </p>
+        </template>
+        <template #filter="{ filterModel, filterCallback }">
+          <InputText
+              v-model="filterModel.value"
+              type="text"
+              @input="filterCallback()"
+              placeholder="Search by description"
+          />
         </template>
       </Column>
       <Column

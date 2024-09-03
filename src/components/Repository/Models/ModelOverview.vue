@@ -434,7 +434,7 @@ const selectedModels = ref([]);
         context-menu
         :loading="isLoading"
         :global-filter-fields="['name', 'description', 'keywords', 'engine']"
-        filter-display="menu"
+        filter-display="row"
         @row-contextmenu="onRowContextMenu"
       >
         <Column

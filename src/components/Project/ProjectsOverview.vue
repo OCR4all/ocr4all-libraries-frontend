@@ -65,6 +65,8 @@ const projects = ref();
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  description: { value: null, matchMode: FilterMatchMode.CONTAINS },
   state: { value: null, matchMode: FilterMatchMode.EQUALS },
   keywords: { value: null, matchMode: FilterMatchMode.IN },
 });
@@ -357,7 +359,7 @@ refetch();
       scrollable
       context-menu
       filter-display="row"
-      :global-filter-fields="['name', 'state', 'keywords']"
+      :global-filter-fields="['name', 'description', 'state', 'keywords']"
       sort-field="tracking.updated"
       :sort-order="-1"
       :row-hover="true"
@@ -386,6 +388,14 @@ refetch();
           >
             {{ data.name }}
           </p>
+        </template>
+        <template #filter="{ filterModel, filterCallback }">
+          <InputText
+              v-model="filterModel.value"
+              type="text"
+              @input="filterCallback()"
+              placeholder="Search by name"
+          />
         </template>
       </Column>
       <Column
