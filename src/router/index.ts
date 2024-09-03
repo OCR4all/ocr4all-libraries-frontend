@@ -181,7 +181,7 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach(async (to) => {
+router.beforeEach((to) => {
   const ui = useUiStore();
   ui.flush();
 
