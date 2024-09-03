@@ -653,7 +653,7 @@
           "single": {
             "header": "Delete user",
             "body": {
-              "warning": "Do you really want to delete the user { user }?"
+              "warning": "Do you really want to delete the following user?"
             }
           },
           "multiple": {

@@ -51,7 +51,7 @@ const toggle = (event: Event, data) => {
         {
           label: "Delete",
           icon: "pi pi-trash",
-          command: () => openDeleteGroupDialog(data),
+          command: () => openDeleteGroupDialog([data]),
         },
       ],
     },
@@ -70,7 +70,7 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
     {
       label: "Delete",
       icon: "pi pi-trash",
-      command: () => openDeleteGroupDialog(event.data),
+      command: () => openDeleteGroupDialog([event.data]),
     },
   ];
   contextMenu.value.show(event.originalEvent);
@@ -154,6 +154,7 @@ function openEditGroupDialog(data: IGroup) {
   });
 }
 function openDeleteGroupDialog(data: IGroup[]) {
+  console.log(data)
   dialog.open(deleteGroupDialog, {
     props: {
       header: i18n.t("admin.user-management.dialog.delete.single.header"),

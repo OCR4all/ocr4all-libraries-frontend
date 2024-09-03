@@ -30,7 +30,7 @@ async function deleteGroups() {
 <template>
   <div class="m-4">
     <p class="text-lg text-surface-950 dark:text-surface-0">
-      {{ $t("admin.user-management.dialog.delete.single.body.warning") }}
+      {{ data.length > 1 ? $t("admin.user-management.dialog.delete.multiple.body.warning") : $t("admin.user-management.dialog.delete.single.body.warning")  }}
     </p>
     <ul class="px-4">
       <li
