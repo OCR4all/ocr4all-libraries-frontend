@@ -86,20 +86,6 @@ const toggle = (event) => {
         <component :is="item.icon" class="h-6 w-6" />
         <span class="mx-1">{{ item.label }}</span>
       </button>
-      <hr
-        v-show="authStore.isAdmin"
-        class="border-gray-200 dark:border-gray-700"
-      />
-      <button
-        v-for="(item, index) in adminItems"
-        v-show="authStore.isAdmin"
-        :key="index"
-        class="my-1 flex transform items-center rounded-md px-3 py-2 text-sm capitalize text-gray-600 transition-colors duration-300 hover:bg-primary-700 hover:text-surface-50 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-        @click="item.action"
-      >
-        <component :is="item.icon" class="h-6 w-6" />
-        <span class="mx-1">{{ item.label }}</span>
-      </button>
       <hr class="border-gray-200 dark:border-gray-700" />
       <a
         class="my-1 flex transform items-center rounded-md px-3 py-2 text-sm capitalize text-gray-600 transition-colors duration-300 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
