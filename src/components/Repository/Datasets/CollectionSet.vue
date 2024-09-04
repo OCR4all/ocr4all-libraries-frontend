@@ -24,6 +24,7 @@ const larexForm = ref()
 const isLoading = ref(true)
 
 const entities = ref({})
+const groundTruth = ref([])
 
 const toast: ToastServiceMethods = useToast();
 const confirm = useConfirm()
@@ -58,6 +59,10 @@ import FileUpload, { FileUploadUploaderEvent } from "primevue/fileupload";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth.store";
 import ProgressBar from "primevue/progressbar";
+import IconActions from "~icons/fluent/more-vertical-32-regular"
+import {useConfirm} from "primevue/useconfirm";
+
+
 const dialog = useDialog();
 
 const { t } = useI18n();
@@ -71,9 +76,6 @@ const datasetName: LocationQueryValue | LocationQueryValue[] =
 
 const uploadToastVisible = ref(false);
 const progress = ref(0);
-
-import IconActions from "~icons/fluent/more-vertical-32-regular"
-import {useConfirm} from "primevue/useconfirm";
 
 
 const uiStore = useUiStore();
@@ -126,6 +128,11 @@ function openUploadDialog() {
 
 const sets: Ref<ISet[]> = ref([]);
 
+const loading = reactive({
+  textline: true,
+  textregion: true
+})
+
 async function refresh() {
   useCustomFetch(`/data/collection/set/list/${dataset}`)
     .get()
@@ -134,6 +141,34 @@ async function refresh() {
       sets.value = response.data.value;
       isLoading.value = false
     });
+  useCustomFetch(`/data/collection/set/pageXML/${dataset}`)
+      .post({
+        level: "TextRegion",
+        index: 0
+      })
+      .json()
+      .then((response) => {
+        for(const result of response.data.value){
+          if(!groundTruth.value.includes(result.id)){
+            groundTruth.value.push(result.id)
+          }
+        }
+        loading.textregion = false
+      })
+  useCustomFetch(`/data/collection/set/pageXML/${dataset}`)
+      .post({
+        level: "TextLine",
+        index: 0
+      })
+      .json()
+      .then((response) => {
+        for(const result of response.data.value){
+          if(!groundTruth.value.includes(result.id)){
+            groundTruth.value.push(result.id)
+          }
+        }
+        loading.textline = false
+      })
 }
 
 useHead({
@@ -335,7 +370,6 @@ const showUploadToast = () => {
 const fileUpload = ref();
 const uploader = async function customUploader(event: FileUploadUploaderEvent) {
   const formData = new FormData();
-  console.log("entered")
 
   const filesToHandle = Array.isArray(event.files)
     ? event.files
@@ -447,12 +481,6 @@ const selectedSets = ref();
 const filters: RemovableRef<any> = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
-
-const layout: RemovableRef<string> = useLocalStorage(
-  "ocr4all/frontend/repository/datasets/layout",
-  "grid",
-);
-const options = ref(["list", "grid"]);
 
 const contextMenu = ref();
 const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
@@ -837,6 +865,12 @@ refresh();
                 >{{ keyword }}</Tag
               >
             </div>
+          </template>
+        </Column>
+        <Column header="Ground Truth">
+          <template #body="{ data }">
+            <Skeleton v-if="loading.textregion && loading.textline" height="2rem"></Skeleton>
+            <i class="pi" :class="{ 'pi-check-circle text-green-500 ': groundTruth.includes(data.id), 'pi-times-circle text-red-500': !groundTruth.includes(data.id) }"></i>
           </template>
         </Column>
         <Column
