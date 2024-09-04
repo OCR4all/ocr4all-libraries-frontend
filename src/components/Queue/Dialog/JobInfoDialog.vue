@@ -24,7 +24,6 @@ onMounted(async () => {
     .json()
     .then((response) => {
       job.value = [response.data.value];
-      console.log(job.value);
     });
 });
 
@@ -91,7 +90,7 @@ function getSeverity(severity: string): string | undefined {
               <Tag
                 v-if="data['service-provider-id']"
                 :value="data['service-provider-id']"
-                class="!text-white"
+                class="!text-white !bg-surface-700 dark:!bg-surface-800"
               />
             </template>
           </Column>
