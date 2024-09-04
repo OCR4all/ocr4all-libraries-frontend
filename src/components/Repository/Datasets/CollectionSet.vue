@@ -808,7 +808,7 @@ refresh();
         :filters="filters"
         context-menu
         :paginator="true"
-        :rows="5"
+        :rows="20"
         :rows-per-page-options="[5, 10, 20, 50]"
         :row-hover="true"
         table-style="min-width: 50rem"

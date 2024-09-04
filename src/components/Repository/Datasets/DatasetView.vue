@@ -37,6 +37,9 @@ const filters: Ref = ref({
 
 const dialog = useDialog();
 
+const groundTruth = ref({})
+const sets = ref({})
+
 import IconAnalytics from "~icons/carbon/data-analytics";
 import IconCreate from "~icons/gridicons/create";
 import IconEvaluation from "~icons/carbon/compare";
@@ -145,6 +148,41 @@ async function refetch() {
         const keywords = []
         for(const dataset of datasets.value){
           if(dataset.keywords) keywords.push(...dataset.keywords);
+          groundTruth.value[dataset.id] = []
+
+          useCustomFetch(`/data/collection/set/pageXML/${dataset.id}`)
+              .post({
+                level: "TextRegion",
+                index: 0
+              })
+              .json()
+              .then((response) => {
+                for(const result of response.data.value){
+                  if(!groundTruth.value[dataset.id].includes(result.id)){
+                    groundTruth.value[dataset.id].push(result.id)
+                  }
+                }
+              })
+          useCustomFetch(`/data/collection/set/pageXML/${dataset.id}`)
+              .post({
+                level: "TextLine",
+                index: 0
+              })
+              .json()
+              .then((response) => {
+                for(const result of response.data.value){
+                  if(!groundTruth.value[dataset.id].includes(result.id)){
+                    groundTruth.value[dataset.id].push(result.id)
+                  }
+                }
+              })
+          useCustomFetch(`/data/collection/set/list/${dataset.id}`)
+              .get()
+              .json()
+              .then((response) => {
+                console.log(response.data.value)
+                sets.value[dataset.id] = response.data.value.length
+              })
         }
         const keywordSet = new Set(keywords);
         availableKeywords.value = Array.from(keywordSet)
@@ -512,6 +550,22 @@ const contextMenu = ref();
             placeholder="Search by description"
             @input="filterCallback()"
           />
+        </template>
+      </Column>
+      <Column header="Ground Truth">
+        <template #body="{ data }">
+          <MeterGroup
+            :max="sets[data.id]"
+            :value="[
+                { color: '#34d399', value: groundTruth[data.id].length },
+                { color: '#fbbf24', value: sets[data.id] - groundTruth[data.id].length },
+            ]">
+            <template #label="{ value }">
+              <div class="flex justify-center">
+                <p>{{ `${value[0].value}/${sets[data.id]}` }}</p>
+              </div>
+            </template>
+          </MeterGroup>
         </template>
       </Column>
       <Column
