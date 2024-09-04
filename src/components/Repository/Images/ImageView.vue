@@ -9,7 +9,7 @@ import DataView from "primevue/dataview";
 import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
-import { FilterMatchMode } from "@primevue/core/api";
+import { FilterMatchMode, FilterService } from "@primevue/core/api";
 
 import IconCreate from "~icons/gridicons/create";
 
@@ -33,7 +33,24 @@ import { useDialog } from "primevue/usedialog";
 import ProgressSpinner from "primevue/progressspinner";
 
 import IconActions from "~icons/fluent/more-vertical-32-regular";
-import { is } from "@formkit/i18n";
+
+const IN_ARRAY = 'IN_ARRAY';
+
+onBeforeMount(() => {
+  FilterService.register(IN_ARRAY, (value, filter) => {
+    if (filter === undefined || filter === null) {
+      return true;
+    }
+    if (value === undefined || value === null || !Array.isArray(value)) {
+      return false;
+    }
+
+    for(const keyword of filter){
+      if(value.includes(keyword.keywords)) return true
+    }
+    return true
+  });
+})
 
 const router: Router = useRouter();
 
@@ -89,9 +106,7 @@ async function listContainers() {
           }
         }
         const keywordSet = new Set(keywords);
-        availableKeywords.value = Array.from(keywordSet).map((item) => ({
-          keywords: item,
-        }));
+        availableKeywords.value = Array.from(keywordSet)
       }
       isLoadingContainers.value = false;
     });
@@ -238,11 +253,12 @@ const toggleCreateContainerPanel = (event: Event) => {
 };
 
 const selectedContainers: Ref<IContainer[] | undefined> = ref([]);
+
 const filters: Ref = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   name: { value: null, matchMode: FilterMatchMode.CONTAINS },
   description: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  keywords: { value: null, matchMode: FilterMatchMode.IN },
+  keywords: { value: null, matchMode: FilterMatchMode.CONTAINS }
 });
 
 const deleteDialogVisible = ref(false);
@@ -735,14 +751,13 @@ function downloadContainer(container: IContainer) {
               <MultiSelect
                 v-model="filterModel.value"
                 :options="availableKeywords"
-                option-label="keywords"
                 filter
                 placeholder="Any"
-                @change="filterCallback()"
+                @change="filterCallback"
               >
                 <template #option="slotProps">
                   <div class="flex items-center gap-2">
-                    <span>{{ slotProps.option.keywords }}</span>
+                    <span>{{ slotProps.option }}</span>
                   </div>
                 </template>
               </MultiSelect>

@@ -32,6 +32,7 @@ const filters: Ref = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   name: { value: null, matchMode: FilterMatchMode.CONTAINS },
   description: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  keywords: { value: null, matchMode: FilterMatchMode.CONTAINS }
 });
 
 const dialog = useDialog();
@@ -118,6 +119,8 @@ async function getCodec(datasets) {
   });*/
 }
 
+const availableKeywords: Ref<string[]> = ref([])
+
 async function refetch() {
   isRefetching.value = true;
   useCustomFetch(`/data/collection/list`)
@@ -138,6 +141,14 @@ async function refetch() {
         ) {
           return container.right !== null;
         });
+
+        const keywords = []
+        for(const dataset of datasets.value){
+          if(dataset.keywords) keywords.push(...dataset.keywords);
+        }
+        const keywordSet = new Set(keywords);
+        availableKeywords.value = Array.from(keywordSet)
+
         isLoading.value = false;
       }
       setTimeout(function () {
@@ -525,6 +536,23 @@ const contextMenu = ref();
               keyword
             }}</Tag>
           </div>
+        </template>
+        <template #filter="{ filterModel, filterCallback }">
+          <Fluid>
+            <MultiSelect
+              v-model="filterModel.value"
+              :options="availableKeywords"
+              filter
+              placeholder="Any"
+              @change="filterCallback"
+            >
+              <template #option="slotProps">
+                <div class="flex items-center gap-2">
+                  <span>{{ slotProps.option }}</span>
+                </div>
+              </template>
+            </MultiSelect>
+          </Fluid>
         </template>
       </Column>
       <Column :exportable="false" style="min-width: 8rem">
