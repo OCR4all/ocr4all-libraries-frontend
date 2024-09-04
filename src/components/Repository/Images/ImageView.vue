@@ -624,7 +624,7 @@ function downloadContainer(container: IContainer) {
           :value="slotProps.items"
           v-model:filters="filters"
           filterDisplay="row"
-          :globalFilterFields="['name', 'keywords']"
+          :globalFilterFields="['name', 'description', 'keywords']"
           contextMenu
           @rowContextmenu="onRowContextMenu"
           :paginator="true"
