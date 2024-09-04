@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useUiStore } from "@/stores/ui.store";
 
-import IconToggle from "~icons/heroicons/bars-3-center-left"
+import IconToggle from "~icons/heroicons/bars-3-center-left";
 
 const uiStore = useUiStore();
 

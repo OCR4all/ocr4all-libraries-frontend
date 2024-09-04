@@ -24,7 +24,7 @@ import Skeleton from "primevue/skeleton";
 const { t } = useI18n();
 
 const folios = ref();
-const isLoading = ref(true)
+const isLoading = ref(true);
 
 const layout: Ref<"list" | "grid" | undefined> = ref("grid");
 const options = ref(["list", "grid"]);
@@ -83,15 +83,13 @@ const hideUploadToast = () => {
 };
 
 async function refresh() {
-  useCustomFetch(
-    `/repository/container/folio/list/${container}`,
-  )
+  useCustomFetch(`/repository/container/folio/list/${container}`)
     .get()
     .json()
     .then((response) => {
-      folios.value = response.data.value
-      isLoading.value = false
-    })
+      folios.value = response.data.value;
+      isLoading.value = false;
+    });
 }
 const fileUpload = ref();
 const uploader = async function customUploader(event: FileUploadUploaderEvent) {
@@ -105,8 +103,8 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
     formData.append("files", file);
   }
   showUploadToast();
-  axios.defaults.timeout = 3600000
-  console.log(axios.defaults.baseURL)
+  axios.defaults.timeout = 3600000;
+  console.log(axios.defaults.baseURL);
   axios
     .post(
       `/repository/container/folio/upload/${container}?job=Uploading images to ${containerName}`,
@@ -371,68 +369,68 @@ refresh();
         </SelectButton>
       </template>
     </Toolbar>
-      <div v-if="isLoading">
-        <Fluid>
-          <Skeleton height="30rem" />
-        </Fluid>
-      </div>
-      <DataView
-        v-else
-        :value="folios"
-        :layout="layout"
-        paginator
-        :rows="20"
-        :rows-per-page-options="[5, 10, 15, 20, 25]"
-      >
-        <template #grid="slotProps">
-          <div class="flex space-x-3">
-            <p
-              class="min-w-fit self-end text-xl font-semibold text-surface-950 dark:text-surface-50"
-            >
-              {{ t("pages.repository.container.overview.sort-by") }}
-            </p>
-            <Select
-              v-model="selectedSortMode"
-              :options="sortModes"
-              option-label="name"
-              :pt="{
-                root: {
-                  class:
-                    'inline-flex relative bg-transparent cursor-pointer self-end',
-                },
-                input: {
-                  class: 'text-surface-950 dark:text-surface-50 text-xl',
-                },
-                trigger: { class: 'hidden' },
-              }"
-              @change="updateSort"
+    <div v-if="isLoading">
+      <Fluid>
+        <Skeleton height="30rem" />
+      </Fluid>
+    </div>
+    <DataView
+      v-else
+      :value="folios"
+      :layout="layout"
+      paginator
+      :rows="20"
+      :rows-per-page-options="[5, 10, 15, 20, 25]"
+    >
+      <template #grid="slotProps">
+        <div class="flex space-x-3">
+          <p
+            class="min-w-fit self-end text-xl font-semibold text-surface-950 dark:text-surface-50"
+          >
+            {{ t("pages.repository.container.overview.sort-by") }}
+          </p>
+          <Select
+            v-model="selectedSortMode"
+            :options="sortModes"
+            option-label="name"
+            :pt="{
+              root: {
+                class:
+                  'inline-flex relative bg-transparent cursor-pointer self-end',
+              },
+              input: {
+                class: 'text-surface-950 dark:text-surface-50 text-xl',
+              },
+              trigger: { class: 'hidden' },
+            }"
+            @change="updateSort"
+          />
+        </div>
+        <div
+          class="grid grid-cols-1 content-center justify-center gap-x-2 gap-y-3 @[650px]/content:grid-cols-2 @[950px]/content:grid-cols-3 @[1350px]/content:grid-cols-4"
+        >
+          <div v-for="(item, index) in slotProps.items" :key="index">
+            <FolioCard
+              :id="item.id"
+              :ref="setFolioRef"
+              :key="item.id"
+              :name="item.name"
+              :format="item.format"
+              :keywords="item.keywords"
+              :size="item.size"
+              :date="item.date"
+              :user="item.user"
+              :container-id="container"
+              @update-selection="updateSelection"
+              @refresh="refresh"
             />
           </div>
-          <div
-            class="grid grid-cols-1 content-center justify-center gap-x-2 gap-y-3 @[650px]/content:grid-cols-2 @[950px]/content:grid-cols-3 @[1350px]/content:grid-cols-4"
-          >
-            <div v-for="(item, index) in slotProps.items" :key="index">
-              <FolioCard
-                :id="item.id"
-                :ref="setFolioRef"
-                :key="item.id"
-                :name="item.name"
-                :format="item.format"
-                :keywords="item.keywords"
-                :size="item.size"
-                :date="item.date"
-                :user="item.user"
-                :container-id="container"
-                @update-selection="updateSelection"
-                @refresh="refresh"
-              />
-            </div>
-          </div>
-        </template>
-        <template #list="slotProps">
-          <DataTable :value="slotProps.items" v-model:selection="selection">
-            <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-            <!--            <Column>
+        </div>
+      </template>
+      <template #list="slotProps">
+        <DataTable :value="slotProps.items" v-model:selection="selection">
+          <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+          <!--            <Column>
               <template #body="{ data }">
                 <Image v-if="imageMap.get(data.id)" :alt="data.name" preview>
                   <template #previewicon>
@@ -448,36 +446,36 @@ refresh();
                 <Skeleton v-else height="2rem"></Skeleton>
               </template>
             </Column>-->
-            <Column field="name" header="Name"></Column>
-            <Column field="format" header="Format"></Column>
-            <Column field="size.height" header="Height"></Column>
-            <Column field="size.width" header="Width"></Column>
-            <Column field="keywords" header="Keywords"></Column>
-            <Column field="date" header="Added">
-              <template #body="slotProps">
-                <div v-tooltip.left="useLocalDateFormat(slotProps.data.date)">
-                  <UseTimeAgo
-                    v-slot="{ timeAgo }"
-                    :time="Date.parse(slotProps.data.date)"
-                  >
-                    {{ timeAgo }}
-                  </UseTimeAgo>
-                </div>
-              </template>
-            </Column>
-          </DataTable>
-        </template>
-      </DataView>
+          <Column field="name" header="Name"></Column>
+          <Column field="format" header="Format"></Column>
+          <Column field="size.height" header="Height"></Column>
+          <Column field="size.width" header="Width"></Column>
+          <Column field="keywords" header="Keywords"></Column>
+          <Column field="date" header="Added">
+            <template #body="slotProps">
+              <div v-tooltip.left="useLocalDateFormat(slotProps.data.date)">
+                <UseTimeAgo
+                  v-slot="{ timeAgo }"
+                  :time="Date.parse(slotProps.data.date)"
+                >
+                  {{ timeAgo }}
+                </UseTimeAgo>
+              </div>
+            </template>
+          </Column>
+        </DataTable>
+      </template>
+    </DataView>
   </ComponentContainer>
 </template>
 <style>
 .p-fileupload {
-  @apply !border-none
+  @apply !border-none;
 }
 .p-fileupload-content {
-  @apply !hidden
+  @apply !hidden;
 }
 .p-fileupload-header {
-  @apply !border-none !p-0
+  @apply !border-none !p-0;
 }
 </style>

@@ -5,7 +5,7 @@ const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 const logs: Ref<string> = ref("");
 const filteredLogs: Ref<string[]> = ref([]);
 
-import sanitizeHtml from 'sanitize-html';
+import sanitizeHtml from "sanitize-html";
 import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
 const toast = useToast();
@@ -27,11 +27,13 @@ watch(search, (newSearch, _) => {
     const results = [];
     for (const line of original) {
       if (line.toLowerCase().includes(newSearch.toLowerCase())) {
-        results.push(sanitizeHtml(highlightWords(line, newSearch), {
-          allowedClasses: {
-            "span": ["bg-yellow-500/50", "p-1", "text-white", "rounded-sm"]
-          }
-        }));
+        results.push(
+          sanitizeHtml(highlightWords(line, newSearch), {
+            allowedClasses: {
+              span: ["bg-yellow-500/50", "p-1", "text-white", "rounded-sm"],
+            },
+          }),
+        );
       }
     }
     filteredLogs.value = results;
@@ -39,7 +41,10 @@ watch(search, (newSearch, _) => {
 });
 
 function highlightWords(input: string, search: string): string {
-  return input.replaceAll(search, `<span class="bg-yellow-500/50 p-1 text-white rounded-sm">${search}</span>`)
+  return input.replaceAll(
+    search,
+    `<span class="bg-yellow-500/50 p-1 text-white rounded-sm">${search}</span>`,
+  );
 }
 
 function copyToClipboard() {
@@ -64,15 +69,10 @@ function download() {
 <template>
   <Toolbar>
     <template #start>
-      <Button
-          text
-          @click="copyToClipboard">
+      <Button text @click="copyToClipboard">
         <i class="pi pi-clipboard text-black dark:text-white" />
       </Button>
-      <Button
-          text
-          @click="download"
-      >
+      <Button text @click="download">
         <i class="pi pi-download text-black dark:text-white" />
       </Button>
     </template>
@@ -91,14 +91,12 @@ function download() {
       </div>
     </template>
   </Toolbar>
-  <div
-    class="max-h-full overflow-auto rounded bg-black p-8 text-white"
-  >
+  <div class="max-h-full overflow-auto rounded bg-black p-8 text-white">
     <div class="grid">
       <div
         v-for="(log, index) in filteredLogs"
         :key="index"
-        class="max-w-[80vw] mb-1"
+        class="mb-1 max-w-[80vw]"
       >
         <span v-html="log" />
       </div>

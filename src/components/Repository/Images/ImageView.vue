@@ -32,13 +32,13 @@ import ShareDialog from "@/components/Repository/Images/Container/Dialog/ShareDi
 import { useDialog } from "primevue/usedialog";
 import ProgressSpinner from "primevue/progressspinner";
 
-import IconActions from "~icons/fluent/more-vertical-32-regular"
+import IconActions from "~icons/fluent/more-vertical-32-regular";
 import { is } from "@formkit/i18n";
 
 const router: Router = useRouter();
 
-const containers = ref([])
-const availableKeywords = ref()
+const containers = ref([]);
+const availableKeywords = ref();
 
 const newContainerName = ref();
 const createContainerPanel = ref();
@@ -64,7 +64,7 @@ const setContainerCardsRef = (ref) => {
   }
 };
 
-const isLoadingContainers = ref(true)
+const isLoadingContainers = ref(true);
 async function listContainers() {
   useCustomFetch("/repository/container/list")
     .json()
@@ -82,16 +82,18 @@ async function listContainers() {
         containers.value = data.filter(function (container: IContainer) {
           return container.right !== null;
         });
-        const keywords = []
-        for(const container of containers.value){
-          if(container.keywords){
-            keywords.push(...container.keywords)
+        const keywords = [];
+        for (const container of containers.value) {
+          if (container.keywords) {
+            keywords.push(...container.keywords);
           }
         }
-        const keywordSet = new Set(keywords)
-        availableKeywords.value = Array.from(keywordSet).map(item => ({ keywords: item }))
+        const keywordSet = new Set(keywords);
+        availableKeywords.value = Array.from(keywordSet).map((item) => ({
+          keywords: item,
+        }));
       }
-      isLoadingContainers.value = false
+      isLoadingContainers.value = false;
     });
 }
 
@@ -390,9 +392,9 @@ function downloadContainer(container: IContainer) {
         >
           <ProgressSpinner
             class="h-4 w-4"
-            strokeWidth="8"
+            stroke-width="8"
             fill="transparent"
-            animationDuration=".5s"
+            animation-duration=".5s"
             aria-label="Download Spinner"
           />
           <span class="sr-only">Fire icon</span>
@@ -403,11 +405,11 @@ function downloadContainer(container: IContainer) {
           {{ message.summary }}
         </div>
         <button
-          @click="closeCallback"
           type="button"
           class="-mx-1.5 -my-1.5 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg p-1.5 text-surface-800 hover:bg-gray-100 hover:text-surface-950 focus:ring-2 focus:ring-surface-300 dark:text-surface-200 dark:hover:bg-gray-800 dark:hover:text-white"
           data-dismiss-target="#toast-default"
           aria-label="Close"
+          @click="closeCallback"
         >
           <span class="sr-only">Close</span>
           <svg
@@ -566,8 +568,8 @@ function downloadContainer(container: IContainer) {
             v-tooltip.top="
               $t('pages.repository.overview.toolbar.button.create')
             "
-            @click="toggleCreateContainerPanel"
             text
+            @click="toggleCreateContainerPanel"
           >
             <IconCreate class="text-black dark:text-white" />
           </Button>
@@ -587,10 +589,10 @@ function downloadContainer(container: IContainer) {
               $t('pages.repository.overview.toolbar.button.delete')
             "
             icon="pi pi-trash"
-            @click="toggleDeleteDialog"
             :disabled="!selectedContainers || !selectedContainers.length"
             severity="danger"
             text
+            @click="toggleDeleteDialog"
           />
         </div>
       </template>
@@ -621,17 +623,17 @@ function downloadContainer(container: IContainer) {
         <DataTable
           ref="containerDataTable"
           v-model:selection="selectedContainers"
-          :value="slotProps.items"
           v-model:filters="filters"
-          filterDisplay="row"
-          :globalFilterFields="['name', 'description', 'keywords']"
-          contextMenu
-          @rowContextmenu="onRowContextMenu"
+          :value="slotProps.items"
+          filter-display="row"
+          :global-filter-fields="['name', 'description', 'keywords']"
+          context-menu
           :paginator="true"
           :rows="5"
           :rows-per-page-options="[5, 10, 20, 50]"
           :row-hover="true"
           table-style="min-width: 50rem"
+          @row-contextmenu="onRowContextMenu"
         >
           <Column
             selection-mode="multiple"
@@ -659,8 +661,8 @@ function downloadContainer(container: IContainer) {
               <InputText
                 v-model="filterModel.value"
                 type="text"
-                @input="filterCallback()"
                 placeholder="Search by name"
+                @input="filterCallback()"
               />
             </template>
             <template #body="{ data }">
@@ -692,18 +694,18 @@ function downloadContainer(container: IContainer) {
             </template>
             <template #filter="{ filterModel, filterCallback }">
               <InputText
-                  v-model="filterModel.value"
-                  type="text"
-                  placeholder="Search by name"
-                  @input="filterCallback()"
+                v-model="filterModel.value"
+                type="text"
+                placeholder="Search by name"
+                @input="filterCallback()"
               />
             </template>
           </Column>
           <Column
             field="keywords"
             sortable
-            filterField="keywords"
-            :showFilterMatchModes="false"
+            filter-field="keywords"
+            :show-filter-match-modes="false"
             :header="
               $t('pages.repository.overview.dataview.list.column.keywords')
             "
@@ -732,11 +734,11 @@ function downloadContainer(container: IContainer) {
             <template #filter="{ filterModel, filterCallback }">
               <MultiSelect
                 v-model="filterModel.value"
-                @change="filterCallback()"
                 :options="availableKeywords"
-                optionLabel="keywords"
+                option-label="keywords"
                 filter
                 placeholder="Any"
+                @change="filterCallback()"
               >
                 <template #option="slotProps">
                   <div class="flex items-center gap-2">
@@ -749,11 +751,7 @@ function downloadContainer(container: IContainer) {
           <Column :exportable="false" style="min-width: 8rem">
             <template #body="{ data }">
               <div class="space-y-2">
-                <Button
-                  type="button"
-                  text
-                  @click="toggle($event, data)"
-                >
+                <Button type="button" text @click="toggle($event, data)">
                   <IconActions class="text-surface-900 dark:text-surface-100" />
                 </Button>
               </div>

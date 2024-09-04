@@ -3,8 +3,8 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import { IJob } from "@/components/Queue/queue.interfaces";
 import { useDialog } from "primevue/usedialog";
 
-import IconEmpty from "~icons/ph/empty-light"
-import IconOpen from "~icons/fluent/open-16-regular"
+import IconEmpty from "~icons/ph/empty-light";
+import IconOpen from "~icons/fluent/open-16-regular";
 import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
 const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");

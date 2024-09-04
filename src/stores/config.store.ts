@@ -6,7 +6,7 @@ export const useConfigStore = defineStore("config", () => {
   const mode: string = import.meta.env.VITE_DESKTOP_MODE;
 
   axios.defaults.timeout = 100000;
-  axios.defaults.baseURL = baseUrl
+  axios.defaults.baseURL = baseUrl;
 
   const instanceTag: Ref<string | null> = null;
 

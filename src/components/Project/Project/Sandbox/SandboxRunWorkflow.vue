@@ -19,7 +19,7 @@ const isImportingImages = ref(false);
 const isWorkflowRunning = ref(false);
 const isWorkflowFinished = ref(false);
 
-import IconStart from "~icons/codicon/debug-start"
+import IconStart from "~icons/codicon/debug-start";
 
 const SANDBOX_LAUNCHER =
   "de.uniwuerzburg.zpd.ocr4all.application.core.spi.launcher.provider.SandboxNormalizedLauncher";
@@ -117,13 +117,15 @@ async function checkWorkflowJob(startedJob: number) {
 const workflowProgress = ref(0);
 const jobStatus = ref("Scheduled");
 
-const processorSelector = ref()
+const processorSelector = ref();
 
 async function runProcessor() {
   const processor = processorSelector.value.get();
 
   isRunning.value = true;
-  await createSandbox(`${processor.processor.name}_${new Date().toISOString().slice(0, -8).replace(":", "-")}`);
+  await createSandbox(
+    `${processor.processor.name}_${new Date().toISOString().slice(0, -8).replace(":", "-")}`,
+  );
   await importImages();
 
   const url = `/spi/${processor.processor.type}/schedule/${project}/${store.sandboxId}`;
@@ -140,8 +142,8 @@ async function runProcessor() {
   };
 
   const { isFetching, error, data } = await useCustomFetch(url)
-      .post(payload)
-      .json()
+    .post(payload)
+    .json();
 
   isWorkflowRunning.value = true;
   const startedJob = data.value["job-id"];
@@ -153,9 +155,9 @@ async function launchWorkflow(workflow: IWorkflow) {
   isRunning.value = true;
 
   const sandboxName = `${workflow.label}_${new Date()
-      .toISOString()
-      .slice(0, -8)
-      .replace(":", "-")}`;
+    .toISOString()
+    .slice(0, -8)
+    .replace(":", "-")}`;
   await createSandbox(sandboxName);
   await importImages();
 
@@ -181,7 +183,7 @@ const options = ref(["Workflow", "Processor"]);
 <template>
   <section
     v-if="!isRunning && !isWorkflowFinished"
-    class="grid px-20 items-center space-y-10 dark:text-surface-100"
+    class="grid items-center space-y-10 px-20 dark:text-surface-100"
   >
     <div class="flex justify-center">
       <SelectButton

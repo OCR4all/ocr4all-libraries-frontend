@@ -22,7 +22,7 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 
 import { useI18n } from "vue-i18n";
 import { useUiStore } from "@/stores/ui.store";
-import IconLoad from "~icons/uis/upload-alt"
+import IconLoad from "~icons/uis/upload-alt";
 
 const { t } = useI18n();
 
@@ -53,7 +53,10 @@ Promise.resolve(importNodesFromAPI()).then(async (nodes) => {
   }
   nodeParameters.value = nodes[1];
   if (store.workflow) {
-    selectedWorkflow.value = { id: store.workflow.id, label: store.workflow.label };
+    selectedWorkflow.value = {
+      id: store.workflow.id,
+      label: store.workflow.label,
+    };
     await loadWorkflow(store.workflow).then(() => {
       store.workflow = null;
     });
@@ -76,18 +79,16 @@ const originalWorkflowName = ref();
 const workflowDescription = ref();
 
 async function openLoadDialog() {
-  const { error, data } = await useCustomFetch(`/workflow/list`)
-    .get()
-    .json();
-  if(error.value){
+  const { error, data } = await useCustomFetch(`/workflow/list`).get().json();
+  if (error.value) {
     toast.add({
       severity: "error",
       summary: "Error",
       detail: "Couldn't retrieve workflows.",
       life: 3000,
       group: "general",
-    })
-  }else{
+    });
+  } else {
     const workflows = [];
     for (const workflow of data.value) {
       workflows.push({ label: workflow.label, id: workflow.id });
@@ -179,7 +180,7 @@ async function saveWorkflow() {
 }
 
 async function loadWorkflow(workflow: IWorkflow) {
-  console.log(workflow)
+  console.log(workflow);
   const { isFetching, error, data } = await useCustomFetch(
     `/workflow/pull/${workflow.id}`,
   )
@@ -246,11 +247,11 @@ function togglePalette() {
   palette.value.toggleVisibility();
 }
 
-const editorEl = ref()
+const editorEl = ref();
 
-const { isFullscreen, toggle } = useFullscreen(editorEl)
+const { isFullscreen, toggle } = useFullscreen(editorEl);
 
-provide("fullscreen", isFullscreen)
+provide("fullscreen", isFullscreen);
 </script>
 
 <template>
@@ -276,11 +277,11 @@ provide("fullscreen", isFullscreen)
           <label
             for="text"
             class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-          >Name*</label
+            >Name*</label
           >
           <InputText v-model="workflowName" type="text" />
           <InlineMessage v-show="!labelEntered"
-          >A workflow name is required</InlineMessage
+            >A workflow name is required</InlineMessage
           >
         </div>
 
@@ -288,7 +289,7 @@ provide("fullscreen", isFullscreen)
           <label
             for="last-name"
             class="mb-2 inline-block text-sm text-surface-800 dark:text-surface-200 sm:text-base"
-          >Description</label
+            >Description</label
           >
           <InputText v-model="workflowDescription" type="text" />
         </div>

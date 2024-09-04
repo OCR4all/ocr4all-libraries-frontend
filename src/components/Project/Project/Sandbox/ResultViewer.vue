@@ -49,7 +49,7 @@ const addToDatasetDialog = defineAsyncComponent(
   () =>
     import(
       "@/components/Project/Project/Sandbox/Dialog/AddToDatasetDialog.vue"
-      ),
+    ),
 );
 
 const router = useRouter();
@@ -60,7 +60,7 @@ const toast = useToast();
 
 const larexURL = import.meta.env.VITE_LAREX_URL;
 
-const larexForm = ref()
+const larexForm = ref();
 
 const { t } = useI18n();
 
@@ -118,13 +118,13 @@ function openProcessorDialog(snapshot: ITrack) {
       track: key,
     },
     onClose: (data: unknown) => {
-      if(data.data){
+      if (data.data) {
         toast.add({
           severity: "info",
           summary: "Processor is running",
           detail: data.data,
           group: "job",
-        })
+        });
       }
       refetch();
     },
@@ -265,29 +265,27 @@ async function generateSandbox(selection: ITrack) {
     }
   }
 
-  console.log("I'm here")
+  console.log("I'm here");
   const payload = {
-    track: createdTrack.value
-  }
+    track: createdTrack.value,
+  };
 
-  useCustomFetch(
-    `/snapshot/mets/file/${project}/${sandbox}`,
-  )
+  useCustomFetch(`/snapshot/mets/file/${project}/${sandbox}`)
     .post(payload)
     .json()
     .then(async (response) => {
-      console.log("I'm here now")
+      console.log("I'm here now");
       const larexMaps = await createLarexMapsFromFiles(response.data.value);
-      formFileMap.value = JSON.stringify(larexMaps.fileMap)
-      formMimeMap.value = JSON.stringify(larexMaps.mimeMap)
-      await nextTick()
-      console.log("Submit it")
-      await larexForm.value.submit()
-      console.log("Submitted??")
+      formFileMap.value = JSON.stringify(larexMaps.fileMap);
+      formMimeMap.value = JSON.stringify(larexMaps.mimeMap);
+      await nextTick();
+      console.log("Submit it");
+      await larexForm.value.submit();
+      console.log("Submitted??");
 
-      toast.removeGroup("headless")
+      toast.removeGroup("headless");
       refetch();
-    })
+    });
 }
 
 function getTagClasses(type: string): string {
@@ -363,7 +361,6 @@ function openExportSnapshotDialog(snapshot: ITrack) {
   });
 }
 
-
 function openAddToDatasetDialog(snapshot: ITrack) {
   dialog.open(addToDatasetDialog, {
     props: {
@@ -380,7 +377,7 @@ function openAddToDatasetDialog(snapshot: ITrack) {
     data: {
       key: convertSelectionToTrack(snapshot),
       project: project,
-      sandbox: sandbox
+      sandbox: sandbox,
     },
     onClose: () => {
       refetch();
@@ -388,37 +385,35 @@ function openAddToDatasetDialog(snapshot: ITrack) {
   });
 }
 
-const scheduledJobs: Ref<number[]> = ref([])
-const runningJobs: Ref<number[]> = ref([])
-const finishedJobs: Ref<number[]> = ref([])
+const scheduledJobs: Ref<number[]> = ref([]);
+const runningJobs: Ref<number[]> = ref([]);
+const finishedJobs: Ref<number[]> = ref([]);
 
 const { pause, resume, isActive } = useIntervalFn(() => {
-  useCustomFetch(
-    `/job/overview/domain`,
-  )
+  useCustomFetch(`/job/overview/domain`)
     .get()
     .json()
     .then((response) => {
-      const jobMap = response.data.value
-      const scheduled = []
-      for(const entry of jobMap["scheduled"]){
-        scheduled.push(entry.id)
+      const jobMap = response.data.value;
+      const scheduled = [];
+      for (const entry of jobMap["scheduled"]) {
+        scheduled.push(entry.id);
       }
-      scheduledJobs.value = scheduled
+      scheduledJobs.value = scheduled;
 
-      const running = []
-      for(const entry of jobMap["running"]){
-        running.push(entry.id)
+      const running = [];
+      for (const entry of jobMap["running"]) {
+        running.push(entry.id);
       }
-      runningJobs.value = running
+      runningJobs.value = running;
 
-      const finished = []
-      for(const entry of jobMap["done"]){
-        finished.push(entry.id)
+      const finished = [];
+      for (const entry of jobMap["done"]) {
+        finished.push(entry.id);
       }
-      finishedJobs.value = finished
-    })
-}, 1000)
+      finishedJobs.value = finished;
+    });
+}, 1000);
 
 async function checkJob(startedJob: number) {
   return await new Promise((resolve) => {
@@ -479,32 +474,36 @@ const actionDock = ref({
 });
 
 async function createLarexMapsFromFiles(sets: string[]): unknown {
-  const fileMap = {}
-  const mimeMap = {}
+  const fileMap = {};
+  const mimeMap = {};
 
-  const environment = await useCustomFetch(`/instance/environment`).get().json()
-  const basePath = environment.data.value.folders.find((element) => element.type === 'projects').folder.replace("/srv/ocr4all/", "/home/books/")
-  const dirPath = `${basePath}/${project}/sandboxes/${sandbox}/snapshots`
+  const environment = await useCustomFetch(`/instance/environment`)
+    .get()
+    .json();
+  const basePath = environment.data.value.folders
+    .find((element) => element.type === "projects")
+    .folder.replace("/srv/ocr4all/", "/home/books/");
+  const dirPath = `${basePath}/${project}/sandboxes/${sandbox}/snapshots`;
 
-  for(const set of sets){
-    const filePathParts = set.files[0].path.split('/')
-    const basename = filePathParts[filePathParts.length - 1].split(".")[0]
-    fileMap[basename] = []
+  for (const set of sets) {
+    const filePathParts = set.files[0].path.split("/");
+    const basename = filePathParts[filePathParts.length - 1].split(".")[0];
+    fileMap[basename] = [];
   }
-  for(const set of sets){
-    for(const file of set.files){
-      if(file["mime-type"] !== 'application/vnd.prima.page+xml'){
-        const filePathParts = file.path.split('/')
-        const basename = filePathParts[filePathParts.length - 1].split(".")[0]
+  for (const set of sets) {
+    for (const file of set.files) {
+      if (file["mime-type"] !== "application/vnd.prima.page+xml") {
+        const filePathParts = file.path.split("/");
+        const basename = filePathParts[filePathParts.length - 1].split(".")[0];
 
-        const path = `${dirPath}/${file.path}`
-        fileMap[basename].push(path)
-        mimeMap[`${path}`] = file["mime-type"]
+        const path = `${dirPath}/${file.path}`;
+        fileMap[basename].push(path);
+        mimeMap[`${path}`] = file["mime-type"];
       }
     }
   }
 
-  return { fileMap: fileMap, mimeMap: mimeMap }
+  return { fileMap: fileMap, mimeMap: mimeMap };
 }
 
 const items = computed(() => {
@@ -545,8 +544,8 @@ const items = computed(() => {
         disabled: false,
         icon: IconAddToDataset,
         command: () => {
-          openAddToDatasetDialog(selection.value)
-        }
+          openAddToDatasetDialog(selection.value);
+        },
       },
       {
         label: "Export",
@@ -571,16 +570,16 @@ const items = computed(() => {
 });
 </script>
 <template>
-  <Toast
-    position="bottom-right"
-    group="job"
-  >
+  <Toast position="bottom-right" group="job">
     <template #container="{ message, closeCallback }">
       <section
         class="grid w-full justify-center gap-3 border bg-surface-100/70 p-3 backdrop-blur-sm dark:border-surface-600 dark:bg-surface-800/80"
         style="border-radius: 10px"
       >
-        <div v-if="scheduledJobs.includes(message.detail)" class="flex flex-col justify-center w-full gap-3 justify-self-center">
+        <div
+          v-if="scheduledJobs.includes(message.detail)"
+          class="flex w-full flex-col justify-center gap-3 justify-self-center"
+        >
           <p
             class="m-0 text-base font-semibold text-primary-950 dark:text-primary-0"
           >
@@ -588,7 +587,10 @@ const items = computed(() => {
           </p>
           <ProgressBar mode="indeterminate" style="height: 6px"></ProgressBar>
         </div>
-        <div v-else-if="runningJobs.includes(message.detail)" class="flex flex-col justify-center w-full gap-3 justify-self-center">
+        <div
+          v-else-if="runningJobs.includes(message.detail)"
+          class="flex w-full flex-col justify-center gap-3 justify-self-center"
+        >
           <p
             class="m-0 text-base font-semibold text-primary-950 dark:text-primary-0"
           >
@@ -596,15 +598,16 @@ const items = computed(() => {
           </p>
           <ProgressBar mode="indeterminate" style="height: 6px"></ProgressBar>
         </div>
-        <div v-else-if="finishedJobs.includes(message.detail)" class="flex flex-col justify-center w-full gap-3 justify-self-center">
+        <div
+          v-else-if="finishedJobs.includes(message.detail)"
+          class="flex w-full flex-col justify-center gap-3 justify-self-center"
+        >
           <p
             class="m-0 text-base font-semibold text-primary-950 dark:text-primary-0"
           >
             Processor job is finished!
           </p>
-          <Button severity="contrast" @click="closeCallback">
-            Close
-          </Button>
+          <Button severity="contrast" @click="closeCallback"> Close </Button>
         </div>
       </section>
     </template>
@@ -705,23 +708,13 @@ const items = computed(() => {
   <form
     id="larexForm"
     ref="larexForm"
-    class="justify-self-center hidden"
+    class="hidden justify-self-center"
     :action="larexURL"
     method="POST"
     target="_blank"
   >
-    <input
-      id="fileMap"
-      v-model="formFileMap"
-      type="hidden"
-      name="fileMap"
-    />
-    <input
-      id="mimeMap"
-      v-model="formMimeMap"
-      type="hidden"
-      name="mimeMap"
-    />
+    <input id="fileMap" v-model="formFileMap" type="hidden" name="fileMap" />
+    <input id="mimeMap" v-model="formMimeMap" type="hidden" name="mimeMap" />
     <input id="metsFilePath" value="" type="hidden" name="metsFilePath" />
     <input id="customFlag" value="" type="hidden" name="customFlag" />
     <input id="customFolder" value="" type="hidden" name="customFolder" />

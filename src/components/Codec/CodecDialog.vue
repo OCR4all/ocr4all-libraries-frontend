@@ -12,7 +12,7 @@ import { CanvasRenderer } from "echarts/renderers";
 import darkTheme from "@/assets/echarts/dark.project.json";
 import lightTheme from "@/assets/echarts/light.project.json";
 
-import IconCsv from "~icons/ph/file-csv"
+import IconCsv from "~icons/ph/file-csv";
 
 use([
   TooltipComponent,
@@ -32,7 +32,7 @@ provide(THEME_KEY, useDark().value ? darkTheme : lightTheme);
 
 const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
-const dt = ref()
+const dt = ref();
 
 const codec = ref();
 const option = ref();
@@ -107,36 +107,41 @@ const selectedSet = ref();
 const sets = ref([]);
 
 const datatableNodes = computed(() => {
-  const nodes = []
-  if(codec.value){
-    for(const [key, value] of Object.entries(codec.value.codec)){
+  const nodes = [];
+  if (codec.value) {
+    for (const [key, value] of Object.entries(codec.value.codec)) {
       nodes.push({
         id: key,
-        quantity: value
-      })
+        quantity: value,
+      });
     }
   }
-  return nodes
+  return nodes;
 });
 
 const exportCSV = () => {
   dt.value.exportCSV();
 };
 
-const filter = ref()
+const filter = ref();
 </script>
 <template>
   <ComponentContainer spaced internal>
     <Toolbar>
       <template #start>
-<!--        <Select
+        <!--        <Select
           v-model="selectedSet"
           :options="sets"
           sets="name"
           placeholder="Select a Set"
           class="w-full md:w-56"
         />-->
-        <Button v-tooltip.top="'Export CSV'" severity="primary" text @click="exportCSV($event)">
+        <Button
+          v-tooltip.top="'Export CSV'"
+          severity="primary"
+          text
+          @click="exportCSV($event)"
+        >
           <IconCsv class="text-black dark:text-white" />
         </Button>
       </template>
@@ -146,29 +151,23 @@ const filter = ref()
       <template #end>
         <IconField>
           <InputIcon class="pi pi-search" />
-          <InputText
-            v-model="filter"
-            placeholder="Search"
-          />
+          <InputText v-model="filter" placeholder="Search" />
         </IconField>
       </template>
     </Toolbar>
-    <div class="flex flex-col ">
+    <div class="flex flex-col">
       <section v-if="mode === 'Chart'">
         <v-chart class="chart" :option="option" autoresize />
       </section>
       <section v-else>
-        <DataTable ref="dt" :value="datatableNodes" sortField="quantity" :sortOrder="-1">
-          <Column
-            field="id"
-            header="Character"
-            sortable
-          ></Column>
-          <Column
-            field="quantity"
-            header="Quantity"
-            sortable
-          ></Column>
+        <DataTable
+          ref="dt"
+          :value="datatableNodes"
+          sortField="quantity"
+          :sortOrder="-1"
+        >
+          <Column field="id" header="Character" sortable></Column>
+          <Column field="quantity" header="Quantity" sortable></Column>
         </DataTable>
       </section>
     </div>

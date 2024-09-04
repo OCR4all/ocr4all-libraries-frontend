@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { IWorkflow } from "@/types/workflow.types";
 
 interface INodeFlowStore {
-  workflow: IWorkflow | null,
+  workflow: IWorkflow | null;
   sidebarDescriptions?: object;
 }
 export const useNodeFlowStore = defineStore({

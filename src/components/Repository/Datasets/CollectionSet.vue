@@ -16,9 +16,9 @@ import { UseTimeAgo } from "@vueuse/components";
 import IconLarex from "~icons/fluent/notebook-eye-20-filled";
 
 const larexURL = import.meta.env.VITE_LAREX_URL;
-const formFileMap = ref()
-const formMimeMap = ref()
-const larexForm = ref()
+const formFileMap = ref();
+const formMimeMap = ref();
+const larexForm = ref();
 
 const toast: ToastServiceMethods = useToast();
 
@@ -53,7 +53,7 @@ import ProgressBar from "primevue/progressbar";
 const dialog = useDialog();
 
 const { t } = useI18n();
-const auth = useAuthStore()
+const auth = useAuthStore();
 
 const router: Router = useRouter();
 const dataset: LocationQueryValue | LocationQueryValue[] =
@@ -64,8 +64,7 @@ const datasetName: LocationQueryValue | LocationQueryValue[] =
 const uploadToastVisible = ref(false);
 const progress = ref(0);
 
-import IconActions from "~icons/fluent/more-vertical-32-regular"
-
+import IconActions from "~icons/fluent/more-vertical-32-regular";
 
 const uiStore = useUiStore();
 uiStore.breadcrumb = [
@@ -220,35 +219,40 @@ const hideUploadToast = () => {
   }, 2000);
 };
 
+async function openInLarex() {
+  const fileMap = {};
+  const mimeMap = {};
 
-async function openInLarex(){
-  const fileMap = {}
-  const mimeMap = {}
+  const environment = await useCustomFetch(`/instance/environment`)
+    .get()
+    .json();
+  const basePath = environment.data.value.folders
+    .find((element) => element.type === "data")
+    .folder.replace("/srv/ocr4all/", "/home/books/");
 
-  const environment = await useCustomFetch(`/instance/environment`).get().json()
-  const basePath = environment.data.value.folders.find((element) => element.type === 'data').folder.replace("/srv/ocr4all/", "/home/books/")
-
-  const { data } = await useCustomFetch(`/data/collection/set/list/${dataset}`).get().json()
-  for(const set of data.value){
-    for(const file of set.files){
-      if(file["content-type"] !== 'application/xml'){
-        const basename = file.name.replace(`.${file.extension}`, '')
-        const path = `${basePath}/${dataset}/${file.name}`
-        mimeMap[`${path}`] = file["content-type"]
-        if(basename in fileMap){
-          fileMap[basename].push(path)
-        }else{
-          fileMap[basename] = [path]
+  const { data } = await useCustomFetch(`/data/collection/set/list/${dataset}`)
+    .get()
+    .json();
+  for (const set of data.value) {
+    for (const file of set.files) {
+      if (file["content-type"] !== "application/xml") {
+        const basename = file.name.replace(`.${file.extension}`, "");
+        const path = `${basePath}/${dataset}/${file.name}`;
+        mimeMap[`${path}`] = file["content-type"];
+        if (basename in fileMap) {
+          fileMap[basename].push(path);
+        } else {
+          fileMap[basename] = [path];
         }
       }
     }
   }
 
-  formFileMap.value = JSON.stringify(fileMap)
-  formMimeMap.value = JSON.stringify(mimeMap)
+  formFileMap.value = JSON.stringify(fileMap);
+  formMimeMap.value = JSON.stringify(mimeMap);
 
-  await nextTick()
-  larexForm.value.submit()
+  await nextTick();
+  larexForm.value.submit();
 }
 
 async function downloadDataset() {
@@ -288,7 +292,7 @@ const showUploadToast = () => {
 const fileUpload = ref();
 const uploader = async function customUploader(event: FileUploadUploaderEvent) {
   const formData = new FormData();
-  console.log("entered")
+  console.log("entered");
 
   const filesToHandle = Array.isArray(event.files)
     ? event.files
@@ -307,7 +311,9 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
       },
       onUploadProgress: function (progressEvent) {
         progress.value = parseInt(
-          String(Math.round((progressEvent.loaded / progressEvent.total) * 100)),
+          String(
+            Math.round((progressEvent.loaded / progressEvent.total) * 100),
+          ),
         );
       },
     })
@@ -390,7 +396,7 @@ async function removeSelectedSets() {
       data: selectedSets,
     },
     onClose: () => {
-      refresh()
+      refresh();
     },
   });
 }
@@ -636,18 +642,8 @@ refresh();
     method="POST"
     target="_blank"
   >
-    <input
-      id="fileMap"
-      v-model="formFileMap"
-      type="hidden"
-      name="fileMap"
-    />
-    <input
-      id="mimeMap"
-      v-model="formMimeMap"
-      type="hidden"
-      name="mimeMap"
-    />
+    <input id="fileMap" v-model="formFileMap" type="hidden" name="fileMap" />
+    <input id="mimeMap" v-model="formMimeMap" type="hidden" name="mimeMap" />
     <input id="metsFilePath" value="" type="hidden" name="metsFilePath" />
     <input id="customFlag" value="" type="hidden" name="customFlag" />
     <input id="customFolder" value="" type="hidden" name="customFolder" />
@@ -684,11 +680,7 @@ refresh();
         >
           <IconAnalytics class="text-black dark:text-white" />
         </Button>
-        <Button
-          v-tooltip.top="'Open in LAREX'"
-          text
-          @click="openInLarex"
-        >
+        <Button v-tooltip.top="'Open in LAREX'" text @click="openInLarex">
           <IconLarex class="text-black dark:text-white" />
         </Button>
         <Button
@@ -822,12 +814,12 @@ refresh();
 </template>
 <style>
 .p-fileupload {
-  @apply !border-none
+  @apply !border-none;
 }
 .p-fileupload-content {
-  @apply !hidden
+  @apply !hidden;
 }
 .p-fileupload-header {
-  @apply !border-none !p-0
+  @apply !border-none !p-0;
 }
 </style>

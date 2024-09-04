@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import IconRefresh from "~icons/heroicons/arrow-path"
+import IconRefresh from "~icons/heroicons/arrow-path";
 import IconCreate from "~icons/gridicons/create";
 
 import { UseTimeAgo } from "@vueuse/components";
@@ -23,19 +23,17 @@ import { useToast } from "primevue/usetoast";
 
 const editSandboxDialog = defineAsyncComponent(
   () =>
-    import(
-      "@/components/Project/Project/Sandbox/Dialog/EditSandboxDialog.vue"
-      ),
+    import("@/components/Project/Project/Sandbox/Dialog/EditSandboxDialog.vue"),
 );
 const toast = useToast();
 
-import IconActions from "~icons/fluent/more-vertical-32-regular"
+import IconActions from "~icons/fluent/more-vertical-32-regular";
 
 import { useI18n } from "vue-i18n";
 import { useDialog } from "primevue/usedialog";
 const { t } = useI18n();
 
-const dialog = useDialog()
+const dialog = useDialog();
 
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
@@ -137,21 +135,21 @@ function toggleDeleteDialog(id) {
 const getStateStyle = (entry) => {
   switch (entry) {
     case "secured":
-      return "!bg-blue-600 !text-blue-100"
+      return "!bg-blue-600 !text-blue-100";
     case "paused":
-      return "!bg-zinc-600 !text-zinc-100"
+      return "!bg-zinc-600 !text-zinc-100";
     case "closed":
-      return "!bg-red-600 !text-red-100"
+      return "!bg-red-600 !text-red-100";
     case "canceled":
-      return "!bg-yellow-600 !text-yellow-100"
+      return "!bg-yellow-600 !text-yellow-100";
     case "active":
-      return "!bg-green-600 !text-green-100"
+      return "!bg-green-600 !text-green-100";
     default:
       return null;
   }
 };
 
-function openSandboxEditDialog(data){
+function openSandboxEditDialog(data) {
   dialog.open(editSandboxDialog, {
     props: {
       header: "Edit Result Metadata",
@@ -166,12 +164,12 @@ function openSandboxEditDialog(data){
     },
     data: {
       sandbox: data,
-      project: project
+      project: project,
     },
     onClose: () => {
       refetch();
     },
-  })
+  });
 }
 
 async function removeResults() {
@@ -196,7 +194,7 @@ async function removeResults() {
 }
 const downloadSandboxToastVisible = ref();
 async function downloadSandbox(sandbox) {
-  downloadSandboxToastVisible.value = true
+  downloadSandboxToastVisible.value = true;
   toast.add({
     severity: "info",
     summary: "Download is prepared",
@@ -212,7 +210,7 @@ async function downloadSandbox(sandbox) {
       document.body.appendChild(link);
       link.click();
       toast.removeGroup("headless");
-      downloadSandboxToastVisible.value = false
+      downloadSandboxToastVisible.value = false;
     });
 }
 async function downloadHistory(sandbox) {
@@ -403,7 +401,10 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
           @click="createSandbox()"
           text
         >
-          <IconCreate class="text-black dark:text-white" :class="{ 'animate-pulse' : sandboxes.length === 0 }" />
+          <IconCreate
+            class="text-black dark:text-white"
+            :class="{ 'animate-pulse': sandboxes.length === 0 }"
+          />
         </Button>
       </template>
       <template #end>
@@ -479,7 +480,11 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
         :filter-menu-style="{ width: '14rem' }"
       >
         <template #body="{ data }">
-          <Tag v-for="keyword of data.keywords" :key="keyword" :value="keyword"  />
+          <Tag
+            v-for="keyword of data.keywords"
+            :key="keyword"
+            :value="keyword"
+          />
         </template>
       </Column>
       <Column

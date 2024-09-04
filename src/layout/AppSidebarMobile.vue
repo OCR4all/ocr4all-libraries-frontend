@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import IconSettings from "~icons/heroicons/cog-6-tooth"
-import IconClose from "~icons/heroicons/x-mark"
+import IconSettings from "~icons/heroicons/cog-6-tooth";
+import IconClose from "~icons/heroicons/x-mark";
 
 import { adminNavigation, mainNavigation } from "@/layout/Sidebar";
 import { useUiStore } from "@/stores/ui.store";

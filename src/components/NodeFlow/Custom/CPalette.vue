@@ -140,41 +140,41 @@ const { x, y, isOutside } = useMouseInElement(palette);
 
 <template>
   <div v-show="visible" ref="palette" class="overflow-scroll-y h-full">
-      <div
-        class="baklava-node-palette !m-5 !rounded-xl !w-64 lg:!w-72 !bg-surface-0 dark:!bg-surface-900 !border !border-surface-200 dark:!border-surface-700"
+    <div
+      class="baklava-node-palette !m-5 !w-64 !rounded-xl !border !border-surface-200 !bg-surface-0 dark:!border-surface-700 dark:!bg-surface-900 lg:!w-72"
+    >
+      <h1
+        class="pb-5 text-center text-xl font-bold text-surface-800 dark:text-surface-100"
       >
-        <h1 class="pb-5 text-center text-xl font-bold text-surface-800 dark:text-surface-100">
-          {{ $t("pages.nodeflow.palette.processors") }}
-        </h1>
-        <Tree
-          :value="categories"
-          :filter="true"
-          filterMode="lenient"
-          class="w-full"
-        >
-          <template #node="slotProps">
-            <PaletteEntry
-              :key="slotProps.node.key"
-              :type="slotProps.node.nt"
-              :title="slotProps.node.label"
-              @pointerdown="
-                onDragStart(slotProps.node.label, slotProps.node.ni)
-              "
-            />
-          </template>
-        </Tree>
-      </div>
-      <transition name="fade">
-        <div
-          v-if="draggedNode"
-          class="baklava-dragged-node"
-          :style="draggedNodeStyles"
-        >
+        {{ $t("pages.nodeflow.palette.processors") }}
+      </h1>
+      <Tree
+        :value="categories"
+        :filter="true"
+        filterMode="lenient"
+        class="w-full"
+      >
+        <template #node="slotProps">
           <PaletteEntry
-            :type="draggedNode.type"
-            :title="draggedNode.nodeInformation.title"
+            :key="slotProps.node.key"
+            :type="slotProps.node.nt"
+            :title="slotProps.node.label"
+            @pointerdown="onDragStart(slotProps.node.label, slotProps.node.ni)"
           />
-        </div>
-      </transition>
+        </template>
+      </Tree>
     </div>
+    <transition name="fade">
+      <div
+        v-if="draggedNode"
+        class="baklava-dragged-node"
+        :style="draggedNodeStyles"
+      >
+        <PaletteEntry
+          :type="draggedNode.type"
+          :title="draggedNode.nodeInformation.title"
+        />
+      </div>
+    </transition>
+  </div>
 </template>

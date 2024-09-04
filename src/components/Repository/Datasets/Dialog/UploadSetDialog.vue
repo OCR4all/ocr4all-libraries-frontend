@@ -11,9 +11,9 @@ const toast = useToast();
 
 const uploadToastVisible = ref(false);
 const progress = ref(0);
-const auth = useAuthStore()
+const auth = useAuthStore();
 
-const dataset = ref()
+const dataset = ref();
 
 const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 onMounted(() => {
@@ -62,7 +62,7 @@ const uploader = async function customUploader(event: FileUploadUploaderEvent) {
     .then(function () {
       fileUpload.value.clear();
       fileUpload.value.uploadedFileCount = 0;
-/*      dialogRef.value.close()*/
+      /*      dialogRef.value.close()*/
     })
     .catch(function (error) {
       console.log(error);

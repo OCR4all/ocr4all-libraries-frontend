@@ -102,14 +102,14 @@ const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
-const isLoading = ref(true)
+const isLoading = ref(true);
 
 async function refetch() {
   useCustomFetch(`/administration/security/group/list`)
     .json()
     .then((response) => {
       groups.value = response.data.value;
-      isLoading.value = false
+      isLoading.value = false;
     });
 }
 
@@ -154,7 +154,7 @@ function openEditGroupDialog(data: IGroup) {
   });
 }
 function openDeleteGroupDialog(data: IGroup[]) {
-  console.log(data)
+  console.log(data);
   dialog.open(deleteGroupDialog, {
     props: {
       header: i18n.t("admin.user-management.dialog.delete.single.header"),

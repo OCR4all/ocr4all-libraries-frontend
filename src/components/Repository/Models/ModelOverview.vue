@@ -16,7 +16,7 @@ const ShareModelDialog = defineAsyncComponent(
   () => import("@/components/Repository/Models/Dialog/ShareModelDialog.vue"),
 );
 
-import IconActions from "~icons/fluent/more-vertical-32-regular"
+import IconActions from "~icons/fluent/more-vertical-32-regular";
 
 const dialog = useDialog();
 
@@ -32,7 +32,7 @@ import { FilterMatchMode } from "@primevue/core/api";
 const confirm = useConfirm();
 const toast = useToast();
 
-const isLoading = ref(true)
+const isLoading = ref(true);
 
 async function fetch() {
   useCustomFetch("/assemble/model/list")
@@ -40,7 +40,7 @@ async function fetch() {
     .json()
     .then((response) => {
       models.value = response.data.value;
-      isLoading.value = false
+      isLoading.value = false;
       console.log(models.value);
     });
 }
@@ -445,10 +445,10 @@ const selectedModels = ref([]);
         <Column field="name" header="Name">
           <template #filter="{ filterModel, filterCallback }">
             <InputText
-                v-model="filterModel.value"
-                type="text"
-                placeholder="Search by name"
-                @input="filterCallback()"
+              v-model="filterModel.value"
+              type="text"
+              placeholder="Search by name"
+              @input="filterCallback()"
             />
           </template>
         </Column>
@@ -458,20 +458,20 @@ const selectedModels = ref([]);
           </template>
           <template #filter="{ filterModel, filterCallback }">
             <InputText
-                v-model="filterModel.value"
-                type="text"
-                placeholder="Search by engine"
-                @input="filterCallback()"
+              v-model="filterModel.value"
+              type="text"
+              placeholder="Search by engine"
+              @input="filterCallback()"
             />
           </template>
         </Column>
         <Column field="description" header="Description">
           <template #filter="{ filterModel, filterCallback }">
             <InputText
-                v-model="filterModel.value"
-                type="text"
-                placeholder="Search by description"
-                @input="filterCallback()"
+              v-model="filterModel.value"
+              type="text"
+              placeholder="Search by description"
+              @input="filterCallback()"
             />
           </template>
         </Column>
@@ -485,10 +485,10 @@ const selectedModels = ref([]);
           </template>
           <template #filter="{ filterModel, filterCallback }">
             <InputText
-                v-model="filterModel.value"
-                type="text"
-                placeholder="Search by state"
-                @input="filterCallback()"
+              v-model="filterModel.value"
+              type="text"
+              placeholder="Search by state"
+              @input="filterCallback()"
             />
           </template>
         </Column>

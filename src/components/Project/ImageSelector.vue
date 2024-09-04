@@ -10,18 +10,18 @@ import Chip from "primevue/chip";
 import Skeleton from "primevue/skeleton";
 
 interface IData {
-  name: string,
-  type: string,
-  thumbnail: null | Ref<string | undefined>,
-  detail: null | Ref<string | undefined>,
-  keywords: null | string[]
+  name: string;
+  type: string;
+  thumbnail: null | Ref<string | undefined>;
+  detail: null | Ref<string | undefined>;
+  keywords: null | string[];
 }
 
 interface INode {
-  key: string,
-  data: IData,
-  leaf: boolean
-  children: undefined | INode[]
+  key: string;
+  data: IData;
+  leaf: boolean;
+  children: undefined | INode[];
 }
 
 function get() {
@@ -45,7 +45,7 @@ function get() {
       }
     }
   }
-  return registry
+  return registry;
 }
 
 onMounted(() => {
@@ -75,9 +75,9 @@ const rows = ref(15);
 const loading = ref(false);
 const totalRecords = ref(0);
 const onExpand = (node: INode) => {
-  const isChecked = (
-    selectedFolios.value && Object.keys(selectedFolios.value).includes(node.key)
-  );
+  const isChecked =
+    selectedFolios.value &&
+    Object.keys(selectedFolios.value).includes(node.key);
   if (!node.children) {
     loading.value = true;
     useCustomFetch(`/repository/container/folio/list/${node.key}`)
@@ -97,11 +97,15 @@ const onExpand = (node: INode) => {
                 .get()
                 .blob()
                 .then((response) => {
-                  const parent = nodes.value.find((elem) => elem.key === node.key)
-                  if(parent && parent.children) {
-                    const child = parent.children.find((child) => child.key === key)
-                    if(child){
-                      child.data.thumbnail = useObjectUrl(response.data)
+                  const parent = nodes.value.find(
+                    (elem) => elem.key === node.key,
+                  );
+                  if (parent && parent.children) {
+                    const child = parent.children.find(
+                      (child) => child.key === key,
+                    );
+                    if (child) {
+                      child.data.thumbnail = useObjectUrl(response.data);
                     }
                   }
                 }),
@@ -111,11 +115,15 @@ const onExpand = (node: INode) => {
                 .get()
                 .blob()
                 .then((response) => {
-                  const parent = nodes.value.find((elem) => elem.key === node.key)
-                  if(parent && parent.children) {
-                    const child = parent.children.find((child) => child.key === key)
-                    if(child){
-                      child.data.detail = useObjectUrl(response.data)
+                  const parent = nodes.value.find(
+                    (elem) => elem.key === node.key,
+                  );
+                  if (parent && parent.children) {
+                    const child = parent.children.find(
+                      (child) => child.key === key,
+                    );
+                    if (child) {
+                      child.data.detail = useObjectUrl(response.data);
                     }
                   }
                 }),
@@ -144,8 +152,8 @@ const filters = ref({
 
 defineExpose({
   selectedFolios,
-  get
-})
+  get,
+});
 </script>
 <template>
   <ComponentContainer spaced internal>
@@ -225,7 +233,7 @@ defineExpose({
           <Chip
             v-for="keyword of slotProps.node.data.keywords"
             :key="keyword"
-          >{{ keyword }}</Chip
+            >{{ keyword }}</Chip
           >
         </template>
       </Column>

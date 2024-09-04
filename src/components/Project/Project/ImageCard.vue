@@ -14,7 +14,9 @@ const props = defineProps<{
 const thumb = ref();
 const detail = ref();
 
-console.log(`/project/folio/derivative/thumbnail/${props.projectId}?id=${props.id}`)
+console.log(
+  `/project/folio/derivative/thumbnail/${props.projectId}?id=${props.id}`,
+);
 useCustomFetch(
   `/project/folio/derivative/thumbnail/${props.projectId}?id=${props.id}`,
 )

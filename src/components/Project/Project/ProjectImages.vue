@@ -10,7 +10,7 @@ const projectImageImportDialog = defineAsyncComponent(
     import("@/components/Project/Project/Dialog/ProjectImageImportDialog.vue"),
 );
 
-const dialog = useDialog()
+const dialog = useDialog();
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
 
@@ -20,10 +20,10 @@ async function refresh() {
     .get()
     .json();
 
-  folios.value = folioData.data.value
+  folios.value = folioData.data.value;
 }
 
-function openImageImportDialog(){
+function openImageImportDialog() {
   dialog.open(projectImageImportDialog, {
     props: {
       header: "Import Images",
@@ -56,7 +56,10 @@ refresh();
           text
           @click="openImageImportDialog"
         >
-          <IconImageImport class="text-black dark:text-white" :class="{ 'animate-pulse' : folios.length === 0 }" />
+          <IconImageImport
+            class="text-black dark:text-white"
+            :class="{ 'animate-pulse': folios.length === 0 }"
+          />
         </Button>
       </template>
     </Toolbar>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DynamicDialogInstance } from 'primevue/dynamicdialogoptions'
+import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 import { FilterMatchMode } from "@primevue/core/api";
 import { UseTimeAgo } from "@vueuse/components";
 

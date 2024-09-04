@@ -8,7 +8,7 @@ const toast = useToast();
 
 const schema = sandboxMetadataSchema;
 const data = ref();
-const project = ref()
+const project = ref();
 
 import { useI18n } from "vue-i18n";
 import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
@@ -16,7 +16,7 @@ const { t } = useI18n();
 
 onMounted(() => {
   data.value = dialogRef?.value.data.sandbox;
-  project.value = dialogRef?.value.data.project
+  project.value = dialogRef?.value.data.project;
 });
 
 async function submit(values, { setErrors }) {
@@ -30,7 +30,7 @@ async function submit(values, { setErrors }) {
   const response = await useCustomFetch(`/sandbox/update/${project.value}`)
     .post(payload)
     .json();
-  console.log(response.error)
+  console.log(response.error);
   if (!response.error.value) {
     toast.add({
       severity: "success",

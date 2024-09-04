@@ -30,7 +30,7 @@ export const useAuthStore = defineStore("auth", () => {
       user.value = data.value.username;
       token.value = data.value.token;
       authority.value = data.value.authority;
-      axios.defaults.headers = { Authorization: `Bearer ${token.value}`}
+      axios.defaults.headers = { Authorization: `Bearer ${token.value}` };
       await router.push(returnUrl || "/");
     } else {
       throw Error;
