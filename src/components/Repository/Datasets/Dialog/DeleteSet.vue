@@ -8,11 +8,8 @@ const data = ref();
 const collection = ref();
 
 onMounted(() => {
-  console.log(dialogRef?.value.data)
   data.value = dialogRef?.value.data.data;
   collection.value = dialogRef?.value.data.collection;
-  console.log(data.value)
-  console.log(collection.value)
 });
 
 function deleteDataset() {
