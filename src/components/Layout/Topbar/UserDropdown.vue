@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import IconAdmin from "~icons/eos-icons/admin-outlined"
+import IconAdmin from "~icons/eos-icons/admin-outlined";
 import IconCog from "~icons/line-md/cog";
-import IconDocumentation from "~icons/oui/documentation"
-import IconLogout from "~icons/solar/logout-2-outline"
+import IconDocumentation from "~icons/oui/documentation";
+import IconLogout from "~icons/solar/logout-2-outline";
 
 interface IUserDropdownEntry {
   action: () => void;
@@ -35,7 +35,7 @@ function openSettings() {
 }
 
 function openAdminDashboard() {
-  router.push({name: "Admin"})
+  router.push({ name: "Admin" });
 }
 function logout() {
   authStore.logout();

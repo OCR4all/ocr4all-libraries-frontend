@@ -9,16 +9,19 @@ const toast = useToast();
 
 const schema = workflowSchema;
 const data = ref();
-const originalLabel = ref()
+const originalLabel = ref();
 
 onMounted(() => {
-  originalLabel.value = dialogRef?.value.data.label
+  originalLabel.value = dialogRef?.value.data.label;
   data.value = dialogRef?.value.data;
 });
 
 async function updateWorkflow(values, { setErrors }) {
   const { data } = await useCustomFetch(`/workflow/list`).get().json();
-  if (originalLabel.value != values.label && data.value.map((workflow) => workflow.label).includes(values.label)) {
+  if (
+    originalLabel.value != values.label &&
+    data.value.map((workflow) => workflow.label).includes(values.label)
+  ) {
     setErrors({
       label: "Sorry, this label is already taken.",
     });

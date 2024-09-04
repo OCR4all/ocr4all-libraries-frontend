@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
 
-
 import { useNodeFlowStore } from "@/stores/nodeflow.store";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useDialog } from "primevue/usedialog";
 import { UseTimeAgo } from "@vueuse/components";
 
 import IconCreate from "~icons/gridicons/create";
-import IconActions from "~icons/fluent/more-vertical-32-regular"
-import IconRefresh from "~icons/heroicons/arrow-path"
+import IconActions from "~icons/fluent/more-vertical-32-regular";
+import IconRefresh from "~icons/heroicons/arrow-path";
 
 import { FilterMatchMode } from "@primevue/core/api";
 
@@ -214,7 +213,7 @@ async function updateWorkflow() {
 }
 
 function loadWorkflow(data) {
-  store.workflow = data
+  store.workflow = data;
   router.push("/nodeflow");
 }
 

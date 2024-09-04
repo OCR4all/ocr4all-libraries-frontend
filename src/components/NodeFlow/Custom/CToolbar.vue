@@ -15,17 +15,17 @@ const emit = defineEmits([
   "zoom-out",
   "rate-workflow",
   "toggle-palette",
-  "toggle-fullscreen"
+  "toggle-fullscreen",
 ]);
 
-const isFullscreen = inject("fullscreen")
+const isFullscreen = inject("fullscreen");
 </script>
 
 <template>
   <div
     class="baklava-toolbar !z-10 overflow-x-auto !rounded-none !border-b-2 !border-solid !border-surface-200 !bg-surface-50 dark:!border-zinc-950 dark:!bg-zinc-900"
   >
-    <div class="flex justify-between w-full">
+    <div class="flex w-full justify-between">
       <div class="flex space-x-4">
         <span v-tooltip.top="t('pages.nodeflow.toolbar.tooltips.undo')">
           <i
@@ -52,13 +52,17 @@ const isFullscreen = inject("fullscreen")
             @click="emit('new')"
           ></i>
         </span>
-        <span v-tooltip.top="t('pages.nodeflow.toolbar.tooltips.load-workflow')">
+        <span
+          v-tooltip.top="t('pages.nodeflow.toolbar.tooltips.load-workflow')"
+        >
           <i
             class="pi pi-upload self-center text-xl text-surface-600 hover:cursor-pointer hover:text-black dark:text-surface-400 dark:hover:text-white"
             @click="emit('load')"
           ></i>
         </span>
-        <span v-tooltip.top="t('pages.nodeflow.toolbar.tooltips.save-workflow')">
+        <span
+          v-tooltip.top="t('pages.nodeflow.toolbar.tooltips.save-workflow')"
+        >
           <i
             class="pi pi-save self-center text-xl text-surface-600 hover:cursor-pointer hover:text-black dark:text-surface-400 dark:hover:text-white"
             @click="emit('save')"
@@ -111,7 +115,9 @@ const isFullscreen = inject("fullscreen")
         <div
           class="inline-block w-0.5 self-stretch bg-surface-500 opacity-100 dark:bg-surface-400 dark:opacity-50"
         ></div>
-        <span v-tooltip.top="t('pages.nodeflow.toolbar.tooltips.rate-workflow')">
+        <span
+          v-tooltip.top="t('pages.nodeflow.toolbar.tooltips.rate-workflow')"
+        >
           <i
             class="pi pi-check-circle self-center text-xl text-surface-600 hover:cursor-pointer hover:text-black dark:text-surface-400 dark:hover:text-white"
             @click="emit('rate-workflow')"
@@ -120,7 +126,9 @@ const isFullscreen = inject("fullscreen")
         <div
           class="inline-block w-0.5 self-stretch bg-surface-500 opacity-100 dark:bg-surface-400 dark:opacity-50"
         ></div>
-        <span v-tooltip.top="t('pages.nodeflow.toolbar.tooltips.toggle-palette')">
+        <span
+          v-tooltip.top="t('pages.nodeflow.toolbar.tooltips.toggle-palette')"
+        >
           <i
             class="pi pi-align-right self-center text-xl text-surface-600 hover:cursor-pointer hover:text-black dark:text-surface-400 dark:hover:text-white"
             @click="emit('toggle-palette')"
@@ -131,7 +139,9 @@ const isFullscreen = inject("fullscreen")
         <span v-tooltip.left="'Toggle Fullscreen'">
           <i
             class="pi self-center text-xl text-surface-600 hover:cursor-pointer hover:text-black dark:text-surface-400 dark:hover:text-white"
-            :class="[ isFullscreen ? 'pi-window-minimize' : 'pi-window-maximize' ]"
+            :class="[
+              isFullscreen ? 'pi-window-minimize' : 'pi-window-maximize',
+            ]"
             @click="emit('toggle-fullscreen')"
           ></i>
         </span>

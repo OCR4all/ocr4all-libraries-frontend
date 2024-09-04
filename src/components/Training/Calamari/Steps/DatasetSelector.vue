@@ -122,19 +122,19 @@ defineExpose({
       </template>
     </Toolbar>
     <TreeTable
-        :value="nodes"
-        :lazy="true"
-        :paginator="true"
-        :rows="rows"
-        :loading="loading"
-        :filters="filters"
-        filter-display="row"
-        :total-records="totalRecords"
-        v-model:selectionKeys="selectedSets"
-        selectionMode="checkbox"
-        scrollable
-        scrollHeight="50vh"
-        @node-expand="onExpand"
+      :value="nodes"
+      :lazy="true"
+      :paginator="true"
+      :rows="rows"
+      :loading="loading"
+      :filters="filters"
+      filter-display="row"
+      :total-records="totalRecords"
+      v-model:selectionKeys="selectedSets"
+      selectionMode="checkbox"
+      scrollable
+      scrollHeight="50vh"
+      @node-expand="onExpand"
     >
       <Column field="name" header="Name" expander></Column>
       <Column field="thumbnail" header="Image">
@@ -146,17 +146,17 @@ defineExpose({
               </template>
               <template #image>
                 <img
-                    :src="slotProps.node.data.thumbnail"
-                    class="max-w-24 max-h-24 object-scale-down"
-                    alt="image"
+                  :src="slotProps.node.data.thumbnail"
+                  class="max-w-24 max-h-24 object-scale-down"
+                  alt="image"
                 />
               </template>
               <template #preview="props">
                 <img
-                    :src="slotProps.node.data.detail"
-                    alt="preview"
-                    :style="props.style"
-                    @click="props.onClick"
+                  :src="slotProps.node.data.detail"
+                  alt="preview"
+                  :style="props.style"
+                  @click="props.onClick"
                 />
               </template>
             </Image>
@@ -164,12 +164,12 @@ defineExpose({
         </template>
       </Column>
       <Column
-          :header="$t('pages.repository.overview.dataview.list.column.keywords')"
+        :header="$t('pages.repository.overview.dataview.list.column.keywords')"
       >
         <template #loading>
           <div
-              class="align-items-center flex"
-              :style="{
+            class="align-items-center flex"
+            :style="{
               height: '17px',
               'flex-grow': '1',
               overflow: 'hidden',
@@ -180,9 +180,9 @@ defineExpose({
         </template>
         <template #body="slotProps">
           <Chip
-              v-for="keyword of slotProps.node.data.keywords"
-              :key="keyword"
-          >{{ keyword }}</Chip
+            v-for="keyword of slotProps.node.data.keywords"
+            :key="keyword"
+            >{{ keyword }}</Chip
           >
         </template>
       </Column>

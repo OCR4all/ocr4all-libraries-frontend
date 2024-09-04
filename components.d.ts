@@ -7,7 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    A11N: typeof import('./src/components/Settings/A11N.vue')['default']
+    A11N: (typeof import("./src/components/Settings/A11N.vue"))["default"]
     A11Y: typeof import('./src/components/Settings/A11Y.vue')['default']
     ActionButton: typeof import('./src/components/ui/ActionButton.vue')['default']
     AddToDatasetDialog: typeof import('./src/components/Project/Project/Sandbox/Dialog/AddToDatasetDialog.vue')['default']
@@ -43,7 +43,7 @@ declare module 'vue' {
     DeleteSet: typeof import('./src/components/Repository/Datasets/Dialog/DeleteSet.vue')['default']
     DeleteUserDialog: typeof import('./src/components/Admin/UserManagement/Dialog/DeleteUserDialog.vue')['default']
     DialogLoadingSkeleton: (typeof import("./src/components/Layout/Dialog/DialogLoadingSkeleton.vue"))["default"]
-    DropZoneBackground: typeof import('./src/components/NodeFlow/DropZoneBackground.vue')['default']
+    DropZoneBackground: (typeof import("./src/components/NodeFlow/DropZoneBackground.vue"))["default"]
     EditDataset: typeof import('./src/components/Repository/Datasets/Dialog/EditDataset.vue')['default']
     EditDialog: typeof import('./src/components/Project/Project/Dialog/EditDialog.vue')['default']
     EditGroupDialogForm: typeof import('./src/components/Admin/GroupManagement/Dialog/EditGroupDialog/EditGroupDialogForm.vue')['default']
@@ -79,7 +79,7 @@ declare module 'vue' {
     NodeFlowCard: typeof import('./src/components/Dashboard/NodeFlowCard.vue')['default']
     NotificationDropdown: typeof import('./src/components/Notifications/NotificationDropdown.vue')['default']
     OCRAPIViewer: typeof import('./src/components/Admin/OCRAPIViewer.vue')['default']
-    Overview: typeof import('./src/components/Admin/Overview.vue')['default']
+    Overview: (typeof import("./src/components/Admin/Overview.vue"))["default"]
     ParameterSelector: typeof import('./src/components/Training/Calamari/Steps/ParameterSelector.vue')['default']
     ProcessorDialog: typeof import('./src/components/Project/Project/Sandbox/Dialog/ProcessorDialog.vue')['default']
     ProcessorForm: (typeof import("./src/components/Project/Project/Sandbox/ProcessorForm.vue"))["default"]

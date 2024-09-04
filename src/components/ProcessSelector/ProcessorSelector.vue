@@ -2,13 +2,13 @@
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { buildProcessorSchema } from "@/components/ProcessSelector/utils";
 
-import { IProcessor } from "@/types/processor.types"
+import { IProcessor } from "@/types/processor.types";
 
 const nodes = ref([]);
-const isLoading = ref(true)
+const isLoading = ref(true);
 
 function structureData(data: IProcessor[]) {
-  console.log(data)
+  console.log(data);
   let categories = Object.groupBy(data, (item) => item["type-label"]);
 
   for (const [key, value] of Object.entries(categories)) {
@@ -38,7 +38,7 @@ useCustomFetch("/spi/list/workflow")
   .json()
   .then((data) => {
     structureData(data.data.value);
-    isLoading.value = false
+    isLoading.value = false;
   });
 
 const expandedKeys = ref({});
@@ -142,13 +142,13 @@ function get() {
 }
 
 function buildProcessorFormSchema(data, cols: number) {
-  console.log(data)
+  console.log(data);
   const schema = buildProcessorSchema(data, cols);
   processorFormSchema.value = schema;
 }
 
 function openProcessor(data) {
-  console.log(data)
+  console.log(data);
   selectedProcessor.value = data;
   buildProcessorFormSchema(data, 3);
   processorDialogVisible.value = true;
@@ -210,9 +210,9 @@ defineExpose({
       <Column field="label" header="Label" expander style="min-width: 12rem">
         <template #body="slotProps">
           <p
-              v-if="slotProps.node.data.type !== 'category'"
-              class="hover:underline cursor-pointer"
-              @click="openProcessor(slotProps.node.data)"
+            v-if="slotProps.node.data.type !== 'category'"
+            class="cursor-pointer hover:underline"
+            @click="openProcessor(slotProps.node.data)"
           >
             {{ slotProps.node.data.label }}
           </p>
@@ -222,26 +222,26 @@ defineExpose({
         </template>
         <template #filter>
           <InputText
-              v-model="filters['name']"
-              type="text"
-              placeholder="Filter by label"
+            v-model="filters['name']"
+            type="text"
+            placeholder="Filter by label"
           />
         </template>
       </Column>
       <Column field="steps" header="Steps" style="min-width: 12rem">
         <template #filter>
           <InputText
-              v-model="filters['size']"
-              type="text"
-              placeholder="Filter by step"
+            v-model="filters['size']"
+            type="text"
+            placeholder="Filter by step"
           />
         </template>
         <template #body="slotProps">
           <div class="flex flex-col space-y-2">
             <Tag
-                v-for="step of slotProps.node.data.steps"
-                :key="step"
-                :value="step"
+              v-for="step of slotProps.node.data.steps"
+              :key="step"
+              :value="step"
             />
           </div>
         </template>
@@ -249,9 +249,9 @@ defineExpose({
       <Column field="description" header="Description" style="min-width: 12rem">
         <template #filter>
           <InputText
-              v-model="filters['type']"
-              type="text"
-              placeholder="Filter by description"
+            v-model="filters['type']"
+            type="text"
+            placeholder="Filter by description"
           />
         </template>
       </Column>

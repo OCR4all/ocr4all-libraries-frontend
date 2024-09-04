@@ -206,10 +206,7 @@ defineExpose({
         : ['bg-surface-100', 'dark:bg-surface-950'],
     ]"
   >
-    <div
-      class="absolute w-max group-hover:flex"
-      :class="{ hidden: !checked }"
-    >
+    <div class="absolute w-max group-hover:flex" :class="{ hidden: !checked }">
       <div class="flex justify-between space-x-44 p-4">
         <Checkbox
           v-model="checked"
@@ -232,8 +229,7 @@ defineExpose({
           aria-label="overlay_menu"
           :pt="{
             root: {
-              class:
-                'rounded-md z-50 bg-surface-50/80 dark:bg-surface-50 p-1',
+              class: 'rounded-md z-50 bg-surface-50/80 dark:bg-surface-50 p-1',
             },
             icon: { class: 'align-center pl-1' },
           }"
@@ -252,11 +248,7 @@ defineExpose({
     >
       <Image v-if="thumb" alt="Image" preview>
         <template #previewicon>
-          <i
-            class="pi pi-search"
-            style="padding: 100%"
-            @click="loadDetail"
-          ></i>
+          <i class="pi pi-search" style="padding: 100%" @click="loadDetail"></i>
         </template>
         <template #image>
           <img

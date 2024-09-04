@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {setFont, setFontSize, setGrayscale} from "@/utils/a11n";
+import { setFont, setFontSize, setGrayscale } from "@/utils/a11n";
 
 const fontScaling = useStorage("ocr4all/frontend/a11n/font-size", {
   name: "Medium",
@@ -15,7 +15,7 @@ const fontScalingOptions = ref([
 
 const font = useStorage("ocr4all/frontend/a11n/font", {
   name: "Regular",
-  value: "Inter var"
+  value: "Inter var",
 });
 
 const fontOptions = ref([
@@ -23,7 +23,10 @@ const fontOptions = ref([
   { name: "Dyslexia", value: "Open Dyslexic" },
 ]);
 
-const grayScale = useStorage("ocr4all/frontend/a11n/grayscale", {"name":"Deactivated","value":"grayscale(0)"});
+const grayScale = useStorage("ocr4all/frontend/a11n/grayscale", {
+  name: "Deactivated",
+  value: "grayscale(0)",
+});
 
 const grayScaleOptions = ref([
   { name: "Deactivated", value: "grayscale(0)" },
@@ -31,48 +34,50 @@ const grayScaleOptions = ref([
 ]);
 
 watch(fontScaling, async (newFonzSize, _) => {
-  setFontSize(newFonzSize)
-})
+  setFontSize(newFonzSize);
+});
 
 watch(grayScale, async (newGrayscaleValue, _) => {
-  setGrayscale(newGrayscaleValue)
-})
+  setGrayscale(newGrayscaleValue);
+});
 
 watch(font, async (newFont, _) => {
-  setFont(newFont)
-})
+  setFont(newFont);
+});
 </script>
 <template>
   <div
-      class="flex h-full flex-1 flex-col space-y-4 rounded-md border bg-white p-5 dark:border-surface-800 dark:bg-surface-900"
+    class="flex h-full flex-1 flex-col space-y-4 rounded-md border bg-white p-5 dark:border-surface-800 dark:bg-surface-900"
   >
     <h1 class="text-xl font-bold text-black dark:text-white">Accessibility</h1>
     <div class="grid grid-cols-2 gap-4">
       <div class="flex flex-col space-y-2">
-        <h2 class="text-sm font-bold text-black dark:text-white">Font Scaling</h2>
+        <h2 class="text-sm font-bold text-black dark:text-white">
+          Font Scaling
+        </h2>
         <SelectButton
-            v-model="fontScaling"
-            :options="fontScalingOptions"
-            option-label="name"
-            :allow-empty="false"
+          v-model="fontScaling"
+          :options="fontScalingOptions"
+          option-label="name"
+          :allow-empty="false"
         />
       </div>
       <div class="flex flex-col space-y-2">
         <h2 class="text-sm font-bold text-black dark:text-white">Font</h2>
         <SelectButton
-            v-model="font"
-            :options="fontOptions"
-            option-label="name"
-            :allow-empty="false"
+          v-model="font"
+          :options="fontOptions"
+          option-label="name"
+          :allow-empty="false"
         />
       </div>
       <div class="flex flex-col space-y-2">
         <h2 class="text-sm font-bold text-black dark:text-white">Grayscale</h2>
         <SelectButton
-            v-model="grayScale"
-            :options="grayScaleOptions"
-            option-label="name"
-            :allow-empty="false"
+          v-model="grayScale"
+          :options="grayScaleOptions"
+          option-label="name"
+          :allow-empty="false"
         />
       </div>
     </div>

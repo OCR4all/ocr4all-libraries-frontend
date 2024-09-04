@@ -16,11 +16,11 @@ const ShareModelDialog = defineAsyncComponent(
   () => import("@/components/Repository/Models/Dialog/ShareModelDialog.vue"),
 );
 
-import IconActions from "~icons/fluent/more-vertical-32-regular"
+import IconActions from "~icons/fluent/more-vertical-32-regular";
 
 const dialog = useDialog();
 
-const models = ref();
+const models = ref([]);
 
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
@@ -29,10 +29,12 @@ import ProgressSpinner from "primevue/progressspinner";
 import { useDialog } from "primevue/usedialog";
 import InputText from "primevue/inputtext";
 import { FilterMatchMode } from "@primevue/core/api";
+import Tag from "primevue/tag";
 const confirm = useConfirm();
 const toast = useToast();
 
-const isLoading = ref(true)
+const isLoading = ref(true);
+const availableKeywords: Ref<string[]> = ref([])
 
 async function fetch() {
   useCustomFetch("/assemble/model/list")
@@ -40,8 +42,15 @@ async function fetch() {
     .json()
     .then((response) => {
       models.value = response.data.value;
-      isLoading.value = false
-      console.log(models.value);
+
+      const keywords = []
+      for(const model of models.value){
+        keywords.push(...model.keywords)
+      }
+      const keywordSet = new Set(keywords);
+      availableKeywords.value = Array.from(keywordSet)
+
+      isLoading.value = false;
     });
 }
 
@@ -286,17 +295,34 @@ function getSeverity(state: string): string {
       return "secondary";
     case "completed":
       return "success";
+    default:
+      return "info";
   }
 }
+
+const keywordFilter = ref()
+
+const test = ref("lol")
 
 const filters: Ref = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   name: { value: null, matchMode: FilterMatchMode.CONTAINS },
   "engine.type": { value: null, matchMode: FilterMatchMode.CONTAINS },
-  "engine.state": { value: null, matchMode: FilterMatchMode.IN },
+  "engine.state": { value: null, matchMode: FilterMatchMode.EQUALS },
+  keywords: { value: test.value, matchMode: FilterMatchMode.CONTAINS },
   description: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
+
+const filteredModels = computed(() => {
+  const filterSet = new Set(keywordFilter.value)
+
+  console.log(filters.value)
+
+  return models.value.filter((model) => {
+    return filterSet.isSubsetOf(new Set(model.keywords))
+  })
+})
 const selectedModels = ref([]);
 </script>
 <template>
@@ -430,7 +456,7 @@ const selectedModels = ref([]);
       <DataTable
         v-model:filters="filters"
         v-model:selection="selectedModels"
-        :value="models"
+        :value="filteredModels"
         context-menu
         :loading="isLoading"
         :global-filter-fields="['name', 'description', 'keywords', 'engine']"
@@ -445,10 +471,10 @@ const selectedModels = ref([]);
         <Column field="name" header="Name">
           <template #filter="{ filterModel, filterCallback }">
             <InputText
-                v-model="filterModel.value"
-                type="text"
-                placeholder="Search by name"
-                @input="filterCallback()"
+              v-model="filterModel.value"
+              type="text"
+              placeholder="Search by name"
+              @input="filterCallback()"
             />
           </template>
         </Column>
@@ -457,21 +483,29 @@ const selectedModels = ref([]);
             <Tag v-if="data.engine" :value="data.engine.type" />
           </template>
           <template #filter="{ filterModel, filterCallback }">
-            <InputText
-                v-model="filterModel.value"
-                type="text"
-                placeholder="Search by engine"
-                @input="filterCallback()"
-            />
+            <Select
+              v-model="filterModel.value"
+              placeholder="Select State"
+              :options="['Calamari']"
+              class="p-column-filter"
+              :show-clear="true"
+              @change="filterCallback()"
+            >
+              <template #option="slotProps">
+                <Tag
+                  :value="slotProps.option"
+                />
+              </template>
+            </Select>
           </template>
         </Column>
         <Column field="description" header="Description">
           <template #filter="{ filterModel, filterCallback }">
             <InputText
-                v-model="filterModel.value"
-                type="text"
-                placeholder="Search by description"
-                @input="filterCallback()"
+              v-model="filterModel.value"
+              type="text"
+              placeholder="Search by description"
+              @input="filterCallback()"
             />
           </template>
         </Column>
@@ -484,23 +518,48 @@ const selectedModels = ref([]);
             />
           </template>
           <template #filter="{ filterModel, filterCallback }">
-            <InputText
-                v-model="filterModel.value"
-                type="text"
-                placeholder="Search by state"
-                @input="filterCallback()"
-            />
+            <Select
+              v-model="filterModel.value"
+              placeholder="Select State"
+              :options="['completed', 'interrupted', 'canceled']"
+              class="p-column-filter"
+              :show-clear="true"
+              @change="filterCallback()"
+            >
+              <template #option="slotProps">
+                <Tag
+                  :value="slotProps.option"
+                  :severity="getSeverity(slotProps.option)"
+                />
+              </template>
+            </Select>
           </template>
         </Column>
         <Column field="keywords" header="Keywords">
           <template #body="{ data }">
-            <div class="flex flex-col space-y-1">
+            <div class="flex space-x-1">
               <Tag
                 v-for="keyword of data.keywords"
                 :key="keyword"
                 :value="keyword"
               />
             </div>
+          </template>
+          <template #filter>
+            <Fluid>
+              <MultiSelect
+                v-model="keywordFilter"
+                :options="availableKeywords"
+                filter
+                placeholder="Any"
+              >
+                <template #option="slotProps">
+                  <div class="flex items-center gap-2">
+                    <span>{{ slotProps.option }}</span>
+                  </div>
+                </template>
+              </MultiSelect>
+            </Fluid>
           </template>
         </Column>
         <Column :exportable="false" style="min-width: 8rem">

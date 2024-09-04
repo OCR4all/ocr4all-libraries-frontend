@@ -12,7 +12,7 @@ const props = defineProps<{
   padded?: boolean;
 }>();
 
-const store = useUiStore()
+const store = useUiStore();
 
 const mobileSidebarRef = ref();
 
@@ -36,7 +36,9 @@ function toggleSidebarMobile() {
           class="w-full overflow-y-auto rounded-b-2xl lg:h-[calc(100vh-6rem)]"
           :class="[
             props.padded ? 'p-8' : 'p-0',
-            store.breadcrumb && store.breadcrumb.length > 1 ? 'h-[calc(100vh-7rem)]' : 'h-[calc(100vh-4rem)]'
+            store.breadcrumb && store.breadcrumb.length > 1
+              ? 'h-[calc(100vh-7rem)]'
+              : 'h-[calc(100vh-4rem)]',
           ]"
         >
           <slot />

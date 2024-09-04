@@ -170,8 +170,6 @@ const filters = ref({
     >
       Project has no image associated yet.
     </h2>
-    <Button>
-      Import Images
-    </Button>
+    <Button> Import Images </Button>
   </section>
 </template>

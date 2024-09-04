@@ -6,8 +6,8 @@ import Toolbar from "primevue/toolbar";
 import Tag from "primevue/tag";
 import InputText from "primevue/inputtext";
 
-import IconRefresh from "~icons/heroicons/arrow-path"
-import IconActions from "~icons/fluent/more-vertical-32-regular"
+import IconRefresh from "~icons/heroicons/arrow-path";
+import IconActions from "~icons/fluent/more-vertical-32-regular";
 
 import { UseTimeAgo } from "@vueuse/components";
 
@@ -391,10 +391,10 @@ refetch();
         </template>
         <template #filter="{ filterModel, filterCallback }">
           <InputText
-              v-model="filterModel.value"
-              type="text"
-              @input="filterCallback()"
-              placeholder="Search by name"
+            v-model="filterModel.value"
+            type="text"
+            @input="filterCallback()"
+            placeholder="Search by name"
           />
         </template>
       </Column>

@@ -50,24 +50,24 @@ refetch();
       </template>
     </Toolbar>
     <DataTable
-        :value="workflows"
-        :paginator="true"
-        :rows="10"
-        v-model:selection="selectedWorkflow"
-        selectionMode="single"
-        :loading="loading"
-        :filters="filters"
-        context-menu
-        :globalFilterFields="['label', 'description']"
-        sortField="date"
-        :sortOrder="-1"
-        :row-hover="true"
-        paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-        :rows-per-page-options="[10, 25, 50]"
-        responsive-layout="scroll"
+      :value="workflows"
+      :paginator="true"
+      :rows="10"
+      v-model:selection="selectedWorkflow"
+      selectionMode="single"
+      :loading="loading"
+      :filters="filters"
+      context-menu
+      :globalFilterFields="['label', 'description']"
+      sortField="date"
+      :sortOrder="-1"
+      :row-hover="true"
+      paginator-template="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+      :rows-per-page-options="[10, 25, 50]"
+      responsive-layout="scroll"
     >
       <template #empty>
-      <span class="text-primary-950 dark:text-primary-50">{{
+        <span class="text-primary-950 dark:text-primary-50">{{
           $t("pages.workflows.table.empty")
         }}</span>
       </template>
@@ -75,31 +75,31 @@ refetch();
         <DefaultSpinner />
       </template>
       <Column
-          field="label"
-          :header="$t('pages.workflows.table.columns.name')"
-          :sortable="true"
+        field="label"
+        :header="$t('pages.workflows.table.columns.name')"
+        :sortable="true"
       >
         <template #body="{ data }">
           {{ data.label }}
         </template>
       </Column>
       <Column
-          field="description"
-          :header="$t('pages.workflows.table.columns.description')"
+        field="description"
+        :header="$t('pages.workflows.table.columns.description')"
       >
         <template #body="slotProps">
           <p class="max-w-xs truncate">{{ slotProps.data.description }}</p>
         </template>
       </Column>
       <Column
-          field="date"
-          :header="$t('pages.workflows.table.columns.updated')"
-          :sortable="true"
+        field="date"
+        :header="$t('pages.workflows.table.columns.updated')"
+        :sortable="true"
       >
         <template #body="slotProps">
           <UseTimeAgo
-              v-slot="{ timeAgo }"
-              :time="Date.parse(slotProps.data.date)"
+            v-slot="{ timeAgo }"
+            :time="Date.parse(slotProps.data.date)"
           >
             {{ timeAgo }}
           </UseTimeAgo>
@@ -107,9 +107,16 @@ refetch();
       </Column>
     </DataTable>
     <div class="flex justify-center">
-      <Button :disabled="!selectedWorkflow" @click="emit('submit', selectedWorkflow)">
+      <Button
+        :disabled="!selectedWorkflow"
+        @click="emit('submit', selectedWorkflow)"
+      >
         <div class="flex space-x-2">
-          <component v-show="props.icon" :is="props.icon" class="text-white self-center" />
+          <component
+            v-show="props.icon"
+            :is="props.icon"
+            class="self-center text-white"
+          />
           <p class="text-white">{{ props.label ? props.label : "Submit" }}</p>
         </div>
       </Button>

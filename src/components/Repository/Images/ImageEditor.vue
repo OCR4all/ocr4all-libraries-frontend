@@ -65,16 +65,28 @@ function rotate(angle) {
     <Toolbar>
       <template #start>
         <div class="flex space-x-2">
-          <Button v-tooltip.top="'Flip horizontally'" @click="flip(true, false)" text>
+          <Button
+            v-tooltip.top="'Flip horizontally'"
+            @click="flip(true, false)"
+            text
+          >
             <IconFlipHorizontal class="text-black dark:text-white" />
           </Button>
-          <Button v-tooltip.top="'Flip vertically'" @click="flip(false, true)" text>
+          <Button
+            v-tooltip.top="'Flip vertically'"
+            @click="flip(false, true)"
+            text
+          >
             <IconFlipVertical class="text-black dark:text-white" />
           </Button>
           <Button v-tooltip.top="'Rotate clockwise'" @click="rotate(90)" text>
             <IconRotateRight class="text-black dark:text-white" />
           </Button>
-          <Button v-tooltip.top="'Rotate counter clockwise'" @click="rotate(-90)" text>
+          <Button
+            v-tooltip.top="'Rotate counter clockwise'"
+            @click="rotate(-90)"
+            text
+          >
             <IconRotateLeft class="text-black dark:text-white" />
           </Button>
         </div>

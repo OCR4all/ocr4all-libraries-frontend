@@ -48,7 +48,7 @@ const filters = ref({
 
 const selectedProviders = ref([]);
 
-const isLoadingProviders = ref(true)
+const isLoadingProviders = ref(true);
 
 async function getProviders() {
   useCustomFetch(`/administration/provider/overview`)
@@ -62,7 +62,7 @@ async function getProviders() {
         }
       }
       nodes.value = providers;
-      isLoadingProviders.value = false
+      isLoadingProviders.value = false;
     });
 }
 
@@ -117,7 +117,6 @@ async function executeProviderAction(data: any, action: string) {
       useCustomFetch(`/administration/provider/action`).post(payload),
     );
   }
-
 
   await Promise.all(promises);
   await getProviders();
@@ -236,13 +235,31 @@ getProviders();
   <ComponentContainer spaced>
     <Toolbar>
       <template #start>
-        <Button v-tooltip.top="'Restart'" severity="contrast" :disabled="selectedProviders.length === 0" text @click="executeProviderAction(selectedProviders, 'restart');">
+        <Button
+          v-tooltip.top="'Restart'"
+          severity="contrast"
+          :disabled="selectedProviders.length === 0"
+          text
+          @click="executeProviderAction(selectedProviders, 'restart')"
+        >
           <i class="pi pi-refresh text-black dark:text-white" />
         </Button>
-        <Button v-tooltip.top="'Start'" severity="contrast" :disabled="selectedProviders.length === 0" text @click="executeProviderAction(selectedProviders, 'start')">
+        <Button
+          v-tooltip.top="'Start'"
+          severity="contrast"
+          :disabled="selectedProviders.length === 0"
+          text
+          @click="executeProviderAction(selectedProviders, 'start')"
+        >
           <i class="pi pi-play text-black dark:text-white" />
         </Button>
-        <Button v-tooltip.top="'Stop'" severity="contrast" :disabled="selectedProviders.length === 0" text @click="executeProviderAction(selectedProviders, 'stop')">
+        <Button
+          v-tooltip.top="'Stop'"
+          severity="contrast"
+          :disabled="selectedProviders.length === 0"
+          text
+          @click="executeProviderAction(selectedProviders, 'stop')"
+        >
           <i class="pi pi-stop text-black dark:text-white" />
         </Button>
       </template>

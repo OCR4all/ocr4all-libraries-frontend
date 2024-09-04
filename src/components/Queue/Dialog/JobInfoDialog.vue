@@ -3,8 +3,8 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import { IJob } from "@/components/Queue/queue.interfaces";
 import { useDialog } from "primevue/usedialog";
 
-import IconEmpty from "~icons/ph/empty-light"
-import IconOpen from "~icons/fluent/open-16-regular"
+import IconEmpty from "~icons/ph/empty-light";
+import IconOpen from "~icons/fluent/open-16-regular";
 import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
 const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
@@ -24,7 +24,6 @@ onMounted(async () => {
     .json()
     .then((response) => {
       job.value = [response.data.value];
-      console.log(job.value);
     });
 });
 
@@ -91,7 +90,7 @@ function getSeverity(severity: string): string | undefined {
               <Tag
                 v-if="data['service-provider-id']"
                 :value="data['service-provider-id']"
-                class="!text-white"
+                class="!text-white !bg-surface-700 dark:!bg-surface-800"
               />
             </template>
           </Column>

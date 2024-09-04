@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import IconRefresh from "~icons/heroicons/arrow-path"
+import IconRefresh from "~icons/heroicons/arrow-path";
 
 const emit = defineEmits(["refresh"]);
 

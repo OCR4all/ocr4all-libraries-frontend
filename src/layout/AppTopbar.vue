@@ -6,7 +6,7 @@ const authStore = useAuthStore();
 const router = useRouter();
 
 const props = defineProps<{
-  mode: string
+  mode: string;
 }>();
 
 defineEmits(["toggle-sidebar-mobile"]);

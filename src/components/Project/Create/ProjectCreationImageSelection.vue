@@ -6,38 +6,41 @@ import IconImageImport from "~icons/lucide/image-plus";
 import { useToast } from "primevue/usetoast";
 
 const router = useRouter();
-const toast = useToast()
+const toast = useToast();
 
 const store = useProjectCreationStore();
 
-const isLoading = ref(false)
+const isLoading = ref(false);
 
-const imageSelector = ref()
+const imageSelector = ref();
 
 async function importFolios() {
-  const selection = imageSelector.value.get()
-  const requests = []
+  const selection = imageSelector.value.get();
+  const requests = [];
 
   for (const [key, value] of Object.entries(selection)) {
     if (value === true) {
-      requests.push(useCustomFetch(
-        `/project/folio/import/all/${store.projectId}?id=${key}`,
-      ).json)
+      requests.push(
+        useCustomFetch(`/project/folio/import/all/${store.projectId}?id=${key}`)
+          .json,
+      );
     } else if (value.length > 0) {
       const payload = {
         ids: value,
       };
-      requests.push(useCustomFetch(
-        `/project/folio/import/list/${store.projectId}?id=${key}`,
-      ).post(payload).json)
+      requests.push(
+        useCustomFetch(
+          `/project/folio/import/list/${store.projectId}?id=${key}`,
+        ).post(payload).json,
+      );
     }
   }
-  isLoading.value = true
-  try{
+  isLoading.value = true;
+  try {
     Promise.all(requests).then(async (response) => {
       await router.push(`/project/${store.projectId}/view`);
-    })
-  }catch(error){
+    });
+  } catch (error) {
     toast.add({
       severity: "error",
       summary: "Error",
@@ -63,9 +66,13 @@ async function importFolios() {
   <div class="grid grid-cols-1 justify-center gap-y-4">
     <ImageSelector ref="imageSelector" />
     <div class="place-self-center">
-      <Button v-if="imageSelector" :disabled="Object.keys(imageSelector.selectedFolios).length === 0" @click="importFolios">
+      <Button
+        v-if="imageSelector"
+        :disabled="Object.keys(imageSelector.selectedFolios).length === 0"
+        @click="importFolios"
+      >
         <div class="flex space-x-2">
-          <IconImageImport class="text-white self-center" />
+          <IconImageImport class="self-center text-white" />
           <p class="text-white">Import</p>
         </div>
       </Button>

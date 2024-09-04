@@ -2,7 +2,7 @@
 import { useUiStore } from "@/stores/ui.store";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
-import IconNext from "~icons/fluent/next-16-filled"
+import IconNext from "~icons/fluent/next-16-filled";
 import { useToast } from "primevue/usetoast";
 
 const datasets = ref();
@@ -22,7 +22,7 @@ uiStore.breadcrumb = [
   },
 ];
 
-const toast = useToast()
+const toast = useToast();
 
 function run() {
   toast.add({
@@ -94,11 +94,11 @@ function run() {
         <Step>Dataset</Step>
         <StepPanel v-slot="{ activateCallback }">
           <DatasetSelector ref="datasets" />
-          <div class="py-6 flex">
+          <div class="flex py-6">
             <Button @click="activateCallback('2')">
               <div class="flex space-x-4">
-                <IconNext class="text-white self-center" />
-                <p class="text-white self-center">Next</p>
+                <IconNext class="self-center text-white" />
+                <p class="self-center text-white">Next</p>
               </div>
             </Button>
           </div>
@@ -116,8 +116,8 @@ function run() {
             />
             <Button @click="activateCallback('3')">
               <div class="flex space-x-4">
-                <IconNext class="text-white self-center" />
-                <p class="text-white self-center">Next</p>
+                <IconNext class="self-center text-white" />
+                <p class="self-center text-white">Next</p>
               </div>
             </Button>
           </div>
@@ -134,8 +134,8 @@ function run() {
             />
             <Button @click="run">
               <div class="flex space-x-4">
-                <IconNext class="text-white self-center" />
-                <p class="text-white self-center">Start training</p>
+                <IconNext class="self-center text-white" />
+                <p class="self-center text-white">Start training</p>
               </div>
             </Button>
           </div>

@@ -46,5 +46,5 @@ export interface IProcessor {
   icon: string | null;
   premise: IPremise;
   entries: IEntry[];
-  "type-label": string
+  "type-label": string;
 }

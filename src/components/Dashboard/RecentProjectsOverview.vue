@@ -3,7 +3,7 @@ import DefaultSpinner from "@/components/Layout/utils/DefaultSpinner.vue";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 
-import IconOpen from "~icons/heroicons/arrow-up-on-square"
+import IconOpen from "~icons/heroicons/arrow-up-on-square";
 
 import { UseTimeAgo } from "@vueuse/components";
 

@@ -85,8 +85,7 @@ useHead({
                     Line based ATR Engine based on OCRopy.
                   </p>
                 </div>
-                <Button severity="contrast">Open</Button
-                >
+                <Button severity="contrast">Open</Button>
               </div>
             </div>
           </SpotlightCard>

@@ -18,7 +18,7 @@ async function deleteUsers() {
       .json()
       .then((response) => {
         if (response.error.value) {
-          console.error(response.error.value)
+          console.error(response.error.value);
         } else {
           dialogRef?.value.close();
         }

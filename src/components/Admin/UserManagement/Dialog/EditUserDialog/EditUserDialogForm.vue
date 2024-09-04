@@ -22,7 +22,7 @@ onMounted(() => {
     state: dialogRef?.value.data.state,
     email: dialogRef?.value.data.email,
     name: dialogRef?.value.data.name,
-  }
+  };
   groupData.value = dialogRef?.value.data.groups;
 });
 
@@ -70,7 +70,7 @@ function submitGroupChange() {}
     <TabList>
       <Tab value="profile">Profile</Tab>
       <Tab value="password">Password</Tab>
-<!--      <Tab value="groups">Groups</Tab>-->
+      <!--      <Tab value="groups">Groups</Tab>-->
     </TabList>
     <TabPanels>
       <TabPanel value="profile">
@@ -101,20 +101,20 @@ function submitGroupChange() {}
           <FormKitSchema :schema="passwordSchema" :data="passwordData" />
         </FormKit>
       </TabPanel>
-<!--      <TabPanel value="groups">-->
-<!--        <FormKit-->
-<!--          id="groupForm"-->
-<!--          ref="groupForm"-->
-<!--          v-model="groupData"-->
-<!--          type="form"-->
-<!--          :submit-attrs="{-->
-<!--            inputClass: 'formkit-submit-btn',-->
-<!--          }"-->
-<!--          @submit="submitGroupChange"-->
-<!--        >-->
-<!--          <FormKitSchema :schema="groupSchema" :data="groupData" />-->
-<!--        </FormKit>-->
-<!--      </TabPanel>-->
+      <!--      <TabPanel value="groups">-->
+      <!--        <FormKit-->
+      <!--          id="groupForm"-->
+      <!--          ref="groupForm"-->
+      <!--          v-model="groupData"-->
+      <!--          type="form"-->
+      <!--          :submit-attrs="{-->
+      <!--            inputClass: 'formkit-submit-btn',-->
+      <!--          }"-->
+      <!--          @submit="submitGroupChange"-->
+      <!--        >-->
+      <!--          <FormKitSchema :schema="groupSchema" :data="groupData" />-->
+      <!--        </FormKit>-->
+      <!--      </TabPanel>-->
     </TabPanels>
   </Tabs>
 </template>

@@ -55,7 +55,7 @@ import { useI18n } from "vue-i18n";
 const i18n = useI18n();
 
 const users = ref();
-const istLoadingUsers = ref(true)
+const istLoadingUsers = ref(true);
 
 const selectedUsers = ref();
 
@@ -64,7 +64,7 @@ async function refetch() {
     .json()
     .then((response) => {
       users.value = response.data.value;
-      istLoadingUsers.value = false
+      istLoadingUsers.value = false;
     });
 }
 

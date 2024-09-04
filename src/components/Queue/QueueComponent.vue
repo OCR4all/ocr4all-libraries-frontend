@@ -1,9 +1,9 @@
-  <script setup lang="ts">
+<script setup lang="ts">
 import { UseTimeAgo } from "@vueuse/components";
 
-import IconRefresh from "~icons/heroicons/arrow-path"
-import IconStop from "~icons/heroicons/stop"
-import IconTrash from "~icons/heroicons/trash"
+import IconRefresh from "~icons/heroicons/arrow-path";
+import IconStop from "~icons/heroicons/stop";
+import IconTrash from "~icons/heroicons/trash";
 
 const jobInfoDialog = defineAsyncComponent(
   () => import("@/components/Queue/Dialog/JobInfoDialog.vue"),
@@ -17,7 +17,7 @@ import Button from "primevue/button";
 import ProgressBar from "primevue/progressbar";
 import { FilterMatchMode } from "@primevue/core/api";
 import IconExpunge from "~icons/ant-design/clear-outlined";
-import IconActions from "~icons/fluent/more-vertical-32-regular"
+import IconActions from "~icons/fluent/more-vertical-32-regular";
 
 const dialog = useDialog();
 
@@ -55,7 +55,9 @@ const states: Ref<string[]> = ref([
 
 const jobs: Ref<IJob[] | undefined> = ref();
 
-const getColor = (entry: string): { background: string, color: string } | undefined  => {
+const getColor = (
+  entry: string,
+): { background: string; color: string } | undefined => {
   switch (entry) {
     case "scheduled":
       return { background: "#76A9FA", color: "white" };
@@ -112,8 +114,8 @@ const { pause } = useIntervalFn(function () {
 }, 5000);
 
 onUnmounted(() => {
-  pause
-})
+  pause;
+});
 async function cancelJob(id: string) {
   const data = await useCustomFetch(`/job/cancel/${id}`).get().json();
   await refetch().then(() => {
@@ -191,7 +193,7 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
 };
 
 function openInfoDialog(data) {
-  console.debug(data)
+  console.debug(data);
   dialog.open(jobInfoDialog, {
     props: {
       header: "Job Information",
@@ -211,29 +213,27 @@ function openInfoDialog(data) {
   });
 }
 
-const confirm = useConfirm()
-const router = useRouter()
+const confirm = useConfirm();
+const router = useRouter();
 
-function goToResult(project: string, sandbox: string){
+function goToResult(project: string, sandbox: string) {
   confirm.require({
-    message: 'Open Result View?',
-    header: 'Confirmation',
-    icon: 'pi pi-exclamation-triangle',
+    message: "Open Result View?",
+    header: "Confirmation",
+    icon: "pi pi-exclamation-triangle",
     position: "bottom",
     rejectProps: {
-      label: 'Cancel',
-      severity: 'secondary',
-      outlined: true
+      label: "Cancel",
+      severity: "secondary",
+      outlined: true,
     },
     acceptProps: {
-      label: 'Save'
+      label: "Save",
     },
     accept: () => {
-      router.push(`/project/${project}/result/${sandbox}`)
+      router.push(`/project/${project}/result/${sandbox}`);
     },
-    reject: () => {
-
-    }
+    reject: () => {},
   });
 }
 
@@ -379,10 +379,10 @@ onUnmounted(() => {});
       >
         <template #filter="{ filterModel, filterCallback }">
           <InputText
-              v-model="filterModel.value"
-              type="text"
-              @input="filterCallback()"
-              placeholder="Search by id"
+            v-model="filterModel.value"
+            type="text"
+            @input="filterCallback()"
+            placeholder="Search by id"
           />
         </template>
       </Column>
@@ -391,8 +391,26 @@ onUnmounted(() => {});
         :header="$t('pages.queue.table.columns.description')"
       >
         <template #body="{ data }">
-          <div v-if="data && data.state ==='completed' && data.process && data.process['project-id'] && data.process['sandbox-id']">
-            <p class="hover:underline cursor-pointer" @click="goToResult(data.process['project-id'], data.process['sandbox-id'])"> {{ data.description }}</p>
+          <div
+            v-if="
+              data &&
+              data.state === 'completed' &&
+              data.process &&
+              data.process['project-id'] &&
+              data.process['sandbox-id']
+            "
+          >
+            <p
+              class="cursor-pointer hover:underline"
+              @click="
+                goToResult(
+                  data.process['project-id'],
+                  data.process['sandbox-id'],
+                )
+              "
+            >
+              {{ data.description }}
+            </p>
           </div>
           <p v-else>
             {{ data.description }}
@@ -400,10 +418,10 @@ onUnmounted(() => {});
         </template>
         <template #filter="{ filterModel, filterCallback }">
           <InputText
-              v-model="filterModel.value"
-              type="text"
-              @input="filterCallback()"
-              placeholder="Search by description"
+            v-model="filterModel.value"
+            type="text"
+            @input="filterCallback()"
+            placeholder="Search by description"
           />
         </template>
       </Column>

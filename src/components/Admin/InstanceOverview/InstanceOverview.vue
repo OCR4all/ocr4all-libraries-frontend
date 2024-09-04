@@ -6,25 +6,31 @@ import ServiceProviderPropertyCard from "@/components/Admin/InstanceOverview/Car
 
 const information: RemovableRef<IAdministrationOverview | undefined> = ref();
 
-const isLoading = ref(true)
+const isLoading = ref(true);
 useCustomFetch("/administration/overview")
   .get()
   .json()
   .then((response) => {
-    information.value = response.data.value
-    isLoading.value = false
-  })
+    information.value = response.data.value;
+    isLoading.value = false;
+  });
 </script>
 <template>
   <div class="grid items-start gap-4 lg:grid-cols-2">
     <div class="grid gap-y-4 lg:gap-y-0">
       <ComponentContainer>
         <Skeleton v-if="isLoading" height="20rem" />
-        <ApplicationCard v-else-if="information" :data="information.application" />
+        <ApplicationCard
+          v-else-if="information"
+          :data="information.application"
+        />
       </ComponentContainer>
       <ComponentContainer>
         <Skeleton v-if="isLoading" height="20rem" />
-        <WorkspaceCard v-else-if="information" :workspace="information.workspace" />
+        <WorkspaceCard
+          v-else-if="information"
+          :workspace="information.workspace"
+        />
       </ComponentContainer>
     </div>
     <div class="grid gap-y-4 lg:gap-y-0">

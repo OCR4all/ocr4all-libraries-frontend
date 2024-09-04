@@ -6,11 +6,11 @@ import IconQueue from "~icons/heroicons/queue-list";
 import IconTraining from "~icons/carbon/machine-learning-model";
 import IconEvaluation from "~icons/carbon/compare";
 
-import IconInformation from "~icons/heroicons/information-circle"
-import IconUsers from "~icons/heroicons/users"
-import IconGroups from "~icons/heroicons/user-group"
-import IconCpu from "~icons/heroicons/cpu-chip"
-import IconViewfinder from "~icons/heroicons/viewfinder-circle"
+import IconInformation from "~icons/heroicons/information-circle";
+import IconUsers from "~icons/heroicons/users";
+import IconGroups from "~icons/heroicons/user-group";
+import IconCpu from "~icons/heroicons/cpu-chip";
+import IconViewfinder from "~icons/heroicons/viewfinder-circle";
 
 import { FunctionalComponent, HTMLAttributes, VNodeProps } from "vue";
 

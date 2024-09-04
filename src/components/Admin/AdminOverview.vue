@@ -23,9 +23,9 @@ const users = ref(0);
 const groups = ref(0);
 const providers = ref(0);
 
-const isLoadingUsers = ref(true)
-const isLoadingGroups = ref(true)
-const isLoadingProviders = ref(true)
+const isLoadingUsers = ref(true);
+const isLoadingGroups = ref(true);
+const isLoadingProviders = ref(true);
 
 useCustomFetch("/administration/security/user/list")
   .get()
@@ -60,7 +60,12 @@ useCustomFetch("/administration/provider/overview")
     </h1>
     <div class="grid grid-cols-1 grid-rows-1 gap-8 sm:grid-cols-3">
       <div>
-        <Skeleton v-if="isLoadingUsers" width="14rem" height="6rem" borderRadius="10px"></Skeleton>
+        <Skeleton
+          v-if="isLoadingUsers"
+          width="14rem"
+          height="6rem"
+          borderRadius="10px"
+        ></Skeleton>
         <StatsCard v-else>
           <template #title> Users </template>
           <template #value>
@@ -71,7 +76,12 @@ useCustomFetch("/administration/provider/overview")
         </StatsCard>
       </div>
       <div>
-        <Skeleton v-if="isLoadingGroups" width="14rem" height="6rem" borderRadius="10px"></Skeleton>
+        <Skeleton
+          v-if="isLoadingGroups"
+          width="14rem"
+          height="6rem"
+          borderRadius="10px"
+        ></Skeleton>
         <StatsCard v-else>
           <template #title> Groups </template>
           <template #value>
@@ -82,7 +92,12 @@ useCustomFetch("/administration/provider/overview")
         </StatsCard>
       </div>
       <div>
-        <Skeleton v-if="isLoadingProviders" width="14rem" height="6rem" borderRadius="10px"></Skeleton>
+        <Skeleton
+          v-if="isLoadingProviders"
+          width="14rem"
+          height="6rem"
+          borderRadius="10px"
+        ></Skeleton>
         <StatsCard v-else>
           <template #title> Providers </template>
           <template #value>

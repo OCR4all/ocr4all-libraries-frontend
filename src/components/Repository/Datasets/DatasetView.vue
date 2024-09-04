@@ -14,7 +14,7 @@ import Toast from "primevue/toast";
 import { IContainer } from "@/components/Project/project.interfaces";
 import { ICollectionSet } from "@/components/Repository/Datasets/dataset.interfaces";
 
-import IconActions from "~icons/fluent/more-vertical-32-regular"
+import IconActions from "~icons/fluent/more-vertical-32-regular";
 
 const router = useRouter();
 
@@ -32,6 +32,7 @@ const filters: Ref = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   name: { value: null, matchMode: FilterMatchMode.CONTAINS },
   description: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  keywords: { value: null, matchMode: FilterMatchMode.CONTAINS }
 });
 
 const dialog = useDialog();
@@ -41,7 +42,7 @@ import IconCreate from "~icons/gridicons/create";
 import IconEvaluation from "~icons/carbon/compare";
 
 const isRefetching: Ref<boolean> = ref(false);
-const isLoading = ref(true)
+const isLoading = ref(true);
 const datasets: Ref<ICollectionSet[]> = ref([]);
 const selectedDatasets: Ref<ICollectionSet[]> = ref([]);
 
@@ -83,7 +84,7 @@ function evaluate(datasets) {
     detail: "Coming soon",
     life: 3000,
     group: "general",
-  })
+  });
 }
 
 async function getCodec(datasets) {
@@ -118,15 +119,15 @@ async function getCodec(datasets) {
   });*/
 }
 
+const availableKeywords: Ref<string[]> = ref([])
+
 async function refetch() {
   isRefetching.value = true;
-  useCustomFetch(
-    `/data/collection/list`,
-  )
+  useCustomFetch(`/data/collection/list`)
     .get()
     .json()
     .then((response) => {
-      if(response.error.value){
+      if (response.error.value) {
         toast.add({
           severity: "error",
           summary: "Error",
@@ -134,17 +135,26 @@ async function refetch() {
           life: 3000,
           group: "general",
         });
-      }else{
-        datasets.value = response.data.value.filter(function (container: IContainer) {
+      } else {
+        datasets.value = response.data.value.filter(function (
+          container: IContainer,
+        ) {
           return container.right !== null;
         });
-        isLoading.value = false
+
+        const keywords = []
+        for(const dataset of datasets.value){
+          if(dataset.keywords) keywords.push(...dataset.keywords);
+        }
+        const keywordSet = new Set(keywords);
+        availableKeywords.value = Array.from(keywordSet)
+
+        isLoading.value = false;
       }
       setTimeout(function () {
         isRefetching.value = false;
       }, 500);
-  })
-
+    });
 }
 
 await refetch();
@@ -462,10 +472,10 @@ const contextMenu = ref();
         </template>
         <template #filter="{ filterModel, filterCallback }">
           <InputText
-              v-model="filterModel.value"
-              type="text"
-              @input="filterCallback()"
-              placeholder="Search by name"
+            v-model="filterModel.value"
+            type="text"
+            @input="filterCallback()"
+            placeholder="Search by name"
           />
         </template>
         <template #body="{ data }">
@@ -497,10 +507,10 @@ const contextMenu = ref();
         </template>
         <template #filter="{ filterModel, filterCallback }">
           <InputText
-              v-model="filterModel.value"
-              type="text"
-              placeholder="Search by description"
-              @input="filterCallback()"
+            v-model="filterModel.value"
+            type="text"
+            placeholder="Search by description"
+            @input="filterCallback()"
           />
         </template>
       </Column>
@@ -526,6 +536,23 @@ const contextMenu = ref();
               keyword
             }}</Tag>
           </div>
+        </template>
+        <template #filter="{ filterModel, filterCallback }">
+          <Fluid>
+            <MultiSelect
+              v-model="filterModel.value"
+              :options="availableKeywords"
+              filter
+              placeholder="Any"
+              @change="filterCallback"
+            >
+              <template #option="slotProps">
+                <div class="flex items-center gap-2">
+                  <span>{{ slotProps.option }}</span>
+                </div>
+              </template>
+            </MultiSelect>
+          </Fluid>
         </template>
       </Column>
       <Column :exportable="false" style="min-width: 8rem">

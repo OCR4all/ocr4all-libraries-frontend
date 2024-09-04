@@ -7,7 +7,6 @@ const data = ref();
 
 onMounted(() => {
   data.value = dialogRef?.value.data.data;
-  console.log(data.value);
 });
 
 import { useCustomFetch } from "@/composables/useCustomFetch";

@@ -49,7 +49,7 @@ async function run() {
           group: "general",
         });
       } else {
-        const jobId = response.data.value["job-id"]
+        const jobId = response.data.value["job-id"];
         toast.add({
           severity: "success",
           summary: "Success",
