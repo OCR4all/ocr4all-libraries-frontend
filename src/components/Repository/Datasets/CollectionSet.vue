@@ -14,13 +14,21 @@ import Column from "primevue/column";
 import { FilterMatchMode } from "@primevue/core/api";
 import { UseTimeAgo } from "@vueuse/components";
 import IconLarex from "~icons/fluent/notebook-eye-20-filled";
+import IconTrash from "~icons/heroicons/trash"
 
 const larexURL = import.meta.env.VITE_LAREX_URL;
 const formFileMap = ref()
 const formMimeMap = ref()
 const larexForm = ref()
 
+const isLoading = ref(true)
+
+const entities = ref({})
+
 const toast: ToastServiceMethods = useToast();
+const confirm = useConfirm()
+
+const expandedRows = ref([])
 
 const editSetDialog = defineAsyncComponent(
   () => import("@/components/Repository/Datasets/Dialog/EditSet.vue"),
@@ -65,6 +73,7 @@ const uploadToastVisible = ref(false);
 const progress = ref(0);
 
 import IconActions from "~icons/fluent/more-vertical-32-regular"
+import {useConfirm} from "primevue/useconfirm";
 
 
 const uiStore = useUiStore();
@@ -123,6 +132,7 @@ async function refresh() {
     .json()
     .then((response) => {
       sets.value = response.data.value;
+      isLoading.value = false
     });
 }
 
@@ -198,6 +208,43 @@ async function downloadSet(data: ISet) {
       }
       toast.removeGroup("download-toast");
     });
+}
+
+function removeFile(id, extension){
+  confirm.require({
+    message: "Do you want to delete this file?",
+    header: "Danger Zone",
+    icon: "pi pi-info-circle",
+    position: "bottom",
+    rejectLabel: "Cancel",
+    rejectProps: {
+      label: "Cancel",
+      severity: "secondary",
+      outlined: true,
+    },
+    acceptProps: {
+      label: "Delete",
+      severity: "danger",
+    },
+    accept: async () => {
+      await deleteFile(id, extension);
+      toast.add({
+        severity: "success",
+        summary: "Success",
+        detail: "File successfully deleted.",
+        life: 3000,
+        group: "general",
+      });
+      fetchField(id)
+    },
+    reject: () => {},
+  });
+}
+
+async function deleteFile(id: string, extension: string){
+  useCustomFetch(`/api/v1.0/data/collection/set/remove/file/${dataset}?id=${id}?suffix=${extension}`)
+      .get()
+      .json()
 }
 
 const hideUploadToast = () => {
@@ -484,6 +531,21 @@ async function getCodec() {
     });
 }
 
+function onRowExpand(event){
+  fetchField(event.data.id)
+}
+
+function fetchField(id: string){
+  isLoading.value = true
+  useCustomFetch(`/data/collection/set/entity/${dataset}?id=${id}`)
+      .get()
+      .json()
+      .then((response) => {
+        entities.value[id] = response.data.value.files
+        isLoading.value = false
+      });
+}
+
 refresh();
 </script>
 <template>
@@ -654,6 +716,7 @@ refresh();
     <input id="modes" value="" type="hidden" name="modes" />
   </form>
   <ComponentContainer spaced>
+    <ConfirmDialog />
     <Toolbar class="mb-4">
       <template #start>
         <FileUpload
@@ -708,116 +771,117 @@ refresh();
         </IconField>
       </template>
     </Toolbar>
-    <DataView :value="sets" :layout="layout">
-      <template #header>
-        <div class="flex justify-end">
-          <SelectButton
-            v-model="layout"
-            :options="options"
-            :allow-empty="false"
-          >
-            <template #option="{ option }">
-              <i :class="[option === 'list' ? 'pi pi-bars' : 'pi pi-table']" />
-            </template>
-          </SelectButton>
-        </div>
-      </template>
-
-      <template #list="slotProps">
-        <DataTable
-          ref="containerDataTable"
-          v-model:selection="selectedSets"
-          :value="slotProps.items"
-          :filters="filters"
-          context-menu
-          :paginator="true"
-          :rows="5"
-          :rows-per-page-options="[5, 10, 20, 50]"
-          :row-hover="true"
-          table-style="min-width: 50rem"
-          @row-contextmenu="onRowContextMenu"
+    <DataTable
+        ref="containerDataTable"
+        v-model:selection="selectedSets"
+        v-model:expandedRows="expandedRows"
+        :loading="isLoading"
+        :value="sets"
+        :filters="filters"
+        context-menu
+        :paginator="true"
+        :rows="5"
+        :rows-per-page-options="[5, 10, 20, 50]"
+        :row-hover="true"
+        table-style="min-width: 50rem"
+        @row-contextmenu="onRowContextMenu"
+        @rowExpand="onRowExpand"
+      >
+        <Column expander style="width: 5rem" />
+        <Column
+          selection-mode="multiple"
+          style="width: 3rem"
+          :exportable="false"
+        ></Column>
+        <Column
+          field="name"
+          :header="$t('pages.repository.overview.dataview.list.column.name')"
+          sortable
         >
-          <Column
-            selection-mode="multiple"
-            style="width: 3rem"
-            :exportable="false"
-          ></Column>
-          <Column
-            field="name"
-            :header="$t('pages.repository.overview.dataview.list.column.name')"
-            sortable
-          >
-            <template #loading>
-              <div
-                class="align-items-center flex"
-                :style="{
-                  height: '17px',
-                  'flex-grow': '1',
-                  overflow: 'hidden',
-                }"
+          <template #loading>
+            <div
+              class="align-items-center flex"
+              :style="{
+                height: '17px',
+                'flex-grow': '1',
+                overflow: 'hidden',
+              }"
+            >
+              <Skeleton width="60%" height="1rem" />
+            </div>
+          </template>
+        </Column>
+        <Column
+          field="keywords"
+          :header="
+            $t('pages.repository.overview.dataview.list.column.keywords')
+          "
+        >
+          <template #loading>
+            <div
+              class="align-items-center flex"
+              :style="{
+                height: '17px',
+                'flex-grow': '1',
+                overflow: 'hidden',
+              }"
+            >
+              <Skeleton width="60%" height="1rem" />
+            </div>
+          </template>
+          <template #body="slotProps">
+            <div class="flex space-x-1">
+              <Tag
+                v-for="keyword of slotProps.data.keywords"
+                :key="keyword"
+                >{{ keyword }}</Tag
               >
-                <Skeleton width="60%" height="1rem" />
-              </div>
-            </template>
-          </Column>
-          <Column
-            field="keywords"
-            :header="
-              $t('pages.repository.overview.dataview.list.column.keywords')
-            "
-          >
-            <template #loading>
-              <div
-                class="align-items-center flex"
-                :style="{
-                  height: '17px',
-                  'flex-grow': '1',
-                  overflow: 'hidden',
-                }"
+            </div>
+          </template>
+        </Column>
+        <Column
+          field="date"
+          :header="$t('pages.projects.overview.table.columns.created')"
+          :sortable="true"
+        >
+          <template #body="{ data }">
+            <UseTimeAgo v-slot="{ timeAgo }" :time="Date.parse(data.date)">
+              {{ timeAgo }}
+            </UseTimeAgo>
+          </template>
+        </Column>
+        <Column :exportable="false" style="min-width: 8rem">
+          <template #body="{ data }">
+            <div class="space-y-2">
+              <Button
+                type="button"
+                text
+                severity="secondary"
+                @click="toggle($event, data)"
               >
-                <Skeleton width="60%" height="1rem" />
-              </div>
-            </template>
-            <template #body="slotProps">
-              <div class="flex space-x-1">
-                <Tag
-                  v-for="keyword of slotProps.data.keywords"
-                  :key="keyword"
-                  >{{ keyword }}</Tag
-                >
-              </div>
-            </template>
-          </Column>
-          <Column
-            field="date"
-            :header="$t('pages.projects.overview.table.columns.created')"
-            :sortable="true"
-          >
-            <template #body="{ data }">
-              <UseTimeAgo v-slot="{ timeAgo }" :time="Date.parse(data.date)">
-                {{ timeAgo }}
-              </UseTimeAgo>
-            </template>
-          </Column>
-          <Column :exportable="false" style="min-width: 8rem">
-            <template #body="{ data }">
-              <div class="space-y-2">
-                <Button
-                  type="button"
-                  text
-                  severity="secondary"
-                  @click="toggle($event, data)"
-                >
-                  <IconActions class="text-surface-900 dark:text-surface-100" />
-                </Button>
-              </div>
-            </template>
-          </Column>
-        </DataTable>
-      </template>
-
-      <template #grid="slotProps"> </template>
-    </DataView>
+                <IconActions class="text-surface-900 dark:text-surface-100" />
+              </Button>
+            </div>
+          </template>
+        </Column>
+        <template #expansion="slotProps">
+          <div class="p-4">
+            <h5 class="text-lg font-semibold">Files</h5>
+              <DataTable :value="entities[slotProps.data.id]">
+                <Column field="name" header="Name" sortable></Column>
+                <Column field="extension" header="Extension" sortable></Column>
+                <Column field="content-type" header="Content Type" sortable></Column>
+                <Column>
+                  <template #body="{ data }">
+                    <Button @click="removeFile(slotProps.data.id, data.extension)" severity="danger" text>
+                      <IconTrash class="text-red-800 dark:text-red-200" />
+                    </Button>
+                  </template>
+                </Column>
+              </DataTable>
+          </div>
+        </template>
+      </DataTable>
   </ComponentContainer>
 </template>
 <style>
