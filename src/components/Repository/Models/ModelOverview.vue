@@ -30,11 +30,24 @@ import { useDialog } from "primevue/usedialog";
 import InputText from "primevue/inputtext";
 import { FilterMatchMode } from "@primevue/core/api";
 import Tag from "primevue/tag";
+import { capitalize } from "vue";
 const confirm = useConfirm();
 const toast = useToast();
 
 const isLoading = ref(true);
 const availableKeywords: Ref<string[]> = ref([])
+
+function getRightSeverity(right: string){
+  switch(right){
+    case "read":
+      return "secondary"
+    case "write":
+      return "info"
+    case "special":
+      return "success"
+  }
+}
+
 
 async function fetch() {
   useCustomFetch("/assemble/model/list")
@@ -556,6 +569,19 @@ const selectedModels = ref([]);
                 </template>
               </MultiSelect>
             </Fluid>
+          </template>
+        </Column>
+        <Column field="tracking.user" header="Owner">
+          <template #body=" { data }">
+            <div class="flex space-x-2 items-center">
+              <AvatarInitials :name="data.tracking.user" />
+              <p class="inline-block align-middle">{{ data.tracking.user }}</p>
+            </div>
+          </template>
+        </Column>
+        <Column field="right" header="Rights">
+          <template #body="{ data }">
+            <Tag :value="capitalize(data.right)" :severity="getRightSeverity(data.right)" />
           </template>
         </Column>
         <Column :exportable="false" style="min-width: 8rem">
