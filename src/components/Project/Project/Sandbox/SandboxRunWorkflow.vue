@@ -5,6 +5,7 @@ import { IWorkflow } from "@/types/workflow.types";
 
 const store = useSandboxCreationStore();
 
+import IconImageImport from "~icons/lucide/image-plus";
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import ProgressBar from "primevue/progressbar";
 import { IQueue } from "@/components/Queue/queue.interfaces";
@@ -14,12 +15,14 @@ const project = router.currentRoute.value.params.project;
 
 const workflows = ref();
 
+const isError = ref(false)
 const isRunning = ref(false);
 const isImportingImages = ref(false);
 const isWorkflowRunning = ref(false);
 const isWorkflowFinished = ref(false);
 
 import IconStart from "~icons/codicon/debug-start";
+import IconBack from "~icons/solar/rewind-back-outline"
 
 const SANDBOX_LAUNCHER =
   "de.uniwuerzburg.zpd.ocr4all.application.core.spi.launcher.provider.SandboxNormalizedLauncher";
@@ -71,14 +74,18 @@ async function importImages() {
     label: "Import images",
     description: "Import images",
   };
-  const _sandboxLaunchData = await useCustomFetch(
+  const { error, data } = await useCustomFetch(
     `/spi/launcher/schedule/${project}/${store.sandboxId}`,
   )
     .post(payload)
     .json();
-  isImportingImages.value = true;
-  const startedJob = _sandboxLaunchData.data.value["job-id"];
-  await checkImageJob(startedJob);
+  if( error.value ){
+    isError.value = true
+  }else{
+    isImportingImages.value = true;
+    const startedJob = data.value["job-id"];
+    await checkImageJob(startedJob);
+  }
 }
 
 async function checkWorkflowJob(startedJob: number) {
@@ -119,6 +126,15 @@ const jobStatus = ref("Scheduled");
 
 const processorSelector = ref();
 
+async function importImageOnly(){
+  isRunning.value = true;
+  await createSandbox(
+    `Image_Import_${new Date().toISOString().slice(0, -8).replace(":", "-")}`,
+  );
+  await importImages();
+  isRunning.value = false;
+}
+
 async function runProcessor() {
   const processor = processorSelector.value.get();
 
@@ -145,10 +161,14 @@ async function runProcessor() {
     .post(payload)
     .json();
 
-  isWorkflowRunning.value = true;
-  const startedJob = data.value["job-id"];
-  await checkWorkflowJob(startedJob);
-  isRunning.value = false;
+  if(error.value){
+    isError.value = true
+  }else{
+    isWorkflowRunning.value = true;
+    const startedJob = data.value["job-id"];
+    await checkWorkflowJob(startedJob);
+    isRunning.value = false;
+  }
 }
 
 async function launchWorkflow(workflow: IWorkflow) {
@@ -171,18 +191,41 @@ async function launchWorkflow(workflow: IWorkflow) {
       },
     })
     .json();
-  isWorkflowRunning.value = true;
-  const startedJob = data.value["job-id"];
-  await checkWorkflowJob(startedJob);
-  isRunning.value = false;
+  if(error.value) {
+    isError.value = true
+  }else{
+    isWorkflowRunning.value = true;
+    const startedJob = data.value["job-id"];
+    await checkWorkflowJob(startedJob);
+    isRunning.value = false;
+  }
 }
 
 const mode = ref("Workflow");
-const options = ref(["Workflow", "Processor"]);
+const options = ref(["Workflow", "Processor", "Import"]);
 </script>
 <template>
+  <section v-if="isError">
+    <h2
+      class="mb-2 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
+    >
+      Something went horribly wrong!
+    </h2>
+    <h2
+      class="mb-8 text-center text-lg font-bold text-surface-700 dark:text-surface-200 sm:text-lg md:text-lg"
+    >
+      Please go back to the Result Overview and try again.
+    </h2>
+    <div class="flex justify-center">
+      <Button severity="contrast" @click="router.push(`/project/${project}/view`)">
+        <div class="flex space-x-2">
+          <IconBack />
+        </div>
+      </Button>
+    </div>
+  </section>
   <section
-    v-if="!isRunning && !isWorkflowFinished"
+    v-else-if="!isRunning && !isWorkflowFinished"
     class="grid items-center space-y-10 px-20 dark:text-surface-100"
   >
     <div class="flex justify-center">
@@ -218,6 +261,26 @@ const options = ref(["Workflow", "Processor"]);
         Select which processor should be used to run on the images
       </h2>
       <ProcessorSelector ref="processorSelector" @submit="runProcessor" />
+    </section>
+    <section v-else-if="mode === 'Import'">
+      <h2
+        class="mb-2 text-center text-xl font-bold text-black dark:text-white sm:text-2xl md:text-3xl"
+      >
+        Only import images
+      </h2>
+      <h2
+        class="mb-8 text-center text-lg font-bold text-surface-700 dark:text-surface-200 sm:text-lg md:text-lg"
+      >
+        Skip processing for now and only import images
+      </h2>
+      <div class="flex justify-center">
+        <Button @click="importImageOnly">
+          <div class="flex space-x-2">
+            <IconImageImport />
+            <p>Import</p>
+          </div>
+        </Button>
+      </div>
     </section>
   </section>
   <section
