@@ -30,6 +30,8 @@ const router = useRouter();
 import IconCreate from "~icons/gridicons/create";
 import { useDialog } from "primevue/usedialog";
 import { useToast } from "primevue/usetoast";
+import { capitalize } from "vue";
+import { destructureRights } from "@/utils/rights";
 const dialog = useDialog();
 
 const loading = ref(true);
@@ -83,6 +85,39 @@ const getSeverity = (entry) => {
       return null;
   }
 };
+
+function getRole(right): string {
+  if(right.special) {
+    return "Special"
+  }else if(right.execute){
+    return "Execute"
+  }else if(right.write){
+    return "Write"
+  }else if(right.read){
+    return "Read"
+  }else{
+    return "None"
+  }
+}
+
+function getRoleSeverity(role: string): string {
+  switch(role){
+    case "Special":
+      return "success"
+    case "Execute":
+      return "contrast"
+    case "Write":
+      return "primary"
+    case "Read":
+      return "info"
+    case "None":
+      return "danger"
+    default:
+      return "danger"
+  }
+}
+
+
 const states = ref(["active", "closed", "blocked"]);
 
 const uiStore = useUiStore();
@@ -444,6 +479,19 @@ refetch();
               :value="keyword"
             />
           </div>
+        </template>
+      </Column>
+      <Column field="tracking.user" header="Owner">
+        <template #body="{ data }">
+          <div class="flex space-x-2 items-center">
+            <AvatarInitials :name="data.tracking.user" :admin="false" />
+            <p>{{ data.tracking.user }}</p>
+          </div>
+        </template>
+      </Column>
+      <Column field="right" header="Rights">
+        <template #body="{ data }">
+          <Tag :value="getRole(data.right)" :severity="getRoleSeverity(getRole(data.right))" />
         </template>
       </Column>
       <Column

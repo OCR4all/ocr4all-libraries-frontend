@@ -777,7 +777,7 @@ function downloadContainer(container: IContainer) {
               </MultiSelect>
             </template>
           </Column>
-          <Column field="tracking.user" header="Created by">
+          <Column field="tracking.user" header="Owner">
             <template #body=" { data }">
               <div class="flex space-x-2 items-center">
                 <AvatarInitials :name="data.tracking.user" />
