@@ -461,10 +461,10 @@ defineExpose({
       @click.self="openContainer"
     >
       <div
-        class="absolute w-max cursor-default group-hover:flex"
+        class="absolute w-full cursor-default group-hover:flex"
         :class="{ hidden: !checked && !actionMenuVisible }"
       >
-        <div class="flex justify-between space-x-28 p-2">
+        <div class="w-full flex justify-between p-2">
           <Checkbox
             v-model="checked"
             :binary="true"
