@@ -14,11 +14,29 @@ const selectedUser = ref();
 const filteredUsers = ref();
 const userRefs: Ref<(typeof SharedEntity)[]> = ref([]);
 
+const availableUsers = computed(() => {
+  if(sharedUsers.value && allUsers.value){
+    const usedUsers = sharedUsers.value.map(user => user.name);
+    return allUsers.value.filter(user => !usedUsers.includes(user.login))
+  }else{
+    return []
+  }
+})
+
 const sharedGroups: Ref<ISharedEntity[]> = ref([]);
 const allGroups = ref();
 const selectedGroup = ref();
 const filteredGroups = ref();
 const groupRefs: Ref<(typeof SharedEntity)[]> = ref([]);
+
+const availableGroups = computed(() => {
+  if(sharedGroups.value && allGroups.value){
+    const usedGroups = sharedGroups.value.map(group => group.name);
+    return allGroups.value.filter(group => !usedGroups.includes(group.label))
+  }else{
+    return []
+  }
+})
 
 interface ISharedEntity {
   name: string;
@@ -62,6 +80,7 @@ onMounted(async () => {
         sharedUsers.value = response.data.value.security.users
           ? destructureRights(response.data.value.security.users)
           : [];
+        console.log(sharedUsers.value)
         sharedGroups.value = response.data.value.security.groups
           ? destructureRights(response.data.value.security.groups)
           : [];
@@ -77,6 +96,7 @@ await useCustomFetch(`/administration/security/user/list`)
       console.log(response.error.value);
     } else {
       allUsers.value = response.data.value;
+      console.log(allUsers.value)
     }
   });
 await useCustomFetch(`/administration/security/group/list`)
@@ -93,9 +113,9 @@ await useCustomFetch(`/administration/security/group/list`)
 const searchUser = (event) => {
   setTimeout(() => {
     if (!event.query.trim().length) {
-      filteredUsers.value = [...allUsers.value];
+      filteredUsers.value = [...availableUsers.value];
     } else {
-      filteredUsers.value = allUsers.value.filter((user) => {
+      filteredUsers.value = availableUsers.value.filter((user) => {
         return (
           user.login.toLowerCase().startsWith(event.query.toLowerCase()) ||
           user.name.toLowerCase().includes(event.query.toLowerCase())
@@ -108,9 +128,9 @@ const searchUser = (event) => {
 const searchGroup = (event) => {
   setTimeout(() => {
     if (!event.query.trim().length) {
-      filteredGroups.value = [...allGroups.value];
+      filteredGroups.value = [...availableGroups.value];
     } else {
-      filteredGroups.value = allGroups.value.filter((group) => {
+      filteredGroups.value = availableGroups.value.filter((group) => {
         return (
           group.label.toLowerCase().startsWith(event.query.toLowerCase()) ||
           group.name.toLowerCase().includes(event.query.toLowerCase())
@@ -166,13 +186,9 @@ function removeShare(type: string, id: string) {
       });
       break;
     case "group":
-      console.log(sharedGroups.value);
       sharedGroups.value = sharedGroups.value.filter(function (group) {
-        console.log(group.name);
-        console.log(id);
         return group.name !== id;
       });
-      console.log(sharedGroups.value);
       break;
   }
 }
