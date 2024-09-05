@@ -33,6 +33,7 @@ import { useDialog } from "primevue/usedialog";
 import ProgressSpinner from "primevue/progressspinner";
 
 import IconActions from "~icons/fluent/more-vertical-32-regular";
+import { capitalize } from "vue";
 
 const IN_ARRAY = 'IN_ARRAY';
 
@@ -95,6 +96,7 @@ async function listContainers() {
           group: "general",
         });
       } else if (response.data.value) {
+        console.log(response.data.value)
         const data: IContainer[] = response.data.value;
         containers.value = data.filter(function (container: IContainer) {
           return container.right !== null;
@@ -355,6 +357,18 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   ];
   contextMenu.value.show(event.originalEvent);
 };
+
+
+function getRightSeverity(right: string){
+  switch(right){
+    case "read":
+      return "secondary"
+    case "write":
+      return "info"
+    case "special":
+      return "success"
+  }
+}
 
 function openShareModal(data: IContainer) {
   dialog.open(ShareDialog, {
@@ -761,6 +775,19 @@ function downloadContainer(container: IContainer) {
                   </div>
                 </template>
               </MultiSelect>
+            </template>
+          </Column>
+          <Column field="tracking.user" header="Created by">
+            <template #body=" { data }">
+              <div class="flex space-x-2 items-center">
+                <AvatarInitials :name="data.tracking.user" />
+                <p class="inline-block align-middle">{{ data.tracking.user }}</p>
+              </div>
+            </template>
+          </Column>
+          <Column field="right" header="Rights">
+            <template #body="{ data }">
+              <Tag :value="capitalize(data.right)" :severity="getRightSeverity(data.right)" />
             </template>
           </Column>
           <Column :exportable="false" style="min-width: 8rem">
