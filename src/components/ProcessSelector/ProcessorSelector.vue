@@ -142,9 +142,7 @@ function get() {
 }
 
 function buildProcessorFormSchema(data, cols: number) {
-  console.log(data);
-  const schema = buildProcessorSchema(data, cols);
-  processorFormSchema.value = schema;
+  processorFormSchema.value = buildProcessorSchema(data, cols);
 }
 
 function openProcessor(data) {
