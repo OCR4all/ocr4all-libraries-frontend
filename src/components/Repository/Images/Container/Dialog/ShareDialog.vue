@@ -124,14 +124,22 @@ function getUserName(login: string): string {
   const entry = allUsers.value.find((user) => {
     return user.login === login;
   });
-  return entry.name;
+  if(entry){
+    return entry.name
+  }else{
+    return "Deleted User"
+  }
 }
 
 function getGroupName(label: string): string {
   const entry = allGroups.value.find((group) => {
     return group.label === label;
   });
-  return entry.name;
+  if(entry){
+    return entry.name
+  }else{
+    return "Deleted Group"
+  }
 }
 
 function addUser() {

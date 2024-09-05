@@ -359,7 +359,7 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
 function openShareModal(data: IContainer) {
   dialog.open(ShareDialog, {
     props: {
-      header: `Share ${name.value}`,
+      header: `Share "${data.name}"`,
       modal: true,
       style: {
         width: "70vw",
