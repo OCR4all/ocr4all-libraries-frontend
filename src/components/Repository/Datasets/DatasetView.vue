@@ -44,6 +44,7 @@ const sets = ref({})
 import IconAnalytics from "~icons/carbon/data-analytics";
 import IconCreate from "~icons/gridicons/create";
 import IconEvaluation from "~icons/carbon/compare";
+import { capitalize } from "vue";
 
 const isRefetching: Ref<boolean> = ref(false);
 const isLoading = ref(true);
@@ -143,6 +144,8 @@ async function refetch() {
         ) {
           return container.right !== null;
         });
+
+        console.log(datasets.value)
 
         const keywords = []
         for(const dataset of datasets.value){
@@ -317,6 +320,17 @@ function openEditDialog(data: ICollectionSet) {
       refetch();
     },
   });
+}
+
+function getRightSeverity(right: string){
+  switch(right){
+    case "read":
+      return "secondary"
+    case "write":
+      return "info"
+    case "special":
+      return "success"
+  }
 }
 
 const contextMenu = ref();
@@ -604,6 +618,19 @@ const contextMenu = ref();
               </template>
             </MultiSelect>
           </Fluid>
+        </template>
+      </Column>
+      <Column field="tracking.user" header="Owner">
+        <template #body=" { data }">
+          <div class="flex space-x-2 items-center">
+            <AvatarInitials :name="data.tracking.user" />
+            <p class="inline-block align-middle">{{ data.tracking.user }}</p>
+          </div>
+        </template>
+      </Column>
+      <Column field="right" header="Rights">
+        <template #body="{ data }">
+          <Tag :value="capitalize(data.right)" :severity="getRightSeverity(data.right)" />
         </template>
       </Column>
       <Column :exportable="false" style="min-width: 8rem">
