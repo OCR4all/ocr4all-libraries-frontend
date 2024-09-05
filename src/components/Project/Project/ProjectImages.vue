@@ -3,6 +3,7 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import Toolbar from "primevue/toolbar";
 import ImageCard from "@/components/Project/Project/ImageCard.vue";
 import IconImageImport from "~icons/lucide/image-plus";
+import IconRefresh from "~icons/heroicons/arrow-path";
 import { useDialog } from "primevue/usedialog";
 
 const projectImageImportDialog = defineAsyncComponent(
@@ -14,12 +15,15 @@ const dialog = useDialog();
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
 
+const isRefetching = ref(true)
+
 const folios = ref([]);
 async function refresh() {
+  isRefetching.value = true
   const folioData = await useCustomFetch(`/project/folio/list/${project}`)
     .get()
     .json();
-
+  isRefetching.value = false
   folios.value = folioData.data.value;
 }
 
@@ -62,6 +66,18 @@ refresh();
           />
         </Button>
       </template>
+      <template #end>
+        <button
+          v-tooltip.left="'Refresh'"
+          :disabled="isRefetching === true"
+          @click="refresh"
+        >
+          <IconRefresh
+            :class="{ 'animate-spin': isRefetching }"
+            class="mr-2 h-6 w-6 text-surface-500 hover:text-black dark:text-surface-200 dark:hover:text-white"
+          />
+        </button>
+      </template>
     </Toolbar>
     <div
       v-if="folios.length"
@@ -69,8 +85,8 @@ refresh();
     >
       <ImageCard
         v-for="folio in folios"
-        :key="folio.id"
         :id="folio.id"
+        :key="folio.id"
         :name="folio.name"
         :size="folio.size"
         :format="folio.format"

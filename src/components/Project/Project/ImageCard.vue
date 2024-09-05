@@ -14,9 +14,6 @@ const props = defineProps<{
 const thumb = ref();
 const detail = ref();
 
-console.log(
-  `/project/folio/derivative/thumbnail/${props.projectId}?id=${props.id}`,
-);
 useCustomFetch(
   `/project/folio/derivative/thumbnail/${props.projectId}?id=${props.id}`,
 )
@@ -38,9 +35,9 @@ async function loadDetail() {
 }
 </script>
 <template>
-  <div class="grid grid-cols-1 justify-self-center">
+  <div class="grid grid-cols-1 justify-self-center @[50rem]/content:justify-self-start">
     <div
-      class="shadow-xs group relative m-2 grid h-64 w-64 bg-surface-100 bg-clip-border text-surface-700 hover:bg-primary-200 dark:bg-surface-950 hover:dark:bg-surface-700"
+      class="shadow-xs group relative m-2 grid h-64 w-80 bg-surface-100 bg-clip-border text-surface-700 hover:bg-primary-200 dark:bg-surface-950 hover:dark:bg-surface-700"
     >
       <div
         class="mx-4 mt-4 h-fit w-fit self-center justify-self-center text-surface-700"
