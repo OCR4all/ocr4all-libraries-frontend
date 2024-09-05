@@ -388,7 +388,17 @@ function openShareModal(data: IContainer) {
       listContainers();
     },
   });
+
 }
+const containerDataTable = ref()
+function showFilters(event){
+  console.log(event)
+  console.log(containerDataTable.value)
+}
+
+const filteredContainers = computed(() => {
+  return containers.value
+})
 
 function downloadContainer(container: IContainer) {
   toast.add({
@@ -663,6 +673,7 @@ function downloadContainer(container: IContainer) {
           v-model:filters="filters"
           :value="slotProps.items"
           filter-display="row"
+          @filter="showFilters"
           :global-filter-fields="['name', 'description', 'keywords']"
           context-menu
           :paginator="true"
@@ -815,7 +826,7 @@ function downloadContainer(container: IContainer) {
           class="grid grid-flow-row-dense grid-cols-1 justify-items-start gap-x-2 gap-y-3 @[580px]/content:grid-cols-2 @[850px]/content:grid-cols-3 @[1050px]/content:grid-cols-4 @[1400px]/content:grid-cols-5"
         >
           <ContainerCard
-            v-for="item in items"
+            v-for="item in filteredContainers"
             v-bind="item"
             :key="item.id"
             :ref="setContainerCardsRef"

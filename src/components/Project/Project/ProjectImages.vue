@@ -23,9 +23,15 @@ async function refresh() {
   const folioData = await useCustomFetch(`/project/folio/list/${project}`)
     .get()
     .json();
-  isRefetching.value = false
+  setTimeout(function () {
+    isRefetching.value = false;
+  }, 500);
   folios.value = folioData.data.value;
 }
+
+const { pause } = useIntervalFn(function () {
+  refresh();
+}, 5000);
 
 function openImageImportDialog() {
   dialog.open(projectImageImportDialog, {

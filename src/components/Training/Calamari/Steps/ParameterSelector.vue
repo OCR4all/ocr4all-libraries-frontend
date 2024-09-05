@@ -17,6 +17,7 @@ useCustomFetch(`/spi/entity/${processor}`)
   .then((response) => {
     buildProcessorFormSchema(response.data.value, 2);
     registry.value = buildRegistry(response.data.value);
+    console.log(response.data.value)
   });
 
 function buildRegistry(data) {

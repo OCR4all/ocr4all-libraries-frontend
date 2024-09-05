@@ -181,10 +181,8 @@ async function deleteContainer() {
   await useCustomFetch(`/repository/container/remove?id=${props.id}`);
   toast.add({
     severity: "success",
-    summary: t(
-      "pages.repository.container.card.toast.delete-container.summary",
-    ),
-    detail: t("pages.repository.container.card.toast.delete-container.detail"),
+    summary: "Success",
+    detail: "Container removed successfully",
     life: 3000,
     group: "general",
   });
