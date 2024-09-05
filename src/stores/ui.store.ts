@@ -22,12 +22,6 @@ export const useUiStore = defineStore("ui", () => {
   const breadcrumb: Ref<undefined | IBreadCrumbEntry[]> = ref();
   function flush() {
     breadcrumb.value = undefined;
-    useHead({
-      title: "",
-      titleTemplate: "%s %separator %siteName",
-      templateParams: { separator: "|", siteName: "OCR4all" },
-      bodyAttrs: { class: { overflow: true } },
-    });
   }
 
   return {
