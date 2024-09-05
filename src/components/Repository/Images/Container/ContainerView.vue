@@ -22,6 +22,8 @@ import IconImageUpload from "~icons/icon-park-outline/upload-picture";
 import Skeleton from "primevue/skeleton";
 import {FilterMatchMode} from "@primevue/core/api";
 import InputText from "primevue/inputtext";
+import IconActions from "~icons/fluent/more-vertical-32-regular";
+import DataTable, {DataTableRowContextMenuEvent} from "primevue/datatable";
 
 const { t } = useI18n();
 
@@ -54,6 +56,95 @@ const filters = ref({
   name: { value: null, matchMode: FilterMatchMode.CONTAINS },
   format: { value: null, matchMode: FilterMatchMode.EQUALS },
 });
+
+const menu = ref();
+const items = ref();
+
+const toggle = (event, data) => {
+  items.value = [
+    {
+      label: "Actions",
+      items: [
+        {
+          label: "Edit Metadata",
+          icon: "pi pi-file-edit",
+          command: () => {
+            toast.add({
+              severity: "info",
+              summary: "Info",
+              detail: "Not implemented yet",
+              life: 3000,
+              group: "general",
+            });
+          },
+        },
+        {
+          label: "Image Editor",
+          icon: "pi pi-pencil",
+          command: () => {
+            openImageEditor();
+          },
+        },
+        {
+          label: "Download",
+          icon: "pi pi-download",
+          command: () => {
+            downloadFolio();
+          },
+        },
+        {
+          label: "Delete",
+          icon: "pi pi-times",
+          command: () => {
+            toggleDeleteDialog();
+          },
+        },
+      ],
+    },
+  ]
+  menu.value.toggle(event);
+};
+
+const contextMenu = ref();
+const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
+  items.value = [
+    {
+      label: "Edit Metadata",
+      icon: "pi pi-file-edit",
+      command: () => {
+        toast.add({
+          severity: "info",
+          summary: "Info",
+          detail: "Not implemented yet",
+          life: 3000,
+          group: "general",
+        });
+      },
+    },
+    {
+      label: "Image Editor",
+      icon: "pi pi-pencil",
+      command: () => {
+        openImageEditor();
+      },
+    },
+    {
+      label: "Download",
+      icon: "pi pi-download",
+      command: () => {
+        downloadFolio();
+      },
+    },
+    {
+      label: "Delete",
+      icon: "pi pi-times",
+      command: () => {
+        toggleDeleteDialog();
+      },
+    },
+  ];
+  contextMenu.value.toggle(event.originalEvent);
+};
 
 const imageMap = ref({})
 
@@ -286,6 +377,58 @@ useHead({
 refresh();
 </script>
 <template>
+  <ContextMenu ref="contextMenu" :model="items">
+    <template #item="{ item, props }">
+      <a
+          v-ripple
+          class="group flex items-center"
+          :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+          v-bind="props.action"
+      >
+        <span
+            :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+            :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+        >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </ContextMenu>
+  <Menu ref="menu" :model="items" :popup="true">
+    <template #item="{ item, props }">
+      <a
+          v-ripple
+          class="group flex items-center"
+          :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+          v-bind="props.action"
+      >
+        <span
+            :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
+        />
+        <span
+            :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+        >{{ item.label }}</span
+        >
+      </a>
+    </template>
+  </Menu>
   <Dialog
     v-model:visible="deleteDialogVisible"
     modal
@@ -479,7 +622,10 @@ refresh();
         <DataTable
             :value="slotProps.items"
             v-model:selection="selection"
-            v-model:filters="filters">
+            v-model:filters="filters"
+            context-menu
+            @row-contextmenu="onRowContextMenu"
+        >
           <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
           <Column>
               <template #body="{ data }">
@@ -512,6 +658,20 @@ refresh();
                 >
                   {{ timeAgo }}
                 </UseTimeAgo>
+              </div>
+            </template>
+          </Column>
+          <Column :exportable="false" style="min-width: 8rem">
+            <template #body="{ data }">
+              <div class="space-y-2">
+                <Button
+                    type="button"
+                    text
+                    severity="secondary"
+                    @click="toggle($event, data)"
+                >
+                  <IconActions class="text-surface-900 dark:text-surface-100" />
+                </Button>
               </div>
             </template>
           </Column>
