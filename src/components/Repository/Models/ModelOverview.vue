@@ -5,6 +5,7 @@ import { IContainer } from "@/components/Project/project.interfaces";
 import ShareDialog from "@/components/Repository/Images/Container/Dialog/ShareDialog.vue";
 import Column from "primevue/column";
 import Button from "primevue/button";
+import IconUpload from "~icons/fluent/arrow-upload-24-filled";
 
 import IconCreate from "~icons/gridicons/create";
 
@@ -19,6 +20,7 @@ const ShareModelDialog = defineAsyncComponent(
 import IconActions from "~icons/fluent/more-vertical-32-regular";
 
 const dialog = useDialog();
+const router = useRouter();
 
 const models = ref([]);
 
@@ -442,11 +444,15 @@ const selectedModels = ref([]);
     <ComponentContainer>
       <Toolbar>
         <template #start>
-          <Button text>
+          <Button v-tooltip.top="'Train new model'" text @click="router.push('/training/overview')" >
             <IconCreate class="text-black dark:text-white" />
+          </Button>
+          <Button v-tooltip.top="'Upload models'" text>
+            <IconUpload class="text-black dark:text-white" />
           </Button>
           <Button
             icon="pi pi-trash"
+            v-tooltip.top="'Delete selected models'"
             :disabled="selectedModels.length == 0"
             severity="danger"
             text
