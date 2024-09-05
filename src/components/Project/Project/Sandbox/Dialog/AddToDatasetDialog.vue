@@ -12,6 +12,7 @@ import { useToast } from "primevue/usetoast";
 import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
 const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
+const toast = useToast()
 
 const key = ref();
 const project = ref();
@@ -45,14 +46,25 @@ onMounted(() => {
   sandbox.value = dialogRef?.value.data.sandbox;
 });
 
-const { isFetching, error, data } = await useCustomFetch(
+const { error, data } = await useCustomFetch(
   `/data/collection/list`,
 )
   .get()
   .json();
-datasets.value = data.value.filter(function (container: IContainer) {
-  return container.right !== null;
-});
+if(error.value){
+  toast.add({
+    severity: "error",
+    summary: "Error",
+    detail: "Couldn't fetch datasets",
+    life: 3000,
+    group: "general",
+  })
+  dialogRef?.value.close()
+}else{
+  datasets.value = data.value.filter(function (container: IContainer) {
+    return container.right !== null;
+  });
+}
 
 async function addToDataset() {
   for (const dataset of selectedDatasets.value) {
@@ -65,16 +77,14 @@ async function addToDataset() {
       `/snapshot/collection/all/${project.value}/${sandbox.value}`,
     ).post(payload);
   }
-  // Promise.all(requests).then((response) => {
-  //   toast.add({
-  //     severity: "success",
-  //     summary: "Success",
-  //     detail: "Ground Truth successfully added to datasets",
-  //     life: 3000,
-  //     group: "general",
-  //   });
-  //   dialogRef.value.close()
-  // })
+  toast.add({
+    severity: "success",
+    summary: "Success",
+    detail: "Pages added to datasets",
+    life: 3000,
+    group: "general",
+  })
+  dialogRef?.value.close()
 }
 </script>
 <template>

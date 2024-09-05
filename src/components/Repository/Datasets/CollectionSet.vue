@@ -167,6 +167,7 @@ async function refresh() {
       })
       .json()
       .then((response) => {
+        console.log(response.data.value)
         for(const result of response.data.value){
           if(!groundTruth.value.includes(result.id)){
             groundTruth.value.push(result.id)

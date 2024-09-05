@@ -28,7 +28,6 @@ async function submitExportSnapshot(values, { setErrors }) {
     "normalize-filenames": values.normalizeFilenames,
     "source-images": values.includeImages,
   };
-  console.log(values);
   useCustomFetch(`/snapshot/export/${project.value}/${sandbox.value}`)
     .post(payload)
     .blob()
@@ -52,12 +51,12 @@ async function submitExportSnapshot(values, { setErrors }) {
     ref="form"
     v-model="data"
     type="form"
-    submit-label="Export"
     :submit-attrs="{
-      inputClass: 'formkit-submit-btn',
+      inputClass: 'hidden',
     }"
     @submit="submitExportSnapshot"
   >
     <FormKitSchema :schema="schema" :data="data" />
+    <Button type="submit" />
   </FormKit>
 </template>
