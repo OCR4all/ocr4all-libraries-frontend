@@ -452,7 +452,7 @@ defineExpose({
     @contextmenu="onContextMenu"
   >
     <div
-      class="shadow-xs group relative m-2 grid h-64 w-64 cursor-pointer rounded-md bg-clip-border text-surface-700 hover:bg-primary-100 hover:dark:bg-surface-800"
+      class="shadow-xs col-span-full group relative m-2 grid h-64 w-80 cursor-pointer rounded-md bg-clip-border text-surface-700 hover:bg-primary-100 hover:dark:bg-surface-800"
       :class="[
         checked
           ? ['bg-primary-100', 'dark:bg-surface-700']

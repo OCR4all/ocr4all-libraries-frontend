@@ -15,6 +15,7 @@ import { IContainer } from "@/components/Project/project.interfaces";
 import { ICollectionSet } from "@/components/Repository/Datasets/dataset.interfaces";
 
 import IconActions from "~icons/fluent/more-vertical-32-regular";
+import IconRefresh from "~icons/heroicons/arrow-path";
 
 const router = useRouter();
 

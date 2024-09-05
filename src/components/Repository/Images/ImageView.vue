@@ -805,7 +805,7 @@ function downloadContainer(container: IContainer) {
       <template #grid="{ items }">
         <div
           v-auto-animate
-          class="grid grid-flow-row-dense grid-cols-1 justify-items-start gap-x-2 gap-y-3 @[550px]/content:grid-cols-2 @[850px]/content:grid-cols-3 @[1050px]/content:grid-cols-4 @[1400px]/content:grid-cols-5"
+          class="grid grid-flow-row-dense grid-cols-1 justify-items-start gap-x-2 gap-y-3 @[580px]/content:grid-cols-2 @[850px]/content:grid-cols-3 @[1050px]/content:grid-cols-4 @[1400px]/content:grid-cols-5"
         >
           <ContainerCard
             v-for="item in items"

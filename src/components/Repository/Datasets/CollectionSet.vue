@@ -15,6 +15,7 @@ import { FilterMatchMode } from "@primevue/core/api";
 import { UseTimeAgo } from "@vueuse/components";
 import IconLarex from "~icons/fluent/notebook-eye-20-filled";
 import IconTrash from "~icons/heroicons/trash"
+import IconRefresh from "~icons/heroicons/arrow-path";
 
 const larexURL = import.meta.env.VITE_LAREX_URL;
 const formFileMap = ref()
@@ -133,13 +134,17 @@ const loading = reactive({
   textregion: true
 })
 
+const isRefetching = ref(true)
+
 async function refresh() {
+  isRefetching.value = true
   useCustomFetch(`/data/collection/set/list/${dataset}`)
     .get()
     .json()
     .then((response) => {
       sets.value = response.data.value;
       isLoading.value = false
+      isRefetching.value = false
     });
   useCustomFetch(`/data/collection/set/pageXML/${dataset}`)
       .post({
@@ -791,6 +796,16 @@ refresh();
         />
       </template>
       <template #end>
+        <button
+          v-tooltip.left="'Refresh'"
+          :disabled="isRefetching === true"
+          @click="refresh"
+        >
+          <IconRefresh
+            :class="{ 'animate-spin': isRefetching }"
+            class="mr-2 h-6 w-6 text-surface-500 hover:text-black dark:text-surface-200 dark:hover:text-white"
+          />
+        </button>
         <IconField>
           <InputIcon>
             <i class="pi pi-search" />

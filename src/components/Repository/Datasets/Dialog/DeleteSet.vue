@@ -1,29 +1,34 @@
 <script setup lang="ts">
 import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 import { useCustomFetch } from "@/composables/useCustomFetch";
+import { useToast } from "primevue/usetoast";
 
 const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
 const data = ref();
 const collection = ref();
 
+const toast = useToast()
+
 onMounted(() => {
   data.value = dialogRef?.value.data.data;
   collection.value = dialogRef?.value.data.collection;
 });
 
-function deleteDataset() {
-  useCustomFetch(
-    `/data/collection/set/remove/entity/${collection.value}?id=${data.value.id}`,
-  )
-    .get()
-    .then((response) => {
-      if (response.error.value) {
-        console.log(response.error.value);
-      } else {
-        dialogRef?.value.close();
-      }
-    });
+async function deleteDataset() {
+  for(const entry of data.value){
+    await useCustomFetch(
+      `/data/collection/set/remove/entity/${collection.value}?id=${entry.id}`,
+    ).get()
+  }
+  toast.add({
+    severity: "success",
+    summary: "Success",
+    detail: "Sets were removed",
+    life: 3000,
+    group: "general",
+  });
+  dialogRef?.value.close()
 }
 </script>
 <template>

@@ -199,15 +199,15 @@ defineExpose({
     </button>
   </Dialog>
   <div
-    class="shadow-xs group relative m-2 grid h-64 w-64 rounded-md bg-clip-border text-surface-700 hover:bg-primary-200 hover:dark:bg-surface-700"
+    class="shadow-xs group relative m-2 grid h-64 w-90 rounded-md bg-clip-border text-surface-700 hover:bg-primary-200 hover:dark:bg-surface-700"
     :class="[
       checked
         ? ['bg-primary-200', 'dark:bg-surface-700']
         : ['bg-surface-100', 'dark:bg-surface-950'],
     ]"
   >
-    <div class="absolute w-max group-hover:flex" :class="{ hidden: !checked }">
-      <div class="flex justify-between space-x-44 p-4">
+    <div class="absolute w-full group-hover:flex" :class="{ hidden: !checked }">
+      <div class="flex w-full justify-between p-4">
         <Checkbox
           v-model="checked"
           :binary="true"
@@ -222,7 +222,7 @@ defineExpose({
         />
         <Button
           icon="pi pi-ellipsis-v"
-          severity="secondary"
+          severity="contrast"
           text
           rounded
           aria-haspopup="true"
