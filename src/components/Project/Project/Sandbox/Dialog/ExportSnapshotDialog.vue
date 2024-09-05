@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { useCustomFetch } from "@/composables/useCustomFetch";
+import IconDownload from "~icons/fluent/arrow-download-24-filled";
+import IconPreparingDownload from "~icons/line-md/downloading-loop"
 
 const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 import { exportSnapshotSchema } from "@/components/Project/Project/Sandbox/Dialog/Schema/exportSnapshotSchema";
@@ -8,6 +10,8 @@ import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 const project = ref();
 const sandbox = ref();
 const track = ref();
+
+const isPreparingDownload = ref(false)
 
 const data = ref({
   includeImages: false,
@@ -28,6 +32,7 @@ async function submitExportSnapshot(values, { setErrors }) {
     "normalize-filenames": values.normalizeFilenames,
     "source-images": values.includeImages,
   };
+  isPreparingDownload.value = true
   useCustomFetch(`/snapshot/export/${project.value}/${sandbox.value}`)
     .post(payload)
     .blob()
@@ -41,6 +46,7 @@ async function submitExportSnapshot(values, { setErrors }) {
       );
       document.body.appendChild(link);
       link.click();
+      isPreparingDownload.value = false
       dialogRef?.value.close();
     });
 }
@@ -57,6 +63,15 @@ async function submitExportSnapshot(values, { setErrors }) {
     @submit="submitExportSnapshot"
   >
     <FormKitSchema :schema="schema" :data="data" />
-    <Button type="submit" />
+    <Button :disabled="isPreparingDownload" severity="primary" type="submit">
+      <div v-if="isPreparingDownload" class="flex space-x-2">
+        <IconPreparingDownload />
+        <p>Preparing Download</p>
+      </div>
+      <div v-else class="flex space-x-2">
+        <IconDownload />
+        <p>Export</p>
+      </div>
+    </Button>
   </FormKit>
 </template>
