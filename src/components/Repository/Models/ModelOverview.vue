@@ -302,22 +302,18 @@ function getSeverity(state: string): string {
 
 const keywordFilter = ref()
 
-const test = ref("lol")
-
 const filters: Ref = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   name: { value: null, matchMode: FilterMatchMode.CONTAINS },
   "engine.type": { value: null, matchMode: FilterMatchMode.CONTAINS },
   "engine.state": { value: null, matchMode: FilterMatchMode.EQUALS },
-  keywords: { value: test.value, matchMode: FilterMatchMode.CONTAINS },
+  keywords: { value: null, matchMode: FilterMatchMode.CONTAINS },
   description: { value: null, matchMode: FilterMatchMode.CONTAINS },
 });
 
 
 const filteredModels = computed(() => {
   const filterSet = new Set(keywordFilter.value)
-
-  console.log(filters.value)
 
   return models.value.filter((model) => {
     return filterSet.isSubsetOf(new Set(model.keywords))
@@ -485,7 +481,7 @@ const selectedModels = ref([]);
           <template #filter="{ filterModel, filterCallback }">
             <Select
               v-model="filterModel.value"
-              placeholder="Select State"
+              placeholder="Select Engine"
               :options="['Calamari']"
               class="p-column-filter"
               :show-clear="true"
