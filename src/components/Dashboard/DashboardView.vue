@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import WideCard from "@/components/Dashboard/WideCard.vue";
 
-import Toast from "primevue/toast";
 import { useToast } from "primevue/usetoast";
 const toast = useToast();
 
@@ -45,7 +44,7 @@ useCustomFetch(`/repository/container/list`)
     collections.value = response.data.value;
     const counter = ref(0);
     for (const collection of response.data.value) {
-      if (collection.right == "read") {
+      if (collection.right) {
         await useCustomFetch(
           `/repository/container/folio/list/${collection.id}`,
         )
