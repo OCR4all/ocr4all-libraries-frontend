@@ -8,7 +8,5 @@ export const useConfigStore = defineStore("config", () => {
   axios.defaults.timeout = 100000;
   axios.defaults.baseURL = baseUrl;
 
-  const instanceTag: Ref<string | null> = null;
-
   return { baseUrl, mode };
 });
