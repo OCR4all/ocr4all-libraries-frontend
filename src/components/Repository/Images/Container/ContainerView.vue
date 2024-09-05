@@ -20,13 +20,15 @@ import { useLocalDateFormat } from "@/composables/useLocalDateFormat";
 const auth: Store = useAuthStore();
 import IconImageUpload from "~icons/icon-park-outline/upload-picture";
 import Skeleton from "primevue/skeleton";
+import {FilterMatchMode} from "@primevue/core/api";
+import InputText from "primevue/inputtext";
 
 const { t } = useI18n();
 
 const folios = ref();
 const isLoading = ref(true);
 
-const layout: Ref<"list" | "grid" | undefined> = ref("grid");
+const layout: Ref<"list" | "grid" | undefined> = ref(useStorage("ocr4all/frontend/repository/container-view", "grid"));
 const options = ref(["list", "grid"]);
 
 const router: Router = useRouter();
@@ -46,6 +48,14 @@ const setFolioRef = (el) => {
 onBeforeUpdate(() => {
   folioRefs.value = [];
 });
+
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  format: { value: null, matchMode: FilterMatchMode.EQUALS },
+});
+
+const imageMap = ref({})
 
 const uploadToastVisible = ref(false);
 const progress = ref(0);
@@ -89,6 +99,17 @@ async function refresh() {
     .then((response) => {
       folios.value = response.data.value;
       isLoading.value = false;
+
+      for(const folio of folios.value){
+        useCustomFetch(
+            `/repository/container/folio/derivative/thumbnail/${container}?id=${folio.id}`,
+        )
+            .get()
+            .blob()
+            .then((response) => {
+             imageMap.value[folio.id] = { thumbnail: useObjectUrl(response.data.value), detail: null }
+            });
+      }
     });
 }
 const fileUpload = ref();
@@ -148,6 +169,17 @@ function updateTotalSelection(event: Event) {
       folioRef.select(event);
     }
   }
+}
+
+async function loadDetail(id: string) {
+  useCustomFetch(
+      `/repository/container/folio/derivative/best/${container}?id=${id}`,
+  )
+      .get()
+      .blob()
+      .then((response) => {
+        imageMap.value[id].detail = useObjectUrl(response.data.value);
+      });
 }
 
 async function deleteSelected() {
@@ -362,11 +394,27 @@ refresh();
         />
       </template>
       <template #end>
-        <SelectButton v-model="layout" :options="options" :allowEmpty="false">
-          <template #option="{ option }">
-            <i :class="[option === 'list' ? 'pi pi-bars' : 'pi pi-table']" />
-          </template>
-        </SelectButton>
+        <button
+            v-tooltip.left="'Refresh'"
+            :disabled="isRefetching === true"
+            @click="refetch"
+        >
+          <IconRefresh
+              :class="{ 'animate-spin': isRefetching }"
+              class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-200 hover:dark:text-white"
+          />
+        </button>
+        <IconField>
+          <InputIcon>
+            <i class="pi pi-search" />
+          </InputIcon>
+          <InputText
+              v-model="filters['global'].value"
+              :placeholder="
+              $t('pages.projects.overview.table.search.placeholder')
+            "
+          />
+        </IconField>
       </template>
     </Toolbar>
     <div v-if="isLoading">
@@ -382,30 +430,30 @@ refresh();
       :rows="20"
       :rows-per-page-options="[5, 10, 15, 20, 25]"
     >
-      <template #grid="slotProps">
-        <div class="flex space-x-3">
-          <p
-            class="min-w-fit self-end text-xl font-semibold text-surface-950 dark:text-surface-50"
-          >
-            {{ t("pages.repository.container.overview.sort-by") }}
-          </p>
-          <Select
-            v-model="selectedSortMode"
-            :options="sortModes"
-            option-label="name"
-            :pt="{
-              root: {
-                class:
-                  'inline-flex relative bg-transparent cursor-pointer self-end',
-              },
-              input: {
-                class: 'text-surface-950 dark:text-surface-50 text-xl',
-              },
-              trigger: { class: 'hidden' },
-            }"
-            @change="updateSort"
-          />
+      <template #header>
+        <div class="flex justify-between">
+          <div v-if="layout === 'grid'" class="flex space-x-3 items-center pl-2">
+            <p
+                class="min-w-fit text-xl font-semibold text-surface-950 dark:text-surface-50"
+            >
+              {{ t("pages.repository.container.overview.sort-by") }}
+            </p>
+            <Select
+                v-model="selectedSortMode"
+                :options="sortModes"
+                option-label="name"
+                @change="updateSort"
+            />
+          </div>
+          <div v-else />
+          <SelectButton v-model="layout" :options="options" :allowEmpty="false">
+            <template #option="{ option }">
+              <i :class="[option === 'list' ? 'pi pi-bars' : 'pi pi-table']" />
+            </template>
+          </SelectButton>
         </div>
+      </template>
+      <template #grid="slotProps">
         <div
           class="grid grid-cols-1 content-center justify-center gap-x-2 gap-y-3 @[650px]/content:grid-cols-2 @[950px]/content:grid-cols-3 @[1350px]/content:grid-cols-4"
         >
@@ -428,28 +476,32 @@ refresh();
         </div>
       </template>
       <template #list="slotProps">
-        <DataTable :value="slotProps.items" v-model:selection="selection">
+        <DataTable
+            :value="slotProps.items"
+            v-model:selection="selection"
+            v-model:filters="filters">
           <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-          <!--            <Column>
+          <Column>
               <template #body="{ data }">
-                <Image v-if="imageMap.get(data.id)" :alt="data.name" preview>
+                <Image v-if="imageMap[data.id]" :alt="data.name" preview>
                   <template #previewicon>
                     <i class="pi pi-search" style="padding: 100%" @click="loadDetail(data.id)"></i>
                   </template>
                   <template #image>
-                    <img :src="imageMap.get(data.id).thumbnail" width="40" alt="image" />
+                    <img :src="imageMap[data.id].thumbnail" width="40" alt="image" />
                   </template>
                   <template #preview="slotProps">
-                    <img :src="imageMap.get(data.id).detail" class="max-h-screen" alt="preview" :style="slotProps.style" />
+                    <img v-if="imageMap[data.id].detail" :src="imageMap[data.id].detail" class="max-h-screen" alt="preview" :style="slotProps.style" />
+                    <Skeleton v-else height="100vh" width="50vw"></Skeleton>
                   </template>
                 </Image>
                 <Skeleton v-else height="2rem"></Skeleton>
               </template>
-            </Column>-->
-          <Column field="name" header="Name"></Column>
-          <Column field="format" header="Format"></Column>
-          <Column field="size.height" header="Height"></Column>
-          <Column field="size.width" header="Width"></Column>
+            </Column>
+          <Column field="name" header="Name" sortable></Column>
+          <Column field="format" header="Format" sortable></Column>
+          <Column field="size.height" header="Height" sortable></Column>
+          <Column field="size.width" header="Width" sortable></Column>
           <Column field="keywords" header="Keywords"></Column>
           <Column field="date" header="Added">
             <template #body="slotProps">
