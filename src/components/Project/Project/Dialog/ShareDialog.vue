@@ -14,11 +14,29 @@ const selectedUser = ref();
 const filteredUsers = ref();
 const userRefs: Ref<(typeof SharedEntity)[]> = ref([]);
 
+const availableUsers = computed(() => {
+  if(sharedUsers.value && allUsers.value){
+    const usedUsers = sharedUsers.value.map(user => user.name);
+    return allUsers.value.filter(user => !usedUsers.includes(user.login))
+  }else{
+    return []
+  }
+})
+
 const sharedGroups: Ref<ISharedEntity[]> = ref([]);
 const allGroups = ref();
 const selectedGroup = ref();
 const filteredGroups = ref();
 const groupRefs: Ref<(typeof SharedEntity)[]> = ref([]);
+
+const availableGroups = computed(() => {
+  if(sharedGroups.value && allGroups.value){
+    const usedGroups = sharedGroups.value.map(group => group.name);
+    return allGroups.value.filter(group => !usedGroups.includes(group.label))
+  }else{
+    return []
+  }
+})
 
 interface ISharedEntity {
   name: string;
@@ -94,9 +112,9 @@ await useCustomFetch(`/administration/security/group/list`)
 const searchUser = (event) => {
   setTimeout(() => {
     if (!event.query.trim().length) {
-      filteredUsers.value = [...allUsers.value];
+      filteredUsers.value = [...availableUsers.value];
     } else {
-      filteredUsers.value = allUsers.value.filter((user) => {
+      filteredUsers.value = availableUsers.value.filter((user) => {
         return (
           user.login.toLowerCase().startsWith(event.query.toLowerCase()) ||
           user.name.toLowerCase().includes(event.query.toLowerCase())
@@ -109,9 +127,9 @@ const searchUser = (event) => {
 const searchGroup = (event) => {
   setTimeout(() => {
     if (!event.query.trim().length) {
-      filteredGroups.value = [...allGroups.value];
+      filteredGroups.value = [...availableGroups.value];
     } else {
-      filteredGroups.value = allGroups.value.filter((group) => {
+      filteredGroups.value = availableGroups.value.filter((group) => {
         return (
           group.label.toLowerCase().startsWith(event.query.toLowerCase()) ||
           group.name.toLowerCase().includes(event.query.toLowerCase())
