@@ -608,12 +608,19 @@ function downloadContainer(container: IContainer) {
               <InputText v-model="newContainerName" />
               <Button
                 icon="pi pi-check"
-                severity="info"
-                class="mr-2 w-fit"
+                text
+                severity="contrast"
                 @click="createContainer"
               />
             </div>
           </Popover>
+          <Button
+            v-tooltip.top="'Import from Exchange'"
+            :disabled="true"
+            text
+          >
+            <i class="pi pi-file-import text-black dark:text-white" />
+          </Button>
           <Button
             v-tooltip.top="
               $t('pages.repository.overview.toolbar.button.delete')

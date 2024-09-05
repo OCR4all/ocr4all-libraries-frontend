@@ -91,20 +91,18 @@ function evaluate(datasets) {
   });
 }
 
-async function getCodec(datasets) {
-  const datasetPayload = [];
+/*async function getCodec(datasets) {
+/!*  const datasetPayload = [];
   for (const dataset of datasets) {
-    const files = [];
-    console.log(dataset);
-  }
-  /*    for(const set of selectedSets.value){
+  }*!/
+  /!*    for(const set of selectedSets.value){
       const xml = set.files.find(file => {
         return file["content-type"] === "application/xml"
       })
-      if(xml) files.push(xml.name)*/
-  /*    }
-  }*/
-  /*  const payload = {
+      if(xml) files.push(xml.name)*!/
+  /!*    }
+  }*!/
+  /!*  const payload = {
     "datasets": [
       {
         "id": dataset,
@@ -120,8 +118,8 @@ async function getCodec(datasets) {
     "/data/collection/set/codec",
   ).post(payload).then((response) => {
     console.log(response.data.value)
-  });*/
-}
+  });*!/
+}*/
 
 const availableKeywords: Ref<string[]> = ref([])
 
@@ -181,7 +179,6 @@ async function refetch() {
               .get()
               .json()
               .then((response) => {
-                console.log(response.data.value)
                 sets.value[dataset.id] = response.data.value.length
               })
         }
@@ -439,8 +436,7 @@ const contextMenu = ref();
         </Button>
         <Button
           v-tooltip.top="'Analyze Codec'"
-          @click="getCodec(selectedDatasets)"
-          :disabled="!selectedDatasets || !selectedDatasets.length"
+          :disabled="true"
           text
         >
           <IconAnalytics class="text-black dark:text-white" />
