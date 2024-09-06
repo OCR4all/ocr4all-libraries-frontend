@@ -25,7 +25,10 @@ import {
   INode,
 } from "@/components/Project/Project/Sandbox/resultviewer.interface";
 
+import { useConfigStore } from "@/stores/config.store";
+
 const authStore = useAuthStore();
+const configStore = useConfigStore();
 
 const processorDialog = defineAsyncComponent(
   () =>
@@ -57,8 +60,6 @@ const project = router.currentRoute.value.params.project;
 const sandbox = router.currentRoute.value.params.sandbox;
 
 const toast = useToast();
-
-const larexURL = import.meta.env.VITE_LAREX_URL;
 
 const larexForm = ref();
 
@@ -265,7 +266,6 @@ async function generateSandbox(selection: ITrack) {
     }
   }
 
-  console.log("I'm here");
   const payload = {
     track: createdTrack.value,
   };
@@ -274,14 +274,11 @@ async function generateSandbox(selection: ITrack) {
     .post(payload)
     .json()
     .then(async (response) => {
-      console.log("I'm here now");
       const larexMaps = await createLarexMapsFromFiles(response.data.value);
       formFileMap.value = JSON.stringify(larexMaps.fileMap);
       formMimeMap.value = JSON.stringify(larexMaps.mimeMap);
       await nextTick();
-      console.log("Submit it");
       await larexForm.value.submit();
-      console.log("Submitted??");
 
       toast.removeGroup("headless");
       refetch();
@@ -709,7 +706,7 @@ const items = computed(() => {
     id="larexForm"
     ref="larexForm"
     class="hidden justify-self-center"
-    :action="larexURL"
+    :action="configStore.larexUrl"
     method="POST"
     target="_blank"
   >

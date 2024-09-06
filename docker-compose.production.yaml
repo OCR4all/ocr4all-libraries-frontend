@@ -6,3 +6,6 @@ services:
       dockerfile: Dockerfile.production
     ports:
       - "8080:80"
+    environment:
+      API_BASE_URL: "https://ocr4all-api-dev.kallimachos.de/api/v1.0"
+      LAREX_URL: "https://larex-dev.kallimachos.de/Larex/directLibrary"

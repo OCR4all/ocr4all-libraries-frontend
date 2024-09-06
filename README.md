@@ -76,11 +76,8 @@ docker-compose -f docker-compose.production.yaml up
 
 ## Environment Variables
 
-- `VITE_API_URL`: Points to the URL under which the REST API of an OCR4all backend instance is running (e. g. `https://some-domain.com/api/v1.0`)
-- `VITE_MODE`: Whether the OCR4all backend is running in `Desktop` or `Server` mode
+- `VITE_API_BASE_URL`: Points to the URL under which the REST API of an OCR4all backend instance is running (e. g. `https://some-domain.com/api/v1.0`)
 - `VITE_LAREX_URL`: Points to the URL under which the `directLibrary` endpoint of the used LAREX instance is located
-- `VITE_LAREX_LOCATION`: Points to base path of the project directory for LAREX
-
 ## Build with
 
 - 🛠[Vue 3](https://github.com/vuejs/)

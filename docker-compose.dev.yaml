@@ -9,3 +9,6 @@ services:
       - /app/node_modules/
     ports:
       - "3333:3333"
+    environment:
+      API_BASE_URL: "https://ocr4all-api-dev.kallimachos.de/api/v1.0"
+      LAREX_URL: "https://larex-dev.kallimachos.de/Larex/directLibrary"

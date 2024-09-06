@@ -17,7 +17,6 @@ import IconLarex from "~icons/fluent/notebook-eye-20-filled";
 import IconTrash from "~icons/heroicons/trash"
 import IconRefresh from "~icons/heroicons/arrow-path";
 
-const larexURL = import.meta.env.VITE_LAREX_URL;
 const formFileMap = ref()
 const formMimeMap = ref()
 const larexForm = ref()
@@ -62,6 +61,10 @@ import { useAuthStore } from "@/stores/auth.store";
 import ProgressBar from "primevue/progressbar";
 import IconActions from "~icons/fluent/more-vertical-32-regular"
 import {useConfirm} from "primevue/useconfirm";
+import { useConfigStore } from "@/stores/config.store";
+
+const configStore = useConfigStore()
+console.log(configStore.larexUrl)
 
 
 const dialog = useDialog();
@@ -728,7 +731,7 @@ refresh();
     id="larexForm"
     ref="larexForm"
     class="justify-self-center"
-    :action="larexURL"
+    :action="configStore.larexUrl"
     method="POST"
     target="_blank"
   >
