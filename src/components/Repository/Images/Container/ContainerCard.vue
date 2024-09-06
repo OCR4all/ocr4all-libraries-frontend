@@ -446,7 +446,7 @@ defineExpose({
     </template>
   </ContextMenu>
   <div
-    class="grid grid-cols-1 justify-self-center"
+    class="grid grid-cols-1 justify-self-start"
     @contextmenu="onContextMenu"
   >
     <div

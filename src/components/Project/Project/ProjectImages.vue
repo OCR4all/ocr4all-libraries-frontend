@@ -5,6 +5,7 @@ import ImageCard from "@/components/Project/Project/ImageCard.vue";
 import IconImageImport from "~icons/lucide/image-plus";
 import IconRefresh from "~icons/heroicons/arrow-path";
 import { useDialog } from "primevue/usedialog";
+import InputText from "primevue/inputtext";
 
 const projectImageImportDialog = defineAsyncComponent(
   () =>
@@ -15,7 +16,16 @@ const dialog = useDialog();
 const router = useRouter();
 const project = router.currentRoute.value.params.project;
 
+const filter = ref()
+
 const isRefetching = ref(true)
+
+const filteredFolios = computed(() => {
+  if(!filter.value) return folios.value
+  return folios.value.filter((folio) => {
+    return folio.name.toLowerCase().includes(filter.value.toLowerCase())
+  })
+})
 
 const folios = ref([]);
 async function refresh() {
@@ -74,15 +84,21 @@ refresh();
       </template>
       <template #end>
         <button
-          v-tooltip.left="'Refresh'"
-          :disabled="isRefetching === true"
-          @click="refresh"
+            v-tooltip.left="'Refresh'"
+            :disabled="isRefetching === true"
+            @click="refresh"
         >
           <IconRefresh
-            :class="{ 'animate-spin': isRefetching }"
-            class="mr-2 h-6 w-6 text-surface-500 hover:text-black dark:text-surface-200 dark:hover:text-white"
+              :class="{ 'animate-spin': isRefetching }"
+              class="mr-2 h-6 w-6 text-surface-500 hover:text-black dark:text-surface-200 dark:hover:text-white"
           />
         </button>
+        <IconField>
+          <InputIcon>
+            <i class="pi pi-search" />
+          </InputIcon>
+          <InputText v-model="filter" placeholder="Search" />
+        </IconField>
       </template>
     </Toolbar>
     <div
@@ -90,7 +106,7 @@ refresh();
       class="grid grid-cols-1 justify-between gap-x-2 gap-y-3 @[700px]/content:grid-cols-2 @[1100px]/content:grid-cols-3 @[1300px]/content:grid-cols-4"
     >
       <ImageCard
-        v-for="folio in folios"
+        v-for="folio in filteredFolios"
         :id="folio.id"
         :key="folio.id"
         :name="folio.name"

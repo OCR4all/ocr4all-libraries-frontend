@@ -63,17 +63,17 @@ const actionMenuItems = ref([
         },
       },
       {
-        label: "Delete",
-        icon: "pi pi-times",
-        command: () => {
-          toggleDeleteDialog();
-        },
-      },
-      {
         label: "Download",
         icon: "pi pi-download",
         command: () => {
           downloadFolio();
+        },
+      },
+      {
+        label: "Delete",
+        icon: "pi pi-times",
+        command: () => {
+          toggleDeleteDialog();
         },
       },
     ],
@@ -221,26 +221,43 @@ defineExpose({
           @update:model-value="updateSelection"
         />
         <Button
-          icon="pi pi-ellipsis-v"
-          severity="contrast"
           text
           rounded
-          aria-haspopup="true"
-          aria-label="overlay_menu"
-          :pt="{
-            root: {
-              class: 'rounded-md z-50 bg-surface-50/80 dark:bg-surface-50 p-1',
-            },
-            icon: { class: 'align-center pl-1' },
-          }"
           @click="toggle"
-        />
+        >
+          <i class="pi pi-ellipsis-v text-black dark:text-white" />
+        </Button>
         <Menu
           id="overlay_menu"
           ref="actionMenu"
           :model="actionMenuItems"
           :popup="true"
+        >
+          <template #item="{ item, props }">
+            <a
+                v-ripple
+                class="group flex items-center"
+                :class="{
+          'rounded-md hover:bg-red-500 hover:text-white':
+            item.label === 'Delete',
+        }"
+                v-bind="props.action"
+            >
+        <span
+            :class="[
+            item.icon,
+            { 'text-red-500 group-hover:text-white': item.label === 'Delete' },
+          ]"
         />
+              <span
+                  :class="{
+            'text-red-500 group-hover:text-white': item.label === 'Delete',
+          }"
+              >{{ item.label }}</span
+              >
+            </a>
+          </template>
+        </Menu>
       </div>
     </div>
     <div

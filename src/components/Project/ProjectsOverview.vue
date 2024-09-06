@@ -355,6 +355,7 @@ refetch();
         <Button
           v-tooltip.top="$t('pages.projects.overview.toolbar.import')"
           text
+          :disabled="true"
           @click="router.push('/project/import')"
         >
           <i class="pi pi-upload text-black dark:text-white" />

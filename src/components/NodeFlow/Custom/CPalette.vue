@@ -141,7 +141,7 @@ const { x, y, isOutside } = useMouseInElement(palette);
 <template>
   <div v-show="visible" ref="palette" class="overflow-scroll-y h-full">
     <div
-      class="baklava-node-palette !m-5 !w-64 !rounded-xl !border !border-surface-200 !bg-surface-0 dark:!border-surface-700 dark:!bg-surface-900 lg:!w-72"
+      class="baklava-node-palette !m-5 !w-[20rem] !rounded-xl !border !border-surface-200 !bg-surface-0 dark:!border-surface-700 dark:!bg-surface-900"
     >
       <h1
         class="pb-5 text-center text-xl font-bold text-surface-800 dark:text-surface-100"
