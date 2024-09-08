@@ -107,6 +107,7 @@ declare module 'vue' {
     SandboxRunWorkflow: typeof import('./src/components/Project/Project/Sandbox/SandboxRunWorkflow.vue')['default']
     ServiceProviderPropertyCard: typeof import('./src/components/Admin/InstanceOverview/Cards/ServiceProviderPropertyCard.vue')['default']
     SettingsDialog: typeof import('./src/components/Layout/Topbar/SettingsDialog.vue')['default']
+    ShareDatasetDialog: typeof import('./src/components/Repository/Datasets/Dialog/ShareDatasetDialog.vue')['default']
     SharedEntity: typeof import('./src/components/Sharing/SharedEntity.vue')['default']
     ShareDialog: typeof import('./src/components/Project/Project/Dialog/ShareDialog.vue')['default']
     ShareModelDialog: typeof import('./src/components/Repository/Models/Dialog/ShareModelDialog.vue')['default']

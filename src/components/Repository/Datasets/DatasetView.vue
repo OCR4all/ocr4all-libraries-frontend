@@ -45,6 +45,7 @@ import IconAnalytics from "~icons/carbon/data-analytics";
 import IconCreate from "~icons/gridicons/create";
 import IconEvaluation from "~icons/carbon/compare";
 import { capitalize } from "vue";
+import ShareDialog from "@/components/Repository/Datasets/Dialog/ShareDatasetDialog.vue";
 
 const isRefetching: Ref<boolean> = ref(false);
 const isLoading = ref(true);
@@ -123,6 +124,26 @@ function evaluate(datasets) {
 }*/
 
 const availableKeywords: Ref<string[]> = ref([])
+
+function openShareModal(data: IContainer) {
+  dialog.open(ShareDialog, {
+    props: {
+      header: `Share "${data.name}"`,
+      modal: true,
+      style: {
+        width: "70vw",
+      },
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
+      },
+    },
+    data: data,
+    onClose: () => {
+      refetch();
+    },
+  });
+}
 
 async function refetch() {
   isRefetching.value = true;
@@ -211,6 +232,13 @@ const toggle = (event, data) => {
       },
     },
     {
+      label: "Share",
+      icon: "pi pi-share-alt",
+      command: () => {
+        openShareModal(data);
+      },
+    },
+    {
       label: "Download",
       icon: "pi pi-download",
       command: () => {
@@ -234,6 +262,13 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
       icon: "pi pi-pencil",
       command: () => {
         openEditDialog(event.data);
+      },
+    },
+    {
+      label: "Share",
+      icon: "pi pi-share-alt",
+      command: () => {
+        openShareModal(event.data);
       },
     },
     {
