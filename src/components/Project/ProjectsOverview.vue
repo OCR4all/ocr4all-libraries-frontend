@@ -445,6 +445,14 @@ refetch();
             {{ slotProps.data.description }}
           </p>
         </template>
+        <template #filter="{ filterModel, filterCallback }">
+          <InputText
+              v-model="filterModel.value"
+              type="text"
+              placeholder="Search by description"
+              @input="filterCallback()"
+          />
+        </template>
       </Column>
       <Column
         field="state"
