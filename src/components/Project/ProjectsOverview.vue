@@ -392,6 +392,8 @@ refetch();
       :paginator="true"
       :rows="10"
       resizableColumns
+      stateStorage="session"
+      stateKey="ocr4all/tables/project-overview"
       columnResizeMode="expand"
       :loading="loading"
       scrollable
