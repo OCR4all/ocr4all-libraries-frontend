@@ -44,6 +44,12 @@ const routes = [
         component: () =>
           import("@/components/Repository/Datasets/CollectionSet.vue"),
       },
+      {
+        path: "model",
+        name: "Model",
+        component: () =>
+            import("@/components/Repository/Models/ModelView.vue"),
+      },
     ],
   },
   {

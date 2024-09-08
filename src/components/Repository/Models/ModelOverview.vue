@@ -87,7 +87,7 @@ const toggle = (event: Event, data) => {
           label: "Open",
           icon: "pi pi-eye",
           command: () => {
-            openContainer(data.id, data.name);
+            openModel(data.id, data.name);
           },
         },
         {
@@ -150,7 +150,7 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
       label: "Open",
       icon: "pi pi-eye",
       command: () => {
-        openContainer(event.data.id, event.data.name);
+        openModel(event.data.id, event.data.name);
       },
     },
     {
@@ -247,6 +247,14 @@ const trainNewModel = () => {
     reject: () => {},
   });
 }
+
+function openModel(id: string, name: string) {
+  router.push({
+    name: "Model",
+    query: { id: id, name: name },
+  });
+}
+
 
 const openNewModelContainerDialog = () => {
   dialog.open(CreateModelContainerDialog, {
@@ -537,6 +545,14 @@ const selectedModels = ref([]);
               placeholder="Search by name"
               @input="filterCallback()"
             />
+          </template>
+          <template #body="{ data }">
+            <p
+                class="cursor-pointer hover:underline"
+                @click="openModel(data.id, data.name)"
+            >
+              {{ data.name }}
+            </p>
           </template>
         </Column>
         <Column field="engine.type" header="Engine">
