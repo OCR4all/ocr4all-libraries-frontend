@@ -18,6 +18,7 @@ import { useUiStore } from "@/stores/ui.store";
 import { UseTimeAgo } from "@vueuse/components";
 import { useLocalDateFormat } from "@/composables/useLocalDateFormat";
 const auth: Store = useAuthStore();
+import { useDialog } from "primevue/usedialog";
 import IconImageUpload from "~icons/icon-park-outline/upload-picture";
 import Skeleton from "primevue/skeleton";
 import {FilterMatchMode} from "@primevue/core/api";
@@ -26,6 +27,10 @@ import IconActions from "~icons/fluent/more-vertical-32-regular";
 import DataTable, {DataTableRowContextMenuEvent} from "primevue/datatable";
 
 const { t } = useI18n();
+
+const ImageEditor = defineAsyncComponent(
+    () => import("@/components/Repository/Images/ImageEditor.vue"),
+);
 
 const folios = ref();
 const isLoading = ref(true);
@@ -60,6 +65,46 @@ const filters = ref({
 const menu = ref();
 const items = ref();
 
+const dialog = useDialog()
+
+function openImageEditor(id: string) {
+  dialog.open(ImageEditor, {
+    props: {
+      header: "Edit Image",
+      modal: true,
+      style: {
+        width: "70vw",
+      },
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
+      },
+    },
+    data: {
+      container: container,
+      id: id,
+    },
+    onClose: () => {
+      console.log("closed");
+    },
+  });
+}
+
+function downloadFolio(data) {
+  useCustomFetch(
+      `/repository/container/folio/download/${container}?id=${data.id}`,
+  )
+      .blob()
+      .then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data.value]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", `${data.name}.${data.format}`);
+        document.body.appendChild(link);
+        link.click();
+      });
+}
+
 const toggle = (event, data) => {
   items.value = [
     {
@@ -82,14 +127,14 @@ const toggle = (event, data) => {
           label: "Image Editor",
           icon: "pi pi-pencil",
           command: () => {
-            openImageEditor();
+            openImageEditor(data.id);
           },
         },
         {
           label: "Download",
           icon: "pi pi-download",
           command: () => {
-            downloadFolio();
+            downloadFolio(data);
           },
         },
         {

@@ -9,8 +9,11 @@ import IconRotateRight from "~icons/fluent/arrow-rotate-clockwise-16-filled";
 import IconRotateLeft from "~icons/fluent/arrow-rotate-counterclockwise-24-filled";
 import IconSave from "~icons/fluent/save-16-regular";
 import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
+import { useToast } from "primevue/usetoast";
 
 const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
+
+const toast = useToast()
 
 const image = ref();
 
@@ -57,6 +60,16 @@ function flip(x, y) {
 }
 function rotate(angle) {
   cropper.value.rotate(angle);
+}
+
+function save() {
+  toast.add({
+    severity: "info",
+    summary: "Info",
+    detail: "Saving edits coming soon...",
+    life: 3000,
+    group: "general",
+  });
 }
 </script>
 
