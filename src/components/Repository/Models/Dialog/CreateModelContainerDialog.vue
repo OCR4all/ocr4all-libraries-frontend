@@ -1,26 +1,23 @@
 <script setup lang="ts">
-import { modelMetadataSchema } from "@/components/Repository/Models/Dialog/Schema/modelMetadataSchema";
+import { modelSchema } from "@/components/Repository/Models/Dialog/Schema/modelSchema";
 
 const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
-
-const data = ref();
-
-onMounted(() => {
-  data.value = dialogRef?.value.data;
-});
-
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 
-const schema = modelMetadataSchema;
+const schema = modelSchema;
+const data = ref();
 
-function editModel(values, { setErrors }) {
+function createModelContainer(values, { setErrors }) {
   const payload = {
     name: data.value.name,
     description: data.value.description,
     keywords: data.value.keywords,
+    "engine-type": data.value.engineType,
+    "engine-version": data.value.engineVersion,
+    "engine-name": data.value.engineName
   };
-  useCustomFetch(`/assemble/model/update?id=${data.value.id}`)
+  useCustomFetch(`/assemble/model/create`)
     .post(payload)
     .then((response) => {
       if (response.error.value) {
@@ -33,13 +30,13 @@ function editModel(values, { setErrors }) {
 </script>
 <template>
   <FormKit
-    id="editModelForm"
+    id="createGroupForm"
     v-model="data"
     type="form"
     :submit-attrs="{
       inputClass: 'formkit-submit-btn',
     }"
-    @submit="editModel"
+    @submit="createModelContainer"
   >
     <FormKitSchema :schema="schema" :data="data" />
   </FormKit>

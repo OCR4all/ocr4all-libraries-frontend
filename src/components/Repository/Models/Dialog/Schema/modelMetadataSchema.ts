@@ -2,7 +2,7 @@ import { RemovableRef } from "@vueuse/core";
 
 const list: RemovableRef<string[]> = ref([]);
 
-export const modelSchema = ref([
+export const modelMetadataSchema = ref([
   {
     $formkit: "primeInputText",
     name: "name",
@@ -28,20 +28,5 @@ export const modelSchema = ref([
       ];
     },
     label: "Keywords",
-  },
-  {
-    $formkit: "primeInputText",
-    name: "engineType",
-    label: "Engine Type",
-  },
-  {
-    $formkit: "primeInputText",
-    name: "engineVersion",
-    label: "Engine Version",
-  },
-  {
-    $formkit: "primeInputText",
-    name: "engineName",
-    label: "Engine Name",
   },
 ]);

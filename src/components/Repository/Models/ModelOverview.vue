@@ -5,7 +5,6 @@ import { IContainer } from "@/components/Project/project.interfaces";
 import ShareDialog from "@/components/Repository/Images/Container/Dialog/ShareDialog.vue";
 import Column from "primevue/column";
 import Button from "primevue/button";
-import IconUpload from "~icons/fluent/arrow-upload-24-filled";
 
 import IconCreate from "~icons/gridicons/create";
 
@@ -13,11 +12,16 @@ const EditModelDialog = defineAsyncComponent(
   () => import("@/components/Repository/Models/Dialog/EditModelDialog.vue"),
 );
 
+const CreateModelContainerDialog = defineAsyncComponent(
+    () => import("@/components/Repository/Models/Dialog/CreateModelContainerDialog.vue"),
+);
+
 const ShareModelDialog = defineAsyncComponent(
   () => import("@/components/Repository/Models/Dialog/ShareModelDialog.vue"),
 );
 
 import IconActions from "~icons/fluent/more-vertical-32-regular";
+import IconTraining from "~icons/carbon/machine-learning-model";
 
 const dialog = useDialog();
 const router = useRouter();
@@ -215,6 +219,48 @@ function openShareDialog(data: IModel) {
       },
     },
     data: data,
+    onClose: () => {
+      fetch();
+    },
+  });
+}
+
+const trainNewModel = () => {
+  confirm.require({
+    message: "Go to the model training zone?",
+    header: "Danger Zone",
+    icon: "pi pi-info-circle",
+    position: "bottom",
+    rejectLabel: "Cancel",
+    rejectProps: {
+      label: "Cancel",
+      severity: "secondary",
+      outlined: true,
+    },
+    acceptProps: {
+      label: "Confirm",
+      severity: "info",
+    },
+    accept: () => {
+      router.push('/training/overview');
+    },
+    reject: () => {},
+  });
+}
+
+const openNewModelContainerDialog = () => {
+  dialog.open(CreateModelContainerDialog, {
+    props: {
+      header: `Create new model container`,
+      modal: true,
+      style: {
+        width: "70vw",
+      },
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
+      },
+    },
     onClose: () => {
       fetch();
     },
@@ -444,11 +490,11 @@ const selectedModels = ref([]);
     <ComponentContainer>
       <Toolbar>
         <template #start>
-          <Button v-tooltip.top="'Train new model'" text @click="router.push('/training/overview')" >
+          <Button v-tooltip.top="'Create new model container'" text @click="openNewModelContainerDialog" >
             <IconCreate class="text-black dark:text-white" />
           </Button>
-          <Button v-tooltip.top="'Upload models'" text>
-            <IconUpload class="text-black dark:text-white" />
+          <Button v-tooltip.top="'Train new model'" text @click="trainNewModel()" >
+            <IconTraining class="text-black dark:text-white" />
           </Button>
           <Button
             icon="pi pi-trash"

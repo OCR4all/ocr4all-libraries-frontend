@@ -28,6 +28,7 @@ declare module 'vue' {
     CPaletteEntry: typeof import('./src/components/NodeFlow/Custom/CPaletteEntry.vue')['default']
     CreateDataset: typeof import('./src/components/Repository/Datasets/Dialog/CreateDataset.vue')['default']
     CreateGroupDialogForm: typeof import('./src/components/Admin/GroupManagement/Dialog/CreateGroupDialog/CreateGroupDialogForm.vue')['default']
+    CreateModelContainerDialog: typeof import('./src/components/Repository/Models/Dialog/CreateModelContainerDialog.vue')['default']
     CreateUserDialogForm: typeof import('./src/components/Admin/UserManagement/Dialog/CreateUserDialog/CreateUserDialogForm.vue')['default']
     CSidebar: typeof import('./src/components/NodeFlow/Custom/CSidebar.vue')['default']
     CSidebarButton: typeof import('./src/components/NodeFlow/Custom/CSidebarButton.vue')['default']
