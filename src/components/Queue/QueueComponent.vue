@@ -337,6 +337,8 @@ onUnmounted(() => {});
       @row-contextmenu="onRowContextMenu"
       :global-filter-fields="['id', 'description', 'state']"
       :loading="loading"
+      resizableColumns
+      columnResizeMode="expand"
       :rows="5"
       :rows-per-page-options="[5, 10, 20, 50]"
       table-style="min-width: 50rem"

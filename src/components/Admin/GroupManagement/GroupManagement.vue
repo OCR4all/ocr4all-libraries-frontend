@@ -262,6 +262,8 @@ refetch();
       ref="dt"
       :loading="isLoading"
       scrollable
+      resizableColumns
+      columnResizeMode="expand"
       :value="groups"
       v-model:selection="selectedGroups"
       dataKey="label"

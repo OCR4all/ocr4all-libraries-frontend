@@ -27,6 +27,7 @@ import VChart, { THEME_KEY } from "vue-echarts";
 import Column from "primevue/column";
 import InputText from "primevue/inputtext";
 import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
+import DataTable from "primevue/datatable";
 
 provide(THEME_KEY, useDark().value ? darkTheme : lightTheme);
 
@@ -163,6 +164,8 @@ const filter = ref();
         <DataTable
           ref="dt"
           :value="datatableNodes"
+          resizableColumns
+          columnResizeMode="expand"
           sortField="quantity"
           :sortOrder="-1"
         >

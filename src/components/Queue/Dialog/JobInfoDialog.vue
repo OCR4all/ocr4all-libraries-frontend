@@ -6,6 +6,7 @@ import { useDialog } from "primevue/usedialog";
 import IconEmpty from "~icons/ph/empty-light";
 import IconOpen from "~icons/fluent/open-16-regular";
 import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
+import DataTable from "primevue/datatable";
 
 const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 const logViewer = defineAsyncComponent(
@@ -56,7 +57,7 @@ function getSeverity(severity: string): string | undefined {
 }
 </script>
 <template>
-  <DataTable v-model:expandedRows="expandedRows" :value="job">
+  <DataTable v-model:expandedRows="expandedRows" :value="job" resizableColumns columnResizeMode="expand">
     <Column expander style="width: 5rem" />
     <Column field="id" header="Id"></Column>
     <Column field="description" header="Description"></Column>
@@ -71,7 +72,7 @@ function getSeverity(severity: string): string | undefined {
     <template #expansion="slotProps">
       <div class="p-4">
         <h5>Journal</h5>
-        <DataTable :value="slotProps.data.journal.steps">
+        <DataTable :value="slotProps.data.journal.steps" resizableColumns columnResizeMode="expand">
           <Column field="index" header="Index"></Column>
           <Column field="completed" header="Completed">
             <template #body="{ data }">

@@ -94,6 +94,8 @@ async function addToDataset() {
       v-model:selection="selectedDatasets"
       :value="datasets"
       :filters="filters"
+      resizableColumns
+      columnResizeMode="expand"
       :paginator="true"
       :rows="5"
       :rows-per-page-options="[5, 10, 20, 50]"

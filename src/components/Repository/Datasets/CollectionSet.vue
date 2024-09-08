@@ -824,6 +824,8 @@ refresh();
         v-model:expandedRows="expandedRows"
         :loading="isLoading"
         :value="sets"
+        resizableColumns
+        columnResizeMode="expand"
         :filters="filters"
         context-menu
         :paginator="true"
@@ -920,7 +922,7 @@ refresh();
         <template #expansion="slotProps">
           <div class="p-4">
             <h5 class="text-lg font-semibold">Files</h5>
-              <DataTable :value="entities[slotProps.data.id]">
+              <DataTable :value="entities[slotProps.data.id]" resizableColumns columnResizeMode="expand">
                 <Column field="name" header="Name" sortable></Column>
                 <Column field="extension" header="Extension" sortable></Column>
                 <Column field="content-type" header="Content Type" sortable></Column>

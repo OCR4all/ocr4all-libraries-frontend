@@ -61,6 +61,8 @@ const getSeverity = (entry) => {
   <DataTable
     :value="jobs"
     stripedRows
+    resizableColumns
+    columnResizeMode="expand"
     :loading="loading"
     paginator
     paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"

@@ -624,6 +624,8 @@ refresh();
             v-model:selection="selection"
             v-model:filters="filters"
             context-menu
+            resizableColumns
+            columnResizeMode="expand"
             @row-contextmenu="onRowContextMenu"
         >
           <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>

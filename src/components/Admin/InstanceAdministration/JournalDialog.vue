@@ -2,6 +2,7 @@
 import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 import { FilterMatchMode } from "@primevue/core/api";
 import { UseTimeAgo } from "@vueuse/components";
+import DataTable from "primevue/datatable";
 
 const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 const journal = ref();
@@ -21,6 +22,8 @@ onMounted(() => {
     v-model:filters="filters"
     scrollable
     scroll-height="75vh"
+    resizableColumns
+    columnResizeMode="expand"
     striped-rows
     :value="journal"
     :global-filter-fields="['user', 'level', 'message']"

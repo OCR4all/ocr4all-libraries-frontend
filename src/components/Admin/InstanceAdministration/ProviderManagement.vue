@@ -4,7 +4,7 @@ import { useDialog } from "primevue/usedialog";
 import { FilterMatchMode } from "@primevue/core/api";
 import { useUiStore } from "@/stores/ui.store";
 import ComponentContainer from "@/components/Layout/ComponentContainer.vue";
-import { DataTableRowContextMenuEvent } from "primevue/datatable";
+import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
 
 const dialog = useDialog();
 const journalDialog = defineAsyncComponent(
@@ -284,6 +284,8 @@ getProviders();
       :loading="isLoadingProviders"
       scrollable
       striped-rows
+      resizableColumns
+      columnResizeMode="expand"
       :value="nodes"
       @row-contextmenu="onRowContextMenu"
       :global-filter-fields="[

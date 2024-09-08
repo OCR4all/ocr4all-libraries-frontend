@@ -430,6 +430,8 @@ const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
     <DataTable
       :value="sandboxes"
       :loading="loading"
+      resizableColumns
+      columnResizeMode="expand"
       sort-field="tracking.updated"
       :sort-order="-1"
       v-model:filters="filters"

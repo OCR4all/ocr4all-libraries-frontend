@@ -40,6 +40,8 @@ refetch();
       :value="workflows"
       striped-rows
       sort-field="date"
+      resizableColumns
+      columnResizeMode="expand"
       :sort-order="-1"
       :loading="loading"
       paginator

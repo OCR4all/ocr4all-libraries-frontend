@@ -265,6 +265,8 @@ refetch();
       v-model:selection="selectedUsers"
       dataKey="login"
       :paginator="true"
+      resizableColumns
+      columnResizeMode="expand"
       @row-contextmenu="onRowContextMenu"
       :rows="10"
       :filters="filters"

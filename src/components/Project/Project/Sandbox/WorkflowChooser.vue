@@ -58,6 +58,8 @@ refetch();
       :loading="loading"
       :filters="filters"
       context-menu
+      resizableColumns
+      columnResizeMode="expand"
       :globalFilterFields="['label', 'description']"
       sortField="date"
       :sortOrder="-1"

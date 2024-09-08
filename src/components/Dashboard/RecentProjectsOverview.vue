@@ -42,6 +42,8 @@ refetch();
       :value="projects"
       :rows="5"
       :loading="initialLoading"
+      resizableColumns
+      columnResizeMode="expand"
       @row-click="router.push(`/project/${$event.data.id}/view`)"
       :rowClass="rowClass"
       :row-hover="true"

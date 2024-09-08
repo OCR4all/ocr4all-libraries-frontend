@@ -391,6 +391,8 @@ refetch();
       :value="projects"
       :paginator="true"
       :rows="10"
+      resizableColumns
+      columnResizeMode="expand"
       :loading="loading"
       scrollable
       context-menu

@@ -8,6 +8,7 @@ const emit = defineEmits(["next"]);
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { FilterMatchMode } from "@primevue/core/api";
 import InputText from "primevue/inputtext";
+import DataTable from "primevue/datatable";
 
 const store = useSandboxCreationStore();
 
@@ -108,6 +109,8 @@ const filters = ref({
         v-model:selection="selectedFolios"
         v-model:filters="filters"
         paginator
+        resizableColumns
+        columnResizeMode="expand"
         :rows="5"
         :rowsPerPageOptions="[5, 10, 20, 50]"
       >
