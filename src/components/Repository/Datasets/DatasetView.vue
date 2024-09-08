@@ -601,6 +601,7 @@ const contextMenu = ref();
       <Column header="Ground Truth">
         <template #body="{ data }">
           <MeterGroup
+            v-if="groundTruth[data.id] && sets[data.id] && !isRefetching"
             :max="sets[data.id]"
             :value="[
                 { color: '#34d399', value: groundTruth[data.id].length },
@@ -612,6 +613,7 @@ const contextMenu = ref();
               </div>
             </template>
           </MeterGroup>
+          <Skeleton v-else width="60%" height="1rem" />
         </template>
       </Column>
       <Column
