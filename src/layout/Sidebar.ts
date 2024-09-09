@@ -102,9 +102,9 @@ export const adminNavigation: navigationEntry[] = [
     label: "nav.sidebar.links.admin.providers",
     icon: IconCpu,
   },
-  {
+/*  {
     to: "/admin/ocrdapi",
     label: "nav.sidebar.links.admin.ocrdapi",
     icon: IconViewfinder,
-  },
+  },*/
 ];
