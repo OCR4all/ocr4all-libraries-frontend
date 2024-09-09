@@ -7,6 +7,7 @@ import Column from "primevue/column";
 import Button from "primevue/button";
 import DataView from "primevue/dataview";
 import DataTable, { DataTableRowContextMenuEvent } from "primevue/datatable";
+import IconRefresh from "~icons/heroicons/arrow-path";
 
 import { useCustomFetch } from "@/composables/useCustomFetch";
 import { FilterMatchMode, FilterService } from "@primevue/core/api";
@@ -82,8 +83,10 @@ const setContainerCardsRef = (ref) => {
   }
 };
 
+const isRefetching = ref(true);
 const isLoadingContainers = ref(true);
 async function listContainers() {
+  isRefetching.value = true
   useCustomFetch("/repository/container/list")
     .json()
     .then((response) => {
@@ -96,7 +99,6 @@ async function listContainers() {
           group: "general",
         });
       } else if (response.data.value) {
-        console.log(response.data.value)
         const data: IContainer[] = response.data.value;
         containers.value = data.filter(function (container: IContainer) {
           return container.right !== null;
@@ -111,6 +113,9 @@ async function listContainers() {
         availableKeywords.value = Array.from(keywordSet)
       }
       isLoadingContainers.value = false;
+      setTimeout(function () {
+        isRefetching.value = false;
+      }, 500);
     });
 }
 
@@ -645,12 +650,21 @@ function downloadContainer(container: IContainer) {
       </template>
       <template #center> </template>
       <template #end>
-        <IconField>
-          <InputIcon>
-            <i class="pi pi-search" />
-          </InputIcon>
-          <InputText v-model="filters['global'].value" placeholder="Search" />
-        </IconField>
+        <div class="flex space-x-2">
+          <button v-tooltip="'Refresh'" @click="listContainers">
+            <IconRefresh
+              :disabled="isRefetching"
+              :class="{ 'animate-spin': isRefetching }"
+              class="inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-300 dark:hover:text-white"
+            />
+          </button>
+          <IconField>
+            <InputIcon>
+              <i class="pi pi-search" />
+            </InputIcon>
+            <InputText v-model="filters['global'].value" placeholder="Search" />
+          </IconField>
+        </div>
       </template>
     </Toolbar>
     <div class="flex justify-end">

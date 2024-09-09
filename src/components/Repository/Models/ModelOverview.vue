@@ -7,6 +7,7 @@ import Column from "primevue/column";
 import Button from "primevue/button";
 
 import IconCreate from "~icons/gridicons/create";
+import IconRefresh from "~icons/heroicons/arrow-path";
 
 const EditModelDialog = defineAsyncComponent(
   () => import("@/components/Repository/Models/Dialog/EditModelDialog.vue"),
@@ -41,6 +42,7 @@ const confirm = useConfirm();
 const toast = useToast();
 
 const isLoading = ref(true);
+const isRefetching = ref(true)
 const availableKeywords: Ref<string[]> = ref([])
 
 function getRightSeverity(right: string){
@@ -55,7 +57,8 @@ function getRightSeverity(right: string){
 }
 
 
-async function fetch() {
+async function refetch() {
+  isRefetching.value = true
   useCustomFetch("/assemble/model/list")
     .get()
     .json()
@@ -70,10 +73,13 @@ async function fetch() {
       availableKeywords.value = Array.from(keywordSet)
 
       isLoading.value = false;
+      setTimeout(function () {
+        isRefetching.value = false;
+      }, 500);
     });
 }
 
-fetch();
+refetch();
 
 const items = ref();
 const menu = ref();
@@ -200,7 +206,7 @@ function openEditDialog(data: IModel) {
     },
     data: data,
     onClose: () => {
-      fetch();
+      refetch();
     },
   });
 }
@@ -220,7 +226,7 @@ function openShareDialog(data: IModel) {
     },
     data: data,
     onClose: () => {
-      fetch();
+      refetch();
     },
   });
 }
@@ -270,7 +276,7 @@ const openNewModelContainerDialog = () => {
       },
     },
     onClose: () => {
-      fetch();
+      refetch();
     },
   });
 }
@@ -317,7 +323,7 @@ async function deleteModel(id: string) {
         group: "general",
       });
     }
-    fetch();
+    refetch();
   });
 }
 
@@ -514,6 +520,16 @@ const selectedModels = ref([]);
           />
         </template>
         <template #end>
+          <button
+            v-tooltip.left="'Refresh'"
+            :disabled="isRefetching === true"
+            @click="refetch()"
+          >
+            <IconRefresh
+              :class="{ 'animate-spin': isRefetching }"
+              class="mr-2 inline h-6 w-6 text-surface-600 hover:text-black dark:text-surface-200 hover:dark:text-white"
+            />
+          </button>
           <IconField>
             <InputIcon>
               <i class="pi pi-search" />

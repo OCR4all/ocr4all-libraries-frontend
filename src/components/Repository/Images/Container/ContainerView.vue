@@ -25,6 +25,7 @@ import {FilterMatchMode} from "@primevue/core/api";
 import InputText from "primevue/inputtext";
 import IconActions from "~icons/fluent/more-vertical-32-regular";
 import DataTable, {DataTableRowContextMenuEvent} from "primevue/datatable";
+import IconRefresh from "~icons/heroicons/arrow-path";
 
 const { t } = useI18n();
 
@@ -34,6 +35,7 @@ const ImageEditor = defineAsyncComponent(
 
 const folios = ref();
 const isLoading = ref(true);
+const isRefetching = ref(true)
 
 const layout: Ref<"list" | "grid" | undefined> = ref(useStorage("ocr4all/frontend/repository/container-view", "grid"));
 const options = ref(["list", "grid"]);
@@ -229,12 +231,16 @@ const hideUploadToast = () => {
 };
 
 async function refresh() {
+  isRefetching.value = true
   useCustomFetch(`/repository/container/folio/list/${container}`)
     .get()
     .json()
     .then((response) => {
       folios.value = response.data.value;
       isLoading.value = false;
+      setTimeout(function () {
+        isRefetching.value = response.isFetching.value;
+      }, 500);
 
       for(const folio of folios.value){
         useCustomFetch(
@@ -584,8 +590,8 @@ refresh();
       <template #end>
         <button
             v-tooltip.left="'Refresh'"
-            :disabled="isRefetching === true"
-            @click="refetch"
+            :disabled="isRefetching"
+            @click="refresh"
         >
           <IconRefresh
               :class="{ 'animate-spin': isRefetching }"
