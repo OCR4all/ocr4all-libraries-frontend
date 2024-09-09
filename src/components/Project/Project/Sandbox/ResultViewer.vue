@@ -309,6 +309,16 @@ function hasLarexView(selection: ITrack): boolean {
   return snapshot.children.map((entry) => entry.label).includes(LAREX_LABEL);
 }
 
+function isExportNode(selection: ITrack): boolean {
+  const snapshot = getSnapshotFromSelection(selection);
+  return snapshot.type === "Format Conversion"
+}
+
+function isLarexNode(selection: ITrack): boolean {
+  const snapshot = getSnapshotFromSelection(selection);
+  return snapshot.label === "LAREX launcher default"
+}
+
 function openProcessorInformationDialog(information: unknown) {
   dialog.open(processorInformationDialog, {
     props: {
@@ -507,11 +517,12 @@ const items = computed(() => {
   if (Object.keys(selection.value).length === 0) {
     return [];
   } else {
+    console.log(isLarexNode(selection.value))
     return [
       {
         label: "LAREX",
         icon: IconLarex,
-        visible: !hasLarexView(selection.value),
+        visible: !hasLarexView(selection.value) && !isExportNode(selection.value),
         disabled: false,
         command: () => {
           generateSandbox(selection.value);
@@ -537,11 +548,11 @@ const items = computed(() => {
       },
       {
         label: "Add to dataset",
-        visible: true,
+        visible: isLarexNode(selection.value),
         disabled: false,
         icon: IconAddToDataset,
         command: () => {
-          openAddToDatasetDialog(selection.value);
+          openAddToDatasetDialog(selection.value) ;
         },
       },
       {
