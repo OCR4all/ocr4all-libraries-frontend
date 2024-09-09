@@ -16,12 +16,14 @@ export const useCustomFetch = createFetch({
       }
       return { options };
     },
-    async onFetchError({ response }) {
-      if (response!.status == 401) {
+    async onFetchError(ctx) {
+      if (ctx.response!.status == 401) {
         /* TODO: Change this as soon as we have a working auth workflow.
         *   Currently there is no good way to check whether a token is still valid
         *   as tokens may expire before their supplied expiry date. */
         await auth.logout();
+      }else{
+        return ctx
       }
     },
   },

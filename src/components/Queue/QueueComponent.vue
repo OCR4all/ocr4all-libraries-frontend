@@ -37,6 +37,7 @@ const toast = useToast();
 
 const loading: Ref<boolean> = ref(true);
 const isRefetching: Ref<boolean> = ref(false);
+const fetchError: Ref<boolean> = ref(false);
 
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -80,13 +81,15 @@ async function refetch() {
     .get()
     .json();
   if (error.value) {
+    console.log(error.value)
     toast.add({
       severity: "error",
       summary: t("pages.login.toasts.login.error.summary"),
-      detail: error.value,
+      detail: "Couldn't fetch queue",
       life: 3000,
       group: "general",
     });
+    pause()
   } else {
     const queue: IQueue = data.value;
     const _jobs: IJob[] = [];
@@ -95,12 +98,12 @@ async function refetch() {
         _jobs.push(job);
       }
     }
-    loading.value = isFetching.value;
-    setTimeout(function () {
-      isRefetching.value = isFetching.value;
-    }, 500);
     jobs.value = _jobs;
   }
+  loading.value = isFetching.value;
+  setTimeout(function () {
+    isRefetching.value = isFetching.value;
+  }, 500);
 }
 
 function calculateProgress(data) {
