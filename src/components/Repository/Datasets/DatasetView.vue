@@ -615,7 +615,10 @@ const contextMenu = ref();
               </div>
             </template>
           </MeterGroup>
-          <Skeleton v-else width="60%" height="1rem" />
+          <div v-else class="flex flex-col space-y-4">
+            <Skeleton width="100%" height="1rem" />
+            <Skeleton width="100%" height="1rem" />
+          </div>
         </template>
       </Column>
       <Column
