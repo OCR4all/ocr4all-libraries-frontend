@@ -420,13 +420,6 @@ const toggle = (event, data: ISet) => {
       label: "Actions",
       items: [
         {
-          label: "Open",
-          icon: "pi pi-eye",
-          command: () => {
-            openSet(data);
-          },
-        },
-        {
           label: "Edit",
           icon: "pi pi-pencil",
           command: () => {
@@ -494,13 +487,6 @@ const filters: RemovableRef<any> = ref({
 const contextMenu = ref();
 const onRowContextMenu = (event: DataTableRowContextMenuEvent) => {
   items.value = [
-    {
-      label: "Open",
-      icon: "pi pi-eye",
-      command: () => {
-        openSet(event.data);
-      },
-    },
     {
       label: "Edit",
       icon: "pi pi-pencil",
