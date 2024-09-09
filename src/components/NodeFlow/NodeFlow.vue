@@ -131,8 +131,7 @@ async function saveWorkflow() {
     labelEntered.value = false;
   } else {
     isLoadingSaveWorkflow.value = true;
-    const workflowListData = await useCustomFetch(
-      `${import.meta.env.VITE_API_URL}/workflow/list`,
+    const workflowListData = await useCustomFetch('/workflow/list',
     )
       .get()
       .json();
@@ -144,7 +143,7 @@ async function saveWorkflow() {
     ) {
     } else {
       const { isFetching, error, data } = await useCustomFetch(
-        `${import.meta.env.VITE_API_URL}/spi/list`,
+        '/spi/list',
       )
         .get()
         .json();
