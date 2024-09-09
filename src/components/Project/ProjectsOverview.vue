@@ -30,8 +30,6 @@ const router = useRouter();
 import IconCreate from "~icons/gridicons/create";
 import { useDialog } from "primevue/usedialog";
 import { useToast } from "primevue/usetoast";
-import { capitalize } from "vue";
-import { destructureRights } from "@/utils/rights";
 const dialog = useDialog();
 
 const loading = ref(true);
@@ -392,8 +390,6 @@ refetch();
       :paginator="true"
       :rows="10"
       resizableColumns
-      stateStorage="session"
-      stateKey="ocr4all/tables/project-overview"
       columnResizeMode="expand"
       :loading="loading"
       scrollable
@@ -497,8 +493,7 @@ refetch();
       <Column field="tracking.user" header="Owner">
         <template #body="{ data }">
           <div class="flex space-x-2 items-center">
-            <AvatarInitials :name="data.tracking.user" :admin="false" />
-            <p>{{ data.tracking.user }}</p>
+            <AvatarInitials v-tooltip.top="data.tracking.user" :name="data.tracking.user" :admin="false" />
           </div>
         </template>
       </Column>
