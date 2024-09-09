@@ -166,8 +166,6 @@ async function refetch() {
           return container.right !== null;
         });
 
-        console.log(datasets.value)
-
         const keywords = []
         for(const dataset of datasets.value){
           if(dataset.keywords) keywords.push(...dataset.keywords);

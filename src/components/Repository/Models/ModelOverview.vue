@@ -27,7 +27,7 @@ import IconTraining from "~icons/carbon/machine-learning-model";
 const dialog = useDialog();
 const router = useRouter();
 
-const models = ref([]);
+const models: Ref<IModel[]> = ref([]);
 
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
@@ -38,6 +38,8 @@ import InputText from "primevue/inputtext";
 import { FilterMatchMode } from "@primevue/core/api";
 import Tag from "primevue/tag";
 import { capitalize } from "vue";
+import { IModel } from "@/types/model.types";
+
 const confirm = useConfirm();
 const toast = useToast();
 
@@ -63,19 +65,35 @@ async function refetch() {
     .get()
     .json()
     .then((response) => {
-      models.value = response.data.value;
+      if (response.error.value) {
+        toast.add({
+          severity: "error",
+          summary: "Error",
+          detail: response.error.value,
+          life: 3000,
+          group: "general",
+        });
+      } else {
+        models.value = response.data.value.filter(function (
+            model: IModel,
+        ) {
+          return model.right !== null;
+        });
 
-      const keywords = []
-      for(const model of models.value){
-        keywords.push(...model.keywords)
+        console.log(models.value)
+
+        const keywords = []
+        for (const model of models.value) {
+          keywords.push(...model.keywords)
+        }
+        const keywordSet = new Set(keywords);
+        availableKeywords.value = Array.from(keywordSet)
+
+        isLoading.value = false;
+        setTimeout(function () {
+          isRefetching.value = false;
+        }, 500);
       }
-      const keywordSet = new Set(keywords);
-      availableKeywords.value = Array.from(keywordSet)
-
-      isLoading.value = false;
-      setTimeout(function () {
-        isRefetching.value = false;
-      }, 500);
     });
 }
 
