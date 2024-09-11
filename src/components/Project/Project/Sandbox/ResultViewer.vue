@@ -214,9 +214,24 @@ async function refetch() {
   )
     .get()
     .json();
-  enrichData(data.value);
-  nodes.value = data.value;
+  if(error.value) {
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: "Results couldn't be retrieved",
+      life: 3000,
+      group: "general",
+    });
+  }else{
+    enrichData(data.value);
+    nodes.value = data.value;
+    console.log(nodes.value)
+  }
 }
+
+useIntervalFn(() => {
+  refetch()
+}, 2000)
 
 function getSnapshotFromSelection(selection: ITrack): IEnrichedNode {
   if (Object.keys(selection)[0].length == 0) return nodes.value;
@@ -396,11 +411,12 @@ const scheduledJobs: Ref<number[]> = ref([]);
 const runningJobs: Ref<number[]> = ref([]);
 const finishedJobs: Ref<number[]> = ref([]);
 
-const { pause, resume, isActive } = useIntervalFn(() => {
+const { pause } = useIntervalFn(() => {
   useCustomFetch(`/job/overview/domain`)
     .get()
     .json()
     .then((response) => {
+      console.log(response.data.value)
       const jobMap = response.data.value;
       const scheduled = [];
       for (const entry of jobMap["scheduled"]) {
@@ -421,6 +437,10 @@ const { pause, resume, isActive } = useIntervalFn(() => {
       finishedJobs.value = finished;
     });
 }, 1000);
+
+onUnmounted(() => {
+  pause
+})
 
 async function checkJob(startedJob: number) {
   return await new Promise((resolve) => {
@@ -479,6 +499,18 @@ const actionDock = ref({
     },
   },
 });
+
+function getClassByState(state: string, animate: boolean): string {
+  switch(state){
+    case "completed":
+      return "bg-green-500"
+    case "running":
+      return animate ? "bg-yellow-500 animate-ping" : "bg-yellow-500"
+    case "interrupted":
+      return "bg-red-500"
+
+  }
+}
 
 async function createLarexMapsFromFiles(sets: string[]): unknown {
   const fileMap = {};
@@ -694,14 +726,20 @@ const items = computed(() => {
           >
             <template #default="slotProps">
               <div class="flex flex-col space-y-2">
-                <span class="mb-2 self-center font-bold">
+                <div class="flex space-x-2">
+                  <span class="mb-2 self-center font-bold">
                   {{
-                    slotProps.node.label.replace(
-                      "LAREX launcher default",
-                      "LAREX",
-                    )
-                  }}
+                      slotProps.node.label.replace(
+                        "LAREX launcher default",
+                        "LAREX",
+                      )
+                    }}
                 </span>
+                  <span class="relative flex h-3 w-3">
+                  <span class="absolute inline-flex h-full w-full rounded-full opacity-75" :class="getClassByState(slotProps.node.snapshot.process.state, true)"></span>
+                  <span class="relative inline-flex rounded-full h-3 w-3" :class="getClassByState(slotProps.node.snapshot.process.state, false)"></span>
+              </span>
+                </div>
                 <Tag
                   :value="slotProps.node.type"
                   :class="getTagClasses(slotProps.node.type)"
