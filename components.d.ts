@@ -52,6 +52,7 @@ declare module 'vue' {
     EditSandboxDialog: typeof import('./src/components/Project/Project/Sandbox/Dialog/EditSandboxDialog.vue')['default']
     EditSet: typeof import('./src/components/Repository/Datasets/Dialog/EditSet.vue')['default']
     EditUserDialogForm: typeof import('./src/components/Admin/UserManagement/Dialog/EditUserDialog/EditUserDialogForm.vue')['default']
+    EvaluationDialog: typeof import('./src/components/Repository/Datasets/Dialog/EvaluationDialog.vue')['default']
     ExportSnapshotDialog: typeof import('./src/components/Project/Project/Sandbox/Dialog/ExportSnapshotDialog.vue')['default']
     FilesystemCard: typeof import('./src/components/Admin/InstanceOverview/Cards/FilesystemCard.vue')['default']
     FolioCard: typeof import('./src/components/Repository/Images/Folio/FolioCard.vue')['default']
