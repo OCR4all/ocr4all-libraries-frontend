@@ -43,6 +43,10 @@ const uploadSetDialog = defineAsyncComponent(
   () => import("@/components/Repository/Datasets/Dialog/UploadSetDialog.vue"),
 );
 
+const evaluationDialog = defineAsyncComponent(
+    () => import("@/components/Repository/Datasets/Dialog/EvaluationDialog.vue"),
+);
+
 const codecDialog = defineAsyncComponent(
   () => import("@/components/Codec/CodecDialog.vue"),
 );
@@ -50,10 +54,11 @@ const codecDialog = defineAsyncComponent(
 import IconAnalytics from "~icons/carbon/data-analytics";
 import IconUpload from "~icons/fluent/arrow-upload-24-filled";
 import IconDownload from "~icons/fluent/arrow-download-24-filled";
+import IconEvaluation from "~icons/carbon/compare";
 import { useDialog } from "primevue/usedialog";
 import Toast from "primevue/toast";
 import Toolbar from "primevue/toolbar";
-import { ISet } from "@/components/Repository/Datasets/dataset.interfaces";
+import {ICollectionSet, ISet} from "@/components/Repository/Datasets/dataset.interfaces";
 import { Ref } from "vue";
 import FileUpload, { FileUploadUploaderEvent } from "primevue/fileupload";
 import axios from "axios";
@@ -226,6 +231,29 @@ function openDeleteDialog(data: ISet) {
     data: {
       collection: dataset,
       data: [data],
+    },
+    onClose: () => {
+      refresh();
+    },
+  });
+}
+
+async function evaluate(){
+  dialog.open(evaluationDialog, {
+    props: {
+      header: "Evaluation",
+      modal: true,
+      style: {
+        width: "70vw",
+      },
+      breakpoints: {
+        "960px": "80vw",
+        "640px": "90vw",
+      },
+    },
+    data: {
+      collection: dataset,
+      sets: selectedSets.value.map(item => item.id),
     },
     onClose: () => {
       refresh();
@@ -478,7 +506,7 @@ async function removeSelectedSets() {
   });
 }
 
-const selectedSets = ref();
+const selectedSets: Ref<ICollectionSet[]> = ref([]);
 
 const filters: RemovableRef<any> = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -769,6 +797,14 @@ refresh();
           @click="getCodec"
         >
           <IconAnalytics class="text-black dark:text-white" />
+        </Button>
+        <Button
+          v-tooltip.top="'Evaluate'"
+          :disabled="!selectedSets || !selectedSets.length"
+          text
+          @click="evaluate"
+        >
+          <IconEvaluation class="text-black dark:text-white" />
         </Button>
         <Button
           v-tooltip.top="'Open in LAREX'"

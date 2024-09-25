@@ -8,7 +8,14 @@
       font-family: "Open Dyslexic";
       font-style: normal;
       font-weight: 400;
-      src: url("../fonts/OpenDyslexic-Regular.woff2") format("woff2");
+      src: url("../fonts/OpenDyslexic/OpenDyslexic-Regular.woff2") format("woff2");
+    }
+
+    @font-face {
+      font-family: "Junicode";
+      font-style: normal;
+      font-weight: 400;
+      src: url("../fonts/Junicode/JunicodeVF-Roman.woff2") format("woff2");
     }
 
     --font-family: "Inter var";

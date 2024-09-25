@@ -10,6 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'junicode': ['Junicode', 'normal'],
+      },
       keyframes: {
         wave: {
           "0%": { transform: "rotate(0.0deg)" },
