@@ -145,8 +145,8 @@ function buildProcessorFormSchema(data, cols: number) {
   processorFormSchema.value = buildProcessorSchema(data, cols);
 }
 
-function openProcessor(data) {
-  console.log(data);
+async function openProcessor(data) {
+  formData.value = null
   selectedProcessor.value = data;
   buildProcessorFormSchema(data, 3);
   processorDialogVisible.value = true;
