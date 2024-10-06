@@ -252,7 +252,7 @@ function openShareDialog(data: IModel) {
 const trainNewModel = () => {
   confirm.require({
     message: "Go to the model training zone?",
-    header: "Danger Zone",
+    header: "Confirm",
     icon: "pi pi-info-circle",
     position: "bottom",
     rejectLabel: "Cancel",
