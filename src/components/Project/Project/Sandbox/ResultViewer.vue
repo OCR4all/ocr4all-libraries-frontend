@@ -329,6 +329,13 @@ function isExportNode(selection: ITrack): boolean {
   return snapshot.type === "Format Conversion"
 }
 
+function isCompleted(selection: ITrack): boolean {
+  const snapshot = getSnapshotFromSelection(selection);
+  return snapshot.snapshot.process.state === "completed"
+}
+
+
+
 function isLarexNode(selection: ITrack): boolean {
   const snapshot = getSnapshotFromSelection(selection);
   return snapshot.label === "LAREX launcher default"
@@ -549,12 +556,11 @@ const items = computed(() => {
   if (Object.keys(selection.value).length === 0) {
     return [];
   } else {
-    console.log(isLarexNode(selection.value))
     return [
       {
         label: "LAREX",
         icon: IconLarex,
-        visible: !hasLarexView(selection.value) && !isExportNode(selection.value),
+        visible: !hasLarexView(selection.value) && !isExportNode(selection.value) && isCompleted(selection.value),
         disabled: false,
         command: () => {
           generateSandbox(selection.value);
@@ -571,7 +577,7 @@ const items = computed(() => {
       },
       {
         label: "Run Processor",
-        visible: true,
+        visible: isCompleted(selection.value),
         disabled: selectedSnapshotLock.value,
         icon: IconStart,
         command: () => {
@@ -580,7 +586,7 @@ const items = computed(() => {
       },
       {
         label: "Add to dataset",
-        visible: isLarexNode(selection.value),
+        visible: isLarexNode(selection.value) && isCompleted(selection.value),
         disabled: false,
         icon: IconAddToDataset,
         command: () => {
@@ -590,7 +596,7 @@ const items = computed(() => {
       {
         label: "Export",
         icon: IconExport,
-        visible: true,
+        visible: isCompleted(selection.value),
         disabled: false,
         command: () => {
           openExportSnapshotDialog(selection.value);
@@ -715,7 +721,7 @@ const items = computed(() => {
         >
           {{ $t("pages.projects.result-viewer.overview.heading") }}
         </h2>
-        <div class="overflow-x-auto dark:[color-scheme:dark]">
+        <div class="overflow-x-auto dark:[color-scheme:dark] pt-1 ">
           <OrganizationChart
             v-if="nodes"
             v-model:selectionKeys="selection"
@@ -727,7 +733,7 @@ const items = computed(() => {
             <template #default="slotProps">
               <div class="flex flex-col space-y-2">
                 <div class="flex space-x-2">
-                  <span class="mb-2 self-center font-bold">
+                  <span class="mx-auto self-center font-bold">
                   {{
                       slotProps.node.label.replace(
                         "LAREX launcher default",
@@ -735,9 +741,9 @@ const items = computed(() => {
                       )
                     }}
                 </span>
-                  <span class="relative flex h-3 w-3">
+                  <span class="absolute flex h-3 w-3 -top-1 -right-1">
                   <span class="absolute inline-flex h-full w-full rounded-full opacity-75" :class="getClassByState(slotProps.node.snapshot.process.state, true)"></span>
-                  <span class="relative inline-flex rounded-full h-3 w-3" :class="getClassByState(slotProps.node.snapshot.process.state, false)"></span>
+                  <span class="relative inline-flex rounded-full h-3 w-3 opacity-100" :class="getClassByState(slotProps.node.snapshot.process.state, false)"></span>
               </span>
                 </div>
                 <Tag
