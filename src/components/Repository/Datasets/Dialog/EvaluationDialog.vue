@@ -31,6 +31,12 @@ const filters = ref({
 function evaluate(){
   const payload = {
     id: "de.uniwuerzburg.zpd.ocr4all.application.calamari.spi.evaluation.CalamariEvaluation",
+    integers: [
+      {
+        "argument": "--n_confusions",
+        "value": -1
+      }
+    ],
     dataset: {
       collections: [
         {
