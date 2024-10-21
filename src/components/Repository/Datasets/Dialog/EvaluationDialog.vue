@@ -3,6 +3,7 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 import InputText from "primevue/inputtext";
 import {FilterMatchMode} from "@primevue/core/api";
+import DataTable from "primevue/datatable";
 
 const dialogRef: Ref<DynamicDialogInstance> | undefined = inject("dialogRef");
 
@@ -110,7 +111,7 @@ const exportCSV = () => {
         </template>
       </StatsCard>
     </div>
-    <DataTable ref="dt" :value="data.details" v-model:filters="filters">
+    <DataTable ref="dt" :value="data.details" v-model:filters="filters" :paginator="true" :rows="10" :rows-per-page-options="[5, 10, 20, 50]">
       <template #header>
         <div class="flex flex-wrap items-center justify-between gap-2">
           <IconField>
