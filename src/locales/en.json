@@ -21,8 +21,8 @@
         "settings": {}
       },
       "cta": {
-        "header": "Disclaimer",
-        "content": "This is the frontend for the OCR4all-libraries project. The base mode for guided processing and many additional features will be included in an additional release."
+        "header": "Info",
+        "content": "This pro mode represents the output of the OCR4all-libraries project. The base mode for guided processing and many additional features will be included in an additional release."
       }
     }
   },
@@ -507,6 +507,7 @@
           "new-workflow": "New Workflow",
           "load-workflow": "Load Workflow",
           "save-workflow": "Save Workflow",
+          "export-workflow": "Export as OCR-D workflow",
           "select": "Select",
           "copy": "Copy",
           "paste": "Paste",
