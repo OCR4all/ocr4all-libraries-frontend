@@ -28,6 +28,7 @@ import Column from "primevue/column";
 import InputText from "primevue/inputtext";
 import type { DynamicDialogInstance } from "primevue/dynamicdialogoptions";
 import DataTable from "primevue/datatable";
+import { FilterMatchMode } from "@primevue/core/api";
 
 provide(THEME_KEY, useDark().value ? darkTheme : lightTheme);
 
@@ -124,7 +125,9 @@ const exportCSV = () => {
   dt.value.exportCSV();
 };
 
-const filter = ref();
+const filters = ref({
+  id: { value: null, matchMode: FilterMatchMode.EQUALS },
+});
 </script>
 <template>
   <ComponentContainer spaced internal>
@@ -152,7 +155,7 @@ const filter = ref();
       <template #end>
         <IconField>
           <InputIcon class="pi pi-search" />
-          <InputText v-model="filter" placeholder="Search" />
+          <InputText v-model="filters['id'].value" placeholder="Search" />
         </IconField>
       </template>
     </Toolbar>
@@ -164,10 +167,11 @@ const filter = ref();
         <DataTable
           ref="dt"
           :value="datatableNodes"
-          resizableColumns
-          columnResizeMode="expand"
-          sortField="quantity"
-          :sortOrder="-1"
+          v-model:filters="filters"
+          resizable-columns
+          column-resize-mode="expand"
+          sort-field="quantity"
+          :sort-order="-1"
         >
           <Column field="id" header="Character" sortable></Column>
           <Column field="quantity" header="Quantity" sortable></Column>
