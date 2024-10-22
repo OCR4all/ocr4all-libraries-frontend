@@ -21,8 +21,8 @@
         "settings": {}
       },
       "cta": {
-        "header": "Alpha",
-        "content": "This version of OCR4all is an early alpha release of the software. Consequently, there may still be some bugs and many features are yet to come."
+        "header": "Disclaimer",
+        "content": "This is the frontend for the OCR4all-libraries project. The base mode for guided processing and many additional features will be included in an additional release."
       }
     }
   },

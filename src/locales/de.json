@@ -20,8 +20,8 @@
         }
       },
       "cta": {
-        "header": "Alpha",
-        "content": "Diese Version von OCR4all ist eine frühe Alpha-Version der Software. Deshalb kann diese immer noch einige Bugs enthalten und verschiedene Features werden noch eingebaut."
+        "header": "Disclaimer",
+        "content": "Dies ist das Frontend für das OCR4all-libraries-Projekt. Der Basis-Modus für geführte Verarbeitung und viele zusätzliche Funktionalitäten werden in einem zukünftigen Release enthalten sein."
       }
     }
   },
