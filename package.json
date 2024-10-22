@@ -1,6 +1,6 @@
 {
-  "name": "ocr4all-frontend",
-  "version": "1.0.0-alpha",
+  "name": "ocr4all-libraries-frontend",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
