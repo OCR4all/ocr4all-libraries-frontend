@@ -673,8 +673,7 @@ const contextMenu = ref();
       <Column field="tracking.user" header="Owner">
         <template #body=" { data }">
           <div class="flex space-x-2 items-center">
-            <AvatarInitials :name="data.tracking.user" />
-            <p class="inline-block align-middle">{{ data.tracking.user }}</p>
+            <AvatarInitials v-tooltip.top="data.tracking.user" :name="data.tracking.user" />
           </div>
         </template>
       </Column>
