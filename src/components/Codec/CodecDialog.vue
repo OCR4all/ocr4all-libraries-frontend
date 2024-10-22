@@ -44,6 +44,9 @@ const options = ref(["Chart", "Table"]);
 
 onMounted(() => {
   codec.value = dialogRef?.value.data.codec;
+  const sortedCodec = Object.entries(codec.value.codec)
+    .sort(([,a],[,b]) => a-b)
+    .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
   option.value = {
     toolbox: {
       show: true,
@@ -67,7 +70,7 @@ onMounted(() => {
     xAxis: [
       {
         type: "category",
-        data: Object.keys(codec.value.codec),
+        data: Object.keys(sortedCodec),
         axisTick: {
           alignWithLabel: true,
         },
@@ -94,7 +97,7 @@ onMounted(() => {
         name: "Occurrence",
         type: "bar",
         barWidth: "60%",
-        data: Object.values(codec.value.codec),
+        data: Object.values(sortedCodec),
       },
     ],
     animationEasing: "elasticOut",
