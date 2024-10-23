@@ -83,7 +83,9 @@ const exportCSV = () => {
           Errors
         </template>
         <template #value>
-          {{ data.summary.errs }}
+          {{ Intl.NumberFormat('en-us', { maximumSignificantDigits: 3 }).format(
+          data.summary.errs,
+        ) }}
         </template>
       </StatsCard>
       <StatsCard>
@@ -91,7 +93,7 @@ const exportCSV = () => {
           Error Rate
         </template>
         <template #value>
-          {{ data.summary["error-rate"] }}%
+          {{ data.summary["error-rate"].toFixed(2) }}%
         </template>
       </StatsCard>
       <StatsCard>
@@ -99,7 +101,9 @@ const exportCSV = () => {
           Total Characters
         </template>
         <template #value>
-          {{ data.summary["total-characters"] }}
+          {{ Intl.NumberFormat('en-us', { maximumSignificantDigits: 3 }).format(
+          data.summary["total-characters"],
+        ) }}
         </template>
       </StatsCard>
       <StatsCard>
@@ -107,11 +111,13 @@ const exportCSV = () => {
           Sync Errors
         </template>
         <template #value>
-          {{ data.summary["sync-errs"] }}
+          {{ Intl.NumberFormat('en-us', { maximumSignificantDigits: 3 }).format(
+          data.summary["sync-errs"]
+        ) }}
         </template>
       </StatsCard>
     </div>
-    <DataTable ref="dt" :value="data.details" v-model:filters="filters" :paginator="true" :rows="10" :rows-per-page-options="[5, 10, 20, 50]">
+    <DataTable ref="dt" :value="data.details" v-model:filters="filters" scrollable scroll-height="50vh">
       <template #header>
         <div class="flex flex-wrap items-center justify-between gap-2">
           <IconField>
@@ -138,7 +144,7 @@ const exportCSV = () => {
       </Column>
       <Column field="cer" header="CER" sortable>
         <template #body="{ data }">
-          <p class="text-2xl">{{ data.cer }}</p>
+          <p class="text-2xl">{{ data.cer.toFixed(2) }}</p>
         </template>
       </Column>
     </DataTable>
