@@ -149,20 +149,13 @@ function constructNodes(nodeData: object[]) {
       name: data.name,
       parameters: collectNodeParameters(data),
       id: data.id,
+      category: data.categories[0]
     };
     nodesParameters.push(nodeParameters);
-    /** Temporary opionated blacklist for alpha version, should be removed later on  **/
-    const blacklist = [
-      "ocrd-tesserocr-fontshape",
-      "ocrd-tesserocr-segment-word",
-      "ocrd-tesserocr-segment-line",
-      "ocrd-tesserocr-segment-region",
-    ];
-    if (!blacklist.includes(data.name))
-      nodes.push({
-        node: node,
-        category: replaceCategories(data.categories[0]),
-      });
+    nodes.push({
+      node: node,
+      category: replaceCategories(data.categories[0]),
+    });
   }
   return [nodes, nodesParameters];
 }

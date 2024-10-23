@@ -11,6 +11,7 @@ const emit = defineEmits([
   "new",
   "load",
   "save",
+  "export",
   "zoom-in",
   "zoom-out",
   "rate-workflow",
@@ -66,6 +67,14 @@ const isFullscreen = inject("fullscreen");
           <i
             class="pi pi-save self-center text-xl text-surface-600 hover:cursor-pointer hover:text-black dark:text-surface-400 dark:hover:text-white"
             @click="emit('save')"
+          ></i>
+        </span>
+        <span
+          v-tooltip.top="t('pages.nodeflow.toolbar.tooltips.export-workflow')"
+        >
+          <i
+            class="pi pi-file-export self-center text-xl text-surface-600 hover:cursor-pointer hover:text-black dark:text-surface-400 dark:hover:text-white"
+            @click="emit('export')"
           ></i>
         </span>
         <div

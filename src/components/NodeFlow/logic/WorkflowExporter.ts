@@ -68,14 +68,14 @@ function filterFlatMap(flatMap, idNameMap) {
   return filteredFlatMap;
 }
 
-function getProcessors(connectionMap, nodeMap, parameterGroups) {
+function getProcessors(connectionMap, nodeMap, parameterGroups, includeDisplayName: boolean) {
   const processors = [];
   // Removes all connections which contain non input root nodes
   for (const entry of connectionMap) {
     if (entry.type !== "InputNode") {
       const node = nodeMap.get(entry.name);
       if (node !== undefined) {
-        const params = parameterGroups.value.find(
+        const params = parameterGroups.find(
           (param) => param.name === node.type,
         );
         if (params !== undefined) {
@@ -128,15 +128,28 @@ function getProcessors(connectionMap, nodeMap, parameterGroups) {
               (processor) => processor["path-id"] === entry.name,
             ).length === 0
           ) {
-            processors.push({
-              "path-id": entry.name,
-              id: params.id,
-              ...(booleans.length !== 0 && { booleans: booleans }),
-              ...(decimals.length !== 0 && { decimals: decimals }),
-              ...(integers.length !== 0 && { integers: integers }),
-              ...(selects.length !== 0 && { selects: selects }),
-              ...(strings.length !== 0 && { strings: strings }),
-            });
+            if(includeDisplayName){
+              processors.push({
+                "path-id": entry.name,
+                name: params.name,
+                id: params.id,
+                ...(booleans.length !== 0 && { booleans: booleans }),
+                ...(decimals.length !== 0 && { decimals: decimals }),
+                ...(integers.length !== 0 && { integers: integers }),
+                ...(selects.length !== 0 && { selects: selects }),
+                ...(strings.length !== 0 && { strings: strings }),
+              });
+            }else{
+              processors.push({
+                "path-id": entry.name,
+                id: params.id,
+                ...(booleans.length !== 0 && { booleans: booleans }),
+                ...(decimals.length !== 0 && { decimals: decimals }),
+                ...(integers.length !== 0 && { integers: integers }),
+                ...(selects.length !== 0 && { selects: selects }),
+                ...(strings.length !== 0 && { strings: strings }),
+              });
+            }
           }
         }
       }
@@ -145,7 +158,169 @@ function getProcessors(connectionMap, nodeMap, parameterGroups) {
   return processors;
 }
 
-export function exportWorkflow(state, parameterGroups) {
+function buildExportString(processString: string[], mode: string): string {
+  switch(mode){
+    case "Docker":
+      return [
+        "docker",
+        "run",
+        "--rm",
+        "-u",
+        "$(id -u)",
+        "-v",
+        "$PWD:/data",
+        "-w",
+        "/data",
+        "--",
+        "ocrd/all:maximum"].concat(processString).join(" ")
+    case "Native":
+      return processString.join(" ")
+    default:
+      return ""
+  }
+}
+
+function buildProcessStringFromPaths(paths: number[][], processors){
+  const call = [
+    "ocrd",
+    "process"
+  ]
+  paths.forEach(function (path: string[], pathIndex: number){
+    console.log(pathIndex)
+    let latestOutput = ""
+    path.forEach(function (processorId: string, processorIndex: number){
+      const processor = processors.find(
+        (proc) => proc["path-id"] === processorId,
+      );
+      const processorCall = []
+
+      processorCall.push(`${processor.name}`.replace(/^(ocrd-)/,""))
+
+      processorCall.push("-I")
+      latestOutput === "" ? processorCall.push("OCR-D-IMG") : processorCall.push(latestOutput)
+      processorCall.push("-O")
+      const outputName = `P${pathIndex}_${processor.name}_${processorIndex}`
+      processorCall.push(outputName)
+      latestOutput = outputName
+
+      if(Object.hasOwn(processor, "booleans")){
+        for(const entry of processor.booleans){
+          processorCall.push("-P")
+          processorCall.push(entry.argument)
+          processorCall.push(entry.value)
+        }
+      }
+      if(Object.hasOwn(processor, "decimals")){
+        for(const entry of processor.decimals){
+          processorCall.push("-P")
+          processorCall.push(entry.argument)
+          processorCall.push(entry.value)
+        }
+      }
+      if(Object.hasOwn(processor, "integers")){
+        for(const entry of processor.integers){
+          processorCall.push("-P")
+          processorCall.push(entry.argument)
+          processorCall.push(entry.value)
+        }
+      }
+      if(Object.hasOwn(processor, "selects")){
+        for(const entry of processor.selects){
+          processorCall.push("-P")
+          processorCall.push(entry.argument)
+          processorCall.push(entry.value)
+        }
+      }
+      if(Object.hasOwn(processor, "strings")){
+        for(const entry of processor.strings){
+          processorCall.push("-P")
+          processorCall.push(entry.argument)
+          processorCall.push(entry.value)
+        }
+      }
+      call.push("'" + processorCall.join(" ") + "'")
+    })
+  })
+  return call
+}
+
+function findAllPaths(node, currentPath = []) {
+  // Create a new path array for this iteration
+  const newPath = [...currentPath, node.id];
+
+  // If this is a leaf node (no children or empty children array)
+  if (!node.children || node.children.length === 0) {
+    return [newPath];
+  }
+
+  // Recursively process all children and collect their paths
+  return node.children.flatMap(child =>
+    findAllPaths(child, newPath)
+  );
+}
+
+function getAllPaths(input) {
+  return input.flatMap(node => findAllPaths(node));
+}
+
+export function checkWorkflowExportability(state): string {
+  const graph = state.graph
+
+  const inputNode = hasInputNode(graph)
+  if(!inputNode){
+    return "no-input-node"
+  }else if(graph.nodes.some(processor => processor.type === 'calamari-predict')){
+    return "non-ocrd-node"
+  }
+  return "yes"
+}
+
+export function exportWorkflowToFile(state, parameterGroups, mode): string{
+  const graph = state.graph
+
+  const inputNode = hasInputNode(graph)
+
+  const connectionNodeMap = new Map()
+  const nodeMap = new Map()
+
+  for(const node of graph.nodes){
+    nodeMap.set(node.id, node)
+    for(const value of Object.values(node.inputs)){
+      connectionNodeMap.set(value.id, node.id)
+    }
+    for(const value of Object.values(node.outputs)){
+      connectionNodeMap.set(value.id, node.id)
+    }
+  }
+
+  const flatMap= []
+  flatMap.push({
+    id: inputNode,
+    name: inputNode,
+    parent: 0
+  })
+
+  for(const connection of graph.connections){
+    const fromNode = connectionNodeMap.get(connection.from)
+    const toNode = connectionNodeMap.get(connection.to)
+
+    flatMap.push({
+      id: toNode,
+      name: toNode,
+      parent: fromNode
+    })
+
+  }
+
+  const filteredFlatMap = filterFlatMap(flatMap, nodeMap);
+  const tree = flatMapToTree(filteredFlatMap);
+  const paths = getPaths(tree);
+  const processors = getProcessors(filteredFlatMap, nodeMap, parameterGroups, true);
+  const processString = buildProcessStringFromPaths(getAllPaths(paths), processors)
+  return buildExportString(processString, mode)
+}
+
+export function saveWorkflowToBackend(state, parameterGroups) {
   const graph = state.graph;
   const inputNode = hasInputNode(graph);
   if (!inputNode) {
@@ -184,7 +359,7 @@ export function exportWorkflow(state, parameterGroups) {
   }
 
   const filteredFlatMap = filterFlatMap(flatMap, nodeMap);
-  const processors = getProcessors(filteredFlatMap, nodeMap, parameterGroups);
+  const processors = getProcessors(filteredFlatMap, nodeMap, parameterGroups, false);
   const tree = flatMapToTree(filteredFlatMap);
   const paths = getPaths(tree);
 

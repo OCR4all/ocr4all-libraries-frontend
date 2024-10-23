@@ -11,7 +11,14 @@ import { IWorkflow } from "@/types/workflow.types";
 import CToolbar from "@/components/NodeFlow/Custom/CToolbar.vue";
 import CPalette from "@/components/NodeFlow/Custom/CPalette.vue";
 
-import { exportWorkflow } from "@/components/NodeFlow/logic/WorkflowExporter";
+const exportDialog = defineAsyncComponent(
+  () => import("@/components/NodeFlow/Dialog/ExportDialog.vue"),
+);
+
+import {
+  checkWorkflowExportability,
+  saveWorkflowToBackend
+} from "@/components/NodeFlow/logic/WorkflowExporter";
 import { importNodesFromAPI } from "@/components/NodeFlow/logic/NodeFactory";
 import { addNodeWithCoordinates } from "@/components/NodeFlow/logic/EditorFunctions";
 
@@ -23,6 +30,7 @@ import { useCustomFetch } from "@/composables/useCustomFetch";
 import { useI18n } from "vue-i18n";
 import { useUiStore } from "@/stores/ui.store";
 import IconLoad from "~icons/uis/upload-alt";
+import { useDialog } from "primevue/usedialog";
 
 const { t } = useI18n();
 
@@ -64,6 +72,8 @@ Promise.resolve(importNodesFromAPI()).then(async (nodes) => {
     addNodeWithCoordinates(baklava, InputNode, 50, 350);
   }
 });
+
+const dialog = useDialog();
 
 const selectedWorkflow = ref();
 const availableWorkflows = ref();
@@ -148,7 +158,7 @@ async function saveWorkflow() {
         .get()
         .json();
       const graph = editor.save();
-      const workflow = exportWorkflow(graph, nodeParameters);
+      const workflow = saveWorkflowToBackend(graph, nodeParameters);
       const payload = {
         description: workflowDescription.value,
         label: workflowName.value,
@@ -179,7 +189,6 @@ async function saveWorkflow() {
 }
 
 async function loadWorkflow(workflow: IWorkflow) {
-  console.log(workflow);
   const { isFetching, error, data } = await useCustomFetch(
     `/workflow/pull/${workflow.id}`,
   )
@@ -222,6 +231,53 @@ async function loadWorkflow(workflow: IWorkflow) {
     selectedWorkflow.value = undefined;
   }
   isLoadDialogVisible.value = false;
+}
+
+function exportWorkflow() {
+  const graph = editor.save()
+  const exportability = checkWorkflowExportability(graph)
+  switch(exportability){
+    case "no-input-node":
+      toast.add({
+        severity: "info",
+        summary: "Info",
+        detail: "Only valid workflows can be exported. Please add an Input node.",
+        life: 3000,
+        group: "general"
+      })
+      break;
+    case "non-ocrd-node":
+      toast.add({
+        severity: "info",
+        summary: "Info",
+        detail: "OCR-D workflow export is only possible for workflows exclusively using OCR-D processors.",
+        life: 3000,
+        group: "general"
+      })
+      break;
+    case "yes":
+      dialog.open(exportDialog, {
+        props: {
+          header: "Export OCR-D workflow",
+          modal: true,
+          style: {
+            width: "25vw",
+          },
+          breakpoints: {
+            "960px": "80vw",
+            "640px": "85vw",
+          },
+        },
+        data: {
+          graph: graph,
+          params: nodeParameters,
+          name: originalWorkflowName
+        },
+        onClose: () => {
+        },
+      });
+      return
+  }
 }
 
 function rateWorkflow() {
@@ -334,12 +390,16 @@ provide("fullscreen", isFullscreen);
         @new="newGraph"
         @load="openLoadDialog"
         @save="openSaveDialog"
+        @export="exportWorkflow"
         @zoom-in="zoomIn"
         @zoom-out="zoomOut"
         @rate-workflow="rateWorkflow"
         @toggle-palette="togglePalette"
         @toggle-fullscreen="toggle"
       />
+    </template>
+    <template #node="nodeProps">
+      <CNode :key="nodeProps.node.id" v-bind="nodeProps" />
     </template>
     <template #sidebar>
       <CSidebar />
