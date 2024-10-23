@@ -214,7 +214,8 @@ async function refetch() {
   )
     .get()
     .json();
-  if(error.value) {
+  if(error.value || !data.value.snapshot) {
+    refetchInterval.pause()
     toast.add({
       severity: "error",
       summary: "Error",
@@ -229,7 +230,7 @@ async function refetch() {
   }
 }
 
-useIntervalFn(() => {
+const refetchInterval = useIntervalFn(() => {
   refetch()
 }, 2000)
 
@@ -418,7 +419,7 @@ const scheduledJobs: Ref<number[]> = ref([]);
 const runningJobs: Ref<number[]> = ref([]);
 const finishedJobs: Ref<number[]> = ref([]);
 
-const { pause } = useIntervalFn(() => {
+const jobInterval = useIntervalFn(() => {
   useCustomFetch(`/job/overview/domain`)
     .get()
     .json()
@@ -446,7 +447,8 @@ const { pause } = useIntervalFn(() => {
 }, 1000);
 
 onUnmounted(() => {
-  pause
+  jobInterval.pause()
+  refetchInterval.pause()
 })
 
 async function checkJob(startedJob: number) {
@@ -721,7 +723,7 @@ const items = computed(() => {
         >
           {{ $t("pages.projects.result-viewer.overview.heading") }}
         </h2>
-        <div class="overflow-x-auto dark:[color-scheme:dark] pt-1 ">
+        <div v-if="nodes && nodes.snapshot" class="overflow-x-auto dark:[color-scheme:dark] pt-1 ">
           <OrganizationChart
             v-if="nodes"
             v-model:selectionKeys="selection"
@@ -753,6 +755,9 @@ const items = computed(() => {
               </div>
             </template>
           </OrganizationChart>
+        </div>
+        <div v-else class="flex justify-center">
+          <p class="text-black dark:text-white">Error</p>
         </div>
       </section>
     </div>
