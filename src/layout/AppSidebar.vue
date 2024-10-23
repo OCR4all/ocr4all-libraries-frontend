@@ -98,9 +98,9 @@ const maximized = computed(() => !uiStore.sidebarMinimized);
               </svg>
             </button>
           </div>
-          <p class="mb-3 text-sm text-surface-800 dark:text-blue-200">
-            {{ $t("nav.sidebar.cta.content") }}
-          </p>
+          <i18n-t keypath="nav.sidebar.cta.content" tag="p" class="mb-3 text-sm text-surface-800 dark:text-blue-200">
+            <a class="font-bold" href="https://gepris.dfg.de/gepris/projekt/460665940?context=projekt&task=showDetail&id=460665940&">{{ $t('nav.sidebar.cta.link') }}</a>
+          </i18n-t>
         </div>
         <div v-else-if="uiStore.sidebarCtaVisible" class="flex justify-center">
           <span

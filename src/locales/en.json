@@ -22,7 +22,8 @@
       },
       "cta": {
         "header": "Info",
-        "content": "This pro mode represents the result of the OCR4all-libraries project. The base mode for guided processing and many additional features will be included in an additional release."
+        "content": "This pro mode represents the result of the {0}. The base mode for guided processing and many additional features will be included in an additional release.",
+        "link": "OCR4all-libraries project"
       }
     }
   },

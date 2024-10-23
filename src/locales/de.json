@@ -21,7 +21,8 @@
       },
       "cta": {
         "header": "Info",
-        "content": "Der hier verfügbare Pro-Modus repräsentiert das Resultat des OCR4all-libraries-Projekts. Der Basis-Modus für geführte Verarbeitung und viele zusätzliche Funktionalitäten werden in einem zukünftigen Release enthalten sein."
+        "content": "Der hier verfügbare Pro-Modus repräsentiert das Resultat des {0}. Der Basis-Modus für geführte Verarbeitung und viele zusätzliche Funktionalitäten werden in einem zukünftigen Release enthalten sein.",
+        "link": "OCR4all-libraries-Projekts"
       }
     }
   },
