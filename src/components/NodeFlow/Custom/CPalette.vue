@@ -19,6 +19,18 @@ defineExpose({
   toggleVisibility,
 });
 
+const expandedKeys = ref({});
+
+const toggleNode = (node) => {
+  if (node.children && node.children.length) {
+    expandedKeys.value[node.key] = !expandedKeys.value[node.key];
+
+    for (let child of node.children) {
+      toggleNode(child);
+    }
+  }
+};
+
 interface IDraggedNode {
   type: string;
   nodeInformation: INodeTypeInformation;
@@ -150,10 +162,17 @@ const { x, y, isOutside } = useMouseInElement(palette);
       </h1>
       <Tree
         :value="categories"
+        v-model:expandedKeys="expandedKeys"
         :filter="true"
         filterMode="lenient"
         class="w-full"
       >
+        <template #default="slotProps">
+          <div class="cursor-pointer flex justify-between" @click="toggleNode(slotProps.node)">
+            <p>{{ slotProps.node.key }}</p>
+            <Badge :value="slotProps.node.children.length" severity="secondary" />
+          </div>
+        </template>
         <template #node="slotProps">
           <PaletteEntry
             :key="slotProps.node.key"
@@ -178,3 +197,8 @@ const { x, y, isOutside } = useMouseInElement(palette);
     </transition>
   </div>
 </template>
+<style scoped>
+:deep(.p-tree-node-label) {
+  width: 100%;
+}
+</style>
